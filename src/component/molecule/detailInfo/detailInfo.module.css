@@ -1,0 +1,55 @@
+.albumDetailInfo {
+	position: relative;
+	display: flex;
+}
+
+.detailThumbnail {
+	width: 100%;
+	height: auto;
+}
+
+.albumDetailInfo .bottomInfo {
+	position: absolute;
+	bottom: 0;
+	background: rgb(0 0 0 / 70%);
+	width: 100%;
+	display: flex;
+	align-items: center;
+	padding: 15px;
+}
+
+.titleContainer {
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.titleContainer p {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: 600;
+	font-size: 17px;
+}
+
+.titleContainer.longTitle p {
+	min-width: 200px;
+	display: inline-block;
+	animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+.albumDetailInfo .buttonGroup {
+	display: flex;
+	align-items: center;
+	gap: 0;
+	padding: 0 5px;
+}

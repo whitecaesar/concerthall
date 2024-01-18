@@ -1,0 +1,41 @@
+.albumItem {
+	width: 130px;
+}
+
+.albumItem .thumbnail {
+	border-radius: 4px;
+}
+
+.albumItem a {
+	width: 130px;
+	white-space: wrap;
+	word-break: break-all;
+}
+.albumItem .title {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	font-size: 14px;
+	line-height: 16px;
+	padding-top: 3px;
+}
+.albumItem .bottomInfo {
+	padding-top: 5px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 12px;
+}
+.albumItem .bottomInfo .bar {
+	display: inline-block;
+	width: 1px;
+	height: 10px;
+	background: var(--LightGrey);
+}
+.thumbupCnt {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+}

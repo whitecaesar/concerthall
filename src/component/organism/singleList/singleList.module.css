@@ -1,0 +1,26 @@
+.singleList {
+	display: flex;
+	width: 100vw;
+	overflow-y: auto;
+	padding: 0 15px 15px;
+	gap: 10px;
+	white-space: nowrap;
+}
+.singleList li {
+	width: 160px;
+}
+
+.noScroll {
+	flex-wrap: wrap;
+	gap: 22px 0;
+	width: 100%;
+	padding: 0 10px 15px;
+}
+.noScroll li {
+	width: 50%;
+	padding: 0 5px;
+}
+.noScroll li img {
+	width: 100%;
+	height: auto;
+}

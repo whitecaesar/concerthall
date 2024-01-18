@@ -1,0 +1,50 @@
+.dropdown {
+	position: relative;
+	display: flex;
+	justify-content: flex-end;
+	padding: 18px 15px;
+}
+
+.toggleButton {
+	background-color: #000;
+	color: white;
+	width: 120px;
+	padding: 5px 15px;
+	font-size: 14px;
+	border: 1px solid var(--borderDark);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+.toggleButton i {
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: all 0.25s;
+}
+.toggleButton.active i {
+	transform: translateY(-50%) rotate(180deg);
+}
+
+.dropdownContent {
+	/* display: none; */
+	position: absolute;
+	top: 45px;
+	background-color: #000;
+	width: 120px;
+	padding: 5px 0;
+	border: 1px solid var(--borderDark);
+	border-radius: 0 0 5px 5px;
+	z-index: 1;
+}
+
+.dropdownContent li {
+	padding: 7px 15px;
+	text-decoration: none;
+	display: block;
+	cursor: pointer;
+	font-size: 14px;
+	text-align: center;
+}

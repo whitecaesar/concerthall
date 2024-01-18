@@ -1,0 +1,40 @@
+.singleItem .thumbnail {
+	border-radius: 4px;
+}
+
+.singleItem a {
+	white-space: wrap;
+	word-break: break-all;
+}
+.singleItem .title {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	font-size: 14px;
+	line-height: 17px;
+	padding-top: 2px;
+}
+
+.singleItem .bottomInfo {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding-top: 3px;
+}
+
+.singleItem .artist {
+	font-size: 13px;
+	color: var(--DarkGrey);
+	width: calc(100% - 50px);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.singleItem .bottomInfo .buttonGroup {
+	width: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}

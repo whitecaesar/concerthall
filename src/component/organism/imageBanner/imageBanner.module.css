@@ -1,0 +1,19 @@
+.imageBannerList img {
+	display: block;
+}
+
+.imageBannerList .swiper-horizontal > .swiper-pagination-progressbar,
+.imageBannerList .swiper-pagination-progressbar.swiper-pagination-horizontal {
+	top: auto !important;
+	bottom: 0;
+}
+.imageBannerList
+	.swiper-pagination-progressbar
+	.swiper-pagination-progressbar-fill {
+	background: var(--mainColor) !important;
+}
+
+.imageBannerList .swiper-horizontal > .swiper-pagination-progressbar,
+.imageBannerList .swiper-pagination-progressbar.swiper-pagination-horizontal {
+	height: 2px !important;
+}

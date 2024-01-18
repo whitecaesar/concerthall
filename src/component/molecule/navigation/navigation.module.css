@@ -1,0 +1,46 @@
+.mainNav {
+	background: #000;
+}
+.mainNav ul {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	height: 100%;
+}
+.mainNav ul li {
+	padding: 0 10px;
+}
+.mainNav ul li a {
+	position: relative;
+	color: #fff;
+	font-size: 19px;
+	padding: 0 5px;
+}
+.mainNav ul li a:after {
+	content: "";
+	position: absolute;
+	bottom: -2px;
+	left: 0;
+	right: 0;
+	height: 2px;
+	width: 0;
+	margin: 0 auto;
+	background: var(--mainColor);
+}
+
+.mainNav ul li[class="active"] a:after {
+	width: 100%;
+	transition: all 0.3s;
+}
+
+.subNav {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 0;
+	padding: 15px 15px 15px 0;
+}
+.subNav h3 {
+	font-size: 18px;
+	font-weight: 500;
+}

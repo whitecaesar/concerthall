@@ -1,0 +1,48 @@
+{
+	"imagebanners": [
+		{
+			"ID_IMG_BANNER": 1,
+			"ALT": "재즈앨범1",
+			"IMAGE": "/images/banner/img_banner_01.jpg",
+			"LINK": "https://www.anytoon.co.kr/webtoon/main"
+		},
+		{
+			"ID_IMG_BANNER": 2,
+			"ALT": "재즈앨범7",
+			"IMAGE": "/images/banner/img_banner_02.jpg",
+			"LINK": "https://www.anytoon.co.kr/webtoon/main"
+		},
+		{
+			"ID_IMG_BANNER": 3,
+			"ALT": "재즈앨범3",
+			"IMAGE": "/images/banner/img_banner_03.jpg",
+			"LINK": "https://www.anytoon.co.kr/webtoon/main"
+		},
+		{
+			"ID_IMG_BANNER": 4,
+			"ALT": "재즈앨범4",
+			"IMAGE": "/images/banner/img_banner_01.jpg",
+			"LINK": "https://www.anytoon.co.kr/webtoon/main"
+		},
+		{
+			"ID_IMG_BANNER": 5,
+			"ALT": "재즈앨범5",
+			"IMAGE": "/images/banner/img_banner_02.jpg",
+			"LINK": "https://www.anytoon.co.kr/webtoon/main"
+		},
+		{
+			"ID_IMG_BANNER": 6,
+			"ALT": "재즈앨범6",
+			"IMAGE": "/images/banner/img_banner_03.jpg",
+			"LINK": "https://www.anytoon.co.kr/webtoon/main"
+		}
+	],
+
+	"textbanners": [
+		{
+			"ID": "텍스트 배너ID",
+			"TEXT": "텍스트 배너에 들어갈 내용",
+			"LINK": "텍스트 배너 링크 URL"
+		}
+	]
+}

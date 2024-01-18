@@ -1,0 +1,143 @@
+{
+	"RESULT": {
+		"RES_CODE": "0000",
+		"RES_MSG": "OK",
+		"DATA": [
+			{
+				"IMG_BANNER": [
+					{
+						"ID": "배너 ID1",
+						"IMAGE": "배너 이미지 URL1",
+						"ALT": "배너 설명1",
+						"LINK": "배너 링크 URL1"
+					}
+				],
+				"TEXT_BANNER": {
+					"ID": "텍스트 배너ID",
+					"TEXT": "텍스트 배너 내용",
+					"LINK": "텍스트 배너 링크 URL"
+				},
+
+				"RECOMMEND_LIST": {
+					"TYPE": "싱글 or 앨범",
+					"ID": "리스트의 ID",
+					"TITLE": "나른할 때 듣기 좋은 곡 or 앨범",
+					"TOTAL_NUM_ITEM": 10,
+					"ITEM_INFO": [
+						{
+							"ID": "아이템 ID1",
+							"THUMBNAIL": "썸네일 URL1",
+							"TITLE": "아이템 타이틀1",
+							"ARTIST": "아티스트1",
+							"GENRE": "장르1",
+							"TOTAL_NUM_TRACK": 7,
+							"NUM_THUMBUP": 12
+						}
+					]
+				}
+			}
+		]
+	},
+
+	"RESULT": {
+		"RES_CODE": "0000",
+		"RES_MSG": "OK",
+		"DATA": [
+			{
+				"CATEGORY": [
+					{
+						"TITLE": "GENRE",
+						"KEYWORD": [
+							{ "KEY": "1", "NAME": "재즈" },
+							{ "KEY": "2", "NAME": "클래식" },
+							{ "KEY": "3", "NAME": "R&B" }
+						]
+					}
+				],
+
+				"RECOMMEND_LIST": {
+					"TYPE": "싱글 or 앨범",
+					"ID": "리스트의 ID",
+					"TITLE": "나른할 때 듣기 좋은 곡 or 앨범",
+					"TOTAL_NUM_ITEM": 10,
+					"ITEM_INFO": [
+						{
+							"ID": "아이템 ID1",
+							"THUMBNAIL": "썸네일 URL1",
+							"TITLE": "아이템 타이틀1",
+							"ARTIST": "아티스트1",
+							"GENRE": "장르1"
+						}
+					]
+				}
+			}
+		]
+	},
+
+	"RESULT": {
+		"RES_CODE": "0000",
+		"RES_MSG": "OK",
+		"DATA": [
+			{
+				"TYPE": "SINGLE",
+				"ID": "싱글 리스트의 ID",
+				"TITLE": "싱글 리스트의 타이틀",
+				"TOTAL_NUM_ITEM": 10,
+				"ITEM_INFO": [
+					{
+						"ID": "아이템 ID1",
+						"THUMBNAIL": "썸네일 URL",
+						"TITLE": "아이템 타이틀",
+						"ARTIST": "아티스트",
+						"GENRE": "장르"
+					}
+				]
+			}
+		]
+	},
+
+	"RESULT": {
+		"RES_CODE": "0000",
+		"RES_MSG": "OK",
+		"DATA": [
+			{
+				"RECOMMEND_LIST": {
+					"TYPE": "싱글 or 앨범",
+					"ID": "리스트의 ID",
+					"TITLE": "나른할 때 듣기 좋은 곡 or 앨범",
+					"TOTAL_NUM_ITEM": 10,
+					"ITEM_INFO": [
+						{
+							"ID": "아이템 ID1",
+							"THUMBNAIL": "썸네일 URL1",
+							"TITLE": "아이템 타이틀1",
+							"ARTIST": "아티스트1",
+							"GENRE": "장르1"
+						}
+					]
+				}
+			}
+		]
+	},
+
+	"RESULT": {
+		"RES_CODE": "0000",
+		"RES_MSG": "OK",
+		"DATA": [
+			{
+				"ID": "선택한 클래식 앨범1의 ID",
+				"THUMBNAIL": "클래식 앨범1 썸네일 URL",
+				"TITLE": "클래식 앨범1",
+				"TOTAL_NUM_TRACK": 25,
+				"TRACK_ITEM_INFO": [
+					{
+						"ID": "트랙1 아이디",
+						"THUMBNAIL": "트랙1 썸네일 URL",
+						"TITLE": "트랙1 타이틀",
+						"ARTIST": "아티스트1"
+					}
+				]
+			}
+		]
+	}
+}

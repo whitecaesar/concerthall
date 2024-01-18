@@ -1,0 +1,15 @@
+.itemListTitle {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	padding: 12px 15px;
+}
+
+.itemListTitle h4 {
+	font-size: 18px;
+	font-weight: 500;
+}
+
+.itemListTitle .viewAll {
+	color: var(--DarkGrey);
+}

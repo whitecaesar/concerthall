@@ -1,0 +1,13 @@
+.textBanner {
+	border-top: 1px solid var(--borderDark);
+	border-bottom: 1px solid var(--borderDark);
+	margin-bottom: 15px;
+}
+.textBanner a {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 15px;
+	color: var(--mainColor);
+	font-size: 15px;
+}
