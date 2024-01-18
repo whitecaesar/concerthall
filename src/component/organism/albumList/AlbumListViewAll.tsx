@@ -17,7 +17,6 @@ export default function AlbumListViewAll({
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
 
-	console.log("TEST");
 	return (
 		<div className={style.albumListContainer}>
 			<ul className={`${style.albumList} ${style.noScroll}`}>
