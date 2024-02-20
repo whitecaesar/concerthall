@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import style from "./albumItem.module.css";
 import Icon from "@/component/atom/icon/Icon";
-import { TITEM_INFO } from "@/types/itemInfo";
+import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
 
 interface AlbumItemProps {
-	albumInfo: TITEM_INFO;
+	albumInfo: ITEM_INFO_TYPE;
 	onClick?: () => void;
 }
 

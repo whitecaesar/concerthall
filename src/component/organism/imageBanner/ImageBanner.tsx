@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Suspense } from "react";
-import { TIMAGE_BANNER_RES } from "@/services/banner/MainInfoAxios";
+import { TIMAGE_BANNER_RES } from "@/services/main/MainInfoAxios";
 
 export default function ImageBanner({
 	list,

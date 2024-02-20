@@ -4,11 +4,15 @@ import Link from "next/link";
 import LikeButton from "@/component/atom/button/LikeButton";
 import FuncButton from "@/component/atom/button/FuncButton";
 import style from "./singleItem.module.css";
-import { TITEM_INFO } from "@/types/itemInfo";
+import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
 
-export default function SingleItem({ singleInfo }: { singleInfo: TITEM_INFO }) {
+export default function SingleItem({
+	singleInfo,
+}: {
+	singleInfo: ITEM_INFO_TYPE;
+}) {
 	return (
-		<div className={style.singleItem} id={singleInfo.ID}>
+		<div className={style.singleItem} id={`${singleInfo.ID}`}>
 			<Link href="">
 				<Image
 					src={singleInfo.THUMBNAIL}

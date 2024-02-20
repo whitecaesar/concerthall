@@ -3,7 +3,7 @@ import SingleListViewAll from "../organism/singleList/SingleListViewAll";
 import PlayButtonGroup from "../molecule/buttonGroup/PlayButtonGroup";
 import { useQuery } from "@tanstack/react-query";
 import {
-	TVIEWALL_LIST_RES,
+	VIEWALL_LIST_TYPE,
 	getViewallAxios,
 } from "@/services/contents/ViewAllAxios";
 
@@ -21,7 +21,7 @@ export default function SingleViewAll() {
 	return (
 		<>
 			<PlayButtonGroup />
-			{data?.VIEWALL_LIST.map((content: TVIEWALL_LIST_RES) => {
+			{data?.VIEWALL_LIST.map((content: VIEWALL_LIST_TYPE) => {
 				return (
 					<>
 						<SingleListViewAll viewAllList={content} />

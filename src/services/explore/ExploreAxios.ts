@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { TRECOMMEND_LIST_RES } from "../banner/MainInfoAxios";
+import { TRECOMMEND_LIST_RES } from "../main/MainInfoAxios";
 
 export type TCATEGORY_RES = {
 	TITLE: string;

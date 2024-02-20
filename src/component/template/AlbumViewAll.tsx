@@ -2,9 +2,10 @@
 import AlbumListViewAll from "../organism/albumList/AlbumListViewAll";
 import { useQuery } from "@tanstack/react-query";
 import {
-	TVIEWALL_LIST_RES,
+	VIEWALL_LIST_TYPE,
 	getViewallAxios,
 } from "@/services/contents/ViewAllAxios";
+import PlayButtonGroup from "../molecule/buttonGroup/PlayButtonGroup";
 
 export default function AlbumViewAll() {
 	const { data } = useQuery({
@@ -15,23 +16,12 @@ export default function AlbumViewAll() {
 		},
 	});
 
-	console.log(data?.VIEWALL_LIST);
-
 	return (
 		<>
-			{data?.VIEWALL_LIST.map((content: TVIEWALL_LIST_RES) => {
-				return (
-					<>
-						<AlbumListViewAll viewAllList={content} />
-					</>
-				);
-			})}
+			<PlayButtonGroup />
+			{data?.VIEWALL_LIST.map((content: VIEWALL_LIST_TYPE, index: number) => (
+				<AlbumListViewAll key={content.ID} viewAllList={content} />
+			))}
 		</>
 	);
-
-	// return (
-	// 	<>
-	// 		<AlbumListViewAll viewAllList={data?.VIEWALL_LIST} />
-	// 	</>
-	// );
 }

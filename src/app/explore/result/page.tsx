@@ -7,7 +7,7 @@ export default function ExploreResultPage() {
 		<>
 			<SubTitleProvider>
 				<div className="exploreResultPage">
-					<SingleList showTitle={true} noScroll={false} />
+					{/* <SingleList showTitle={true} noScroll={false} recommendList={{}} /> */}
 				</div>
 			</SubTitleProvider>
 		</>

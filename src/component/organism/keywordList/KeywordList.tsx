@@ -7,12 +7,16 @@ import keywordData from "@/data/keywordinfo.json";
 import { useRouter } from "next/navigation";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
 
-export default function KeywordList({ title = "GENRE" }) {
+export default function KeywordList({ title = "GENRE", ID = 1 }) {
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
 	return (
 		<div className={style.keywordListWrap}>
-			<ItemListTitle.ViewAll isPresent={false} text={title} />
+			<ItemListTitle.ViewAll
+				isPresent={false}
+				text={title}
+				href={`/detail/${ID}`}
+			/>
 			<ul className={style.keywordList}>
 				{keywordData.KEYWORD.map((keyword) => (
 					<li key={keyword.key}>

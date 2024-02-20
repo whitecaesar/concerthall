@@ -6,7 +6,7 @@ import React, { useContext } from "react";
 
 export default function Test() {
 	const context = useContext(SubTitleContext);
-	context?.setSubTitle(`김이박최정 - ${usePathname()}`);
+	// context?.setSubTitle(`김이박최정 - ${usePathname()}`);
 	return (
 		<>
 			<div>{context.subTitle}</div>

@@ -4,13 +4,10 @@ import ImageBanner from "../organism/imageBanner/ImageBanner";
 import SingleList from "../organism/singleList/SingleList";
 import AlbumList from "../organism/albumList/AlbumList";
 import { useQuery } from "@tanstack/react-query";
-import {
-	TRECOMMEND_LIST_RES,
-	getBannersAxios,
-} from "@/services/banner/MainInfoAxios";
+import { getBannersAxios } from "@/services/main/MainInfoAxios";
+import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
 
 export default function Main() {
-	// 여기1
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
 		queryFn: () => {
@@ -18,14 +15,14 @@ export default function Main() {
 			return list;
 		},
 	});
-	console.log(data?.RECOMMEND_LIST);
 
 	return (
 		<>
 			<ImageBanner list={data?.IMG_BANNER} isFetched={isFetched} />
-			<TextBanner list={data?.TXT_BANNER} isFetched={isFetched} />
+			<TextBanner banner={data?.TXT_BANNER[0]} isFetched={isFetched} />
+			{/* 나중에 [0]빼야함 */}
 
-			{data?.RECOMMEND_LIST.map((content: TRECOMMEND_LIST_RES) => {
+			{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
 				console.log(content);
 				return (
 					<>

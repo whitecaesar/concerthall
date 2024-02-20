@@ -6,7 +6,10 @@ export default function Explore() {
 	return (
 		<>
 			<KeywordList />
-			<SingleList showTitle={true} />
+			{/* <SingleList
+				showTitle={true}
+				recommendList={{}}
+			/> */}
 		</>
 	);
 }

@@ -1,31 +1,36 @@
+// 앨범 리스트들
+
 "use client";
 import React, { useContext } from "react";
 import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
 import AlbumItem from "@/component/molecule/albumItem/AlbumItem";
-import { TRECOMMEND_LIST_RES } from "@/services/banner/MainInfoAxios";
-import style from "./albumList.module.css";
 import { useRouter } from "next/navigation";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
-import { TITEM_INFO } from "@/types/itemInfo";
+import style from "./albumList.module.css";
+import {
+	ITEM_INFO_TYPE,
+	VIEWALL_LIST_TYPE,
+} from "@/services/contents/ViewAllAxios";
 
 interface AlbumListProps {
-	recommendList: TRECOMMEND_LIST_RES;
+	recommendList: VIEWALL_LIST_TYPE;
 	showTitle: boolean;
 	noScroll?: boolean;
+	viewAllLink?: string;
 }
 
-export default function AlbumList({
-	recommendList: { TYPE = "ALBUM", ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO },
+const AlbumList = ({
+	recommendList: { ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO },
 	showTitle,
 	noScroll = false,
-}: AlbumListProps) {
+}: AlbumListProps) => {
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
-
 	const listType = noScroll
 		? `${style.albumList} ${style.noScroll}`
 		: style.albumList;
 
+	console.log("props--> ", ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO, "props ");
 	return (
 		<div className={style.albumListContainer}>
 			{showTitle && TITLE && (
@@ -33,10 +38,15 @@ export default function AlbumList({
 					isPresent={true}
 					text={TITLE}
 					count={TOTAL_NUM_ITEM}
+					href={`/detail/album/${ID}`}
+					onClick={() => {
+						setSubTitle(TITLE);
+						//router.push(`/detail/album/${ID}`);
+					}}
 				/>
 			)}
 			<ul className={listType}>
-				{ITEM_INFO.map((item: TITEM_INFO) => (
+				{ITEM_INFO.map((item: ITEM_INFO_TYPE) => (
 					<li key={item.ID}>
 						<AlbumItem
 							albumInfo={item}
@@ -50,4 +60,6 @@ export default function AlbumList({
 			</ul>
 		</div>
 	);
-}
+};
+
+export default AlbumList;

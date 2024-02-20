@@ -1,14 +1,16 @@
 import React from "react";
 import style from "./itemListTitle.module.css";
 import Link from "next/link";
+import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
 
 interface ItemTitleProps {
 	text?: string;
 	count?: number;
 	children?: React.ReactNode;
+	onClick?: () => void;
 }
 
-const ItemListTitle = ({ text, count, children }: ItemTitleProps) => {
+const ItemListTitle = ({ text, count, children, onClick }: ItemTitleProps) => {
 	return (
 		<div className={style.itemListTitle}>
 			<h4>
@@ -24,16 +26,22 @@ interface ViewAllProps {
 	isPresent: boolean;
 	text: string;
 	count?: number;
+	// recommendList?: {
+	// 	idRecom: string;
+	// 	ID: string;
+	// 	TYPE: string;
+	// 	TITLE: string;
+	// 	TOTAL_NUM_ITEM: number;
+	// 	ITEM_INFO: ITEM_INFO_TYPE[];
+	// };
 	href?: string;
-	listId?: string;
+	onClick?: () => void;
 }
 
-const ViewAll = ({ isPresent, text, count, listId }: ViewAllProps) => {
-	const href = listId ? `/[detail]/${listId}` : "/기본경로";
-
+const ViewAll = ({ isPresent, text, count, href, onClick }: ViewAllProps) => {
 	return isPresent ? (
-		<ItemListTitle text={text} count={count}>
-			<Link href={href} className={style.viewAll}>
+		<ItemListTitle text={text} count={count} onClick={onClick}>
+			<Link href={href ? href : "/"} className={style.viewAll}>
 				View All
 			</Link>
 		</ItemListTitle>
