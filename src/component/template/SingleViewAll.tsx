@@ -21,13 +21,15 @@ export default function SingleViewAll() {
 	return (
 		<>
 			<PlayButtonGroup />
-			{data?.VIEWALL_LIST.map((content: VIEWALL_LIST_TYPE) => {
-				return (
-					<>
-						<SingleListViewAll viewAllList={content} />
-					</>
-				);
-			})}
+			{data?.VIEWALL_LIST.filter((item) => item.ID === 1).map(
+				(content: VIEWALL_LIST_TYPE) => {
+					return (
+						<>
+							<SingleListViewAll viewAllList={content} />
+						</>
+					);
+				}
+			)}
 		</>
 	);
 }

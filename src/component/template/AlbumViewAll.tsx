@@ -7,6 +7,8 @@ import {
 } from "@/services/contents/ViewAllAxios";
 import PlayButtonGroup from "../molecule/buttonGroup/PlayButtonGroup";
 import SubTitleProvider from "@/providers/SubTitleProvider";
+import Dropdown from "../atom/dropdown/dropdown";
+import { dropdownOptions } from "@/interface/DropdownType";
 
 export default function AlbumViewAll() {
 	const { data } = useQuery({
@@ -20,10 +22,13 @@ export default function AlbumViewAll() {
 	return (
 		<>
 			<SubTitleProvider>
-			{/* <PlayButtonGroup /> */}
-			{data?.VIEWALL_LIST.filter(item=>item.ID === 0).map((content: VIEWALL_LIST_TYPE, index: number) => (
-				<AlbumListViewAll key={content.ID} viewAllList={content} />
-			))}
+				{/* <PlayButtonGroup /> */}
+				<Dropdown options={dropdownOptions} />
+				{data?.VIEWALL_LIST.filter((item) => item.ID === 0).map(
+					(content: VIEWALL_LIST_TYPE, index: number) => (
+						<AlbumListViewAll key={content.ID} viewAllList={content} />
+					)
+				)}
 			</SubTitleProvider>
 		</>
 	);

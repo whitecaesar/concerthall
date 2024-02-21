@@ -1,12 +1,14 @@
 import SubTitleProvider from "@/providers/SubTitleProvider";
-import AlbumDetail from "@/component/template/AlbumDetail";
+import SingleViewAll from "@/component/template/SingleViewAll";
 
-export default function page() {
+export default function ViewAllSingle() {
 	return (
-		<SubTitleProvider>
-			<div className="detailPage">
-				<AlbumDetail />
-			</div>
-		</SubTitleProvider>
+		<>
+			<SubTitleProvider>
+				<div className="datailSinglePage">
+					<SingleViewAll />
+				</div>
+			</SubTitleProvider>
+		</>
 	);
 }
