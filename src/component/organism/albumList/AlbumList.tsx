@@ -40,6 +40,7 @@ const AlbumList = ({
 					count={TOTAL_NUM_ITEM}
 					href={`/detail/album/${ID}`}
 					onClick={() => {
+						console.log('click1');
 						setSubTitle(TITLE);
 						//router.push(`/detail/album/${ID}`);
 					}}

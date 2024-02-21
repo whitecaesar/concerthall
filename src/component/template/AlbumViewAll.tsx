@@ -6,6 +6,7 @@ import {
 	getViewallAxios,
 } from "@/services/contents/ViewAllAxios";
 import PlayButtonGroup from "../molecule/buttonGroup/PlayButtonGroup";
+import SubTitleProvider from "@/providers/SubTitleProvider";
 
 export default function AlbumViewAll() {
 	const { data } = useQuery({
@@ -18,10 +19,12 @@ export default function AlbumViewAll() {
 
 	return (
 		<>
-			<PlayButtonGroup />
-			{data?.VIEWALL_LIST.map((content: VIEWALL_LIST_TYPE, index: number) => (
+			<SubTitleProvider>
+			{/* <PlayButtonGroup /> */}
+			{data?.VIEWALL_LIST.filter(item=>item.ID === 0).map((content: VIEWALL_LIST_TYPE, index: number) => (
 				<AlbumListViewAll key={content.ID} viewAllList={content} />
 			))}
+			</SubTitleProvider>
 		</>
 	);
 }

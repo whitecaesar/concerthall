@@ -7,10 +7,9 @@ interface ItemTitleProps {
 	text?: string;
 	count?: number;
 	children?: React.ReactNode;
-	onClick?: () => void;
 }
 
-const ItemListTitle = ({ text, count, children, onClick }: ItemTitleProps) => {
+const ItemListTitle = ({ text, count, children}: ItemTitleProps) => {
 	return (
 		<div className={style.itemListTitle}>
 			<h4>
@@ -40,8 +39,8 @@ interface ViewAllProps {
 
 const ViewAll = ({ isPresent, text, count, href, onClick }: ViewAllProps) => {
 	return isPresent ? (
-		<ItemListTitle text={text} count={count} onClick={onClick}>
-			<Link href={href ? href : "/"} className={style.viewAll}>
+		<ItemListTitle text={text} count={count} >
+			<Link href={href ? href : "/"} className={style.viewAll} onClick={onClick}>
 				View All
 			</Link>
 		</ItemListTitle>
