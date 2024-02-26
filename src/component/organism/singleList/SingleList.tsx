@@ -1,6 +1,5 @@
 // 단일 컨텐츠 리스트
 
-
 import React, { useContext } from "react";
 import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
 import SingleItem from "@/component/molecule/singleItem/SingleItem";
@@ -24,7 +23,7 @@ export default function SingleList({
 }: SingleListProps) {
 	const { setSubTitle } = useContext(SubTitleContext);
 	return (
-		<div style={{ paddingBottom: "5px" }}>
+		<div style={{ paddingBottom: "10px" }}>
 			<ItemListTitle.ViewAll
 				isPresent={true}
 				text={TITLE}

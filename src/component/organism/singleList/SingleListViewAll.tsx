@@ -17,7 +17,7 @@ export default function SingleListViewAll({
 	viewAllList: { ITEM_INFO },
 }: SingleListViewAllProps) {
 	return (
-		<div style={{ paddingBottom: "5px" }}>
+		<div style={{ paddingBottom: "10px" }}>
 			<ul className={`${style.singleList} ${style.noScroll}`}>
 				{ITEM_INFO.map((item: ITEM_INFO_TYPE) => (
 					<li key={item.ID}>

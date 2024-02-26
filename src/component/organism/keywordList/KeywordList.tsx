@@ -6,6 +6,13 @@ import style from "./keywordList.module.css";
 import keywordData from "@/data/keywordinfo.json";
 import { useRouter } from "next/navigation";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
+import { TCATEGORY_RES } from "@/services/explore/ExploreAxios";
+
+
+interface CategoryProps {
+	categoryList: TCATEGORY_RES;
+	onClick?: () => void;
+}
 
 export default function KeywordList({ title = "GENRE", ID = 1 }) {
 	const router = useRouter();

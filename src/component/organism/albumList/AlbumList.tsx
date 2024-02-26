@@ -26,13 +26,10 @@ const AlbumList = ({
 }: AlbumListProps) => {
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
-	const listType = noScroll
-		? `${style.albumList} ${style.noScroll}`
-		: style.albumList;
 
 	console.log("props--> ", ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO, "props ");
 	return (
-		<div className={style.albumListContainer}>
+		<div className={style.albumListContainer} style={{ paddingBottom: "10px" }}>
 			{showTitle && TITLE && (
 				<ItemListTitle.ViewAll
 					isPresent={true}
@@ -40,13 +37,13 @@ const AlbumList = ({
 					count={TOTAL_NUM_ITEM}
 					href={`/detail/album/${ID}`}
 					onClick={() => {
-						console.log('click1');
+						console.log("click1");
 						setSubTitle(TITLE);
 						//router.push(`/detail/album/${ID}`);
 					}}
 				/>
 			)}
-			<ul className={listType}>
+			<ul className={style.albumList}>
 				{ITEM_INFO.map((item: ITEM_INFO_TYPE) => (
 					<li key={item.ID}>
 						<AlbumItem
