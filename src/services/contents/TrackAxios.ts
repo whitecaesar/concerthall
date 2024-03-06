@@ -15,14 +15,14 @@ export type TRACK_LIST_RESPONSE = {
 	TRACK_LIST: TRACK_LIST_RES[];
 };
 
-export function getTrackAxios(): Promise<TRACK_LIST_RESPONSE | void> {
-	return axios
-		.get("http://cip.ontown.co.kr/hch/{idAlbum}/contents")
-		.then((response: AxiosResponse<TRACK_LIST_RESPONSE>) => {
-			if (response.status === 200) {
-				return response.data;
-			} else {
-				throw new Error(`에러입니다.`);
-			}
-		});
+export async function getTrackAxios(): Promise<TRACK_LIST_RESPONSE> {
+	const response: AxiosResponse<TRACK_LIST_RESPONSE> = await axios.get(
+		"http://cip.ontown.co.kr/hch/{idAlbum}/contents"
+	);
+
+	if (response.status === 200) {
+		return response.data;
+	} else {
+		throw new Error(`에러입니다. (status: ${response.status})`);
+	}
 }

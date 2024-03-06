@@ -3,35 +3,33 @@ import React, { useContext } from "react";
 import Keyword from "@/component/atom/keyword/Keyword";
 import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
 import style from "./keywordList.module.css";
-import keywordData from "@/data/keywordinfo.json";
 import { useRouter } from "next/navigation";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
-import { TCATEGORY_RES } from "@/services/explore/ExploreAxios";
-
+import { TCATEGORY_RES, TKEYWORD_INFO } from "@/services/explore/ExploreAxios";
 
 interface CategoryProps {
 	categoryList: TCATEGORY_RES;
 	onClick?: () => void;
 }
 
-export default function KeywordList({ title = "GENRE", ID = 1 }) {
+const KeywordList = ({ categoryList: { TITLE, KEWORD } }: CategoryProps) => {
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
 	return (
 		<div className={style.keywordListWrap}>
 			<ItemListTitle.ViewAll
 				isPresent={false}
-				text={title}
-				href={`/detail/${ID}`}
+				text={TITLE}
+				href={`/detail/${TITLE}`}
 			/>
 			<ul className={style.keywordList}>
-				{keywordData.KEYWORD.map((keyword) => (
-					<li key={keyword.key}>
+				{KEWORD.map((keyword: TKEYWORD_INFO) => (
+					<li key={keyword.KEY}>
 						<Keyword
-							KeywordText={keyword.children}
+							keywordInfo={keyword}
 							onClick={() => {
-								setSubTitle(keyword.children);
-								router.push(`/explore/result?keyword=${keyword.children}`);
+								setSubTitle(keyword.NAME);
+								router.push(`/explore/result?keyword=${keyword.NAME}`);
 							}}
 						/>
 					</li>
@@ -39,4 +37,6 @@ export default function KeywordList({ title = "GENRE", ID = 1 }) {
 			</ul>
 		</div>
 	);
-}
+};
+
+export default KeywordList;

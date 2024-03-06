@@ -12,4 +12,5 @@
 
 .itemListTitle .viewAll {
 	color: var(--DarkGrey);
+	min-width: 55px;
 }

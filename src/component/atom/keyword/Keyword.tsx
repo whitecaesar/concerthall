@@ -1,12 +1,13 @@
 "use client";
+import { TKEYWORD_INFO } from "@/services/explore/ExploreAxios";
 import React, { useState } from "react";
 
 interface KeywordProps {
-	KeywordText: string;
+	keywordInfo: TKEYWORD_INFO;
 	onClick: () => void;
 }
 
-const Keyword = ({ KeywordText, onClick }: KeywordProps) => {
+const Keyword = ({ keywordInfo, onClick }: KeywordProps) => {
 	const [isActive, setIsActive] = useState(false);
 
 	const keywordClick = () => {
@@ -16,11 +17,8 @@ const Keyword = ({ KeywordText, onClick }: KeywordProps) => {
 
 	return (
 		<div>
-			<button
-				className={`keyword ${isActive ? "active" : ""}`}
-				onClick={keywordClick}
-			>
-				{KeywordText}
+			<button className="keyword" onClick={keywordClick}>
+				{keywordInfo.NAME}
 			</button>
 			<style jsx>{`
 				.keyword {
@@ -33,8 +31,14 @@ const Keyword = ({ KeywordText, onClick }: KeywordProps) => {
 					height: 35px;
 					padding: 0 15px;
 					white-space: nowrap;
+					&:active,
+					&:hover {
+						background: var(--mainColor);
+						transition: all 0.25s;
+					}
 				}
-				.keyword.active {
+				.keyword:active,
+				.keyword:hover {
 					background: var(--mainColor);
 				}
 			`}</style>

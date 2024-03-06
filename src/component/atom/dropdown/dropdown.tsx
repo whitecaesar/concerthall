@@ -6,10 +6,9 @@ import Icon from "../icon/Icon";
 import style from "./dropdown.module.css";
 
 function Dropdown({ options }: DropdownProps) {
-	
 	const [isOpen, setIsOpen] = useState(false); // 드롭다운이 열렸는지 여부
 	const [selectedOption, setSelectedOption] = useState<string>( // 선택된 옵션
-		options.length > 0 ? options[0].value : ""	//초기값으로는 options 배열의 첫 번째 요소를 사용
+		options.length > 0 ? options[0].value : "" //초기값으로는 options 배열의 첫 번째 요소를 사용
 	);
 	const [data, setData] = useState<string[]>([]); // 드롭다운 데이터
 
@@ -33,7 +32,6 @@ function Dropdown({ options }: DropdownProps) {
 	useEffect(() => {
 		// 데이터 로딩 로직 추가해야 함
 	}, []);
-
 
 	return (
 		<div className={style.dropdown}>

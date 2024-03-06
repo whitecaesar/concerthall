@@ -25,7 +25,7 @@ export type TVIEWALL_LIST_RESPONSE = {
 };
 
 export async function getViewallAxios(): Promise<TVIEWALL_LIST_RESPONSE | void> {
-	const response = await axios.get(
+	const response: AxiosResponse<TVIEWALL_LIST_RESPONSE> = await axios.get(
 		"http://cip.ontown.co.kr/hch/{idRecom}/recomDetail.json"
 	);
 	if (response.status === 200) {
