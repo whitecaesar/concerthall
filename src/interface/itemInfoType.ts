@@ -1,4 +1,5 @@
 export interface ItemInfoType {
+	playUrl?: string | undefined;
 	id: string;
 	singleThumbnail: string;
 	albumThumbnail: string;

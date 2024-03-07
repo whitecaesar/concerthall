@@ -1,22 +1,20 @@
+// FuncButtonGroup.tsx
 "use client";
-
 import React from "react";
-import Button from "@/component/atom/button/Button";
 import LikeButton from "@/component/atom/button/LikeButton";
+import Button from "@/component/atom/button/Button";
 import FuncButton from "@/component/atom/button/FuncButton";
 
 const FuncButtonGroup = () => {
 	return (
-		<>
-			<div className="FuncButtonGroup">
-				<LikeButton />
-				<Button
-					type="button"
-					icon="addFolder"
-					onClick={() => console.log("플레이리스트 추가")}
-				/>
-				<FuncButton />
-			</div>
+		<div className="FuncButtonGroup">
+			<LikeButton />
+			<Button
+				type="button"
+				icon="addFolder"
+				onClick={() => console.log("Adding to playlist")}
+			/>
+			<FuncButton />
 			<style jsx>{`
 				.FuncButtonGroup {
 					display: flex;
@@ -30,7 +28,7 @@ const FuncButtonGroup = () => {
 					}
 				}
 			`}</style>
-		</>
+		</div>
 	);
 };
 

@@ -31,7 +31,7 @@ export default function AlbumListViewAll({
 							albumInfo={item}
 							onClick={() => {
 								setSubTitle(item.TITLE);
-								router.push(`/detail/${item.ID}`);
+								router.push(`/detail/album/track/${item.ID}`);
 							}}
 						/>
 					</li>

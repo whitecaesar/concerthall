@@ -5,7 +5,6 @@ import SingleList from "../organism/singleList/SingleList";
 import {
 	getExploreAxios,
 	TCATEGORY_RES,
-	//VIEWALL_LIST_TYPE, // 불러오는 타입들
 	CATEGORY_LIST_RESPONSE, // getExploreAxios 함수의 반환 타입
 } from "@/services/explore/ExploreAxios";
 import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";

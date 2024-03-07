@@ -1,24 +1,27 @@
+// DetailInfo.tsx
 "use client";
-
 import React from "react";
 import Image from "next/image";
 import RoundPlayButton from "@/component/atom/button/RoundPlayButton";
 import RoundShuffleButton from "@/component/atom/button/RoundSuffleButton";
-import { ItemInfoType } from "@/interface/itemInfoType";
+import { ALBUM_DETAIL_TYPE } from "@/services/contents/TrackAxios";
 import style from "./detailInfo.module.css";
 
-export default function DetailInfo(props: { detailInfo: ItemInfoType }) {
-	const { detailInfo } = props;
-	const isLongTitle = detailInfo.title.length > 20;
+interface DetailInfoProps {
+	detailInfo: ALBUM_DETAIL_TYPE;
+}
+
+const DetailInfo = ({ detailInfo }: DetailInfoProps) => {
+	const isLongTitle = detailInfo.TITLE.length > 20;
 
 	return (
 		<div className={style.albumDetailInfo}>
 			<Image
-				src={detailInfo.albumDetailThumbnail}
-				alt={detailInfo.title}
+				src={detailInfo.THUMBNAIL}
+				alt={detailInfo.TITLE}
 				width={720}
 				height={611}
-				priority={true}
+				priority
 				className={style.detailThumbnail}
 			/>
 			<div className={style.bottomInfo}>
@@ -27,7 +30,7 @@ export default function DetailInfo(props: { detailInfo: ItemInfoType }) {
 						isLongTitle ? style.longTitle : ""
 					}`}
 				>
-					<p>{detailInfo.title}</p>
+					<p>{detailInfo.TITLE}</p>
 				</div>
 				<div className={style.buttonGroup}>
 					<RoundPlayButton />
@@ -36,4 +39,6 @@ export default function DetailInfo(props: { detailInfo: ItemInfoType }) {
 			</div>
 		</div>
 	);
-}
+};
+
+export default DetailInfo;
