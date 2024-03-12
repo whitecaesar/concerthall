@@ -15,7 +15,7 @@ interface AlbumItemProps {
 const AlbumItem = ({ albumInfo, onClick }: AlbumItemProps) => {
 	return (
 		<div className={style.albumItem} onClick={onClick}>
-			<Link href={`/detail/${albumInfo.ID}`}>
+			<Link href={`/detail/album/track/${albumInfo.ID}`}>
 				<Image
 					src={albumInfo.THUMBNAIL}
 					alt={albumInfo.TITLE}

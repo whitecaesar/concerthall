@@ -1,10 +1,11 @@
 .albumList {
 	display: flex;
 	width: 100vw;
-	overflow-y: auto;
+	overflow-x: auto;
 	padding: 0 15px 15px;
 	gap: 10px;
 	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
 }
 .albumList li {
 	width: 130px;

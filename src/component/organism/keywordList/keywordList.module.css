@@ -10,5 +10,6 @@
 		overflow-y: hidden;
 		max-height: 65px;
 		padding: 0 15px 10px;
+		-webkit-overflow-scrolling: touch;
 	}
 }
