@@ -14,7 +14,8 @@ const FuncButtonGroup = () => {
 				icon="addFolder"
 				onClick={() => console.log("Adding to playlist")}
 			/>
-			<FuncButton />
+			<FuncButton funcClick={() => {}} />
+			{/* 기능 로직 넣으세요. */}
 			<style jsx>{`
 				.FuncButtonGroup {
 					display: flex;

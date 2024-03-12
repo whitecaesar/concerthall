@@ -1,4 +1,4 @@
-// DetailInfo.tsx
+// DetailInfo.tsx 앨범 클릭 > 트랙 페이지 상세
 "use client";
 import React from "react";
 import Image from "next/image";

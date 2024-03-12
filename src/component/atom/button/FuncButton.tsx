@@ -1,14 +1,11 @@
-import React from "react";
-
-const FuncButton = () => {
-	const funcClick = () => {
-		// 버튼 클릭 시 실행할 로직
-		console.log("음악 재생");
-	};
-
+const FuncButton = (props: { funcClick: () => void }) => {
 	return (
 		<>
-			<button type="button" className="funcBtn" onClick={funcClick}></button>
+			<button
+				type="button"
+				className="funcBtn"
+				onClick={props.funcClick}
+			></button>
 			<style jsx>{`
 				.funcBtn {
 					display: inline-block;
