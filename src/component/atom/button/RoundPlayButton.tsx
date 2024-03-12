@@ -1,44 +1,48 @@
-"use client";
+import React from "react";
+
 const RoundPlayButton = () => {
 	const playClick = () => {
 		// 버튼 클릭 시 실행할 로직
 
-		const atistItem: { key: string; value: string }[] = [
-			{ key: "artist_id", value: "test1234" },
-			{ key: "artist_name", value: "artist" },
-			{
-				key: "thumbnail",
-				value: "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
-			},
-		];
+		const artistItem = {
+			artist_id: "test1234",
+			artist_name: "artist",
+			thumbnail: "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
+		};
 
-		const trackData: { codec: string } = {
+		const WebStreamArtistItem: any[] = [artistItem];
+
+		const trackItem = {
+			track_id: "test1234",
+			title: "test_track",
+			thumbnail: "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
+			url: "http://movie.cinehotel.co.kr/movie/111111.mkv",
+			playable: "0000",
+			media_type: "video",
+			album_id: "album_1234",
+			album_name: "test_album",
+			artist: WebStreamArtistItem,
+			duration: "",
+			resolution: "",
 			codec: "hevc/pcm_si6le",
 		};
 
-		let data: string = JSON.stringify(trackData);
+		const WebStreamTrackItem: any[] = [trackItem];
 
-		const trackItem: { key: string; value: any }[] = [
-			{ key: "track_id", value: "test1234" },
-			{ key: "title", value: "test_track" },
-			{
-				key: "thunbnail",
-				value: "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
-			},
-			{ key: "url", value: "http://movie.cinehotel.co.kr/movie/111111.mkv" },
-			{ key: "playable", value: "0000" },
-			{ key: "media_type", value: "video" },
-			{ key: "album_id", value: "album_1234" },
-			{ key: "album_name", value: "test_album" },
-			{ key: "artist", value: atistItem },
-			{ key: "data", value: data },
-		];
-		console.log(trackItem);
+		const playData = {
+			webstreamtrackitem: WebStreamTrackItem,
+		};
 
-		(window as any).HifiRose.webStreamTrackClick(trackItem, 1);
+		let data: string = JSON.stringify(playData);
+		console.log(data);
+
+		//		const jsonArray = JSON.parse(data);
+		//		console.log(jsonArray);
+
+		(window as any).HifiRose.webStreamTrackClick(data);
 		//(window as any).HifiRose.webStreamTrackClick();
 
-		console.log("트랙 처음부터 재생");
+		//console.log("트랙 처음부터 재생");
 	};
 
 	return (
