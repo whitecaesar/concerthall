@@ -1,3 +1,5 @@
+"use client";
+
 const FuncButton = (props: { funcClick: () => void }) => {
 	return (
 		<>
