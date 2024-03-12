@@ -28,7 +28,8 @@ export default function SingleItem({
 				<p className={style.artist}>{singleInfo.ARTIST}</p>
 				<div className={style.buttonGroup}>
 					<LikeButton />
-					<FuncButton />
+					<FuncButton funcClick={() => {}} />
+					{/* 기능 로직 넣으세요. */}
 				</div>
 			</div>
 		</div>
