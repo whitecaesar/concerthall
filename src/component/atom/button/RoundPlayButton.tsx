@@ -15,6 +15,7 @@ const RoundPlayButton = () => {
 		const trackItem = {
 			track_id : "test1234",
 			title : "test_track",
+			album_thumbnail : "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
 			thumbnail : "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
 			url : "http://movie.cinehotel.co.kr/movie/111111.mkv",
 			playable : "0000",

@@ -28,8 +28,7 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 			</Link>
 			<div className={style.buttonGroup}>
 				<LikeButton />
-				<FuncButton funcClick={() => {}} />
-				{/* 기능 로직 넣으세요. */}
+				<FuncButton method="track"/>
 			</div>
 		</div>
 	);
