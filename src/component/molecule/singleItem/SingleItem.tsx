@@ -6,6 +6,7 @@ import FuncButton from "@/component/atom/button/FuncButton";
 import style from "./singleItem.module.css";
 import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
 
+
 export default function SingleItem({
 	singleInfo,
 }: {
@@ -28,7 +29,7 @@ export default function SingleItem({
 				<p className={style.artist}>{singleInfo.ARTIST}</p>
 				<div className={style.buttonGroup}>
 					<LikeButton />
-					<FuncButton funcClick={() => {}} />
+					<FuncButton method="single"/>
 					{/* 기능 로직 넣으세요. */}
 				</div>
 			</div>
