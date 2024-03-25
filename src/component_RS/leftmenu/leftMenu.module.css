@@ -1,16 +1,26 @@
-.leftMenu {
+.leftMain {
 	height: 100vh;
-	width: 300px;
+	width: 50px;
 	padding: 0;
 	position: fixed;
 	left: 0;
 	top: 0;
 }
-.leftMenu ul li {
+.leftMain ul li {
 	width: 100%;
 	transition: all 0.4s;
 }
 
-.leftMenu ul li[class="active"] {
+.leftMain ul li[class="active"] {
 	background: var(--mainColor);
+}
+
+.leftSub {
+	background: #ddd;
+	height: 100vh;
+	width: 200px;
+	padding: 0;
+	position: fixed;
+	left: 50px;
+	top: 0;
 }

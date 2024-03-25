@@ -1,33 +1,45 @@
+// "use client";
+// import { useMemo, useEffect } from "react";
+// import { usePathname } from "next/navigation";
+// import LeftMainNav from "./LeftMainNav";
+// import LeftSubNav from "./LeftSubNav";
+
+// export default function LeftMenu() {
+// 	const path = usePathname();
+// 	const ynMainNav = useMemo(
+// 		() => path === "/RS/my" || path === "/RS/explore" || path === "/RS/main",
+// 		[path]
+// 	);
+
+// 	useEffect(() => {
+// 		// path 변수가 변경될 때 특정 작업을 수행
+// 	}, [path]);
+
+// 	//return <>{ynMainNav ? <LeftMainNav /> : <LeftSubNav title="타이틀" />}</>;
+// 	return (
+// 		<>
+// 			<LeftMainNav /> <LeftSubNav title="타이틀" />
+// 		</>
+// 	);
+// }
+// "use client"를 사용하여 클라이언트 측에서만 실행되게 함
 "use client";
-
+import { useMemo, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
-import style from "./leftMenu.module.css";
+import LeftMainNav from "./LeftMainNav";
+import LeftSubNav from "./LeftSubNav";
 
-export const LeftMenu = () => {
-	const currentRoute = usePathname();
+export default function LeftMenu() {
+	const path = usePathname();
+
+	useEffect(() => {
+		// 만약 경로 변경 시 수행해야 할 작업이 있다면 여기에 구현
+	}, [path]);
 
 	return (
-		<nav className={style.leftMenu}>
-			<ul>
-				<li
-					className={(style.link, currentRoute === "/RS/main" ? "active" : "")}
-				>
-					<Link href="/RS/main">홈</Link>
-				</li>
-				<li
-					className={
-						(style.link, currentRoute === "/RS/explore" ? "active" : "")
-					}
-				>
-					<Link href="/RS/explore">탐색</Link>
-				</li>
-				<li className={(style.link, currentRoute === "/RS/my" ? "active" : "")}>
-					<Link href="/RS/my">my</Link>
-				</li>
-			</ul>
-		</nav>
+		<>
+			<LeftMainNav />
+			<LeftSubNav title="타이틀" />
+		</>
 	);
-};
-
-export default LeftMenu;
+}
