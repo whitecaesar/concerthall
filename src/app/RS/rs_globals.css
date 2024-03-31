@@ -198,7 +198,7 @@ button {
 	--card-rgb: 180, 185, 188;
 	--card-border-rgb: 131, 134, 135;
 
-	--mainColor: #b18658;
+	--mainColor:/* #b18658;*/ #ac8357;
 	--mainColorLight: #c39665;
 	--borderDark: #242424;
 	--DarkGrey: #666;
@@ -241,6 +241,7 @@ button {
 ::-webkit-scrollbar {
 	width: 7px;
 	height: 7px;
+	display: none;
 }
 
 ::-webkit-scrollbar-track {
@@ -278,8 +279,8 @@ a {
 
 nav {
 	background: #000;
-	height: 55px;
-	padding: 15px;
+	height: 0;
+	padding: 0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -291,6 +292,58 @@ nav {
 /* .rs-wrap {
 } */
 
-[class^="leftMenu"] + div {
+/* [class^="leftMenu"] + div {
 	padding-left: 320px;
+} */
+#nav {
+	display: none;
+}
+
+[class*="leftMain"] + [class^="rs-container"] {
+	padding-left: 80px;
+	transition: all 0.35s;
+}
+
+[class*="leftSub"] + [class^="rs-container"] {
+	padding-left: 425px;
+	transition: all 0.35s;
+}
+.rs-container {
+	position: relative;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 100dvw;
+	height: 100dvh;
+	background: #000;
+	z-index: 9;
+}
+
+.rs-container div[class$="Page"] {
+	padding: 30px;
+}
+
+nav[class*="subHide"] + [class*="leftSub"] + .rs-container {
+	padding-left: 80px;
+	transition: all 0.35s;
+}
+
+[class*="leftBackButton"] + [class^="rs-container"] {
+	padding-left: 80px;
+	transition: all 0.35s;
+}
+
+@media (min-width: 1920px) {
+	/* RS130 */
+	@media (max-height: 382px) {
+		.rs-container div[class$="Page"] {
+			padding: 20px;
+		}
+	}
+	/* RS201 */
+	@media (max-height: 480px) {
+	}
+	/* RS520 */
+	@media (min-height: 481px) and (max-height: 520px) {
+	}
+	/* ... 기타 다른 높이에 대한 스타일 */
 }

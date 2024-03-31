@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Icon from "@/component/atom/icon/Icon";
+import Icon from "@/component_RS/button/icon/Icon";
 
 interface MenuItemProps {
 	href: string;

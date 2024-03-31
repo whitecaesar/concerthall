@@ -9,7 +9,7 @@ import { Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import style from "./textBanner.module.css";
-import Icon from "@/component/atom/icon/Icon";
+import Icon from "@/component_RS/button/icon/Icon";
 
 export default function TextBanner({
 	banner,

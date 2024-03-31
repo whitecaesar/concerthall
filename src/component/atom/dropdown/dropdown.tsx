@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { DropdownProps } from "@/interface/DropdownType";
-import Icon from "../icon/Icon";
+import Icon from "../../../component_RS/button/icon/Icon";
 import style from "./dropdown.module.css";
 
 function Dropdown({ options }: DropdownProps) {

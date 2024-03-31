@@ -17,11 +17,13 @@ const LikeButton = () => {
 				.likeBtn2,
 				.likeBtn3 {
 					display: inline-block;
-					width: 20px;
-					height: 20px;
-					background-size: contain;
-					background-position: center center;
+					width: 60px;
+					height: 60px;
+					background-size: 35px;
+					background-position: center 15px;
 					background-repeat: no-repeat;
+					background-color: #ac8357;
+					border-radius: 50%;
 				}
 				.likeBtn0 {
 					background-image: url(/images/icon/png/icon_heart_0.png);
@@ -34,6 +36,7 @@ const LikeButton = () => {
 				}
 				.likeBtn3 {
 					background-image: url(/images/icon/png/icon_heart_3.png);
+					background-position: center 17px;
 				}
 			`}</style>
 		</>

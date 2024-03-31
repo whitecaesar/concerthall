@@ -4,7 +4,7 @@
 import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Icon from "@/component/atom/icon/Icon";
+import Icon from "@/component_RS/button/icon/Icon";
 import style from "./albumList.module.css"; // AlbumItem의 스타일을 AlbumList에 포함시켜야 합니다.
 import { useRouter } from "next/navigation";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
@@ -31,11 +31,11 @@ export default function AlbumListViewAll({
 						key={albumInfo.ID}
 						onClick={() => {
 							setSubTitle(albumInfo.TITLE);
-							router.push(`/detail/album/track/${albumInfo.ID}`);
+							router.push(`/RS/detail/album/track/${albumInfo.ID}`);
 						}}
 					>
 						<div className={style.albumItem}>
-							<Link href={`/detail/album/track/${albumInfo.ID}`}>
+							<Link href={`/RS/detail/album/track/${albumInfo.ID}`}>
 								<div>
 									<Image
 										src={albumInfo.THUMBNAIL}

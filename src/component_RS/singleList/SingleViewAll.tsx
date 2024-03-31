@@ -43,7 +43,7 @@ export default function SingleListViewAll({
 						<div className={style.bottomInfo}>
 							<div className={style.buttonGroup}>
 								<LikeButton />
-								<FuncButton funcClick={() => {}} />
+								<FuncButton method={"single"} />
 							</div>
 						</div>
 					</li>

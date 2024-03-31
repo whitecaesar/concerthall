@@ -1,13 +1,10 @@
-import type { Metadata } from "next";
 import "./rs_globals.css";
-import SubTitleProvider from "@/providers/SubTitleProvider";
 import QueryProviders from "@/providers/QueryClientProvider";
-import LeftMenu from "@/component_RS/leftmenu/LeftMenu";
-
-export const metadata: Metadata = {
-	title: "하이파이로즈 웹 서비스",
-	description: "하이파이로즈 웹 서비스",
-};
+import SubTitleProvider from "@/providers/SubTitleProvider";
+import LeftMenu from "@/component_RS/navigation/LeftMenu";
+import TopNav from "@/component_RS/navigation/topNav";
+import { MenuProvider } from "@/providers/RSMenuProvider";
+import { SelectedItemProvider } from "@/providers/SelectedItemProvider";
 
 export default function RootLayout({
 	children,
@@ -15,17 +12,22 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
-			<body>
+		<div>
+			<MenuProvider>
 				<QueryProviders>
 					<SubTitleProvider>
-						<div className="rs-wrap">
-							<LeftMenu />
-							{children}
-						</div>
+						<SelectedItemProvider>
+							<div className="rs-wrap">
+								<LeftMenu />
+								<div className="rs-container">
+									<TopNav />
+									{children}
+								</div>
+							</div>
+						</SelectedItemProvider>
 					</SubTitleProvider>
 				</QueryProviders>
-			</body>
-		</html>
+			</MenuProvider>
+		</div>
 	);
 }

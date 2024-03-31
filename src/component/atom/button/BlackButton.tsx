@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Icon from "../icon/Icon";
+import Icon from "../../../component_RS/button/icon/Icon";
 
 interface ButtonProps {
 	buttonText: string;

@@ -1,0 +1,188 @@
+.leftMain {
+	height: 100vh;
+	width: 80px;
+	padding: 0;
+	position: fixed;
+	left: 0;
+	top: 0;
+	box-shadow: 4px 0 8px rgba(0, 0, 0, 0.5);
+	z-index: 20;
+	transition: all 0.35s;
+	background: linear-gradient(0deg, #323232, #000);
+}
+.leftMain ul {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.leftMain ul li {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	transition: all 0.4s;
+}
+
+.leftMain ul li[class="active"] {
+	background: var(--mainColor);
+}
+.leftMain ul li a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	font-size: 0;
+}
+
+.leftMain ul li .icoHome {
+	background: url(/images/icon/png/ico_RS_home_w.png) center center no-repeat;
+	background-size: 24px;
+}
+.leftMain ul li .icoExplore {
+	background: url(/images/icon/png/ico_RS_explore_w.png) center center no-repeat;
+	background-size: 24px;
+}
+
+.leftMain ul li .icoMy {
+	background: url(/images/icon/png/ico_RS_my_w.png) center center no-repeat;
+	background-size: 24px;
+}
+
+.leftMain.subHide + .leftSub {
+	left: -345px;
+}
+
+.leftSub {
+	background: linear-gradient(0deg, #323232, #000);
+	height: 100vh;
+	width: 345px;
+	padding: 0;
+	position: fixed;
+	left: 80px;
+	top: 0;
+	z-index: 10;
+	overflow-y: auto;
+	transition: all 0.35s ease-out;
+	font-size: 1.6rem;
+}
+
+.leftSub::-webkit-scrollbar {
+	display: none;
+}
+
+.leftSub ul li {
+	display: flex;
+	align-items: center;
+	padding: 0 25px;
+	color: #fff;
+	height: 80px;
+	cursor: pointer;
+}
+.leftSub ul li[class="active"] {
+	background: var(--mainColor);
+}
+
+.leftSub ul > .active {
+	background: var(--mainColor);
+}
+
+.leftSub ul li a {
+	display: flex;
+	align-items: center;
+
+	width: 100%;
+	height: 100%;
+}
+
+.topNav {
+	position: relative;
+	display: flex;
+	align-items: center;
+	padding: 0 30px;
+	height: 80px;
+	background: linear-gradient(0deg, #323232, #232323, #0f0f0f);
+	z-index: 10;
+	color: var(--mainColor);
+	font-size: 1.6rem;
+}
+.logoRose {
+	position: absolute;
+	right: 15px;
+	display: flex;
+	align-items: center;
+}
+.logoRose img {
+	width: 50px !important;
+	height: 56px !important;
+}
+
+.topNav span {
+	position: relative;
+}
+.firstPath {
+	font-weight: 600;
+	margin-left: 10px;
+}
+.secondPath {
+	margin-left: 18px;
+	padding-left: 18px;
+}
+.secondPath:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	width: 2px;
+	height: 25px;
+	top: 50%;
+	transform: translateY(-50%);
+	background: var(--mainColor);
+}
+
+.topNav .funcButton {
+	position: absolute;
+	right: 75px;
+	display: flex;
+	align-items: center;
+	gap: 40px;
+	padding: 0 30px;
+}
+
+.topNav .funcButton button {
+	width: 36px;
+	height: 36px;
+}
+.topNav .funcButton button i {
+	width: 36px;
+	height: 36px;
+}
+
+.leftBackButton {
+	background: linear-gradient(0deg, #323232, #000);
+	height: 100dvh;
+	width: 80px;
+	padding: 0;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 10;
+	overflow-y: auto;
+	transition: all 0.35s ease-out;
+}
+.backBtn {
+	display: block;
+	width: 80px;
+	height: 100%;
+	background: url(/images/icon/png/icon_back_white.png) center center no-repeat;
+	background-size: 20px;
+}
+
+@media (min-width: 1920px) {
+	/* RS130 */
+	@media (max-height: 382px) {
+		.topNav {
+			padding: 0 20px;
+		}
+	}
+}

@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import style from "./albumItem.module.css";
-import Icon from "@/component/atom/icon/Icon";
+import Icon from "@/component_RS/button/icon/Icon";
 import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
 
 interface AlbumItemProps {

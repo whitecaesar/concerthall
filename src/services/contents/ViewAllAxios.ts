@@ -11,6 +11,7 @@ export type ITEM_INFO_TYPE = {
 };
 
 export type VIEWALL_LIST_TYPE = {
+	PATH?: any;
 	TYPE: "ALBUM" | "SINGLE";
 	ID: number;
 	TITLE: string;

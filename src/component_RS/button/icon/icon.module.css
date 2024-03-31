@@ -126,6 +126,16 @@
 	background-size: contain;
 }
 
+.listRSPlay {
+	background: url(/images/icon/png/ico_RS_play.png) center center no-repeat;
+	background-size: contain;
+}
+
+.listRSShuffle {
+	background: url(/images/icon/png/ico_RS_shuffle.png) center center no-repeat;
+	background-size: contain;
+}
+
 .option {
 	background: url(/images/icon/png/icon_option.png) center center no-repeat;
 	background-size: contain;

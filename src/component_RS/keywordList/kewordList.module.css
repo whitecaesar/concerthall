@@ -1,0 +1,32 @@
+.explorePage {
+	padding: 15px 0;
+}
+.keywordListWrap {
+	padding-bottom: 10px;
+}
+
+.keywordList {
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;
+	max-height: 65px;
+	padding: 0 15px 10px;
+	-webkit-overflow-scrolling: touch;
+}
+.keyword {
+	text-align: center;
+	background: #000;
+	border: 1px solid var(--borderDark);
+	border-radius: 30px;
+	color: #fff;
+	min-width: 50px;
+	height: 35px;
+	padding: 0 15px;
+	white-space: nowrap;
+}
+.keyword:active,
+.keyword:hover {
+	background: var(--mainColor);
+	transition: all 0.25s;
+}

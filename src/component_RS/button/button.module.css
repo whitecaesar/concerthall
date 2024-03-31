@@ -1,0 +1,16 @@
+/* iconButton.module.css */
+
+.blackBtn {
+	color: #fff;
+	background: #000;
+	border: 1px solid var(--borderDark);
+	border-radius: 5px;
+	width: 100%;
+	height: 45px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.blackBtn i {
+	margin-right: 8px;
+}
