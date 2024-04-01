@@ -17,15 +17,15 @@ const RoundPlayButton = () => {
 			title : "test_track",
 			album_thumbnail : "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
 			thumbnail : "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
-			url : "http://movie.cinehotel.co.kr/movie/111111.mkv",
+			url : "http://movie.cinehotel.co.kr/movie/music.flac",
 			playable : "0000",
-			media_type : "video",
+			media_type : "audio",
 			album_id : "album_1234",
 			album_name : "test_album",
 			artist : WebStreamArtistItem,
 			duration : "",
 			resolution : "",
-			codec : "hevc/pcm_si6le",
+			codec : "flac",
 		};
 
 		const WebStreamTrackItem: any[] = [trackItem];

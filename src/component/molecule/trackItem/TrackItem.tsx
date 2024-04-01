@@ -11,6 +11,7 @@ interface TrackItemProps {
 }
 
 export default function TrackItem({ trackInfo }: TrackItemProps) {
+
 	return (
 		<div className={style.trackItem}>
 			<Link href={`/album/track/${trackInfo.ID}`}>
