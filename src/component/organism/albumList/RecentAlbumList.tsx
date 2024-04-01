@@ -12,44 +12,47 @@ import {
 	VIEWALL_LIST_TYPE,
 } from "@/services/contents/ViewAllAxios";
 
-interface AlbumListProps {
-	recommendList: VIEWALL_LIST_TYPE;
+import {ALBUM_RECENT_LIST_TYPE, ALBUM_RECENT_LIST_RESPONSE} from "@/services/contents/RecentAlbumAxios";
+import RecentAlbumItem from "@/component/molecule/albumItem/RecentAlbumItem";
+
+interface RecentAlbumListProps {
+	recommendList: ALBUM_RECENT_LIST_RESPONSE;
 	showTitle: boolean;
 	noScroll?: boolean;
 	viewAllLink?: string;
 }
 
-const AlbumList = ({
-	recommendList: { ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO },
+const RecentAlbumList = ({
+	recommendList: { totalCount, recentList },
 	showTitle,
 	noScroll = false,
-}: AlbumListProps) => {
+}: RecentAlbumListProps) => {
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
 
-	console.log("props--> ", ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO, "props ");
+	console.log("props--> ", recentList, "props ");
 	return (
 		<div className={style.albumListContainer} style={{ paddingBottom: "10px" }}>
-			{showTitle && TITLE && (
+			{showTitle && recentList && (
 				<ItemListTitle.ViewAll
 					isPresent={true}
-					text={TITLE}
-					count={TOTAL_NUM_ITEM}
-					href={`/detail/album/${ID}`}
+					text='최근 재생 앨범'
+					count={totalCount}
+					href={`/detail/album/recent`}
 					onClick={() => {
-						setSubTitle(TITLE);
+						setSubTitle('최근 재생 앨범');
 					}}
 				/>
 			)}
 			<ul className={style.albumList}>
 				
-				{ITEM_INFO.map((item: ITEM_INFO_TYPE) => (
-					<li key={item.ID}>
-						<AlbumItem
-							albumInfo={item}
+				{recentList.map((item: ALBUM_RECENT_LIST_TYPE) => (
+					<li key={item.album.id}>
+						<RecentAlbumItem
+							albumInfo={item.album}
 							onClick={() => {
-								setSubTitle(item.TITLE);
-								router.push(`/detail/album/track/${item.ID}`);
+								setSubTitle(item.album.title);
+								router.push(`/detail/album/track/${item.album.id}`);
 							}}
 						/>
 					</li>
@@ -59,4 +62,4 @@ const AlbumList = ({
 	);
 };
 
-export default AlbumList;
+export default RecentAlbumList;

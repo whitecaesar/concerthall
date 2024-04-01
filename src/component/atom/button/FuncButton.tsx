@@ -67,17 +67,17 @@ const FuncButton = ( {method} : Props) => {
 		// 버튼 클릭 시 실행할 로직
 		if(type == 'single')
 		{
-			console.log(json_track_data);
-		//	(window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+		//	console.log(json_track_data);
+			(window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
 		}
 		else if(type == 'album')
 		{
-		//	(window as any).HifiRose.webStreamAlbumMoreClick(json_album_data);
+			(window as any).HifiRose.webStreamAlbumMoreClick(json_album_data);
 		}
 		else if(type == 'track')
 		{
-			console.log(json_track_data);
-		//	(window as any).HifiRose.webStreamArtistMoreClick(json_track_data);
+		//	console.log(json_track_data);
+			(window as any).HifiRose.webStreamArtistMoreClick(json_track_data);
 		}
 	};
 

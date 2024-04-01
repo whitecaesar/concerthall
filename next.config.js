@@ -15,6 +15,11 @@ const nextConfig = {
 				protocol: 'http',
 				hostname: 'cip.ontown.co.kr'
 			}
+			,
+			{
+				protocol: 'https',
+				hostname: 'static.qobuz.com'
+			}
 		],
 	},
 	async redirects() {
