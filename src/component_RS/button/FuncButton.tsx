@@ -1,6 +1,6 @@
 "use client";
 
-import { formToJSON } from "axios";
+import style from "./button.module.css";
 
 type Props = {
 	method: string;
@@ -79,22 +79,9 @@ const FuncButton = ({ method }: Props) => {
 		<>
 			<button
 				type="button"
-				className="funcBtn"
+				className={style.funcBtn}
 				onClick={() => funcClickAction(method)}
 			></button>
-			<style jsx>{`
-				.funcBtn {
-					display: inline-block;
-					width: 60px;
-					height: 60px;
-					background-image: url(/images/icon/png/icon_option.png);
-					background-position: center center;
-					background-repeat: no-repeat;
-					background-size: 8px;
-					background-color: #ac8357;
-					border-radius: 50%;
-				}
-			`}</style>
 		</>
 	);
 };

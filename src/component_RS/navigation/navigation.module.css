@@ -1,6 +1,6 @@
 .leftMain {
 	height: 100vh;
-	width: 80px;
+	width: 100px;
 	padding: 0;
 	position: fixed;
 	left: 0;
@@ -38,26 +38,26 @@
 
 .leftMain ul li .icoHome {
 	background: url(/images/icon/png/ico_RS_home_w.png) center center no-repeat;
-	background-size: 24px;
+	background-size: 28px;
 }
 .leftMain ul li .icoExplore {
 	background: url(/images/icon/png/ico_RS_explore_w.png) center center no-repeat;
-	background-size: 24px;
+	background-size: 28px;
 }
 
 .leftMain ul li .icoMy {
 	background: url(/images/icon/png/ico_RS_my_w.png) center center no-repeat;
-	background-size: 24px;
+	background-size: 28px;
 }
 
 .leftMain.subHide + .leftSub {
-	left: -345px;
+	left: -375px;
 }
 
 .leftSub {
 	background: linear-gradient(0deg, #323232, #000);
 	height: 100vh;
-	width: 345px;
+	width: 375px;
 	padding: 0;
 	position: fixed;
 	left: 80px;
@@ -102,7 +102,14 @@
 	align-items: center;
 	padding: 0 30px;
 	height: 80px;
-	background: linear-gradient(0deg, #323232, #232323, #0f0f0f);
+	background: linear-gradient(
+		0deg,
+		#323232,
+		#232323,
+		#0f0f0f,
+		#030303,
+		#000000
+	);
 	z-index: 10;
 	color: var(--mainColor);
 	font-size: 1.6rem;
@@ -114,8 +121,8 @@
 	align-items: center;
 }
 .logoRose img {
-	width: 50px !important;
-	height: 56px !important;
+	width: 45px !important;
+	height: 51px !important;
 }
 
 .topNav span {
@@ -161,7 +168,7 @@
 .leftBackButton {
 	background: linear-gradient(0deg, #323232, #000);
 	height: 100dvh;
-	width: 80px;
+	width: 100px;
 	padding: 0;
 	position: fixed;
 	left: 0;
@@ -172,17 +179,110 @@
 }
 .backBtn {
 	display: block;
-	width: 80px;
+	width: 100px;
 	height: 100%;
 	background: url(/images/icon/png/icon_back_white.png) center center no-repeat;
 	background-size: 20px;
 }
 
 @media (min-width: 1920px) {
+	.leftMain.subHide + .leftSub {
+		left: -475px;
+	}
+
+	.leftSub {
+		left: 100px;
+	}
+
 	/* RS130 */
 	@media (max-height: 382px) {
 		.topNav {
+			height: 64px;
+			padding: 0 20px;
+			font-size: 1.5rem;
+		}
+		.topNav .funcButton {
+			right: 70px;
+			gap: 35px;
 			padding: 0 20px;
 		}
+		.logoRose img {
+			width: 40px !important;
+			height: 45px !important;
+		}
+		.leftSub ul li {
+			height: 64px;
+			font-size: 1.5rem;
+		}
+	}
+}
+@media (min-width: 1280px) and (max-width: 1919px) {
+	/* RS150 */
+	.topNav {
+		height: 40px;
+		padding: 0 15px;
+		font-size: 1rem;
+	}
+	.topNav > img {
+		width: 15px;
+		height: auto;
+	}
+	.logoRose img {
+		width: 25px !important;
+		height: 28px !important;
+	}
+	.topNav .funcButton {
+		right: 50px;
+		gap: 20px;
+		padding: 0 12px;
+	}
+	.topNav .funcButton button {
+		width: 24px;
+		height: 24px;
+	}
+	.topNav .funcButton button i {
+		width: 24px;
+		height: 24px;
+	}
+	.firstPath {
+		margin-left: 8px;
+	}
+	.secondPath {
+		margin-left: 12px;
+		padding-left: 12px;
+	}
+	.secondPath:before {
+		content: "";
+		position: absolute;
+		left: 0;
+		width: 2px;
+		height: 15px;
+		top: 50%;
+		transform: translateY(-50%);
+		background: var(--mainColor);
+	}
+
+	.leftMain {
+		width: 50px;
+	}
+	.leftSub {
+		font-size: 1rem;
+	}
+	.leftSub ul li {
+		height: 40px;
+		padding: 0 15px;
+	}
+	.leftMain ul li .icoHome,
+	.leftMain ul li .icoExplore,
+	.leftMain ul li .icoMy {
+		background-size: 18px;
+	}
+
+	.leftMain.subHide + .leftSub {
+		left: -200px;
+	}
+	.leftSub {
+		width: 200px;
+		left: 50px;
 	}
 }

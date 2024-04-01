@@ -23,9 +23,6 @@
 	gap: 15px;
 	white-space: nowrap;
 }
-.singleList li {
-	/* width: calc(100% / 5); */
-}
 
 .singleItem {
 	position: relative;
@@ -39,22 +36,7 @@
 	background: #1e1e1e;
 	padding: 25px 20px;
 }
-@media (min-width: 1920px) {
-	@media (min-height: 383px) and (max-height: 480px) {
-		/* RS201에 적용할 스타일 */
-		.bottomInfo {
-			padding: 25px 20px 15px;
-		}
-	}
-	@media (min-height: 481px) and (max-height: 520px) {
-		/* RS520에 적용할 스타일 */
-		.bottomInfo {
-			padding: 35px 20px 25px;
-			height: 195px;
-		}
-	}
-	/* ... 기타 다른 높이에 대한 스타일 */
-}
+
 .bottomInfo .title {
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
@@ -81,7 +63,7 @@
 	font-weight: 500;
 }
 
-p.bottomDetail {
+.bottomDetail {
 	margin-top: 5px;
 	display: flex;
 	align-items: center;
@@ -100,6 +82,87 @@ p.bottomDetail {
 	position: absolute;
 	display: flex;
 	gap: 18px;
-	top: -30px;
+	top: 145px;
 	right: 15px;
+}
+@media (min-width: 1920px) {
+	/* RS130 */
+	@media (max-height: 382px) {
+		.singleItem a > img {
+			width: 298px !important;
+			height: 144px !important;
+		}
+		.bottomInfo {
+			padding: 15px;
+			height: 133px;
+		}
+		.bottomInfo .title {
+			font-size: 1.35rem;
+		}
+		.bottomInfo .artist {
+			font-size: 1.25rem;
+		}
+		.bottomDetail {
+			font-size: 1rem;
+			margin-top: 3px;
+		}
+		.bottomDetail .bar {
+			height: 15px;
+		}
+		.buttonGroup {
+			top: 115px;
+			gap: 13px;
+		}
+	}
+
+	@media (min-height: 383px) and (max-height: 480px) {
+		/* RS201에 적용할 스타일 */
+		.bottomInfo {
+			padding: 25px 20px 15px;
+		}
+	}
+	@media (min-height: 481px) and (max-height: 520px) {
+		/* RS520에 적용할 스타일 */
+		.bottomInfo {
+			padding: 35px 20px 25px;
+			height: 195px;
+		}
+	}
+	/* ... 기타 다른 높이에 대한 스타일 */
+}
+
+@media (min-width: 1280px) and (max-width: 1919px) {
+	.singleList {
+		gap: 12px;
+	}
+	.singleItem a > img {
+		width: 170px !important;
+		height: auto !important;
+	}
+	.bottomInfo {
+		padding: 13px 10px 10px;
+	}
+	.bottomInfo .titleWrap {
+		height: 40px;
+		margin-bottom: 0;
+	}
+	.bottomInfo .title {
+		font-size: 1rem;
+	}
+	.bottomInfo .artist {
+		font-size: 0.85rem;
+	}
+	.bottomDetail {
+		font-size: 0.7rem;
+		margin-top: 0;
+		gap: 8px;
+	}
+	.bottomDetail .bar {
+		height: 10px;
+	}
+	.buttonGroup {
+		top: 60px;
+		gap: 8px;
+		right: 10px;
+	}
 }

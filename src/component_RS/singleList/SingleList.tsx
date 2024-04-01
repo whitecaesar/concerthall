@@ -62,12 +62,12 @@ function SingleList({
 										<span className={style.bar}></span>
 										<span>조회수 200</span>
 									</p>
-									<div className={style.buttonGroup}>
-										<LikeButton />
-										<FuncButton method="single" />
-									</div>
 								</div>
 							</Link>
+							<div className={style.buttonGroup}>
+								<LikeButton />
+								<FuncButton method="single" />
+							</div>
 						</div>
 					</li>
 				))}

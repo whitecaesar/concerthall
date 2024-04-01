@@ -14,3 +14,80 @@
 .blackBtn i {
 	margin-right: 8px;
 }
+
+.funcBtn {
+	display: inline-block;
+	width: 60px;
+	height: 60px;
+	background-image: url(/images/icon/png/icon_option.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 8px;
+	background-color: #ac8357;
+	border-radius: 50%;
+}
+
+.likeBtn0,
+.likeBtn1,
+.likeBtn2,
+.likeBtn3 {
+	display: inline-block;
+	width: 60px;
+	height: 60px;
+	background-size: 35px;
+	background-position: center 15px;
+	background-repeat: no-repeat;
+	background-color: #ac8357;
+	border-radius: 50%;
+}
+.likeBtn0 {
+	background-image: url(/images/icon/png/icon_heart_0.png);
+}
+.likeBtn1 {
+	background-image: url(/images/icon/png/icon_heart_1.png);
+}
+.likeBtn2 {
+	background-image: url(/images/icon/png/icon_heart_2.png);
+}
+.likeBtn3 {
+	background-image: url(/images/icon/png/icon_heart_3.png);
+	background-position: center 17px;
+}
+@media (min-width: 1920px) {
+	/* RS130 */
+	@media (max-height: 382px) {
+		.likeBtn0,
+		.likeBtn1,
+		.likeBtn2,
+		.likeBtn3 {
+			width: 50px;
+			height: 50px;
+			background-size: 30px;
+			background-position: center 13px;
+		}
+		.likeBtn3 {
+			background-position: center 14px;
+		}
+		.funcBtn {
+			width: 50px;
+			height: 50px;
+			background-size: 6px;
+		}
+	}
+}
+@media (min-width: 1280px) and (max-width: 1919px) {
+	.likeBtn0,
+	.likeBtn1,
+	.likeBtn2,
+	.likeBtn3 {
+		width: 36px;
+		height: 36px;
+		background-size: 18px;
+		background-position: center 11px;
+	}
+	.funcBtn {
+		width: 36px;
+		height: 36px;
+		background-size: 4px;
+	}
+}

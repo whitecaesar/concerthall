@@ -63,7 +63,7 @@ export const TopNav: React.FC = () => {
 					width={51.3}
 					height={57.95}
 					alt="로즈로고"
-					layout="responsive"
+					//layout="responsive"
 				/>
 			</button>
 		</div>
