@@ -6,22 +6,21 @@ import LikeButton from "../button/LikeButton";
 import FuncButton from "../button/FuncButton";
 import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
-import style from "./singleList.module.css";
+import style from "./trackList.module.css";
 import {
 	ITEM_INFO_TYPE,
 	VIEWALL_LIST_TYPE,
 } from "@/services/contents/ViewAllAxios";
 
-interface SingleListProps {
+interface TrackListProps {
 	recommendList: VIEWALL_LIST_TYPE;
 	isTitle?: boolean;
 }
 
-// SingleList 컴포넌트 정의
-function SingleList({
+function TrackList({
 	recommendList: { ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO },
 	isTitle = true, // 기본값을 true로 설정하여, 명시적으로 false가 주어지지 않으면 항상 표시
-}: SingleListProps) {
+}: TrackListProps) {
 	const { setSubTitle } = useContext(SubTitleContext);
 
 	return (
@@ -31,16 +30,16 @@ function SingleList({
 					isPresent={true}
 					text={TITLE}
 					count={TOTAL_NUM_ITEM}
-					href={`/RS/detail/single/${ID}`}
+					href={`/RS/track/${ID}`}
 					onClick={() => {
 						setSubTitle(TITLE);
 					}}
 				/>
 			)}
-			<ul className={style.singleList}>
+			<ul className={style.trackList}>
 				{ITEM_INFO.map((item: ITEM_INFO_TYPE) => (
 					<li key={item.ID}>
-						<div className={style.singleItem} id={`${item.ID}`}>
+						<div className={style.trackItem} id={`${item.ID}`}>
 							<Link href="">
 								<Image
 									// src={item.THUMBNAIL}
@@ -76,4 +75,4 @@ function SingleList({
 	);
 }
 
-export default SingleList;
+export default TrackList;

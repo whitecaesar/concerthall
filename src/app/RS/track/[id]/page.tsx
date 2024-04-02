@@ -6,7 +6,6 @@ export default function trackPage() {
 		<SubTitleProvider>
 			<div className="trackPage">
 				<AlbumTrack />
-				{/* <TrackList trackList={[]} /> */}
 			</div>
 		</SubTitleProvider>
 	);

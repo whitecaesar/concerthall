@@ -146,6 +146,10 @@
 	transform: translateY(-50%);
 	background: var(--mainColor);
 }
+.topNavAlbumTit {
+	padding-left: 0;
+	margin-left: 0;
+}
 
 .topNav .funcButton {
 	position: absolute;

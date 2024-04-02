@@ -2,17 +2,17 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getBannersAxios } from "@/services/main/MainInfoAxios";
-import TrackList from "../trackList/TrackList";
+import AlbumList from "../albumList/AlbumList";
 
-export default function LikeList() {
+export default function PlayList() {
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
 		queryFn: getBannersAxios,
 	});
 
-	const trackItem = data?.RECOMMEND_LIST[1];
+	const albumItem = data?.RECOMMEND_LIST[0];
 
 	return (
-		<>{trackItem && <TrackList isTitle={false} recommendList={trackItem} />}</>
+		<>{albumItem && <AlbumList isTitle={false} recommendList={albumItem} />}</>
 	);
 }

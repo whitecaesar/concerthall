@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getBannersAxios } from "@/services/main/MainInfoAxios";
 import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
-import SingleList from "../singleList/SingleList";
+import TrackList from "../trackList/TrackList";
 import AlbumList from "../albumList/AlbumList";
 import { useMenu } from "@/providers/RSMenuProvider";
 
@@ -43,7 +43,7 @@ export default function Main() {
 			).map((content, index) => (
 				<React.Fragment key={index}>
 					{content.TYPE === "SINGLE" ? (
-						<SingleList recommendList={content} isTitle={false} />
+						<TrackList recommendList={content} isTitle={false} />
 					) : (
 						<AlbumList recommendList={content} isTitle={false} />
 					)}

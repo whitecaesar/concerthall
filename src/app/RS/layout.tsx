@@ -5,6 +5,7 @@ import LeftMenu from "@/component_RS/navigation/LeftMenu";
 import TopNav from "@/component_RS/navigation/topNav";
 import { MenuProvider } from "@/providers/RSMenuProvider";
 import { SelectedItemProvider } from "@/providers/SelectedItemProvider";
+import { TopNavProvider } from "@/providers/TopNavProvider";
 
 export default function RootLayout({
 	children,
@@ -16,15 +17,17 @@ export default function RootLayout({
 			<MenuProvider>
 				<QueryProviders>
 					<SubTitleProvider>
-						<SelectedItemProvider>
-							<div className="rs-wrap">
-								<LeftMenu />
-								<div className="rs-container">
-									<TopNav />
-									{children}
+						<TopNavProvider>
+							<SelectedItemProvider>
+								<div className="rs-wrap">
+									<LeftMenu />
+									<div className="rs-container">
+										<TopNav />
+										{children}
+									</div>
 								</div>
-							</div>
-						</SelectedItemProvider>
+							</SelectedItemProvider>
+						</TopNavProvider>
 					</SubTitleProvider>
 				</QueryProviders>
 			</MenuProvider>

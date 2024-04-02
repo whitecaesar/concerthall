@@ -47,14 +47,27 @@ export const LeftMainNav = () => {
 				<li
 					className={
 						(style.link,
-						currentRoute === "/RS/my/likeList" ||
-						currentRoute === "/RS/my/playList"
+						currentRoute === "/RS/my/playList" ||
+						currentRoute === "/RS/my/likeList"
 							? "active"
 							: "")
 					}
-					onClick={() => toggleSubHide("/RS/my/likeList")}
+					onClick={() => {
+						if (currentRoute === "/RS/my/playList") {
+							toggleSubHide("/RS/my/playList");
+						} else if (currentRoute === "/RS/my/likeList") {
+							toggleSubHide("/RS/my/likeList");
+						}
+					}}
 				>
-					<Link href="/RS/my/likeList" className={style.icoMy}>
+					<Link
+						href={
+							currentRoute === "/RS/my/likeList"
+								? "/RS/my/likeList"
+								: "/RS/my/playList"
+						}
+						className={style.icoMy}
+					>
 						myHiRes
 					</Link>
 				</li>

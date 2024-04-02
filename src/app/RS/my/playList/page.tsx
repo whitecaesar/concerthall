@@ -1,21 +1,8 @@
-import AlbumList from "@/component_RS/albumList/AlbumList";
-
-export default function PlayList() {
+import PlayList from "@/component_RS/template/PlayList";
+export default function LikeListPage() {
 	return (
-		<>
-			<div className="playListPage" style={{ paddingBottom: "20px" }}>
-				<AlbumList
-					recommendList={{
-						PATH: undefined,
-						TYPE: "ALBUM",
-						ID: 0,
-						TITLE: "",
-						TOTAL_NUM_ITEM: undefined,
-						ITEM_INFO: [],
-					}}
-					isTitle={false}
-				/>
-			</div>
-		</>
+		<div className="playListPage">
+			<PlayList />
+		</div>
 	);
 }

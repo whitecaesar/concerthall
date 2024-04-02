@@ -1,17 +1,17 @@
 // components/TopNav.tsx
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import style from "./navigation.module.css";
 import { useSelectedItem } from "@/providers/SelectedItemProvider";
-import RoundPlayButton from "@/component/atom/button/RoundPlayButton";
-import RoundShuffleButton from "@/component/atom/button/RoundSuffleButton";
+import { SubTitleContext } from "@/providers/SubTitleProvider";
 import BlackButton from "../button/BlackButton";
 
 export const TopNav: React.FC = () => {
 	const currentRoute = usePathname();
-	const { selectedItemName } = useSelectedItem(); // 컨텍스트에서 선택된 아이템의 이름을 사용
+	const { selectedItemName } = useSelectedItem();
+	const { subTitle } = useContext(SubTitleContext);
 
 	const routeTitles: { [key: string]: { title: string; iconSrc: string } } = {
 		"/RS/main": {
@@ -38,12 +38,35 @@ export const TopNav: React.FC = () => {
 		iconSrc: "",
 	};
 
+	let firstPath = true;
+
+	// 현재 경로가 '/RS/track'를 포함하면 첫 번째 경로와 아이콘을 보여주지 않습니다.
+	if (currentRoute.includes("/RS/track")) {
+		firstPath = false;
+	}
+
+	// 선택된 타이틀을 설정합니다.
+	// '/RS/track' 경로에 있지 않을 경우에만 displayTitle을 설정합니다.
+	let displayTitle: React.ReactNode = firstPath ? (
+		selectedItemName
+	) : (
+		<span className={style.topNavAlbumTit}>{subTitle}</span>
+	);
+
 	return (
 		<div className={style.topNav}>
-			{iconSrc && <Image src={iconSrc} alt={title} width={24} height={24} />}
-			<span className={style.firstPath}>{title}</span>
-			{/* 선택된 아이템 이름을 추가로 표시 */}
-			<span className={style.secondPath}>{selectedItemName}</span>
+			{firstPath && iconSrc && (
+				<Image src={iconSrc} alt={title} width={24} height={24} />
+			)}
+			{firstPath && (
+				<>
+					<span className={style.firstPath}>{title}</span>
+					<span className={style.secondPath}>{displayTitle}</span>
+				</>
+			)}
+
+			{/* 아래 라인에서 조건부 렌더링을 통해 displayTitle을 제어합니다 - 앨범 타이틀만 보여줌 */}
+			{!firstPath && displayTitle}
 
 			<div className={style.funcButton}>
 				<BlackButton

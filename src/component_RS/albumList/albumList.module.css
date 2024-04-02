@@ -12,7 +12,7 @@
 	display: block;
 }
 
-.albumItem a {
+.albumList li a {
 	display: flex;
 	flex-direction: column;
 }

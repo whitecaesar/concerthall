@@ -18,13 +18,13 @@ const SubNav = ({ title }: SubNavProps) => {
 	const { setSelectedItemName } = useSelectedItem();
 
 	const isMainPage = pathname === "/RS/main";
-	const isMyPage = pathname.startsWith("/RS/my");
 	const isExplorePage = pathname.startsWith("/RS/explore");
+	const isMyPage = pathname.startsWith("/RS/my");
 
 	const myPageSubMenus = useMemo(
 		() => [
-			{ name: "최근 재생목록", path: "/RS/my/likeList" },
 			{ name: "MY 플레이리스트", path: "/RS/my/playList" },
+			{ name: "즐겨찾기", path: "/RS/my/likeList" },
 		],
 		[]
 	);
@@ -80,7 +80,7 @@ const SubNav = ({ title }: SubNavProps) => {
 					))}
 				{!isMainPage && !isMyPage && !isExplorePage && (
 					<li>
-						<h3>{title || subTitle}</h3>
+						<h3>{title}</h3>
 					</li>
 				)}
 			</ul>

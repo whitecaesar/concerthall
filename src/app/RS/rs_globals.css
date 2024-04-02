@@ -323,7 +323,7 @@ nav {
 }
 
 nav[class*="subHide"] + [class*="leftSub"] + .rs-container {
-	padding-left: 80px;
+	padding-left: 100px;
 	transition: all 0.35s;
 }
 

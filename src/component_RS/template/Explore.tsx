@@ -1,15 +1,13 @@
-// components/Explore.tsx 또는 해당하는 경로
 "use client";
 import React, { useEffect, useState } from "react";
-import { useMenu } from "@/providers/RSMenuProvider"; // 경로는 실제 프로젝트 구조에 맞게 조정해주세요.
+import { useMenu } from "@/providers/RSMenuProvider";
 import {
 	getExploreAxios,
 	TCATEGORY_RES,
 	CATEGORY_LIST_RESPONSE,
 } from "@/services/explore/ExploreAxios";
 import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
-import KeywordList from "../keywordList/KeywordList";
-import SingleList from "../singleList/SingleList";
+import TrackList from "../trackList/TrackList";
 
 interface ExploreProps {}
 
@@ -49,11 +47,8 @@ const Explore = (props: ExploreProps) => {
 
 	return (
 		<>
-			{/* {categories.map((category, index) => (
-				<KeywordList key={index} categoryList={category} />
-			))} */}
 			{recommendList && (
-				<SingleList recommendList={recommendList} isTitle={false} />
+				<TrackList recommendList={recommendList} isTitle={false} />
 			)}
 		</>
 	);

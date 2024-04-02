@@ -1,5 +1,11 @@
 "use client";
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, {
+	createContext,
+	useState,
+	useContext,
+	ReactNode,
+	useEffect,
+} from "react";
 
 interface MenuItem {
 	name: string;
@@ -28,6 +34,16 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
 	const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItem | null>(
 		null
 	); // 상태 추가
+
+	// 선택된 메뉴 아이템이 변경될 때마다 sessionStorage에 저장합니다.
+	useEffect(() => {
+		if (selectedMenuItem) {
+			sessionStorage.setItem(
+				"selectedMenuItem",
+				JSON.stringify(selectedMenuItem)
+			);
+		}
+	}, [selectedMenuItem]);
 
 	return (
 		<MenuContext.Provider
