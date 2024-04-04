@@ -38,7 +38,7 @@ const RecentAlbumList = ({
 					isPresent={true}
 					text='최근 재생 앨범'
 					count={totalCount}
-					href={`/detail/album/recent`}
+					href={`/detail/recentAlbum?totalcount=${totalCount}`}
 					onClick={() => {
 						setSubTitle('최근 재생 앨범');
 					}}

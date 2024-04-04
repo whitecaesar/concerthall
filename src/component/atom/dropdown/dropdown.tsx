@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { DropdownProps } from "@/interface/DropdownType";
+import { DropdownProps} from "@/interface/DropdownType";
 import Icon from "../../../component_RS/button/icon/Icon";
 import style from "./dropdown.module.css";
 
-function Dropdown({ options }: DropdownProps) {
+function Dropdown({ options, onRecentChange}: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false); // 드롭다운이 열렸는지 여부
 	const [selectedOption, setSelectedOption] = useState<string>( // 선택된 옵션
 		options.length > 0 ? options[0].value : "" //초기값으로는 options 배열의 첫 번째 요소를 사용
 	);
 	const [data, setData] = useState<string[]>([]); // 드롭다운 데이터
+
 
 	// 드롭다운을 토글하는 함수
 	const toggleDropdown = () => setIsOpen(!isOpen);
@@ -20,6 +21,7 @@ function Dropdown({ options }: DropdownProps) {
 		setSelectedOption(option);
 		setIsOpen(false);
 		// 옵션에 따른 데이터 정렬 로직 추가해야 함
+		onRecentChange(option);
 	};
 
 	// 선택된 옵션의 라벨을 반환하는 함수
