@@ -33,7 +33,7 @@ export default function RecentPlayList({
 				isPresent={true}
 				text='최근 플레이 리스트'
 				count={totalCount}
-				href={`/detail/single/id`}
+				href={`/detail/recentPlayList?totalcount=${totalCount}`}
 				onClick={() => {
 					setSubTitle('최근 플레이 리스트');
 				}}

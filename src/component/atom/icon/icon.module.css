@@ -1,0 +1,169 @@
+.icon {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+}
+/*
+.addFolder {
+	background: url(/images/icon/icon_add_folder.svg) center center no-repeat;
+	background-size: contain;
+}
+
+.arrowDownWhite {
+	background: url(/images/icon/icon_arrow_down_white.svg) center center
+		no-repeat;
+	background-size: contain;
+}
+
+.arrowRightWhite {
+	background: url(/images/icon/icon_arrow_right_white.svg) center center
+		no-repeat;
+	background-size: contain;
+}
+
+.arrowRightBrown {
+	background: url(/images/icon/icon_arrow_right_brown.svg) center center
+		no-repeat;
+	background-size: contain;
+}
+
+.heart0 {
+	background: url(/images/icon/icon_heart_0.svg) center center no-repeat;
+	background-size: contain;
+}
+.heart1 {
+	background: url(/images/icon/icon_heart_1.svg) center center no-repeat;
+	background-size: contain;
+}
+.heart2 {
+	background: url(/images/icon/icon_heart_2.svg) center center no-repeat;
+	background-size: contain;
+}
+.heart3 {
+	background: url(/images/icon/icon_heart_3.svg) center center no-repeat;
+	background-size: contain;
+}
+
+.likeList {
+	background: url(/images/icon/icon_likelist.svg) center center no-repeat;
+	background-size: contain;
+}
+
+.listPlay {
+	background: url(/images/icon/icon_list_play.svg) center center no-repeat;
+	background-size: contain;
+}
+
+.listShuffle {
+	background: url(/images/icon/icon_list_shuffle.svg) center center no-repeat;
+	background-size: contain;
+}
+
+.option {
+	background: url(/images/icon/icon_option.svg) center center no-repeat;
+	background-size: contain;
+}
+
+.playList {
+	background: url(/images/icon/icon_playlist.svg) center center no-repeat;
+	background-size: contain;
+}
+
+.thumbUp {
+	background: url(/images/icon/icon_thumbup.svg) center center no-repeat;
+	background-size: contain;
+}
+
+.trackPlay {
+	background: url(/images/icon/icon_track_play.svg) center center no-repeat;
+	background-size: contain;
+}
+
+.trackShffle {
+	background: url(/images/icon/icon_track_shuffle.svg) center center no-repeat;
+	background-size: contain;
+}
+*/
+
+.addFolder {
+	background: url(/images/icon/png/icon_add_folder.png) center center no-repeat;
+	background-size: contain;
+}
+
+.arrowDownWhite {
+	background: url(/images/icon/png/icon_arrow_down_white.png) center center
+		no-repeat;
+	background-size: contain;
+}
+
+.arrowRightWhite {
+	background: url(/images/icon/png/icon_arrow_right_white.png) center center
+		no-repeat;
+	background-size: contain;
+}
+
+.arrowRightBrown {
+	background: url(/images/icon/png/icon_arrow_right_brown.png) center center
+		no-repeat;
+	background-size: contain;
+}
+
+.likeList {
+	background: url(/images/icon/png/icon_likelist.png) center center no-repeat;
+	background-size: contain;
+}
+
+.listPlay {
+	background: url(/images/icon/png/icon_list_play.png) center center no-repeat;
+	background-size: contain;
+}
+
+.listShuffle {
+	width: 15px;
+	height: 15px;
+	background: url(/images/icon/png/icon_list_shuffle.png) center center
+		no-repeat;
+	background-size: contain;
+}
+
+.listRSPlay {
+	background: url(/images/icon/png/ico_RS_play.png) center center no-repeat;
+	background-size: contain;
+}
+
+.listRSShuffle {
+	background: url(/images/icon/png/ico_RS_shuffle.png) center center no-repeat;
+	background-size: contain;
+}
+
+.option {
+	background: url(/images/icon/png/icon_option.png) center center no-repeat;
+	background-size: contain;
+}
+
+.playList {
+	background: url(/images/icon/png/icon_playlist.png) center center no-repeat;
+	background-size: contain;
+}
+
+.thumbUp {
+	background: url(/images/icon/png/icon_thumbup.png) center center no-repeat;
+	background-size: contain;
+}
+
+.trackPlay {
+	background: url(/images/icon/png/icon_track_play.png) center center no-repeat;
+	background-size: contain;
+}
+
+.trackShffle {
+	background: url(/images/icon/png/icon_track_shuffle.png) center center
+		no-repeat;
+	background-size: contain;
+}
+.backWhite {
+	width: 20px;
+	height: 20px;
+	background: url(/images/icon/png/icon_back_white.png) center center no-repeat;
+	background-size: contain;
+}
