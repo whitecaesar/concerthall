@@ -1,16 +1,13 @@
 "use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-// 컨텍스트 타입 정의
 interface SelectedItemContextType {
 	selectedItemName: string;
 	setSelectedItemName: (name: string) => void;
 }
 
-// 컨텍스트 생성
 const SelectedItemContext = createContext<SelectedItemContextType | null>(null);
 
-// 컨텍스트 프로바이더 정의
 export const SelectedItemProvider: React.FC<{ children: ReactNode }> = ({
 	children,
 }) => {

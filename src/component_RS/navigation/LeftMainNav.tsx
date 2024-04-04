@@ -4,10 +4,42 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import style from "./navigation.module.css";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getBannersAxios } from "@/services/main/MainInfoAxios";
+import { getExploreAxios } from "@/services/explore/ExploreAxios";
+import { useSelectedItem } from "@/providers/SelectedItemProvider";
+import { useMenu } from "@/providers/RSMenuProvider";
 
 export const LeftMainNav = () => {
 	const currentRoute = usePathname();
+	const [mainFirstIdx, setMainFirstIdx] = useState<Number>();
+	const [exploreFirstIdx, setExploreFirstIdx] = useState<string | undefined>();
 	const [subHideActive, setSubHideActive] = useState<boolean>(false);
+	const { selectedMenuItem } = useMenu();
+
+	const mainData = useQuery({
+		queryKey: ["MAIN-BANNER"],
+		queryFn: getBannersAxios,
+	});
+
+	const exploreData = useQuery({
+		queryKey: ["EXPLORE-PAGE"],
+		queryFn: getExploreAxios,
+	});
+
+	useEffect(() => {
+		console.log("data?.RECOMMEND_LIST ", mainData.data?.RECOMMEND_LIST);
+		mainData.data?.RECOMMEND_LIST &&
+			setMainFirstIdx(mainData.data?.RECOMMEND_LIST[0].ID);
+		// data?.RECOMMEND_LIST && setMainFirstIdx(data?.RECOMMEND_LIST[0].ID);
+	}, [mainData.isFetched]);
+
+	useEffect(() => {
+		console.log("data?.CATEGORY ", exploreData.data?.CATEGORY);
+		exploreData.data?.CATEGORY &&
+			setExploreFirstIdx(exploreData?.data?.CATEGORY[0].KEWORD[0].KEY);
+		// data?.RECOMMEND_LIST && setMainFirstIdx(data?.RECOMMEND_LIST[0].ID);
+	}, [exploreData.isFetched]);
 
 	useEffect(() => {
 		setSubHideActive(false);
@@ -18,7 +50,6 @@ export const LeftMainNav = () => {
 			setSubHideActive(!subHideActive);
 		}
 	};
-
 	const navClassName = `${style.leftMain} ${
 		subHideActive ? style.subHide : ""
 	}`;
@@ -27,42 +58,66 @@ export const LeftMainNav = () => {
 		<nav className={navClassName}>
 			<ul>
 				<li
-					className={(style.link, currentRoute === "/RS/main" ? "active" : "")}
-					onClick={() => toggleSubHide("/RS/main")}
+					className={
+						(style.link, currentRoute.indexOf("/RS/main") > -1 ? "active" : "")
+					}
+					onClick={() => {
+						mainData.isFetched &&
+							toggleSubHide(
+								`/RS/main/${
+									typeof selectedMenuItem?.mainId === "undefined"
+										? mainFirstIdx
+										: selectedMenuItem?.mainId
+								}`
+							);
+					}}
 				>
-					<Link href="/RS/main" className={style.icoHome}>
+					<Link
+						href={`/RS/main/${
+							typeof selectedMenuItem?.mainId === "undefined"
+								? mainFirstIdx
+								: selectedMenuItem?.mainId
+						}`}
+						className={style.icoHome}
+					>
 						홈
 					</Link>
 				</li>
 				<li
 					className={
-						(style.link, currentRoute === "/RS/explore" ? "active" : "")
+						(style.link,
+						currentRoute.indexOf("/RS/explore") > -1 ? "active" : "")
 					}
-					onClick={() => toggleSubHide("/RS/explore")}
+					onClick={() =>
+						toggleSubHide(
+							`/RS/explore/${
+								typeof selectedMenuItem?.exploreId === "undefined"
+									? exploreFirstIdx
+									: selectedMenuItem?.exploreId
+							}`
+						)
+					}
 				>
-					<Link href="/RS/explore" className={style.icoExplore}>
+					<Link
+						href={`/RS/explore/${
+							typeof selectedMenuItem?.exploreId === "undefined"
+								? exploreFirstIdx
+								: selectedMenuItem?.exploreId
+						}`}
+						className={style.icoExplore}
+					>
 						탐색
 					</Link>
 				</li>
 				<li
 					className={
-						(style.link,
-						currentRoute === "/RS/my/playList" ||
-						currentRoute === "/RS/my/likeList"
-							? "active"
-							: "")
+						(style.link, currentRoute.startsWith("/RS/my/") ? "active" : "")
 					}
-					onClick={() => {
-						if (currentRoute === "/RS/my/playList") {
-							toggleSubHide("/RS/my/playList");
-						} else if (currentRoute === "/RS/my/likeList") {
-							toggleSubHide("/RS/my/likeList");
-						}
-					}}
+					onClick={() => toggleSubHide(currentRoute)}
 				>
 					<Link
 						href={
-							currentRoute === "/RS/my/likeList"
+							currentRoute.startsWith("/RS/my/likeList")
 								? "/RS/my/likeList"
 								: "/RS/my/playList"
 						}

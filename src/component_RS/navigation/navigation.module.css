@@ -116,13 +116,13 @@
 }
 .logoRose {
 	position: absolute;
-	right: 15px;
+	right: 30px;
 	display: flex;
 	align-items: center;
 }
 .logoRose img {
-	width: 45px !important;
-	height: 51px !important;
+	width: 40px !important;
+	height: auto !important;
 }
 
 .topNav span {

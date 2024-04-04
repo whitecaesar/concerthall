@@ -19,6 +19,7 @@ export default function SubTitleProvider({ children }: SubTitleProviderProps) {
 	const [subtitle, setSubTitle] = useState<ReactNode>("");
 
 	const setSubTitleFn = (chgSubtitle: ReactNode) => {
+		//console.log("chg subtitme", chgSubtitle);
 		setSubTitle(chgSubtitle);
 	};
 

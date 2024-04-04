@@ -97,7 +97,7 @@
 	}
 	/* RS520 */
 	@media (min-height: 481px) and (max-height: 520px) {
-		.albumItem a > img {
+		.albumList a img {
 			width: 390px !important;
 			height: 183px !important;
 		}
@@ -120,7 +120,7 @@
 	.albumList {
 		gap: 12px;
 	}
-	.albumItem a > img {
+	.albumList a img {
 		width: 185px;
 		height: auto;
 	}

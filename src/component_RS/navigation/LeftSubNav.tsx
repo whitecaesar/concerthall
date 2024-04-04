@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
-import { useMenu } from "@/providers/RSMenuProvider";
+import { MenuItem, useMenu } from "@/providers/RSMenuProvider";
 import { useSelectedItem } from "@/providers/SelectedItemProvider";
 import style from "./navigation.module.css";
 
@@ -11,61 +11,72 @@ interface SubNavProps {
 }
 
 const SubNav = ({ title }: SubNavProps) => {
-	const { subTitle } = useContext(SubTitleContext);
-	const { menuItems, setSelectedMenuItem } = useMenu();
+	const { setSubTitle } = useContext(SubTitleContext);
+	const { menuItems, selectedMenuItem, setSelectedMenuItem } = useMenu();
 	const pathname = usePathname();
-	const [activeIndex, setActiveIndex] = useState<number | null>(null);
+	const [activeIndex, setActiveIndex] = useState<MenuItem>();
 	const { setSelectedItemName } = useSelectedItem();
 
-	const isMainPage = pathname === "/RS/main";
+	const isMainPage = pathname.startsWith("/RS/main");
 	const isExplorePage = pathname.startsWith("/RS/explore");
 	const isMyPage = pathname.startsWith("/RS/my");
 
 	const myPageSubMenus = useMemo(
 		() => [
-			{ name: "MY 플레이리스트", path: "/RS/my/playList" },
-			{ name: "즐겨찾기", path: "/RS/my/likeList" },
+			{ id: 0, name: "MY 플레이리스트", path: "/RS/my/playList", type: "my" },
+			{ id: 1, name: "즐겨찾기", path: "/RS/my/likeList", type: "my" },
 		],
 		[]
 	);
 
-	useEffect(() => {
-		const currentMenuItems = isMyPage ? myPageSubMenus : menuItems;
-		if (currentMenuItems.length > 0) {
-			setSelectedItemName(currentMenuItems[0].name);
-			setActiveIndex(0); // 첫 번째 메뉴 아이템을 활성화
-		}
-	}, [isMyPage, menuItems, myPageSubMenus, setSelectedItemName]);
-
-	const handleItemClick = (index: number) => {
-		setActiveIndex(index);
-		const selectedItem = isMyPage ? myPageSubMenus[index] : menuItems[index];
-		setSelectedItemName(selectedItem.name);
-		setSelectedMenuItem(selectedItem);
+	const handleItemClick = (menu: MenuItem) => {
+		setActiveIndex(
+			menuItems.find((item) => {
+				if (item.type === "main") {
+					return item.mainId === menu?.mainId;
+				}
+				if (item.type === "explore") {
+					return item.exploreId === menu?.exploreId;
+				}
+				if (item.type === "my") {
+					return item.myId === menu?.myId;
+				}
+			})
+		);
+		setSubTitle(menu.name);
 	};
 
 	return (
 		<nav className={style.leftSub}>
 			<ul>
-				{/* 메뉴 아이템 렌더링 */}
 				{isMainPage &&
 					menuItems.map((item, index) => (
 						<li
-							key={index}
-							className={index === activeIndex ? style.active : ""}
-							onClick={() => handleItemClick(index)}
+							key={`li-${index}`}
+							className={
+								item.mainId === selectedMenuItem?.mainId ? style.active : ""
+							}
+							onClick={() => handleItemClick(item)}
 						>
-							{item.name}
+							<Link key={item.mainId} href={`/RS/main/${item.mainId}`}>
+								{item.name}
+							</Link>
 						</li>
 					))}
 				{isExplorePage &&
 					menuItems.map((item, index) => (
 						<li
-							key={index}
-							className={index === activeIndex ? style.active : ""}
-							onClick={() => handleItemClick(index)}
+							key={`li-${index}`}
+							className={
+								item.exploreId === selectedMenuItem?.exploreId
+									? style.active
+									: ""
+							}
+							onClick={() => handleItemClick(item)}
 						>
-							{item.name}
+							<Link key={item.exploreId} href={`/RS/explore/${item.exploreId}`}>
+								{item.name}
+							</Link>
 						</li>
 					))}
 				{isMyPage &&
@@ -73,7 +84,7 @@ const SubNav = ({ title }: SubNavProps) => {
 						<li
 							key={index}
 							className={pathname === item.path ? style.active : ""}
-							onClick={() => handleItemClick(index)}
+							onClick={() => handleItemClick(item)}
 						>
 							<Link href={item.path}>{item.name}</Link>
 						</li>

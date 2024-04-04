@@ -4,7 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getBannersAxios } from "@/services/main/MainInfoAxios";
 import TrackList from "../trackList/TrackList";
 
-export default function LikeList() {
+interface AlbumTrackProps {
+	slug?: string;
+}
+
+export default function AlbumTrack({ slug }: AlbumTrackProps) {
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
 		queryFn: getBannersAxios,

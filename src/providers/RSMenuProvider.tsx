@@ -7,9 +7,14 @@ import React, {
 	useEffect,
 } from "react";
 
-interface MenuItem {
+export interface MenuItem {
+	mainId?: number; // main key 값
+	exploreId?: string;
+	myId?: string;
 	name: string;
-	path: string;
+	type: string;
+	// index: number;
+	path?: string;
 }
 
 interface MenuContextType {
@@ -34,16 +39,6 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
 	const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItem | null>(
 		null
 	); // 상태 추가
-
-	// 선택된 메뉴 아이템이 변경될 때마다 sessionStorage에 저장합니다.
-	useEffect(() => {
-		if (selectedMenuItem) {
-			sessionStorage.setItem(
-				"selectedMenuItem",
-				JSON.stringify(selectedMenuItem)
-			);
-		}
-	}, [selectedMenuItem]);
 
 	return (
 		<MenuContext.Provider

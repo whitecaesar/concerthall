@@ -1,12 +1,9 @@
-import SubTitleProvider from "@/providers/SubTitleProvider";
 import AlbumTrack from "@/component_RS/albumList/AlbumTrack";
 
-export default function trackPage() {
+export default function trackPage({ params }: { params: { id: string } }) {
 	return (
-		<SubTitleProvider>
-			<div className="trackPage">
-				<AlbumTrack />
-			</div>
-		</SubTitleProvider>
+		<div className="trackPage">
+			<AlbumTrack slug={params.id} />
+		</div>
 	);
 }

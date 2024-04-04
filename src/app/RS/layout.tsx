@@ -15,21 +15,17 @@ export default function RootLayout({
 	return (
 		<div>
 			<MenuProvider>
-				<QueryProviders>
-					<SubTitleProvider>
-						<TopNavProvider>
-							<SelectedItemProvider>
-								<div className="rs-wrap">
-									<LeftMenu />
-									<div className="rs-container">
-										<TopNav />
-										{children}
-									</div>
-								</div>
-							</SelectedItemProvider>
-						</TopNavProvider>
-					</SubTitleProvider>
-				</QueryProviders>
+				<TopNavProvider>
+					<SelectedItemProvider>
+						<div className="rs-wrap">
+							<LeftMenu params={{ slug: "" }} />
+							<div className="rs-container">
+								<TopNav />
+								{children}
+							</div>
+						</div>
+					</SelectedItemProvider>
+				</TopNavProvider>
 			</MenuProvider>
 		</div>
 	);

@@ -32,7 +32,6 @@ const AlbumList = ({
 						key={albumInfo.ID}
 						onClick={() => {
 							setSubTitle(albumInfo.TITLE);
-							router.push(`/RS/track/${albumInfo.ID}`);
 						}}
 					>
 						<Link href={`/RS/track/${albumInfo.ID}`}>

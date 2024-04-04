@@ -1,10 +1,10 @@
+// Single과 Track 같이 씀
 "use client";
 import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import LikeButton from "../button/LikeButton";
 import FuncButton from "../button/FuncButton";
-import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
 import style from "./trackList.module.css";
 import {
@@ -25,20 +25,15 @@ function TrackList({
 
 	return (
 		<div>
-			{isTitle && ( // 조건부 렌더링
-				<ItemListTitle.ViewAll
-					isPresent={true}
-					text={TITLE}
-					count={TOTAL_NUM_ITEM}
-					href={`/RS/track/${ID}`}
-					onClick={() => {
-						setSubTitle(TITLE);
-					}}
-				/>
-			)}
 			<ul className={style.trackList}>
 				{ITEM_INFO.map((item: ITEM_INFO_TYPE) => (
-					<li key={item.ID}>
+					<li
+						key={item.ID}
+						onClick={() => {
+							//console.log("item title", item.TITLE);
+							setSubTitle(item.TITLE);
+						}}
+					>
 						<div className={style.trackItem} id={`${item.ID}`}>
 							<Link href="">
 								<Image
