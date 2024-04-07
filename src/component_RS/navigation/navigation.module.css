@@ -185,8 +185,8 @@
 	display: block;
 	width: 100px;
 	height: 100%;
-	background: url(/images/icon/png/icon_back_white.png) center center no-repeat;
-	background-size: 20px;
+	background: url(/images/icon/png/ico_RS_back.png) center center no-repeat;
+	background-size: 10px;
 }
 
 @media (min-width: 1920px) {
@@ -230,6 +230,9 @@
 	.topNav > img {
 		width: 15px;
 		height: auto;
+	}
+	.logoRose {
+		right: 15px;
 	}
 	.logoRose img {
 		width: 25px !important;
@@ -288,5 +291,11 @@
 	.leftSub {
 		width: 200px;
 		left: 50px;
+	}
+	.leftBackButton {
+		width: 50px;
+	}
+	.backBtn {
+		width: 50px;
 	}
 }

@@ -20,12 +20,11 @@ const Explore = ({ slug }: ExploreProps) => {
 		null
 	);
 	const { setMenuItems, menuItems, setSelectedMenuItem } = useMenu();
-
 	const { setSubTitle } = useContext(SubTitleContext);
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				// api 각 요청하는 genre 1개씩만 리턴
 				const response: CATEGORY_LIST_RESPONSE | void = await getExploreAxios();
 				if (response) {
 					setCategories(response.CATEGORY);
@@ -33,17 +32,15 @@ const Explore = ({ slug }: ExploreProps) => {
 						setRecommendList(response.RECOMMEND_LIST[0]);
 					}
 
-					// 모든 카테고리의 키워드를 전역 메뉴 아이템으로 설정
-					console.log("response.CATEGORY", response.CATEGORY);
 					const newMenuItems = response.CATEGORY.flatMap((category) =>
-						category.KEWORD.map((keyword, index) => {
-							console.log("category ", keyword, index);
-							return {
-								exploreId: keyword.KEY,
-								name: keyword.NAME,
-								type: "explore",
-							} as TMenuItem;
-						})
+						category.KEWORD.map(
+							(keyword) =>
+								({
+									exploreId: keyword.KEY,
+									name: keyword.NAME,
+									type: "explore",
+								} as TMenuItem)
+						)
 					);
 					setMenuItems(newMenuItems);
 				}
@@ -53,18 +50,18 @@ const Explore = ({ slug }: ExploreProps) => {
 		};
 
 		fetchData();
-	}, [setMenuItems]);
+	}, []);
 
 	useEffect(() => {
 		if (menuItems.length > 0) {
-			setSubTitle(menuItems.find((menu) => `${menu.exploreId}` === slug)?.name);
-			setSelectedMenuItem(
-				slug
-					? menuItems.filter((menu) => `${menu.exploreId}` === slug)[0]
-					: menuItems[0]
+			const selectedMenu = menuItems.find(
+				(menu) => `${menu.exploreId}` === slug
 			);
+			setSubTitle(selectedMenu?.name);
+			setSelectedMenuItem(selectedMenu || menuItems[0]);
 		}
 	}, [menuItems]);
+
 	return (
 		<>
 			{recommendList && (
