@@ -1,4 +1,3 @@
-// TopNav.tsx
 "use client";
 import React, { useContext } from "react";
 import { usePathname } from "next/navigation";
@@ -7,12 +6,8 @@ import style from "./navigation.module.css";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
 import BlackButton from "../button/BlackButton";
 
-export const TopNav: React.FC = () => {
-	const currentRoute = usePathname();
-	const { subTitle } = useContext(SubTitleContext);
-
-	const pathname = usePathname();
-
+// 현재 경로에 대한 정보를 가져오는 함수를 컴포넌트 외부로 이동
+const getRouteInfo = (pathname: string) => {
 	const routeTitles: { [key: string]: { title: string; iconSrc: string } } = {
 		"/RS/main/": {
 			title: "홈",
@@ -27,19 +22,24 @@ export const TopNav: React.FC = () => {
 			iconSrc: "/images/icon/png/ico_RS_my.png",
 		},
 	};
-	// 현재 경로에 대한 정보를 가져오는 함수
-	const getRouteInfo = () => {
-		const routeKey = Object.keys(routeTitles).find((key) =>
-			pathname.startsWith(key)
-		);
-		if (routeKey !== undefined) {
-			const { title, iconSrc } = routeTitles[routeKey];
-			return { title, iconSrc };
-		} else {
-			return { title: "", iconSrc: "" };
-		}
-	};
-	const { title, iconSrc } = getRouteInfo();
+	const routeKey = Object.keys(routeTitles).find((key) =>
+		pathname.startsWith(key)
+	);
+	if (routeKey !== undefined) {
+		const { title, iconSrc } = routeTitles[routeKey];
+		return { title, iconSrc };
+	} else {
+		return { title: "", iconSrc: "" };
+	}
+};
+
+export const TopNav: React.FC = () => {
+	const currentRoute = usePathname();
+	const { subTitle } = useContext(SubTitleContext);
+
+	const pathname = usePathname();
+
+	const { title, iconSrc } = getRouteInfo(pathname);
 
 	let firstPath = true;
 
@@ -69,12 +69,12 @@ export const TopNav: React.FC = () => {
 				<BlackButton
 					buttonIcon="listRSPlay"
 					buttonText="전체재생"
-					onClick={() => console.log("전체재생이닷")}
+					onClick={() => {}}
 				/>
 				<BlackButton
 					buttonIcon="listRSShuffle"
 					buttonText="셔플재생"
-					onClick={() => console.log("셔플재생이닷")}
+					onClick={() => {}}
 				/>
 			</div>
 			<button type="button" className={style.logoRose}>

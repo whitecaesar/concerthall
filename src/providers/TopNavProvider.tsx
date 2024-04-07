@@ -1,21 +1,24 @@
-// TopNavProvider.tsx
 "use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
+// Define the structure of the navigation state
 interface NavigationState {
 	title: string;
 	iconSrc: string;
 }
 
+// Define the structure of the navigation context
 interface NavigationContextType {
 	navState: NavigationState;
 	setNavState: (state: NavigationState) => void;
 }
 
+// Create the navigation context
 const NavigationContext = createContext<NavigationContextType | undefined>(
 	undefined
 );
 
+// Provider component for the NavigationContext
 export const TopNavProvider: React.FC<{ children: ReactNode }> = ({
 	children,
 }) => {
@@ -31,6 +34,7 @@ export const TopNavProvider: React.FC<{ children: ReactNode }> = ({
 	);
 };
 
+// Custom hook to use the NavigationContext
 export const useNavigation = () => {
 	const context = useContext(NavigationContext);
 	if (context === undefined) {

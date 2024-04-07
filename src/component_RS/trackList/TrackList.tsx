@@ -30,7 +30,6 @@ function TrackList({
 					<li
 						key={item.ID}
 						onClick={() => {
-							//console.log("item title", item.TITLE);
 							setSubTitle(item.TITLE);
 						}}
 					>

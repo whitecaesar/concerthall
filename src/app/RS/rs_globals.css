@@ -363,4 +363,7 @@ nav[class*="subHide"] + [class*="leftSub"] + .rs-container {
 	nav[class*="subHide"] + [class*="leftSub"] + .rs-container {
 		padding-left: 50px;
 	}
+	[class*="leftBackButton"] + [class^="rs-container"] {
+		padding-left: 50px;
+	}
 }

@@ -7,25 +7,28 @@ import React, {
 	useEffect,
 } from "react";
 
+// Define the structure of the menu item
 export interface MenuItem {
-	mainId?: number; // main key 값
+	mainId?: number; // main key value
 	exploreId?: string;
 	myId?: string;
 	name: string;
 	type: string;
-	// index: number;
 	path?: string;
 }
 
+// Define the structure of the menu context
 interface MenuContextType {
 	menuItems: MenuItem[];
 	setMenuItems: (items: MenuItem[]) => void;
-	selectedMenuItem: MenuItem | null; // 추가: 현재 선택된 메뉴 아이템
-	setSelectedMenuItem: (item: MenuItem | null) => void; // 추가: 선택된 메뉴 아이템을 설정하는 함수
+	selectedMenuItem: MenuItem | null; // added: currently selected menu item
+	setSelectedMenuItem: (item: MenuItem | null) => void; // added: function to set the selected menu item
 }
 
+// Create the menu context
 const MenuContext = createContext<MenuContextType | undefined>(undefined);
 
+// Custom hook to use the MenuContext
 export const useMenu = () => {
 	const context = useContext(MenuContext);
 	if (context === undefined) {
@@ -34,11 +37,12 @@ export const useMenu = () => {
 	return context;
 };
 
+// Provider component for the MenuContext
 export const MenuProvider = ({ children }: { children: ReactNode }) => {
 	const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 	const [selectedMenuItem, setSelectedMenuItem] = useState<MenuItem | null>(
 		null
-	); // 상태 추가
+	); // added state
 
 	return (
 		<MenuContext.Provider

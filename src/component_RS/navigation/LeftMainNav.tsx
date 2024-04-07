@@ -16,7 +16,6 @@ export const LeftMainNav = () => {
 	const [exploreFirstIdx, setExploreFirstIdx] = useState<string | undefined>();
 	const [subHideActive, setSubHideActive] = useState<boolean>(false);
 	const { selectedMenuItem } = useMenu();
-
 	const mainData = useQuery({
 		queryKey: ["MAIN-BANNER"],
 		queryFn: getBannersAxios,
