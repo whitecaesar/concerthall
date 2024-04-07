@@ -3,7 +3,7 @@ import SubTitleProvider, { SubTitleContext } from "@/providers/SubTitleProvider"
 import Dropdown from "../atom/dropdown/dropdown";
 import { dropdownOptions } from "@/interface/DropdownType";
 import { getRecentAlbumAxios, ALBUM_RECENT_LIST_TYPE, ALBUM_RECENT_LIST_RESPONSE } from "@/services/contents/RecentAlbumAxios";
-import { useContext, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import RecentAlbumListViewAll from "../organism/albumList/RecentAlbumListViewAll";
 
 interface RecentAlbumViewAllProps {
@@ -19,7 +19,6 @@ export default function RecentAlbumViewAll(total : RecentAlbumViewAllProps) {
 		getRecentAlbumAxios('', total.totalCnt).then(data => 
 			setRecent(data)
 		);
-
 	}, []);
 
 	const handleRecentChange = (event : string) => {
@@ -47,7 +46,6 @@ export default function RecentAlbumViewAll(total : RecentAlbumViewAllProps) {
 	return (
 		<>
 			<SubTitleProvider>
-				{/* <PlayButtonGroup /> */}
 				<Dropdown options={dropdownOptions} onRecentChange={handleRecentChange} />
 				{recent&&<RecentAlbumListViewAll  recentViewAllList={recent} />}
 			</SubTitleProvider>

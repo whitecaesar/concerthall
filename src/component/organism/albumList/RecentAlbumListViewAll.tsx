@@ -19,7 +19,7 @@ export default function RecentAlbumListViewAll({
 }: AlbumListViewAllProps) {
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
-
+	
 	return (
 		<div className={style.albumListContainer}>
 			<ul className={`${style.albumList} ${style.noScroll}`}>
