@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import RoundPlayButton from "@/component/atom/button/RoundPlayButton";
 import RoundShuffleButton from "@/component/atom/button/RoundSuffleButton";
-import { ALBUM_DETAIL_TYPE } from "@/services/contents/TrackAxios";
+import { ALBUM_DETAIL_TYPE } from "@/services/contents/AlbumAxios";
 import style from "./detailInfo.module.css";
 
 interface DetailInfoProps {

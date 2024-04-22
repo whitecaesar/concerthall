@@ -6,6 +6,7 @@ import AlbumList from "../organism/albumList/AlbumList";
 import { useQuery } from "@tanstack/react-query";
 import { getBannersAxios } from "@/services/main/MainInfoAxios";
 import {
+	ARTIST_INFO_TYPE,
 	ITEM_INFO_TYPE,
 	VIEWALL_LIST_TYPE,
 } from "@/services/contents/ViewAllAxios";
@@ -21,33 +22,7 @@ import {
 import RecentAlbumList from "../organism/albumList/RecentAlbumList";
 import RecentPlayList from "../organism/singleList/RecentPlayList";
 
-/*
-import { setCookie, getCookie, deleteCookie } from "@/services/common";
-
-declare global {
-    interface Window {
-        userInfo:any;
-		logout:any;
-    }
-}
-*/
-
 export default function Main() {
-	/*
-	useEffect(() => {
-		window.userInfo = (token :any, app_type : any, loc : any) => {
-			setCookie("token", token, 2);
-			setCookie("app_type", app_type, 2);
-			setCookie("loc", loc, 2);
-		};
-
-		window.logout = () => {
-			deleteCookie("token");
-			deleteCookie("app_type");
-			deleteCookie("loc");
-		};
-	}, []);
-	*/
 
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
@@ -60,12 +35,12 @@ export default function Main() {
 	const [recent, setRecent] = useState<ALBUM_RECENT_LIST_RESPONSE>();
 	const [recentPlayList, setRecentPlayList] =
 		useState<PLAY_RECENT_LIST_RESPONSE>();
-	useEffect(() => {
+		useEffect(() => {
 		// const recent = ;
-		getRecentAlbumAxios("", 20).then((data) => setRecent(data));
+			getRecentAlbumAxios("", 20).then((data) => setRecent(data));
 
-		getRecentPlayListAxios("", 20).then((playdata) =>
-			setRecentPlayList(playdata)
+			getRecentPlayListAxios("", 20).then((playdata) =>
+				setRecentPlayList(playdata)
 		);
 	}, []);
 

@@ -26,7 +26,7 @@ export default function SingleItem({
 				<p className={style.title}>{singleInfo.TITLE}</p>
 			</Link>
 			<div className={style.bottomInfo}>
-				<p className={style.artist}>{singleInfo.ARTIST}</p>
+				<p className={style.artist}>{singleInfo.ARTIST?.artist_name}</p>
 				<div className={style.buttonGroup}>
 					<LikeButton />
 					<FuncButton method="single"/>

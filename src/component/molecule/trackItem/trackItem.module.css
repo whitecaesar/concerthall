@@ -8,7 +8,7 @@
 	padding: 12px 15px;
 }
 
-.trackItem a {
+.trackItem > span {
 	white-space: wrap;
 	word-break: break-all;
 	display: grid;

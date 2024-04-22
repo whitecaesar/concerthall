@@ -2,6 +2,7 @@
 
 import { formToJSON } from "axios";
 
+
 type Props = {
 	method : string
 }

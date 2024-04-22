@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE } from "../contents/ViewAllAxios";
+import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE, TVIEWALL_LIST_RESPONSE } from "../contents/ViewAllAxios";
 
 //텍스트 배너 타입
 export type TTXT_BANNER_RES = {
@@ -33,7 +33,7 @@ export type TMAIN_RESPONSE = {
 
 export async function getBannersAxios(): Promise<TMAIN_RESPONSE | void> {
 	const response = await axios.get(
-		"http://cip.ontown.co.kr/hch/info/home.json"
+		"http://cip.ontown.co.kr/hch/home/info.json"
 	);
 	if (response.status === 200) {
 		return response.data;
@@ -41,3 +41,5 @@ export async function getBannersAxios(): Promise<TMAIN_RESPONSE | void> {
 		throw new Error(`에러입니다.`);
 	}
 }
+
+

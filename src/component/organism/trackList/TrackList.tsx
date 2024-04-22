@@ -1,23 +1,23 @@
+"use client";
 import React from "react";
 import TrackItem from "@/component/molecule/trackItem/TrackItem";
-import { ALBUM_DETAIL_TYPE } from "@/services/contents/TrackAxios";
+import { ALBUM_DETAIL_TYPE } from "@/services/contents/AlbumAxios";
 
 interface TrackListProps {
-	trackList: ALBUM_DETAIL_TYPE[];
+	trackList: ALBUM_DETAIL_TYPE;
 }
 
 const TrackList = ({ trackList }: TrackListProps) => {
 	// 여기서는 첫 번째 앨범의 트랙 정보만 사용합니다.
-	const firstAlbumTracks = trackList[0]?.ITEM_INFO || [];
-
+	const AlbumTracks = trackList?.ITEM_INFO;
 	return (
 		<div className="trackListWrap">
 			<div className="trackNum">
-				<span>{firstAlbumTracks.length} Tracks</span>
+				<span>{AlbumTracks.length} Tracks</span>
 			</div>
 			<ul className="trackList">
-				{firstAlbumTracks.map((itemInfo, index) => (
-					<li key={`${trackList[0].ID}-${index}`}>
+				{AlbumTracks.map((itemInfo, index) => (
+					<li key={itemInfo.ID}>
 						<TrackItem trackInfo={itemInfo} />
 					</li>
 				))}
