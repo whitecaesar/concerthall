@@ -29,7 +29,7 @@ export default function RecentPlayListItem({
 			<div className={style.bottomInfo}>
 				<p className={style.artist}>{playListInfo.ownerName}</p>
 				<div className={style.buttonGroup}>
-					<LikeButton />
+					<LikeButton star={0}/>
 					<FuncButton method="single"/>
 					{/* 기능 로직 넣으세요. */}
 				</div>

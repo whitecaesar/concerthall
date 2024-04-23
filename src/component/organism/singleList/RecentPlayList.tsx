@@ -26,7 +26,7 @@ export default function RecentPlayList({
 }: RecentPlayListProps) {
 	const { setSubTitle } = useContext(SubTitleContext);
 
-	console.log("props--> ", recentList, "props ");
+	//console.log("props--> ", recentList, "props ");
 	return (
 		<div style={{ paddingBottom: "10px" }}>
 			<ItemListTitle.ViewAll

@@ -33,17 +33,17 @@ export type ALBUM_DETAIL_TYPE = {
 	ARTIST: ALBUM_ARTIST_INFO_TYPE;
 };
 
-export type TRACK_LIST_RESPONSE = {
+export type ALBUM_LIST_RESPONSE = {
 	idAlbum: string;
 	RES_CODE: string;
 	LIST: ALBUM_DETAIL_TYPE[];
 };
 
-export async function getTrackAxios(
+export async function getAlbumAxios(
 	idAlbum?: string // idAlbum 파라미터를 추가했습니다.
-): Promise<TRACK_LIST_RESPONSE> {
+): Promise<ALBUM_LIST_RESPONSE> {
 
-	const response: AxiosResponse<TRACK_LIST_RESPONSE> = await axios.get(
+	const response: AxiosResponse<ALBUM_LIST_RESPONSE> = await axios.get(
 		`http://cip.ontown.co.kr/hch/album/${idAlbum}/contents.json` // URL 구성을 동적으로 변경했습니다.
 	);
 

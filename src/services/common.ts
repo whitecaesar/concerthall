@@ -32,6 +32,9 @@ export function deleteCookie(name: string): void {
 
 export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, track : TRACK_ITEM_TYPE) {
 
+  console.log(playUrl);
+  console.log(track);
+
    const artistItem = {
     artist_id : track.ARTIST?.artist_id ,
     artist_name : track.ARTIST?.artist_name ,
@@ -57,7 +60,8 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
   };
 
   console.log(trackItem);
-  
+
+   
   const WebStreamTrackItem: any[] = [trackItem];
 
   const albumItem  = {   
@@ -87,21 +91,89 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
   let json_album_data: string = JSON.stringify(albumData);
 
   // 버튼 클릭 시 실행할 로직
-  if(type == 'artistMore')
-  {
-  //	console.log(json_track_data);
-    (window as any).HifiRose.webStreamArtistMoreClick(json_artist_data);
-  }
-  else if(type == 'albumMore')
-  {
-    (window as any).HifiRose.webStreamAlbumMoreClick(json_album_data);
-  }
-  else if(type == 'trackMore')
+  if(type == 'trackMore')
   {
   //	console.log(json_track_data);
     (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
   }
   else if(type == 'trackPlay')
+  {
+    (window as any).HifiRose.webStreamTrackClick(json_track_data);
+  }
+
+};
+
+export function funcAlbumPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, track : TRACK_ITEM_TYPE) {
+
+  console.log(playUrl);
+  console.log(track);
+
+   const artistItem = {
+    artist_id : track.ARTIST?.artist_id ,
+    artist_name : track.ARTIST?.artist_name ,
+    thumbnail : track.ARTIST?.thumbnail
+  };
+
+  const WebStreamArtistItem: any[] = [artistItem];
+
+  const trackItem = {
+    track_id : track.ID,
+    title : track.TITLE,
+    album_thumbnail : track.album_thumbnail,
+    thumbnail : track.THUMBNAIL,
+    url : playUrl?.INFO.URL,
+    playable : playUrl?.RES_CODE,
+    media_type : track.media_type,
+    album_id : track.album_id,
+    album_name : track.album_name,
+    artist : WebStreamArtistItem,
+    duration : track.data?.duration,
+    resolution : track.data?.resolution,
+    codec : track.data?.codec,
+  };
+
+  console.log(trackItem);
+
+   
+  const WebStreamTrackItem: any[] = [trackItem];
+
+  const albumItem  = {   
+    album_id : track.album_id,           
+    album_name : track.album_name,       
+    thumbnail : track.album_thumbnail,
+    tracks  : WebStreamTrackItem, 
+    artist  : WebStreamArtistItem 
+  }
+
+  const WebStreamAlbumItem: any[] = [albumItem];
+
+  const artistData = {
+    WebStreamArtistItem : WebStreamArtistItem
+  }
+  
+  const trackData = {
+    webstreamtrackitem : WebStreamTrackItem
+  }
+
+  const albumData = {
+    webstreamtrackitem : WebStreamAlbumItem
+  }
+
+  let json_artist_data: string = JSON.stringify(artistData);
+  let json_track_data: string = JSON.stringify(trackData);
+  let json_album_data: string = JSON.stringify(albumData);
+
+  // 버튼 클릭 시 실행할 로직
+  if(type == 'AlbumMore')
+  {
+  //	console.log(json_track_data);
+    (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+  }
+  else if(type == 'AlbumPlay')
+  {
+    (window as any).HifiRose.webStreamTrackClick(json_track_data);
+  }
+  else if(type == 'ShufflePlay')
   {
     (window as any).HifiRose.webStreamTrackClick(json_track_data);
   }

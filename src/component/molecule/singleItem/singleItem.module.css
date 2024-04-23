@@ -2,7 +2,7 @@
 	border-radius: 4px;
 }
 
-.singleItem a {
+.singleItem > span {
 	white-space: wrap;
 	word-break: break-all;
 }

@@ -9,7 +9,7 @@ export type ARTIST_INFO_TYPE = {
 
 export type ITEM_INFO_TYPE = {
 	NUM_THUMBUP?: number; //CITECH에서 제공 예정
-	ID: number;
+	ID: string;
 	THUMBNAIL: string;
 	TITLE: string;
 	ARTIST?: ARTIST_INFO_TYPE;

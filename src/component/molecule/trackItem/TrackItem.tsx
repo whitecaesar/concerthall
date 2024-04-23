@@ -18,12 +18,10 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 	const { data, isError, isLoading } = useQuery({
 		queryKey: ["PLAY-INFO"],
 		queryFn: () => {
-			const PlayInfo = getPlayInfoAxios(trackInfo.album_id, trackInfo.ID);
+			const PlayInfo = getPlayInfoAxios(trackInfo.ID);
 			return PlayInfo;
 		},
 	});
-
-	console.log(data);
 
 	if (isLoading) return <div>Loading...</div>;
 	if (isError || !data) return <div>Error occurred</div>;
@@ -44,7 +42,7 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 				<p className={style.artist}>{trackInfo.ARTIST?.artist_name}</p>
 			</span>
 			<div className={style.buttonGroup}>
-				<LikeButton />
+				<LikeButton star={0}/>
 				<FuncButton method="track"/>
 			</div>
 		</div>

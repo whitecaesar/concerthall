@@ -8,7 +8,7 @@ import FuncButton from "@/component/atom/button/FuncButton";
 const FuncButtonGroup = () => {
 	return (
 		<div className="FuncButtonGroup">
-			<LikeButton />
+			<LikeButton star={0} />
 			<Button
 				type="button"
 				icon="addFolder"

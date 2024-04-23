@@ -58,7 +58,6 @@ export default function Main() {
 			)}
 
 			{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
-				console.log(content);
 				return (
 					<>
 						{content.TYPE === "SINGLE" ? (
