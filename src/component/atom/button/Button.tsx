@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "../../../component_RS/button/icon/Icon";
+import Icon from "../icon/Icon";
 import style from "./button.module.css";
 
 type buttonPropsType = {

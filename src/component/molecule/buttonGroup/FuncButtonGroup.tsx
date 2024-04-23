@@ -11,10 +11,10 @@ const FuncButtonGroup = () => {
 			<LikeButton star={0} />
 			<Button
 				type="button"
-				icon="addFolder"
+				icon="iconShare"
 				onClick={() => console.log("Adding to playlist")}
 			/>
-			<FuncButton method="album"/>
+			<FuncButton method="album" />
 			{/* 기능 로직 넣으세요. */}
 			<style jsx>{`
 				.FuncButtonGroup {
