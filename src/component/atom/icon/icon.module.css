@@ -118,6 +118,11 @@
 	background-size: contain;
 }
 
+.iconShare {
+	background: url(/images/icon/png/icon_share.png) center center no-repeat;
+	background-size: contain;
+}
+
 .listShuffle {
 	width: 15px;
 	height: 15px;
