@@ -1,57 +1,44 @@
-import React from "react";
+import { funcAlbumPlayClick, funcTrackPlayClick } from "@/services/common";
+import { ALBUM_DETAIL_TYPE, TRACK_ITEM_TYPE } from "@/services/contents/AlbumAxios";
+import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
+import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
+import React, { useState } from "react";
 
-const RoundPlayButton = () => {
-	const playClick = () => {
-		// 버튼 클릭 시 실행할 로직
+interface allPlayProp {
+	AlbumItem : ALBUM_DETAIL_TYPE;	
+}
 
-		const artistItem = {
-			artist_id : "test1234" ,
-			artist_name : "artist" ,
-			thumbnail : "http://cip.ontown.co.kr/images/dummy/dummy_single.png"
-		};
-
-		const WebStreamArtistItem: any[] = [artistItem];
-
-		const trackItem = {
-			track_id : "test1234",
-			title : "test_track",
-			album_thumbnail : "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
-			thumbnail : "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
-			url : "http://movie.cinehotel.co.kr/movie/music.flac",
-			playable : "0000",
-			media_type : "audio",
-			album_id : "album_1234",
-			album_name : "test_album",
-			artist : WebStreamArtistItem,
-			duration : "",
-			resolution : "",
-			codec : "flac",
-		};
-
-		const WebStreamTrackItem: any[] = [trackItem];
-
-		const playData = {
-			webstreamtrackitem : WebStreamTrackItem
+const RoundPlayButton = ({AlbumItem} :allPlayProp) => {
+	const track = AlbumItem.ITEM_INFO;
+	function addPropertyToItemInfo(id :string, propertyName:string, propertyValue:string) {
+		const item = AlbumItem.ITEM_INFO.find(item => item.ID === id);
+		if (item) {
+		// 속성 추가
+			(item as any)[propertyName] = propertyValue;
 		}
-
-		let data: string = JSON.stringify(playData);
-		console.log(data);
-
-//		const jsonArray = JSON.parse(data);
-//		console.log(jsonArray);
-
-		(window as any).HifiRose.webStreamTrackClick(data);
-		//(window as any).HifiRose.webStreamTrackClick();
-
-		//console.log("트랙 처음부터 재생");
-	};
-
+	}
+	
+	const handleClick = async(trackItem : TRACK_ITEM_TYPE[]) => {
+		trackItem.forEach(async (item :ITEM_INFO_TYPE) => {
+			try {
+				const playInfo = getPlayInfoAxios(item.ID);
+				addPropertyToItemInfo(item.ID, 'playable_code',(await playInfo).RES_CODE);
+				addPropertyToItemInfo(item.ID, 'url',(await playInfo).INFO.URL);
+			} catch (error) {
+				console.error('Error fetching data for item', item.ID, error);
+			}
+		});
+	
+		AlbumItem.ITEM_INFO = trackItem;
+		funcAlbumPlayClick('ShufflePlay',AlbumItem);
+	}
+	
 	return (
 		<>
 			<button
 				type="button"
 				className="trackPlayBtn"
-				onClick={playClick}
+				onClick={()=> handleClick(track)}
 			></button>
 			<style jsx>{`
 				.trackPlayBtn {

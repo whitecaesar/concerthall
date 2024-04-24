@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { TRACK_ITEM_TYPE } from "./contents/AlbumAxios";
+import { ALBUM_DETAIL_TYPE, TRACK_ITEM_TYPE } from "./contents/AlbumAxios";
 import { PLAY_ITEM_RESPONSE, getPlayInfoAxios } from "./contents/PlayInfoAxios";
+import { ITEM_INFO_TYPE } from "./contents/ViewAllAxios";
 
 export function setCookie(name: string, value: string, days: number) {
 	let expires = "";
@@ -103,49 +104,46 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
 
 };
 
-export function funcAlbumPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, track : TRACK_ITEM_TYPE) {
+export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
 
-  console.log(playUrl);
-  console.log(track);
-
-   const artistItem = {
-    artist_id : track.ARTIST?.artist_id ,
-    artist_name : track.ARTIST?.artist_name ,
-    thumbnail : track.ARTIST?.thumbnail
+  const albumArtistItem = {
+    artist_id : album.ARTIST?.artist_id ,
+    artist_name : album.ARTIST?.artist_name ,
+    thumbnail : album.ARTIST?.thumbnail
   };
 
-  const WebStreamArtistItem: any[] = [artistItem];
+  const WebStreamArtistItem: any[] = [albumArtistItem];
 
-  const trackItem = {
-    track_id : track.ID,
-    title : track.TITLE,
-    album_thumbnail : track.album_thumbnail,
-    thumbnail : track.THUMBNAIL,
-    url : playUrl?.INFO.URL,
-    playable : playUrl?.RES_CODE,
-    media_type : track.media_type,
-    album_id : track.album_id,
-    album_name : track.album_name,
-    artist : WebStreamArtistItem,
-    duration : track.data?.duration,
-    resolution : track.data?.resolution,
-    codec : track.data?.codec,
-  };
+  const WebStreamTrackItem: any[] = [];
 
-  console.log(trackItem);
+  album?.ITEM_INFO.forEach(async (item :TRACK_ITEM_TYPE) => {
+    const trackItem = {
+      track_id : item.ID,
+      title : item.TITLE,
+      album_thumbnail : item.album_thumbnail,
+      thumbnail : item.THUMBNAIL,
+      url : item.url,
+      playable_code : item.playable_code,
+      media_type : item.media_type,
+      album_id : item.album_id,
+      album_name : item.album_name,
+      artist : item.ARTIST,
+      duration : item.data?.duration,
+      resolution : item.data?.resolution,
+      codec : item.data?.codec,
+    };
+    WebStreamTrackItem.push(trackItem);
+  });
 
-   
-  const WebStreamTrackItem: any[] = [trackItem];
-
-  const albumItem  = {   
-    album_id : track.album_id,           
-    album_name : track.album_name,       
-    thumbnail : track.album_thumbnail,
+  const WebStreamAlbumItem  = {   
+    album_id : album.ID,           
+    album_name : album.TITLE,       
+    thumbnail : album.THUMBNAIL,
     tracks  : WebStreamTrackItem, 
     artist  : WebStreamArtistItem 
   }
 
-  const WebStreamAlbumItem: any[] = [albumItem];
+  //const WebStreamAlbumItem: any[] = [albumItem];
 
   const artistData = {
     WebStreamArtistItem : WebStreamArtistItem
@@ -156,7 +154,7 @@ export function funcAlbumPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
   }
 
   const albumData = {
-    webstreamtrackitem : WebStreamAlbumItem
+    WebStreamAlbumItem : WebStreamAlbumItem
   }
 
   let json_artist_data: string = JSON.stringify(artistData);
@@ -167,15 +165,15 @@ export function funcAlbumPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
   if(type == 'AlbumMore')
   {
   //	console.log(json_track_data);
-    (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+    (window as any).HifiRose.webStreamAlbumMoreClick(json_album_data);
   }
   else if(type == 'AlbumPlay')
   {
-    (window as any).HifiRose.webStreamTrackClick(json_track_data);
+    (window as any).HifiRose.webStreamAlbumClick(json_track_data, json_album_data , false);
   }
   else if(type == 'ShufflePlay')
   {
-    (window as any).HifiRose.webStreamTrackClick(json_track_data);
+    (window as any).HifiRose.webStreamAlbumClick(json_track_data, json_album_data , true);
   }
 
 };

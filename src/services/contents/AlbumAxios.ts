@@ -21,8 +21,10 @@ export type TRACK_ITEM_TYPE = {
 	media_type?: string;
 	album_id: string;
 	album_name: string;
-	album_thumbnail? : string;
-	data? : ALBUM_DATA_INFO_TYPE;
+	album_thumbnail?: string;
+	data?: ALBUM_DATA_INFO_TYPE;
+	playable_code?: string;
+	url?: string;
 };
 export type ALBUM_DETAIL_TYPE = {
 	ID: string;

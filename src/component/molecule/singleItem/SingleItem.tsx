@@ -17,7 +17,7 @@ export default function SingleItem({
 	singleInfo: ITEM_INFO_TYPE;
 }) {
 
-	const { data, isError, isLoading } = useQuery({
+	const { data : trackData, isError, isLoading } = useQuery({
 		queryKey: ["TRACK-LIST"],
 		queryFn: () => {
 			const TrackItem = getTrackAxios(singleInfo.ID);
@@ -25,7 +25,7 @@ export default function SingleItem({
 		},
 	});
 	
-	const { data :TarckData, isError: TrackError, isLoading: trackLoding } = useQuery({
+	const { data :playData, isError: playError, isLoading: playLoding } = useQuery({
 		queryKey: ["PLAY-INFO"],
 		queryFn: () => {
 			const PlayInfo = getPlayInfoAxios(singleInfo.ID);
@@ -33,12 +33,12 @@ export default function SingleItem({
 		},
 	});
 
-	if (isLoading || trackLoding ) return <div>Loading...</div>;
-	if (isError || TrackError || !TarckData || !data) return <div>Error occurred</div>;
+	if (isLoading || playLoding ) return <div>Loading...</div>;
+	if (isError || playError || !playData || !trackData) return <div>Error occurred</div>;
 
 	return (
 		<div className={style.singleItem} id={`${singleInfo.ID}`}>
-			<span onClick={() => funcTrackPlayClick('trackPlay',TarckData, data.TRACK_INFO)}>
+			<span onClick={() => funcTrackPlayClick('trackPlay',playData, trackData.TRACK_INFO)}>
 				<Image
 					src={singleInfo.THUMBNAIL}
 					alt={singleInfo.TITLE}
@@ -53,7 +53,7 @@ export default function SingleItem({
 				<p className={style.artist}>{singleInfo.ARTIST?.artist_name}</p>
 				<div className={style.buttonGroup}>
 					<LikeButton star={0} />
-					<FuncButton method="trackMore" track_info={data} play_info={TarckData}/>
+					<FuncButton method="trackMore" track_info={trackData} play_info={playData}/>
 					{/* 기능 로직 넣으세요. */}
 				</div>
 			</div>

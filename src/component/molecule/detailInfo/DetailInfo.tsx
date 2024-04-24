@@ -33,7 +33,7 @@ const DetailInfo = ({ detailInfo }: DetailInfoProps) => {
 					<p>{detailInfo.TITLE}</p>
 				</div>
 				<div className={style.buttonGroup}>
-					<RoundPlayButton />
+					<RoundPlayButton AlbumItem={detailInfo}/>
 					<RoundShuffleButton />
 				</div>
 			</div>

@@ -25,7 +25,7 @@ type Props = {
 	  if (method === 'trackMore') {
 		funcTrackPlayClick(method, play_info, track_info.TRACK_INFO);
 	  } else {
-		funcAlbumPlayClick(method, play_info, track_info.TRACK_INFO);
+		//funcAlbumPlayClick(method, play_info, track_info.TRACK_INFO);
 	  }
 	};
   
