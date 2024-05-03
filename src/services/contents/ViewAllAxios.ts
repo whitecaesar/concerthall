@@ -15,6 +15,7 @@ export type ITEM_INFO_TYPE = {
 	ARTIST?: ARTIST_INFO_TYPE;
 	GENRE?: string;
 	TOTAL_NUM_TRACK?: number;
+	star?: number;
 };
 
 export type VIEWALL_LIST_TYPE = {

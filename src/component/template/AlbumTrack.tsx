@@ -29,7 +29,7 @@ export default function AlbumTrack(album : AlbumTrackProps) {
 	return (
 		<>
 			<DetailInfo detailInfo={AlbumItem} />
-			<FuncButtonGroup />
+			<FuncButtonGroup AlbumItem={AlbumItem}/>
 			{AlbumItem && <TrackList trackList={AlbumItem} />}
 		</>
 	);

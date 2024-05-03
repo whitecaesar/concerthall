@@ -1,17 +1,44 @@
+import { funcAlbumPlayClick } from "@/services/common";
+import { ALBUM_DETAIL_TYPE, TRACK_ITEM_TYPE } from "@/services/contents/AlbumAxios";
+import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
+import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
 import React from "react";
 
-const RoundShuffleButton = () => {
-	const playClick = () => {
-		// 버튼 클릭 시 실행할 로직
-		console.log("트랙 셔플로 재생");
-	};
+interface allPlayProp {
+	AlbumItem : ALBUM_DETAIL_TYPE;	
+}
+
+const RoundShuffleButton = ({AlbumItem} :allPlayProp) => {
+	const track = AlbumItem.ITEM_INFO;
+	function addPropertyToItemInfo(id :string, propertyName:string, propertyValue:string) {
+		const item = AlbumItem.ITEM_INFO.find(item => item.ID === id);
+		if (item) {
+		// 속성 추가
+			(item as any)[propertyName] = propertyValue;
+		}
+	}
+
+	const handleClick = async(trackItem : TRACK_ITEM_TYPE[]) => {
+		trackItem.forEach(async (item :ITEM_INFO_TYPE) => {
+			try {
+				const playInfo = getPlayInfoAxios(item.ID);
+				addPropertyToItemInfo(item.ID, 'playable_code',(await playInfo).RES_CODE);
+				addPropertyToItemInfo(item.ID, 'url',(await playInfo).INFO.URL);
+			} catch (error) {
+				console.error('Error fetching data for item', item.ID, error);
+			}
+		});
+	
+		AlbumItem.ITEM_INFO = trackItem;
+		funcAlbumPlayClick('AlbumPlay',AlbumItem);
+	}
 
 	return (
 		<>
 			<button
 				type="button"
 				className="trackShuffleBtn"
-				onClick={playClick}
+				onClick={()=> handleClick(track)}
 			></button>
 			<style jsx>{`
 				.trackShuffleBtn {

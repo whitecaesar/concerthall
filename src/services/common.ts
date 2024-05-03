@@ -2,6 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { ALBUM_DETAIL_TYPE, TRACK_ITEM_TYPE } from "./contents/AlbumAxios";
 import { PLAY_ITEM_RESPONSE, getPlayInfoAxios } from "./contents/PlayInfoAxios";
 import { ITEM_INFO_TYPE } from "./contents/ViewAllAxios";
+import { TRACK_RECENT_ITEM_TYPE } from "./contents/RecentTrackListAxios";
+
+export const MediaType = 'QOBUZ';
 
 export function setCookie(name: string, value: string, days: number) {
 	let expires = "";
@@ -12,8 +15,6 @@ export function setCookie(name: string, value: string, days: number) {
 	}
 	document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
-
-
 
 export function getCookie(name: string): string | undefined {
     const nameEQ = name + "=";
@@ -101,6 +102,10 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
   {
     (window as any).HifiRose.webStreamTrackClick(json_track_data);
   }
+  else if(type == 'trackShare')
+  {
+    (window as any).HifiRose.webStreamGotoShareTrack(json_track_data);
+  }
 
 };
 
@@ -157,6 +162,9 @@ export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
     WebStreamAlbumItem : WebStreamAlbumItem
   }
 
+  console.log(trackData);
+  console.log(albumData);
+
   let json_artist_data: string = JSON.stringify(artistData);
   let json_track_data: string = JSON.stringify(trackData);
   let json_album_data: string = JSON.stringify(albumData);
@@ -175,5 +183,65 @@ export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
   {
     (window as any).HifiRose.webStreamAlbumClick(json_track_data, json_album_data , true);
   }
+  else if(type == 'AlbumShare')
+  {
+    (window as any).HifiRose.webStreamGotoShareAlbum(json_album_data);
+  }
 
+};
+
+
+export function funcRecentTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, track : TRACK_RECENT_ITEM_TYPE) {
+/*
+  const albumArtistItem = {
+    artist_id : track.data.album.artist.id,
+    artist_name : track.data.album.artist_name ,
+    alubms_count : album.ARTIST?.thumbnail
+  };
+
+  const WebStreamArtistItem: any[] = [albumArtistItem];
+
+  const trackItem = {
+    id : track.id,
+    title : track.title,
+    type : track.type,
+    sort : track.sort,
+    playlistId : null,
+    favorite : track.favorite,
+    ownerId : track.ownerId,
+    ownerName : track.ownerName,
+    star : track.star,
+    comment : track.comment,
+    thumnailUrl : track.thumbnailUrl,
+    playUrl : playUrl?.INFO.URL,
+    clientKey : track.id,
+    duration : track.duration,
+    albums : [],
+    artists
+  };
+
+  console.log(trackItem);
+*/
+
+  track.playUrl = playUrl?.INFO.URL;
+   
+  const WebStreamTrackItem: any[] = [track];
+
+  
+  const trackData = {
+    webstreamtrackitem : WebStreamTrackItem
+  }
+
+  let json_track_data: string = JSON.stringify(trackData);
+ 
+  // 버튼 클릭 시 실행할 로직
+  if(type == 'recentTrackMore')
+  {
+  //	console.log(json_track_data);
+    (window as any).HifiRose.webStreamTotalHomeMoreClick(json_track_data, 0, true);
+  }
+  else if(type == 'recentTrackPlay')
+  {
+    (window as any).HifiRose.webStreamTotalHomeTrackClick(json_track_data);
+  }
 };

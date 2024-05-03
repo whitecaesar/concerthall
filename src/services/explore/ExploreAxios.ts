@@ -20,7 +20,7 @@ export type CATEGORY_LIST_RESPONSE = {
 
 export async function getExploreAxios(): Promise<CATEGORY_LIST_RESPONSE> {
 	const response: AxiosResponse = await axios.get(
-		"http://cip.ontown.co.kr/hch/info/recom.json"
+		"http://cip.ontown.co.kr/hch/recom/info.json"
 	);
 
 	if (response.status === 200) {

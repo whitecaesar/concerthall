@@ -5,7 +5,7 @@ export default function page() {
 	return (
 		<SubTitleProvider>
 			<div className="detailPage">
-				<AlbumDetail />
+				<AlbumDetail album_id=""/>
 			</div>
 		</SubTitleProvider>
 	);

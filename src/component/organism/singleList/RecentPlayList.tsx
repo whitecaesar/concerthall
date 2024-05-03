@@ -31,11 +31,11 @@ export default function RecentPlayList({
 		<div style={{ paddingBottom: "10px" }}>
 			<ItemListTitle.ViewAll
 				isPresent={true}
-				text='최근 플레이 리스트'
+				text='최근 재생 플레이 리스트'
 				count={totalCount}
 				href={`/detail/recentPlayList?totalcount=${totalCount}`}
 				onClick={() => {
-					setSubTitle('최근 플레이 리스트');
+					setSubTitle('최근 재생 플레이 리스트');
 				}}
 			/>
 			<ul className={style.singleList}>

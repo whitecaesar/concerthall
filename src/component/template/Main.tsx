@@ -21,6 +21,8 @@ import {
 } from "@/services/contents/RecentPlayListAxios";
 import RecentAlbumList from "../organism/albumList/RecentAlbumList";
 import RecentPlayList from "../organism/singleList/RecentPlayList";
+import { TRACK_RECENT_LIST_RESPONSE, getRecentTrackListAxios } from "@/services/contents/RecentTrackListAxios";
+import RecentTrackList from "../organism/singleList/RecentTrackList";
 
 export default function Main() {
 
@@ -33,15 +35,15 @@ export default function Main() {
 	});
 
 	const [recent, setRecent] = useState<ALBUM_RECENT_LIST_RESPONSE>();
-	const [recentPlayList, setRecentPlayList] =
-		useState<PLAY_RECENT_LIST_RESPONSE>();
-		useEffect(() => {
+	const [recentPlayList, setRecentPlayList] = useState<PLAY_RECENT_LIST_RESPONSE>();
+	const [recentTrackList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
+	useEffect(() => {
 		// const recent = ;
 			getRecentAlbumAxios("", 20).then((data) => setRecent(data));
 
-			getRecentPlayListAxios("", 20).then((playdata) =>
-				setRecentPlayList(playdata)
-		);
+			getRecentPlayListAxios("", 20).then((playdata) => setRecentPlayList(playdata));
+
+			getRecentTrackListAxios("", 20).then((trackdata) =>	setRecentTrackList(trackdata));
 	}, []);
 
 	return (
@@ -52,6 +54,10 @@ export default function Main() {
 
 			{/* 여기에 한출 추가 */}
 			{recent && <RecentAlbumList showTitle={true} recommendList={recent} />}
+
+			{recentTrackList && (
+				<RecentTrackList showTitle={true} recommendList={recentTrackList} />
+			)}
 
 			{recentPlayList && (
 				<RecentPlayList showTitle={true} recommendList={recentPlayList} />

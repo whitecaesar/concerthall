@@ -2,19 +2,18 @@
 import React, { useState, useEffect } from "react";
 
 interface LikeButtonProps {
-  star: number;
+  starPoint: number;
 }
 
-const LikeButton = ({ star } : LikeButtonProps) => {
+const LikeButton = ({ starPoint } : LikeButtonProps) => {
   const likeClick = () => {
     // num 상태를 업데이트하는 함수, num 값이 0에서 3 사이를 순환
 //    setNumber((likeNum) => (likeNum + 1) % 4);
   };
-  console.log(star);
 
   return (
     <>
-      <button onClick={likeClick} className={`likeBtn${star}`}></button>
+      <button onClick={likeClick} className={`likeBtn${starPoint}`}></button>
       <style jsx>{`
         .likeBtn0,
         .likeBtn1,

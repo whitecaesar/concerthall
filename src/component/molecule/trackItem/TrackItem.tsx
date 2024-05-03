@@ -51,7 +51,7 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 				<p className={style.artist}>{trackInfo.ARTIST?.artist_name}</p>
 			</span>
 			<div className={style.buttonGroup}>
-				<LikeButton star={0}/>
+				<LikeButton starPoint={0}/>
 				<FuncButton method="trackMore" track_info={trackData} play_info={playData}/>
 			</div>
 		</div>

@@ -49,7 +49,7 @@ function TrackList({
 									<div className={style.titleWrap}>
 										<p className={style.title}>{item.TITLE}</p>
 									</div>
-									<p className={style.artist}>{item.ARTIST}</p>
+									<p className={style.artist}>{item.ARTIST?.artist_name}</p>
 									<p className={style.bottomDetail}>
 										<span>3:50</span>
 										<span className={style.bar}></span>

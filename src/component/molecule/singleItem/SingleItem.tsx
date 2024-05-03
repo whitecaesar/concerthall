@@ -12,7 +12,7 @@ import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 
 
 export default function SingleItem({
-	singleInfo,
+	singleInfo
 }: {
 	singleInfo: ITEM_INFO_TYPE;
 }) {
@@ -52,7 +52,7 @@ export default function SingleItem({
 			<div className={style.bottomInfo}>
 				<p className={style.artist}>{singleInfo.ARTIST?.artist_name}</p>
 				<div className={style.buttonGroup}>
-					<LikeButton star={0} />
+					<LikeButton starPoint={singleInfo.star || 0} />
 					<FuncButton method="trackMore" track_info={trackData} play_info={playData}/>
 					{/* 기능 로직 넣으세요. */}
 				</div>
