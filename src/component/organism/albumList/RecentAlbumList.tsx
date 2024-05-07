@@ -50,10 +50,12 @@ const RecentAlbumList = ({
 					<li key={item.album.id}>
 						<RecentAlbumItem
 							albumInfo={item.album}
+							/*
 							onClick={() => {
 								setSubTitle(item.album.title);
 								router.push(`/detail/album/track/${item.album.id}`);
 							}}
+							*/
 						/>
 					</li>
 				))}

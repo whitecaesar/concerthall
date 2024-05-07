@@ -245,3 +245,9 @@ export function funcRecentTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPON
     (window as any).HifiRose.webStreamTotalHomeTrackClick(json_track_data);
   }
 };
+
+
+export function funcThumUpClick()
+{
+  
+}
