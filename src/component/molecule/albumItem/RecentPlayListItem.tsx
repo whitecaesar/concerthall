@@ -15,7 +15,7 @@ interface PlayListItemProps {
 const RecentPlayListItem = ({ playListInfo, onClick }: PlayListItemProps) => {
 	return (
 		<div className={style.albumItem} onClick={onClick}>
-			<Link href={`/detail/album/track/${playListInfo.id}`}>
+			<Link href={`/detail/playList/track/${playListInfo.id}`}>
 				<Image
 					src={playListInfo.thumbnail}
 					alt={playListInfo.title}

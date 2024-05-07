@@ -53,10 +53,10 @@ const FuncButtonGroup = ({ AlbumItem, pageType }: ShareInfoProps) => {
 
 	return (
 		<div className="FuncButtonGroup">
-			{pageType === "ArtistPage" ? (
-				<LikeButton starPoint={0} />
-			) : (
+			{pageType === "PlayListPage" ? (
 				<ThumbupButton />
+			) : (
+				<LikeButton starPoint={0} />
 			)}
 			<Button
 				type="button"

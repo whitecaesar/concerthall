@@ -1,10 +1,20 @@
 "use client";
 import React, { useState } from "react";
 
-const ThumbupButton = () => {
-	const [isActive, setIsActive] = useState(false);
+const ThumbupButton = (status? : boolean) => {
+	const [isActive, setIsActive] = useState(status);
+
 	const toggleButton = () => {
 		setIsActive(!isActive);
+		console.log(isActive);
+		if(!isActive)
+		{
+			/* 취소 처리 */
+		}
+		else
+		{
+			/* 등록 처리 */
+		}
 	};
 
 	return (

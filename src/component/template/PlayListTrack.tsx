@@ -1,22 +1,23 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { ALBUM_LIST_RESPONSE, getAlbumAxios} from "@/services/contents/AlbumAxios";
+import {getAlbumAxios} from "@/services/contents/AlbumAxios";
 import DetailInfo from "../molecule/detailInfo/DetailInfo";
 import FuncButtonGroup from "../molecule/buttonGroup/FuncButtonGroup";
 import TrackList from "@/component/organism/trackList/TrackList";
+import PLTrackList from "../organism/trackList/PLTrackList";
 
-interface AlbumTrackProps {
-	album_id: string;
+interface PlayListTrackProps {
+	playList_id: string;
 	func_type? : string;
 }
 
-export default function AlbumTrack({album_id, func_type} : AlbumTrackProps) {
+export default function PlayListTrack({playList_id, func_type} : PlayListTrackProps) {
 	// useQuery 호출을 옵션 객체를 사용하는 형태로 수정
 
 	const { data, isError, isLoading } = useQuery({
 		queryKey: ["ALBUM-ITEM"],
 		queryFn: () => {
-			const TrackList = getAlbumAxios(album_id);
+			const TrackList = getAlbumAxios(playList_id);
 			return TrackList;
 		},
 	});
@@ -30,8 +31,8 @@ export default function AlbumTrack({album_id, func_type} : AlbumTrackProps) {
 	return (
 		<>
 			<DetailInfo detailInfo={AlbumItem} />
-			<FuncButtonGroup AlbumItem={AlbumItem}/>
-			{AlbumItem && <TrackList trackList={AlbumItem} />}
+			<FuncButtonGroup AlbumItem={AlbumItem} pageType={'PlayListPage'}/>
+			{AlbumItem && <PLTrackList trackList={AlbumItem} />}
 		</>
 	);
 
