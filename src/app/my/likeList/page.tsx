@@ -1,12 +1,11 @@
-import SingleViewAll from "@/component/template/SingleViewAll";
-import SubTitleProvider from "@/providers/SubTitleProvider";
+import LikeList from "@/component/organism/likeList/LikeList";
 
-export default function LikeList() {
+export default function LikeListPage() {
 	return (
-		<div className="likeListPage">
-			<SubTitleProvider>
-				<SingleViewAll />
-			</SubTitleProvider>
-		</div>
+		<>
+			<div className="playListPage" style={{ paddingBottom: "20px" }}>
+				<LikeList album_id={"0"} />
+			</div>
+		</>
 	);
 }

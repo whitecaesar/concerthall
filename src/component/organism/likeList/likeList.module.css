@@ -1,0 +1,21 @@
+.tab {
+	overflow: hidden;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.tab button {
+	cursor: pointer;
+	padding: 5px 10px;
+	transition: background-color 0.3s;
+	color: #fff;
+	border-radius: 30px;
+	font-size: 13px;
+	border: 1px solid #121212;
+}
+
+.tab button.active {
+	border: 1px solid var(--mainColor);
+	color: var(--mainColor);
+}
