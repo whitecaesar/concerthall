@@ -60,3 +60,4 @@ export async function getRecentPlayListAxios(
 		throw new Error(`에러입니다. ${response.status}`);
 	}
 }
+

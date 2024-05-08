@@ -16,24 +16,9 @@ type Props = {
 	recent_track_info?: TRACK_RECENT_ITEM_TYPE;
   }
   
-  const FuncButton = ({ method, track_info, play_info, album_info, recent_track_info }: Props) => {
+  const AlbumFuncButton = () => {
 
 	const handleClick = () => {
-		  /*
-	  if (method === 'trackMore') {
-		if (!track_info || !play_info) {
-			console.error("Track info or Play info is missing!");
-			return; // 에러 메시지 출력하고 함수 종료
-		}
-		funcTrackPlayClick(method, play_info, track_info.TRACK_INFO);
-	  } else if(method == 'recentTrackMore') {
-		if (!recent_track_info || !play_info) {
-			console.error("recent_track info or Play info is missing!");
-			return; // 에러 메시지 출력하고 함수 종료
-		}
-		funcTrackPlayClick(method, play_info, recent_track_info);
-	  }
-	    */
 	};
 
 	return (
@@ -56,4 +41,4 @@ type Props = {
 	);
   };
   
-  export default FuncButton;
+  export default AlbumFuncButton;

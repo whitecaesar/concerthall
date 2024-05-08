@@ -4,9 +4,9 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import style from "./albumItem.module.css";
-import Icon from "@/component/atom/icon/Icon";
-import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
 import {ALBUM_RECENT_ITEM_TYPE} from "@/services/contents/RecentAlbumAxios";
+import AlbumLikeButton from "@/component/atom/button/AlbumLikeButton";
+import AlbumFuncButton from "@/component/atom/button/AlbumFuncButton";
 
 interface AlbumItemProps {
 	albumInfo: ALBUM_RECENT_ITEM_TYPE;
@@ -26,13 +26,6 @@ const RecentAlbumItem = ({ albumInfo, onClick }: AlbumItemProps) => {
 					className={style.thumbnail}
 				/>
 				<p className={style.title}>{albumInfo.title}</p>
-				<div className={style.bottomInfo}>
-					<span className={style.thumbupCnt}>
-						<Icon iconName="thumbUp" /> {albumInfo.star}
-					</span>
-					<span className={style.bar}></span>
-					<span>12곡</span>
-				</div>
 			</Link>
 		</div>
 	);

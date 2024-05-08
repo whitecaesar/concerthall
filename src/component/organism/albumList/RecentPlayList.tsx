@@ -32,7 +32,7 @@ const RecentPlayList = ({
 					count={totalCount}
 					href={`/detail/recentPlayList?totalcount=${totalCount}`}
 					onClick={() => {
-						setSubTitle('최근 재생 플레이 리스트');
+							setSubTitle('최근 재생 플레이 리스트');
 					}}
 				/>
 			)}
@@ -42,12 +42,9 @@ const RecentPlayList = ({
 					<li key={item.playlist.id}>
 						<RecentPlayListItem
 							playListInfo={item.playlist}
-							/*
 							onClick={() => {
-								setSubTitle(item.album.title);
-								router.push(`/detail/album/track/${item.album.id}`);
+								setSubTitle(item.playlist.title);
 							}}
-							*/
 						/>
 					</li>
 				))}

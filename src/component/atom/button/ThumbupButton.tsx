@@ -1,19 +1,29 @@
 "use client";
-import React, { useState } from "react";
+import { setPLLIKEAxios } from "@/services/contents/PLLikeAxio";
+import React, { useEffect, useState } from "react";
 
-const ThumbupButton = (status? : boolean) => {
+interface thumbupProp {
+	status: boolean;
+	targetId : string;
+}
+const ThumbupButton = ({status,targetId} : thumbupProp) => {
 	const [isActive, setIsActive] = useState(status);
-
 	const toggleButton = () => {
-		setIsActive(!isActive);
-		console.log(isActive);
 		if(!isActive)
 		{
-			/* 취소 처리 */
+			/* 안좋아요 */
+			const param = {	targetId:targetId, 
+							type:'PLAY_LIST',
+							thumbup:true}
+			setPLLIKEAxios(param).then(data => data.code == '200'?setIsActive(true):alert('error'));
 		}
 		else
 		{
-			/* 등록 처리 */
+			/* 좋아요 */
+			const param = {	targetId:targetId, 
+							type:'PLAY_LIST',
+							thumbup:false}
+			setPLLIKEAxios(param).then(data => data.code == '200'?setIsActive(false):alert('error'));
 		}
 	};
 

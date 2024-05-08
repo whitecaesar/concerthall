@@ -1,37 +1,22 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
-import LikeButton from "@/component/atom/button/LikeButton";
-import FuncButton from "@/component/atom/button/FuncButton";
 import style from "./singleItem.module.css";
-import { TRACK_RECENT_ITEM_TYPE } from "@/services/contents/RecentTrackListAxios";
-import { useQuery } from "@tanstack/react-query";
-import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
-import { funcRecentTrackPlayClick } from "@/services/common";
-
-
+import { funcPlayListTrackClick} from "@/services/common";
+import PLTFuncButton from "@/component/atom/button/PLTFuncButton";
+import { PLAYLIST_TRACK_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
+import PLTLikeButton from "@/component/atom/button/PLTLikeButton";
 
 export default function RecentTrackListItem({
 	trackListInfo,
+	position
 }: {
-	trackListInfo: TRACK_RECENT_ITEM_TYPE;
+	trackListInfo: PLAYLIST_TRACK_ITEM_TYPE;
+	position:number;
 }) {
 
-    const { data :playData, isError: playError, isLoading: playLoding } = useQuery({
-		queryKey: ["PLAY-INFO"],
-		queryFn: () => {
-			const PlayInfo = getPlayInfoAxios(trackListInfo.id);
-			return PlayInfo;
-		},
-	});
-
-    if (playLoding ) return <div>Loading...</div>;
-	if (playError || !playData) return <div>Error occurred</div>;
-
-    
 	return (
 		<div className={style.singleItem} id={`${trackListInfo.id}`}>
-			<span onClick={() => funcRecentTrackPlayClick('recentTrackPlay',playData, trackListInfo)}>
+			<span onClick={() => funcPlayListTrackClick('play', trackListInfo, position)}>
 				<Image
 					src={trackListInfo.thumbnailUrl}
 					alt={trackListInfo.title}
@@ -43,10 +28,10 @@ export default function RecentTrackListItem({
 				<p className={style.title}>{trackListInfo.title}</p>
 			</span>
 			<div className={style.bottomInfo}>
-				<p className={style.artist}></p>
+				<p className={style.artist}>{trackListInfo.arists}</p>
 				<div className={style.buttonGroup}>
-					<LikeButton starPoint={0}/>
-					<FuncButton method="recentTrackMore" recent_track_info={trackListInfo} play_info={playData} />
+					<PLTLikeButton starPoint={trackListInfo.star} track_id={trackListInfo.id}/>
+					<PLTFuncButton trackItem={trackListInfo} position={position}/>
 					{/* 기능 로직 넣으세요. */}
 				</div>
 			</div>

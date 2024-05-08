@@ -40,21 +40,19 @@ export default function Main() {
 	useEffect(() => {
 		// const recent = ;
 			getRecentAlbumAxios("", 20).then((data) => setRecent(data));
-
 			getRecentPlayListAxios("", 20).then((playdata) => setRecentPlayList(playdata));
-
 			getRecentTrackListAxios("", 20).then((trackdata) =>	setRecentTrackList(trackdata));
 	}, []);
 
 	return (
 		<>
+			
 			<ImageBanner list={data?.IMG_BANNER} isFetched={isFetched} />
 			<TextBanner banner={data?.TXT_BANNER[0]} isFetched={isFetched} />
 
 			{recentPlayList && (<RecentPlayList showTitle={true} recommendList={recentPlayList} />)}
-			{recent && <RecentAlbumList showTitle={true} recommendList={recent} />}
+			{/*recent && <RecentAlbumList showTitle={true} recommendList={recent} />*/}
 			{recentTrackList && (<RecentTrackList showTitle={true} recommendList={recentTrackList} />)}
-
 			{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
 				return (
 					<>

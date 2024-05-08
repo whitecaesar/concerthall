@@ -1,22 +1,19 @@
 "use client";
+import { setPLTStarAxios } from "@/services/contents/PLTStarAxios";
 import React, { useState, useEffect } from "react";
 
 interface LikeButtonProps {
   starPoint: number;
+  track_id:string;
 }
 
-  const LikeButton = ({ starPoint } : LikeButtonProps) => {
-  const [star, setNumber] = useState(0);
-
-  useEffect(() => {
-    // const recent = ;
-    setNumber(starPoint);
-  }, []);
-
+const PLTLikeButton = ({ starPoint, track_id } : LikeButtonProps) => {
+  const [star, setNumber] = useState(starPoint);
   const likeClick = () => {
     // num 상태를 업데이트하는 함수, num 값이 0에서 3 사이를 순환
-    setNumber((likeNum) => (likeNum + 1) % 4);
-        
+    setNumber((star) => (star + 1) % 4);
+    const param = {ratingInfo:{type:'QOBUZ', star:(star + 1) % 4},track:{id:track_id}};
+    setPLTStarAxios(param);
   };
 
   return (
@@ -51,4 +48,4 @@ interface LikeButtonProps {
   );
 };
 
-export default LikeButton;
+export default PLTLikeButton;

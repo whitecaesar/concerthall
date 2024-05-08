@@ -25,7 +25,8 @@ export default function AlbumTrack({album_id, func_type} : AlbumTrackProps) {
 	if (isError || !data) return <div>Error occurred</div>;
 
 	// data가 non-null임을 보장하기 위한 optional chaining
-	const AlbumItem = data?.LIST[0]; // 예시로 첫 번째 아이템 사용
+
+	const AlbumItem = data?.LIST?.[0]; // 예시로 첫 번째 아이템 사용
 
 	return (
 		<>

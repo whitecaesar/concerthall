@@ -49,7 +49,7 @@ const AlbumList = ({
 							albumInfo={item}
 							onClick={() => {
 								setSubTitle(item.TITLE);
-								router.push(`/detail/album/track/${item.ID}`);
+								//router.push(`/detail/album/track/${item.ID}`);
 							}}
 						/>
 					</li>

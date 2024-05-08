@@ -1,7 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import { ALBUM_DETAIL_TYPE, TRACK_ITEM_TYPE } from "./contents/AlbumAxios";
 import { PLAY_ITEM_RESPONSE, getPlayInfoAxios } from "./contents/PlayInfoAxios";
-import { ITEM_INFO_TYPE } from "./contents/ViewAllAxios";
+import { PLAYLIST_TRACK_ITEM_TYPE, TRACK_PLAYLIST_ITEM_TYPE } from "./contents/PlayListTrackAxios";
 import { TRACK_RECENT_ITEM_TYPE } from "./contents/RecentTrackListAxios";
 
 export const MediaType = 'QOBUZ';
@@ -190,64 +189,58 @@ export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
 
 };
 
-
-export function funcRecentTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, track : TRACK_RECENT_ITEM_TYPE) {
-/*
-  const albumArtistItem = {
-    artist_id : track.data.album.artist.id,
-    artist_name : track.data.album.artist_name ,
-    alubms_count : album.ARTIST?.thumbnail
-  };
-
-  const WebStreamArtistItem: any[] = [albumArtistItem];
-
-  const trackItem = {
-    id : track.id,
-    title : track.title,
-    type : track.type,
-    sort : track.sort,
-    playlistId : null,
-    favorite : track.favorite,
-    ownerId : track.ownerId,
-    ownerName : track.ownerName,
-    star : track.star,
-    comment : track.comment,
-    thumnailUrl : track.thumbnailUrl,
-    playUrl : playUrl?.INFO.URL,
-    clientKey : track.id,
-    duration : track.duration,
-    albums : [],
-    artists
-  };
-
-  console.log(trackItem);
-*/
-
-  track.playUrl = playUrl?.INFO.URL;
-   
-  const WebStreamTrackItem: any[] = [track];
-
-  
-  const trackData = {
-    webstreamtrackitem : WebStreamTrackItem
-  }
-
-  let json_track_data: string = JSON.stringify(trackData);
- 
-  // 버튼 클릭 시 실행할 로직
-  if(type == 'recentTrackMore')
+export function funcPlayListTrackClick(type:string, trackItem:PLAYLIST_TRACK_ITEM_TYPE, position:number) {
+  if(trackItem)
   {
-  //	console.log(json_track_data);
-    (window as any).HifiRose.webStreamTotalHomeMoreClick(json_track_data, 0, true);
-  }
-  else if(type == 'recentTrackPlay')
-  {
-    (window as any).HifiRose.webStreamTotalHomeTrackClick(json_track_data);
+    const RoseMemberTrackItem: any[] = [trackItem];
+    if(type == 'play'){
+      const trackData = {
+        rosemembertrackitem : RoseMemberTrackItem
+      }
+      let json_track_data: string = JSON.stringify(trackData);
+      console.log(json_track_data);
+      (window as any).HifiRose.webStreamTotalHomeTrackClick(json_track_data);
+    }
+    else if(type == 'option')
+    {
+      const trackData = {
+        rosemembertrackitem : RoseMemberTrackItem,
+        position:position,
+        isrecent:false
+      }
+      let json_track_data: string = JSON.stringify(trackData);
+      console.log(json_track_data);
+      (window as any).HifiRose.webStreamTotalHomeMoreClick(json_track_data);
+    }
   }
 };
 
-
-export function funcThumUpClick()
-{
-  
-}
+export function funcPlayListPlayClick(type:string, playlist:TRACK_PLAYLIST_ITEM_TYPE) {
+  if(playlist)
+  {
+    if(type == 'allPlay'){
+      const trackData = {
+        rosememberplaylistitem : playlist,
+        isshuffleplay:false
+      }
+      const json_playList_data: string = JSON.stringify(trackData);
+      (window as any).HifiRose.webStreamTotalHomePlaylistClick(json_playList_data);
+    }
+    else if(type == 'sufflePlay'){
+      const trackData = {
+        rosememberplaylistitem : playlist,
+        isshuffleplay:true
+      }
+      const json_playList_data: string = JSON.stringify(trackData);
+      (window as any).HifiRose.webStreamTotalHomePlaylistClick(json_playList_data);
+    }
+    else if(type == 'share'){
+      const json_playList_data: string = JSON.stringify(playlist);
+      (window as any).HifiRose.webStreamTotalHomeGotoShare(json_playList_data);
+    }
+    else if(type == 'option'){
+      const json_playList_data: string = JSON.stringify(playlist);
+      (window as any).HifiRose.webStreamTotalHomePlaylistMoreClick(json_playList_data);
+    }
+  }
+};

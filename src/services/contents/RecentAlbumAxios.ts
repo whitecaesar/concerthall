@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { VIEWALL_LIST_TYPE } from "./ViewAllAxios";
+import { PLAYLIST_TRACK_ITEM_TYPE } from "./PlayListTrackAxios";
 
 const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzExNTAzMDA0LCJleHAiOjIwMjY4NjMwMDQsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJyb3NldHViZVJlY2VudFBsYXlsaXN0IjoxNTUwNCwidXNlcm5hbWUiOiJKYW1pZSIsImlzRW1haWxDb25maXJtIjpmYWxzZSwiYXV0aG9yaXRpZXMiOlsiUk9TRV9NRU1CRVIiLCJST0xFX1VTRVJfT05MSU5FIl19.3ZLPsp98wTCgMOChwwm2XtzRhKO7bMih556OtA6tnzvWAM_xSUSFtdMrlXCZR0k5142qpG3Cxd1L33qkRkPAaw"; // 동적으로 토큰을 얻는 로직
 
@@ -7,7 +7,7 @@ export type ALBUM_RECENT_ITEM_TYPE = {
 	id: string;
 	title: string;
 	clientKey: string;
-	tracks?: [];
+	tracks?: PLAYLIST_TRACK_ITEM_TYPE[];
 	favorite: boolean;
     star: number;
     thumbnail:string;

@@ -3,7 +3,7 @@
 
 import React, { useContext } from "react";
 import RecentPlayListItem from "@/component/molecule/albumItem/RecentPlayListItem";
-import style from "./AlbumList.module.css";
+import style from "./albumList.module.css";
 import {PLAY_RECENT_LIST_TYPE, PLAY_RECENT_LIST_RESPONSE} from "@/services/contents/RecentPlayListAxios";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
 import RecentAlbumItem from "@/component/molecule/albumItem/RecentAlbumItem";
@@ -26,7 +26,6 @@ export default function RecentPlayListViewAll({
 							playListInfo={item.playlist}
 							onClick={() => {
 								setSubTitle(item.playlist.title);
-								router.push(`/detail/album/track/${item.playlist.id}`);
 							}}
 						/>
 					</li>
