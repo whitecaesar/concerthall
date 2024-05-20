@@ -3,35 +3,37 @@ import Image from "next/image";
 import style from "./singleItem.module.css";
 import { funcPlayListTrackClick} from "@/services/common";
 import PLTFuncButton from "@/component/atom/button/PLTFuncButton";
-import { PLAYLIST_TRACK_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
 import PLTLikeButton from "@/component/atom/button/PLTLikeButton";
+import { TRACK_RECENT_ITEM_TYPE, TRACK_RECENT_LIST_RESPONSE } from "@/services/contents/RecentTrackListAxios";
 
 export default function RecentTrackListItem({
 	trackListInfo,
+	trackInfo,
 	position
 }: {
-	trackListInfo: PLAYLIST_TRACK_ITEM_TYPE;
+	trackListInfo: TRACK_RECENT_LIST_RESPONSE;
+	trackInfo: TRACK_RECENT_ITEM_TYPE;
 	position:number;
 }) {
 
 	return (
-		<div className={style.singleItem} id={`${trackListInfo.id}`}>
-			<span onClick={() => funcPlayListTrackClick('play', trackListInfo, position)}>
+		<div className={style.singleItem} id={`${trackInfo.id}`}>
+			<span onClick={() => funcPlayListTrackClick('play', trackInfo, trackListInfo, position)}>
 				<Image
-					src={trackListInfo.thumbnailUrl}
-					alt={trackListInfo.title}
+					src={trackInfo.thumbnailUrl}
+					alt={trackInfo.title}
 					width={150}
 					height={85}
 					priority={true}
 					className={style.thumbnail}
 				/>
-				<p className={style.title}>{trackListInfo.title}</p>
+				<p className={style.title}>{trackInfo.title}</p>
 			</span>
 			<div className={style.bottomInfo}>
-				<p className={style.artist}>{trackListInfo.arists}</p>
+				<p className={style.artist}>{trackInfo.arists}</p>
 				<div className={style.buttonGroup}>
-					<PLTLikeButton starPoint={trackListInfo.star} track_id={trackListInfo.id}/>
-					<PLTFuncButton trackItem={trackListInfo} position={position}/>
+					<PLTLikeButton starPoint={trackInfo.star} track_id={trackInfo.id}/>
+					<PLTFuncButton trackItem={trackInfo} trackListItem={trackListInfo} position={position} method='track'/>
 					{/* 기능 로직 넣으세요. */}
 				</div>
 			</div>

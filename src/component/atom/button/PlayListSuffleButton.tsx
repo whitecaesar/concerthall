@@ -1,14 +1,14 @@
 import React from "react";
-import { PLAYLIST_TRACK_ITEM_TYPE, TRACK_PLAYLIST_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
+import { TRACK_PLAYLIST_TYPE } from "@/services/contents/PlayListTrackAxios";
 import { funcPlayListPlayClick } from "@/services/common";
 
 interface sufflePlayProp {
-	TrackItem : TRACK_PLAYLIST_ITEM_TYPE; 	
+	TrackItem : TRACK_PLAYLIST_TYPE; 	
 }
 
 const PlayListShuffleButton = ({TrackItem} :sufflePlayProp) => {
 
-	const handleClick = async(Item : TRACK_PLAYLIST_ITEM_TYPE) => {
+	const handleClick = async(Item : TRACK_PLAYLIST_TYPE) => {
 		//funcAlbumPlayClick('AlbumPlay',AlbumItem);
 		funcPlayListPlayClick('sufflePlay', Item)
 	}

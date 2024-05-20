@@ -29,7 +29,7 @@ export default function LikeList(album: AlbumTrackProps, props: Props) {
 	if (isLoading) return <div>Loading...</div>;
 	if (isError || !data) return <div>Error occurred</div>;
 
-	const AlbumItem = data?.LIST[0];
+	const AlbumItem = data?.ITME_INFO;
 
 	return (
 		<>
@@ -64,22 +64,22 @@ export default function LikeList(album: AlbumTrackProps, props: Props) {
 				<div className={style.tabContent}>
 					{activeTab === "Tab1" && (
 						<div>
-							<TrackList trackList={AlbumItem} />
+							{/*<TrackList trackList={AlbumItem} />*/}
 						</div>
 					)}
 					{activeTab === "Tab2" && (
 						<div>
-							<AlbumViewAll />
+							{/*<AlbumViewAll />*/}
 						</div>
 					)}
 					{activeTab === "Tab3" && (
 						<div>
-							<TrackList trackList={AlbumItem} />
+							{/*<TrackList trackList={AlbumItem} />*/}
 						</div>
 					)}
 					{activeTab === "Tab4" && (
 						<div>
-							<AlbumViewAll />
+							{/*<AlbumViewAll />*/}
 						</div>
 					)}
 				</div>

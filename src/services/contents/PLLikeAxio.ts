@@ -15,7 +15,6 @@ export type PLT_LIKE_RESPONSE_TYPE = {
 export async function setPLLIKEAxios(
     param?: PLT_LIKE_REQUEST_TYPE
 ): Promise<PLT_LIKE_RESPONSE_TYPE> {
-    console.log(param);
 	const response: AxiosResponse<PLT_LIKE_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/playlist/thumbup`, param,
         {
@@ -25,7 +24,6 @@ export async function setPLLIKEAxios(
         } // URL 구성을 동적으로 변경했습니다. // URL 구성을 동적으로 변경했습니다.
 	);
 	if (response.status === 200) {
-        console.log(response.data);
 		return response.data;
 	} else {
 		throw new Error(`에러입니다. ${response.status}`);

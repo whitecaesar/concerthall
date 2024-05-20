@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
 import { REG_TRACK_REQEUST_TYPE, setPLTStarAxios, setRegTrackAxios } from "@/services/contents/PLTStarAxios";
 import { STAR_TRACK_REQUEST_TYPE, getStarTrackAxios } from "@/services/contents/StarAxios";
-import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
 
 interface LikeButtonProps {
-  starPoint: number;
-  track_info?: ITEM_INFO_TYPE;
+  track_info?: ALBUM_ITEM_TYPE;
 }
 
-const LikeButton = ({ starPoint, track_info }: LikeButtonProps) => {
-  // 훅을 조건문 전에 호출합니다.
-  const [star, setNumber] = useState(starPoint);
+const AlbumTrackLikeButton =  ({ track_info }: LikeButtonProps) => {
+  // 우선 'star' 상태를 초기화합니다. track_info가 없을 경우 0을 사용합니다.
+  const [star, setNumber] = useState<number>( 0);
 
-  // track_info가 없으면 아무 것도 렌더링하지 않습니다.
-  if(!track_info) {
-    return null;
+  useEffect(() => {
+    track_info?.STAR && setNumber(track_info?.STAR )
+  }, [track_info?.STAR]);
+  if (!track_info) {
+    return null;  // track_info가 없으면 아무 것도 렌더링하지 않습니다.
   }
 
-  const likeClick = async() => {
+  const likeClick = async () => {
     try {
       const starTrackParam: STAR_TRACK_REQUEST_TYPE = {
         tracks: [{ type: 'CONCERT_HALL', clientKey: track_info.ID }]
@@ -28,7 +28,7 @@ const LikeButton = ({ starPoint, track_info }: LikeButtonProps) => {
       if (trackStarResponse.id !== null) {
         const param = { ratingInfo: { type: 'CONCERT_HALL', star: (star + 1) % 4 }, track: { id: trackStarResponse.id } };
         await setPLTStarAxios(param);
-        setNumber((prevStar) => (prevStar + 1) % 4);
+        setNumber(prevStar => (prevStar + 1) % 4);
       } else {
         const duration = parseInt(track_info.DURATION || "0", 10);
         const setTrackParam: REG_TRACK_REQEUST_TYPE = {
@@ -43,6 +43,8 @@ const LikeButton = ({ starPoint, track_info }: LikeButtonProps) => {
       console.error('Error fetching star rating', error);
     }
   };
+
+  console.log(star);
 
   return (
     <>
@@ -65,4 +67,4 @@ const LikeButton = ({ starPoint, track_info }: LikeButtonProps) => {
   );
 };
 
-export default LikeButton;
+export default AlbumTrackLikeButton;

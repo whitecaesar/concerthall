@@ -71,7 +71,7 @@ export default function ImageBanner({
 							<SwiperSlide key={slide.ID_BANNER}>
 								<Link href={slide.LINK} target="_blank">
 									<Image
-										src={slide.CONTENT}
+										src={slide.CONTENTS}
 										alt={slide?.ALT}
 										width={420}
 										height={320}

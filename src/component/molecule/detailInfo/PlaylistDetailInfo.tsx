@@ -3,12 +3,12 @@
 import React from "react";
 import Image from "next/image";
 import style from "./detailInfo.module.css";
-import { TRACK_PLAYLIST_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
+import { TRACK_PLAYLIST_TYPE } from "@/services/contents/PlayListTrackAxios";
 import PlayListAllButton from "@/component/atom/button/PlayListAllButton";
 import PlayListShuffleButton from "@/component/atom/button/PlayListSuffleButton";
 
 interface PlayListDetailInfoProps {
-	detailInfo: TRACK_PLAYLIST_ITEM_TYPE;
+	detailInfo: TRACK_PLAYLIST_TYPE;
 }
 
 const playlistDetailInfo = ({ detailInfo }: PlayListDetailInfoProps) => {

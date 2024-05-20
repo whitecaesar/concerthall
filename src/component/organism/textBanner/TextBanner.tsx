@@ -20,7 +20,7 @@ export default function TextBanner({
 			{banner ? (
 				<div className={style.textBanner}>
 					<Link key={banner.ID_BANNER} href={banner.LINK ? banner.LINK : ""}>
-						<p>{banner.CONTENT}</p>
+						<p>{banner.CONTENTS}</p>
 						<Icon iconName="arrowRightBrown" />
 					</Link>
 				</div>

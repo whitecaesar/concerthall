@@ -1,14 +1,14 @@
 "use client";
 import { funcPlayListPlayClick } from "@/services/common";
-import { TRACK_PLAYLIST_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
+import { TRACK_PLAYLIST_TYPE } from "@/services/contents/PlayListTrackAxios";
 
   type Props = {
-	playList:TRACK_PLAYLIST_ITEM_TYPE;
+	playList:TRACK_PLAYLIST_TYPE;
   }
   
   const PLFuncButton = ({ playList }: Props) => {
   
-	const handleClick = (Item : TRACK_PLAYLIST_ITEM_TYPE) => {
+	const handleClick = (Item : TRACK_PLAYLIST_TYPE) => {
         funcPlayListPlayClick('option', Item);
 	};
   

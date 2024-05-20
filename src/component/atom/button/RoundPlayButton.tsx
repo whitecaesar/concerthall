@@ -1,7 +1,6 @@
 import { funcAlbumPlayClick, funcTrackPlayClick } from "@/services/common";
-import { ALBUM_DETAIL_TYPE, TRACK_ITEM_TYPE } from "@/services/contents/AlbumAxios";
+import { ALBUM_DETAIL_TYPE, ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
 import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
-import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
 import React, { useState } from "react";
 
 interface allPlayProp {
@@ -9,28 +8,28 @@ interface allPlayProp {
 }
 
 const RoundPlayButton = ({AlbumItem} :allPlayProp) => {
-	const track = AlbumItem.ITEM_INFO;
+	const track = AlbumItem.ITME_INFO;
 	function addPropertyToItemInfo(id :string, propertyName:string, propertyValue:string) {
-		const item = AlbumItem.ITEM_INFO.find(item => item.ID === id);
+		const item = AlbumItem.ITME_INFO.find(item => item.ID === id);
 		if (item) {
 		// 속성 추가
 			(item as any)[propertyName] = propertyValue;
 		}
 	}
 	
-	const handleClick = async(trackItem : TRACK_ITEM_TYPE[]) => {
-		trackItem.forEach(async (item :ITEM_INFO_TYPE) => {
+	const handleClick = async(trackItem : ALBUM_ITEM_TYPE[]) => {
+		trackItem.forEach(async (item :ALBUM_ITEM_TYPE) => {
 			try {
 				const playInfo = getPlayInfoAxios(item.ID);
-				addPropertyToItemInfo(item.ID, 'playable_code',(await playInfo).RES_CODE);
-				addPropertyToItemInfo(item.ID, 'url',(await playInfo).INFO.URL);
+				addPropertyToItemInfo(item.ID, 'PLAYABLE_CODE',(await playInfo).RES_CODE);
+				addPropertyToItemInfo(item.ID, 'URL',(await playInfo).INFO.URL);
 			} catch (error) {
 				console.error('Error fetching data for item', item.ID, error);
 			}
 		});
 	
-		AlbumItem.ITEM_INFO = trackItem;
-		funcAlbumPlayClick('ShufflePlay',AlbumItem);
+		AlbumItem.ITME_INFO = trackItem;
+		funcAlbumPlayClick('AlbumPlay',AlbumItem);
 	}
 	
 	return (

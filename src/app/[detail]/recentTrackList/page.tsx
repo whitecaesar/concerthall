@@ -10,15 +10,14 @@ export default function RecentViewAllTrackList() {
 	const size = parseInt(searchParams.get("totalcnt") || "0", 10);
     const [recentTrackList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
     useEffect(() => {
-			getRecentTrackListAxios("", size).then((trackdata) =>	setRecentTrackList(trackdata));
+			getRecentTrackListAxios("", size).then((trackdata) => setRecentTrackList(trackdata));
 	}, []);
 
-    const PlayList = recentTrackList?.tracks;
 	return (
 		<>
 			<SubTitleProvider>
 				<div className="datailSinglePage">
-                    {PlayList && <RCTTrackList trackList={PlayList}/>}
+                    {recentTrackList && <RCTTrackList trackList={recentTrackList}/>}
 				</div>
 			</SubTitleProvider>
 		</>

@@ -39,7 +39,6 @@ export default function RecentAlbumViewAll(total : RecentAlbumViewAllProps) {
 			recent?.recentList.sort((a , b) => -a.album.title.localeCompare(b.album.title));
 		}
 
-		console.log(recent);
 		recent && setRecent({...recent});
 	};
 

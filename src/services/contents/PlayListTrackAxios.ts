@@ -67,20 +67,20 @@ export type TRACK_ITEM_DATA_TYPE = {
     performers : string;
     previewable : boolean;
     purchasable : boolean;
-    qobuz_id : number;
+    concerthall_id? : number;
     sampleable : boolean;
     streamable : boolean;
     title : string;
     track_number : number;
 }
 
-export type PLAYLIST_TRACK_ITEM_TYPE = {
+export type TRACK_TRACKS_ITEM_TYPE = {
 	id: string;
     title: string;
 	type: string;
 	sort: number;
     favorite: string;
-    arists: string[];
+    arists?: string[];
     ownerId: number;
     ownerName:string;
     star: number;
@@ -97,7 +97,7 @@ export type PLAYLIST_TRACK_ITEM_TYPE = {
     genresSTring: string;
 };
 
-export type TRACK_PLAYLIST_ITEM_TYPE = {
+export type TRACK_PLAYLIST_TYPE = {
 	id: string;
     title: string;
 	type: string;
@@ -116,7 +116,7 @@ export type TRACK_PLAYLIST_ITEM_TYPE = {
     registDateTime : string;
     comment : string;
     clientKey : string;
-    tracks : PLAYLIST_TRACK_ITEM_TYPE[];
+    tracks : TRACK_TRACKS_ITEM_TYPE[];
     isRose : boolean;
 };
 
@@ -128,7 +128,7 @@ export type TRACK_LIST_RESPONSE = {
     totalCount: number;
     last: boolean;
     offset:number;
-    playlist: TRACK_PLAYLIST_ITEM_TYPE;
+    playlist: TRACK_PLAYLIST_TYPE;
 };
 
 export async function getPlayListTrackListAxios(

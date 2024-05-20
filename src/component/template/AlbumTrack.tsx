@@ -1,9 +1,10 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { ALBUM_LIST_RESPONSE, getAlbumAxios} from "@/services/contents/AlbumAxios";
+import { getAlbumAxios} from "@/services/contents/AlbumAxios";
 import DetailInfo from "../molecule/detailInfo/DetailInfo";
 import FuncButtonGroup from "../molecule/buttonGroup/FuncButtonGroup";
 import TrackList from "@/component/organism/trackList/TrackList";
+import AlbumTrackList from "../organism/trackList/AlbumTrackList";
 
 interface AlbumTrackProps {
 	album_id: string;
@@ -25,15 +26,23 @@ export default function AlbumTrack({album_id, func_type} : AlbumTrackProps) {
 	if (isError || !data) return <div>Error occurred</div>;
 
 	// data가 non-null임을 보장하기 위한 optional chaining
+	const trackItem = data.ITME_INFO; // 예시로 첫 번째 아이템 사용
 
-	const AlbumItem = data?.LIST?.[0]; // 예시로 첫 번째 아이템 사용
+	if(data)
+	{
 
-	return (
-		<>
-			<DetailInfo detailInfo={AlbumItem} />
-			<FuncButtonGroup AlbumItem={AlbumItem}/>
-			{AlbumItem && <TrackList trackList={AlbumItem} />}
-		</>
-	);
+		return (
+			<>
+				<DetailInfo detailInfo={data} />
+				<FuncButtonGroup AlbumItem={data}/>
+				{trackItem && <AlbumTrackList AlbumTrackList={trackItem} />}
+			</>
+		);
+	}
+	else{
+		return (
+		<div>Error occurred</div>
+		);
+	}
 
 }

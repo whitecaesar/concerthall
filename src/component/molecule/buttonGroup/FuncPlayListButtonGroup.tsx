@@ -5,17 +5,16 @@ import Button from "@/component/atom/button/Button";
 import FuncButton from "@/component/atom/button/FuncButton";
 import {funcPlayListPlayClick } from "@/services/common";
 import ThumbupButton from "@/component/atom/button/ThumbupButton";
-import { TRACK_PLAYLIST_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
+import {TRACK_PLAYLIST_TYPE } from "@/services/contents/PlayListTrackAxios";
 import PLFuncButton from "@/component/atom/button/PLFuncButton";
 
 interface PlayListShareInfoProps {
-	trackItem: TRACK_PLAYLIST_ITEM_TYPE;
+	trackItem: TRACK_PLAYLIST_TYPE;
 	pageType?: string; // 페이지 타입 prop 추가
 	like:boolean;
 }
 const FuncPlayListButtonGroup = ({ trackItem, pageType, like }: PlayListShareInfoProps) => {
-
-	const handleClick = async (Item: TRACK_PLAYLIST_ITEM_TYPE) => {
+	const handleClick = async (Item: TRACK_PLAYLIST_TYPE) => {
 		funcPlayListPlayClick('share', Item);
 	};
 

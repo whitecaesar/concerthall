@@ -1,21 +1,28 @@
 "use client";
-import React from "react";
-import { PLAYLIST_TRACK_ITEM_TYPE} from "@/services/contents/PlayListTrackAxios";
+import React, { useEffect, useState } from "react";
 import PLTrackItem from "@/component/molecule/trackItem/PLTrackItem";
+import { TRACK_RECENT_ITEM_TYPE, TRACK_RECENT_LIST_RESPONSE } from "@/services/contents/RecentTrackListAxios";
 
 interface RCTTrackListProps {
-	trackList: PLAYLIST_TRACK_ITEM_TYPE[];
+	trackList: TRACK_RECENT_LIST_RESPONSE;
 }
 
 const RCTTrackList = ({ trackList }: RCTTrackListProps) => {
 	// 여기서는 첫 번째 앨범의 트랙 정보만 사용합니다.
+    const [tracks, setTracks] = useState<TRACK_RECENT_ITEM_TYPE[]>([]);
+
+    useEffect(() => {
+        if (trackList) {
+            setTracks(trackList.tracks); // 데이터가 준비된 후 상태 업데이트
+        }
+    }, [trackList]); // trackList가 변경될 때마다 실행
 
 	return (
 		<div className="trackListWrap">
 			<ul className="trackList">
-				{trackList.map((itemInfo, index) => (
-					<li key={itemInfo.id}>
-						<PLTrackItem trackInfo={itemInfo} position={index+1} />
+				{tracks.map((item: TRACK_RECENT_ITEM_TYPE, index:number) => (
+					<li key={item.id}>
+						<PLTrackItem trackInfo={item} trackListInfo={trackList} position={index} method="track"/>
 					</li>
 				))}
 			</ul>

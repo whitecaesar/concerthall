@@ -1,15 +1,26 @@
 "use client";
 
-import { funcPlayListTrackClick } from "@/services/common";
-import { PLAYLIST_TRACK_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
+import { funcPlayListPlayClick, funcPlayListTrackClick } from "@/services/common";
+import { TRACK_PLAYLIST_TYPE, TRACK_TRACKS_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
+import { TRACK_RECENT_ITEM_TYPE, TRACK_RECENT_LIST_RESPONSE } from "@/services/contents/RecentTrackListAxios";
 type Props = {
-	trackItem: PLAYLIST_TRACK_ITEM_TYPE;
+	trackItem: TRACK_RECENT_ITEM_TYPE;
+	trackListItem:TRACK_RECENT_LIST_RESPONSE | TRACK_PLAYLIST_TYPE;
     position: number;
+	method: string;
  }
-   const PLTFuncButton = ({ trackItem, position }: Props) => {
+   const PLTFuncButton = ({ trackItem, trackListItem, position, method }: Props) => {
   
-	const handleClick = (Item:PLAYLIST_TRACK_ITEM_TYPE, pst:number) => {
-        funcPlayListTrackClick('option', Item, pst);
+	const handleClick = (Item:TRACK_RECENT_ITEM_TYPE, ListItem:TRACK_RECENT_LIST_RESPONSE | TRACK_PLAYLIST_TYPE, pst:number, method:string) => {
+
+		if(method == 'track')
+		{
+			funcPlayListTrackClick('option', trackItem, trackListItem, pst);
+		}
+		else if(method == 'playlist')
+		{
+        	funcPlayListPlayClick('trackoption', trackListItem, pst);
+		}
 	};
   
 	return (
@@ -17,7 +28,7 @@ type Props = {
 		<button
 		  type="button"
 		  className="funcBtn"
-		  onClick={() => handleClick(trackItem, position)}
+		  onClick={() => handleClick(trackItem, trackListItem, position, method)}
 		></button>
 		<style jsx>{`
 		  .funcBtn {

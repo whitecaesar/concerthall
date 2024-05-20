@@ -4,21 +4,21 @@ import Link from "next/link";
 import LikeButton from "@/component/atom/button/LikeButton";
 import FuncButton from "@/component/atom/button/FuncButton";
 import style from "./trackItem.module.css";
-import { funcTrackPlayClick } from "@/services/common";
+import { funcAlbumTrackPlayClick} from "@/services/common";
 import { useQuery } from "@tanstack/react-query";
 import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
-import { TRACK_ITEM_TYPE, getTrackAxios } from "@/services/contents/TrackAxios";
-
+import { getTrackAxios } from "@/services/contents/TrackAxios";
+import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
+import AlbumTrackLikeButton from "@/component/atom/button/AlbumTrackLikeButton";
 interface TrackItemProps {
-	trackInfo: TRACK_ITEM_TYPE;
+	albumTrackInfo: ALBUM_ITEM_TYPE;
 }
 
-export default function TrackItem({ trackInfo }: TrackItemProps) {
-
+export default function AlbumTrackItem({ albumTrackInfo }: TrackItemProps) {
 	const { data : trackData, isError, isLoading } = useQuery({
 		queryKey: ["TRACK-LIST"],
 		queryFn: () => {
-			const TrackItem = getTrackAxios(trackInfo.TRACK_ID);
+			const TrackItem = getTrackAxios(albumTrackInfo.ID);
 			return TrackItem;
 		},
 	});
@@ -26,7 +26,7 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 	const { data :playData, isError: playError, isLoading: playLoding } = useQuery({
 		queryKey: ["PLAY-INFO"],
 		queryFn: () => {
-			const PlayInfo = getPlayInfoAxios(trackInfo.TRACK_ID);
+			const PlayInfo = getPlayInfoAxios(albumTrackInfo.ID);
 			return PlayInfo;
 		},
 	});
@@ -36,21 +36,21 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 
 	return (
 		<div className={style.trackItem}>
-			<span onClick={() => funcTrackPlayClick('trackPlay',playData, trackInfo)}>
+			<span onClick={() => funcAlbumTrackPlayClick('trackPlay',playData, albumTrackInfo)}>
 				{/* Link에는 트랙 재생하는 url이 들어가야 함 */}
 				<Image
-					src={trackInfo.THUMBNAIL}
-					alt={trackInfo.TITLE}
+					src={albumTrackInfo.THUMBNAIL}
+					alt={albumTrackInfo.TITLE}
 					width={45}
 					height={45}
 					priority={true}
 					className={style.thumbnail}
 				/>
-				<p className={style.title}>{trackInfo.TITLE}</p>
-				<p className={style.artist}>{}</p>
+				<p className={style.title}>{albumTrackInfo.TITLE}</p>
+				<p className={style.artist}>{albumTrackInfo.ARTIST?.[0].artist_name}</p>
 			</span>
 			<div className={style.buttonGroup}>
-				<LikeButton starPoint={0}/>
+				<AlbumTrackLikeButton track_info={albumTrackInfo}/>
 				<FuncButton method="trackMore" track_info={trackData} play_info={playData}/>
 			</div>
 		</div>

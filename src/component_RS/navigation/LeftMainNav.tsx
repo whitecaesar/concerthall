@@ -12,7 +12,7 @@ import { useMenu } from "@/providers/RSMenuProvider";
 
 export const LeftMainNav = () => {
 	const currentRoute = usePathname();
-	const [mainFirstIdx, setMainFirstIdx] = useState<Number>();
+	const [mainFirstIdx, setMainFirstIdx] = useState<string>();
 	const [exploreFirstIdx, setExploreFirstIdx] = useState<string | undefined>();
 	const [subHideActive, setSubHideActive] = useState<boolean>(false);
 	const { selectedMenuItem } = useMenu();

@@ -2,19 +2,23 @@
 import Image from "next/image";
 import style from "./trackItem.module.css";
 import { funcPlayListTrackClick} from "@/services/common";
-import { PLAYLIST_TRACK_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
+import { TRACK_TRACKS_ITEM_TYPE, TRACK_PLAYLIST_TYPE } from "@/services/contents/PlayListTrackAxios";
 import PLTFuncButton from "@/component/atom/button/PLTFuncButton";
 import PLTLikeButton from "@/component/atom/button/PLTLikeButton";
+import { TRACK_RECENT_ITEM_TYPE, TRACK_RECENT_LIST_RESPONSE } from "@/services/contents/RecentTrackListAxios";
 
 interface PLTrackItemProps {
-	trackInfo: PLAYLIST_TRACK_ITEM_TYPE;
+	trackInfo: TRACK_RECENT_ITEM_TYPE;
+	trackListInfo: TRACK_RECENT_LIST_RESPONSE | TRACK_PLAYLIST_TYPE;
     position: number;
+	method: string;
 }
 
-export default function PLTrackItem({ trackInfo, position }: PLTrackItemProps) {
+export default function PLTrackItem({ trackInfo, trackListInfo, position, method }: PLTrackItemProps) {
+
 	return (
 		<div className={style.trackItem}>
-			<span onClick={() => funcPlayListTrackClick('play', trackInfo, position)}>
+			<span onClick={() => funcPlayListTrackClick('play', trackInfo, trackListInfo, position)}>
 				{/* Link에는 트랙 재생하는 url이 들어가야 함 */}
 				<Image
 					src={trackInfo.thumbnailUrl}
@@ -29,7 +33,7 @@ export default function PLTrackItem({ trackInfo, position }: PLTrackItemProps) {
 			</span>
 			<div className={style.buttonGroup}>
 				<PLTLikeButton starPoint={trackInfo.star} track_id={trackInfo.id}/>
-				<PLTFuncButton trackItem={trackInfo} position={position}/>
+				<PLTFuncButton trackItem={trackInfo} trackListItem={trackListInfo} position={position} method={method}/>
 			</div>
 		</div>
 	);

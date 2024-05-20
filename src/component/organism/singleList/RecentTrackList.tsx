@@ -6,7 +6,7 @@ import { SubTitleContext } from "@/providers/SubTitleProvider";
 import style from "./singleList.module.css";
 import { TRACK_RECENT_ITEM_TYPE, TRACK_RECENT_LIST_RESPONSE } from "@/services/contents/RecentTrackListAxios";
 import RecentTrackListItem from "@/component/molecule/singleItem/RecentTrackListItem";
-import { PLAYLIST_TRACK_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
+import { TRACK_TRACKS_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
 
 interface RecentTrackListProps {
 	// recommendList: TITEM_INFO[];
@@ -21,7 +21,6 @@ export default function RecentTrackList({
 }: RecentTrackListProps) {
 	const { setSubTitle } = useContext(SubTitleContext);
 
-	//console.log("props--> ", recentList, "props ");
 	const tracks = recommendList.tracks;
 	return (
 		<div style={{ paddingBottom: "10px" }}>
@@ -35,9 +34,9 @@ export default function RecentTrackList({
 				}}
 			/>
 			<ul className={style.singleList}>
-				{tracks.map((item: PLAYLIST_TRACK_ITEM_TYPE, index) => (
+				{tracks.map((item: TRACK_RECENT_ITEM_TYPE, index:number) => (
 					<li key={item.id}>
-						<RecentTrackListItem trackListInfo={item} position={index+1}  />
+						<RecentTrackListItem trackListInfo={recommendList} trackInfo={item} position={index}  />
 					</li>
 				))}
 			</ul>

@@ -7,7 +7,14 @@ interface thumbupProp {
 	targetId : string;
 }
 const ThumbupButton = ({status,targetId} : thumbupProp) => {
-	const [isActive, setIsActive] = useState(status);
+	const [isActive, setIsActive] = useState('');
+	useEffect(() => {
+		if(status)
+		{
+			setIsActive('on');
+		} 
+	}, [status]);
+	
 	const toggleButton = () => {
 		if(!isActive)
 		{
@@ -15,7 +22,7 @@ const ThumbupButton = ({status,targetId} : thumbupProp) => {
 			const param = {	targetId:targetId, 
 							type:'PLAY_LIST',
 							thumbup:true}
-			setPLLIKEAxios(param).then(data => data.code == '200'?setIsActive(true):alert('error'));
+			setPLLIKEAxios(param).then(data => data.code == '200'? setIsActive('on'):alert('error'));
 		}
 		else
 		{
@@ -23,7 +30,7 @@ const ThumbupButton = ({status,targetId} : thumbupProp) => {
 			const param = {	targetId:targetId, 
 							type:'PLAY_LIST',
 							thumbup:false}
-			setPLLIKEAxios(param).then(data => data.code == '200'?setIsActive(false):alert('error'));
+			setPLLIKEAxios(param).then(data => data.code == '200'? setIsActive(''):alert('error'));
 		}
 	};
 
@@ -31,7 +38,7 @@ const ThumbupButton = ({status,targetId} : thumbupProp) => {
 		<>
 			<button
 				onClick={toggleButton}
-				className={`thumbupBtn ${isActive ? "on" : ""}`}
+				className={`thumbupBtn ${isActive}`}
 			></button>
 			<style jsx>{`
 				.thumbupBtn {

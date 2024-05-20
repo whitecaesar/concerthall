@@ -1,10 +1,9 @@
 "use client";
-import TextBanner from "../organism/textBanner/TextBanner";
 import ImageBanner from "../organism/imageBanner/ImageBanner";
 import SingleList from "../organism/singleList/SingleList";
 import AlbumList from "../organism/albumList/AlbumList";
 import { useQuery } from "@tanstack/react-query";
-import { getBannersAxios } from "@/services/main/MainInfoAxios";
+import {getBannersAxios } from "@/services/main/MainInfoAxios";
 import {
 	ARTIST_INFO_TYPE,
 	ITEM_INFO_TYPE,
@@ -23,6 +22,7 @@ import RecentAlbumList from "../organism/albumList/RecentAlbumList";
 import RecentPlayList from "../organism/albumList/RecentPlayList";
 import { TRACK_RECENT_LIST_RESPONSE, getRecentTrackListAxios } from "@/services/contents/RecentTrackListAxios";
 import RecentTrackList from "../organism/singleList/RecentTrackList";
+import TextBanner from "../organism/textBanner/TextBanner";
 
 export default function Main() {
 
@@ -42,6 +42,8 @@ export default function Main() {
 			getRecentAlbumAxios("", 20).then((data) => setRecent(data));
 			getRecentPlayListAxios("", 20).then((playdata) => setRecentPlayList(playdata));
 			getRecentTrackListAxios("", 20).then((trackdata) =>	setRecentTrackList(trackdata));
+
+
 	}, []);
 
 	return (
@@ -56,7 +58,7 @@ export default function Main() {
 			{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
 				return (
 					<>
-						{content.TYPE === "SINGLE" ? (
+						{content.TYPE == "TRACK" ? (
 							<SingleList showTitle={true} recommendList={content} />
 						) : (
 							<AlbumList showTitle={true} recommendList={content} />

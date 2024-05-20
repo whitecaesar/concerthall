@@ -7,9 +7,6 @@ type Props = {
 };
 
 const FuncButton = ({ method }: Props) => {
-	//		const jsonArray = JSON.parse(data);
-	//		console.log(jsonArray);
-
 	const funcClickAction = (type: string) => {
 		const artistItem = {
 			artist_id: "test1234",

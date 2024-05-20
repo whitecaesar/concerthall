@@ -1,12 +1,14 @@
 import AlbumViewAll from "@/component/template/AlbumViewAll";
 import SubTitleProvider from "@/providers/SubTitleProvider";
 
-export default function ViewAllAlbum() {
+export default function ViewAllAlbum({ params }: { params: { id: string } }) {
+
+	console.log('test');
 	return (
 		<>
 			<SubTitleProvider>
 				<div className="datailAlbumPage">
-					<AlbumViewAll />
+					<AlbumViewAll list_id={params.id}/>
 				</div>
 			</SubTitleProvider>
 		</>

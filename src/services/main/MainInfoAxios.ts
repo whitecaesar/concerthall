@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from "axios";
-import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE, TVIEWALL_LIST_RESPONSE } from "../contents/ViewAllAxios";
+import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE, TVIEWALL_LIST_RESPONSE, ARTIST_INFO_TYPE } from "../contents/ViewAllAxios";
 
 //텍스트 배너 타입
 export type TTXT_BANNER_RES = {
 	ID_BANNER: string;
 	TYPE: string;
-	CONTENT: string;
+	CONTENTS: string;
 	LINK: string;
 };
 
@@ -36,7 +36,19 @@ export async function getBannersAxios(): Promise<TMAIN_RESPONSE | void> {
 		"http://cip.ontown.co.kr/hch/home/info.json"
 	);
 	if (response.status === 200) {
-		return response.data;
+		const data = response.data as TMAIN_RESPONSE;
+		const parsedRecommendList = data.RECOMMEND_LIST.map(list => ({
+			...list,
+			ITEM_INFO: list.ITEM_INFO.map(item => ({
+			...item,
+			ARTIST: JSON.parse(item.S_ARTIST) as ARTIST_INFO_TYPE[]
+			}))
+		}));
+		
+		return {
+			...data,
+			RECOMMEND_LIST: parsedRecommendList
+		};
 	} else {
 		throw new Error(`에러입니다.`);
 	}

@@ -39,7 +39,6 @@ export default function RecentPlayViewAll(total : RecentPlayViewAllProps) {
 			recent?.recentList.sort((a , b) => -a.playlist.title.localeCompare(b.playlist.title));
 		}
 
-		console.log(recent);
 		recent && setRecent({...recent});
 	};
 

@@ -12,7 +12,7 @@ const PLTLikeButton = ({ starPoint, track_id } : LikeButtonProps) => {
   const likeClick = () => {
     // num 상태를 업데이트하는 함수, num 값이 0에서 3 사이를 순환
     setNumber((star) => (star + 1) % 4);
-    const param = {ratingInfo:{type:'QOBUZ', star:(star + 1) % 4},track:{id:track_id}};
+    const param = {ratingInfo:{type:'CONCERT_HALL', star:(star + 1) % 4},track:{id:track_id}};
     setPLTStarAxios(param);
   };
 

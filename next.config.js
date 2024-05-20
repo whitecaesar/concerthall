@@ -20,6 +20,16 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'static.qobuz.com'
 			}
+			,
+			{
+				protocol: 'https',
+				hostname: 'imgcdn.cinehotel.co.kr'
+			}
+			,
+			{
+				protocol: 'http',
+				hostname: 'ons.ontown.co.kr'
+			}
 		],
 	},
 	async redirects() {

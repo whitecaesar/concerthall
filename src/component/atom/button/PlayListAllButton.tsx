@@ -1,14 +1,14 @@
 import { funcPlayListPlayClick } from "@/services/common";
-import { PLAYLIST_TRACK_ITEM_TYPE, TRACK_PLAYLIST_ITEM_TYPE } from "@/services/contents/PlayListTrackAxios";
+import { TRACK_PLAYLIST_TYPE } from "@/services/contents/PlayListTrackAxios";
 import React from "react";
 
 interface allPlayProp {
-	ListItem : TRACK_PLAYLIST_ITEM_TYPE; 	
+	ListItem : TRACK_PLAYLIST_TYPE; 	
 }
 
 const PlayListAllButton = ({ListItem} :allPlayProp) => {
 
-	const handleClick = async(Item : TRACK_PLAYLIST_ITEM_TYPE) => {
+	const handleClick = async(Item : TRACK_PLAYLIST_TYPE) => {
 		funcPlayListPlayClick('allPlay', Item)
 	}
 	
