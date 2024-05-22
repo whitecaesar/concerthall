@@ -28,7 +28,6 @@ const AlbumList = ({
 	const { setSubTitle } = useContext(SubTitleContext);
 
 	
-	//console.log("props--> ", ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO, "props ");
 	return (
 		<div className={style.albumListContainer} style={{ paddingBottom: "10px" }}>
 			{showTitle && TITLE && (

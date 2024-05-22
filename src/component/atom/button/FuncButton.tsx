@@ -21,6 +21,7 @@ type Props = {
   
   const FuncButton = ({ method, track_info, play_info, album_info, recent_track_info, trackListInfo, position }: Props) => {
 
+	console.log(trackListInfo);
 	function addPropertyToItemInfo(id :string, propertyName:string, propertyValue:string) {
 		const item = trackListInfo?.ITEM_INFO.find(item => item.ID === id);
 		if (item) {
@@ -53,6 +54,8 @@ type Props = {
 				console.error("Error fetching data for item", item.ID, error);
 			}
 		});
+
+		console.log(trackListInfo?.ITEM_INFO);
 
 		funcTrackPlayClick(method, play_info, track_info.TRACK_INFO, trackListInfo, position);
 	  } else if(method == 'albumMore'){

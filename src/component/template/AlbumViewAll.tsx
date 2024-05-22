@@ -18,7 +18,6 @@ interface AlbumViewAllProps {
 
 export default function AlbumViewAll({list_id} : AlbumViewAllProps) {
 
-	console.log("test");
 	const [AlbumContent, setAlbumContent] = useState<TVIEWALL_LIST_RESPONSE>();
 	const { setSubTitle } = useContext(SubTitleContext);
 	
@@ -47,11 +46,8 @@ export default function AlbumViewAll({list_id} : AlbumViewAllProps) {
 			AlbumContent?.RECOMMEND_LIST[0].ITEM_INFO.sort((a , b) => -a.TITLE.localeCompare(b.TITLE));
 		}
 
-		console.log(AlbumContent);
 		AlbumContent && setAlbumContent({...AlbumContent});
 	};
-
-	console.log(AlbumContent);
 
 	return (
 		<>

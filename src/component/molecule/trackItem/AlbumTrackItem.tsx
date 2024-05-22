@@ -10,11 +10,14 @@ import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
 import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
 import AlbumTrackLikeButton from "@/component/atom/button/AlbumTrackLikeButton";
+import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
+import AlbumFuncButton from "@/component/atom/button/AlbumFuncButton";
 interface TrackItemProps {
 	albumTrackInfo: ALBUM_ITEM_TYPE;
+	AlbumTrackList: ALBUM_ITEM_TYPE[];
 }
 
-export default function AlbumTrackItem({ albumTrackInfo }: TrackItemProps) {
+export default function AlbumTrackItem({ albumTrackInfo, AlbumTrackList }: TrackItemProps) {
 	const { data : trackData, isError, isLoading } = useQuery({
 		queryKey: ["TRACK-LIST"],
 		queryFn: () => {
@@ -51,7 +54,7 @@ export default function AlbumTrackItem({ albumTrackInfo }: TrackItemProps) {
 			</span>
 			<div className={style.buttonGroup}>
 				<AlbumTrackLikeButton track_info={albumTrackInfo}/>
-				<FuncButton method="trackMore" track_info={trackData} play_info={playData}/>
+				<AlbumFuncButton method="albumTrackMore" track_info={trackData} play_info={playData} albumTrackList={AlbumTrackList}/>
 			</div>
 		</div>
 	);

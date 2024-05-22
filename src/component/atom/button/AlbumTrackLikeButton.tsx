@@ -44,8 +44,6 @@ const AlbumTrackLikeButton =  ({ track_info }: LikeButtonProps) => {
     }
   };
 
-  console.log(star);
-
   return (
     <>
       <button onClick={likeClick} className={`likeBtn${star}`}></button>

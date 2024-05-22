@@ -51,7 +51,6 @@ export default function SingleList({
           mediaType: 'CONCERT_HALL'
         };
         const response = await getStarAxios('TRACK', params);
-        console.log("star =>", track.ID, "valve=>", response.contents[0].star)
         addPropertyToItemInfo(track.ID, 'STAR', response.code === '200' ? response.contents[0].star: 0);
         setIsFetch(true);
       } else {

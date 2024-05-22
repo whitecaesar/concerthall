@@ -61,7 +61,7 @@ const AlbumTrackList = ({ AlbumTrackList }: TrackListProps) => {
 			{AlbumTrackList.map((itemInfo, index) => {
 				return (
 					<li key={itemInfo.ID}>
-						<AlbumTrackItem albumTrackInfo={itemInfo} />
+						<AlbumTrackItem albumTrackInfo={itemInfo} AlbumTrackList={AlbumTrackList}/>
 					</li>)
 			})}
 		</ul>

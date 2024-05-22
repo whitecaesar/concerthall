@@ -3,7 +3,6 @@ import SubTitleProvider from "@/providers/SubTitleProvider";
 
 export default function ViewAllAlbum({ params }: { params: { id: string } }) {
 
-	console.log('test');
 	return (
 		<>
 			<SubTitleProvider>

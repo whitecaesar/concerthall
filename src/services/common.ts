@@ -45,13 +45,12 @@ function convertToMilliseconds(duration : string) {
   return (seconds * 1000) + millisecondsPart;
 }
 
-export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, track : TRACK_ITEM_TYPE, tracklistInfo? : VIEWALL_LIST_TYPE, position? : number) {
+export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, track? : TRACK_ITEM_TYPE, tracklistInfo? : VIEWALL_LIST_TYPE, position? : number, albumTrackList? : ALBUM_ITEM_TYPE[]) {
   
    // 버튼 클릭 시 실행할 로직
   if(type == 'trackMore')
   {
     const WebStreamTrackItem: any[] = [];
-
     tracklistInfo?.ITEM_INFO.forEach(async (item :ITEM_INFO_TYPE) => {
       
       const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
@@ -70,6 +69,39 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
       WebStreamTrackItem.push(trackItem);
     });
 
+    console.log(WebStreamTrackItem);
+
+    const trackData = {
+      webstreamtrackitem : WebStreamTrackItem,
+      position : position
+    };
+
+    let json_track_data: string = JSON.stringify(trackData);
+    (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+  }
+  else if(type == 'albumTrackMore')
+  {
+    const WebStreamTrackItem: any[] = [];
+
+    albumTrackList?.forEach(async (item :ALBUM_ITEM_TYPE) => {
+      const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
+      const trackItem = {
+        track_id : item.ID,
+        title : item.TITLE,
+        thumbnail : item.THUMBNAIL,
+        url : item.URL,
+        playable_code : item.PLAYABLE_CODE,
+        media_type : item.MEDIA_TYPE,
+        album_id : item.ALBUM_ID,
+        album_name : item.ALBUM_NAME,
+        artist : item.ARTIST,
+        duration : duratinon
+      };
+      WebStreamTrackItem.push(trackItem);
+    });
+
+    console.log(WebStreamTrackItem);
+
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem,
       position : position
@@ -80,24 +112,26 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
   }
   else if(type == 'trackPlay' || type == 'trackShare')
   {
-     const duratinon = track.DURATION && convertToMilliseconds(track.DURATION);
+     const duratinon = track?.DURATION && convertToMilliseconds(track.DURATION);
      const trackItem = {
-      track_id : track.TRACK_ID,
-      title : track.TITLE,
-      album_thumbnail : track.ALBUM_THUMBNAIL,
-      thumbnail : track.THUMBNAIL,
+      track_id : track?.TRACK_ID,
+      title : track?.TITLE,
+      album_thumbnail : track?.ALBUM_THUMBNAIL,
+      thumbnail : track?.THUMBNAIL,
       url : playUrl?.INFO.URL,
       playable : playUrl?.RES_CODE,
-      media_type : track.MEDIA_TYPE,
-      album_id : track.ALBUM_ID,
-      album_name : track.ALBUM_NAME,
-      artist : track.ARTIST,
+      media_type : track?.MEDIA_TYPE,
+      album_id : track?.ALBUM_ID,
+      album_name : track?.ALBUM_NAME,
+      artist : track?.ARTIST,
       duration : duratinon,
-      resolution : track.data?.resolution,
-      codec : track.data?.codec,
+      resolution : track?.data?.resolution,
+      codec : track?.data?.codec,
     };
 
     const WebStreamTrackItem: any[] = [trackItem];
+
+    console.log(WebStreamTrackItem);
   
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem
@@ -141,6 +175,8 @@ export function funcAlbumTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONS
       WebStreamTrackItem.push(trackItem);
     });
 
+    console.log(WebStreamTrackItem);
+
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem,
       position : position
@@ -167,6 +203,8 @@ export function funcAlbumTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONS
     };
 
     const WebStreamTrackItem: any[] = [trackItem];
+
+    console.log(WebStreamTrackItem);
   
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem
@@ -186,7 +224,6 @@ export function funcAlbumTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONS
 };
 
 export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
-
   const WebStreamTrackItem: any[] = [];
 
   album?.ITME_INFO?.forEach(async (item :ALBUM_ITEM_TYPE) => {
@@ -218,7 +255,7 @@ export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
   }
 
   const albumData = {
-    WebStreamAlbumItem : WebStreamAlbumItem
+    webstreamalbumitem : WebStreamAlbumItem
   }
 
   let allData = {}
@@ -226,7 +263,7 @@ export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
   let json_album_data: string = JSON.stringify(albumData);
 
   // 버튼 클릭 시 실행할 로직
-  if(type == 'AlbumMore')
+  if(type == 'albumMore')
   {
     (window as any).HifiRose.webStreamAlbumMoreClick(json_album_data);
   }
@@ -235,17 +272,19 @@ export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
     allData = { 
       webstreamtrackitem : WebStreamTrackItem,
       webstreamalbumitem : WebStreamAlbumItem,
-      isshuffleplay : false
+      isShufflePlay : false
     };
     let All_data: string = JSON.stringify(allData);
+    console.log(All_data);
     (window as any).HifiRose.webStreamAlbumClick(All_data);
   }
-  else if(type == 'ShufflePlay')
+  else if(type == 'SufflePlay')
   {
+    console.log('shuffle');
     allData = {
       webstreamtrackitem : WebStreamTrackItem,
       webstreamalbumitem : WebStreamAlbumItem,
-      isshuffleplay : true
+      isShufflePlay : true
     };
     let All_data: string = JSON.stringify(allData);
     (window as any).HifiRose.webStreamAlbumClick(All_data);
@@ -286,7 +325,7 @@ export function funcPlayListPlayClick(type:string, playlist:TRACK_RECENT_LIST_RE
     if(type == 'allPlay'){
       const trackData = {
         rosememberplaylistitem : playlist,
-        isshuffleplay:false
+        isShufflePlay:false
       }
       const json_playList_data: string = JSON.stringify(trackData);
       (window as any).HifiRose.webStreamTotalHomePlaylistClick(json_playList_data);
@@ -294,7 +333,7 @@ export function funcPlayListPlayClick(type:string, playlist:TRACK_RECENT_LIST_RE
     else if(type == 'sufflePlay'){
       const trackData = {
         rosememberplaylistitem : playlist,
-        isshuffleplay:true
+        isShufflePlay:true
       }
       const json_playList_data: string = JSON.stringify(trackData);
       (window as any).HifiRose.webStreamTotalHomePlaylistClick(json_playList_data);

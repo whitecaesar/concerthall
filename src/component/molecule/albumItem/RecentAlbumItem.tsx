@@ -5,8 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import style from "./albumItem.module.css";
 import {ALBUM_RECENT_ITEM_TYPE} from "@/services/contents/RecentAlbumAxios";
-import AlbumLikeButton from "@/component/atom/button/AlbumLikeButton";
-import AlbumFuncButton from "@/component/atom/button/AlbumFuncButton";
 
 interface AlbumItemProps {
 	albumInfo: ALBUM_RECENT_ITEM_TYPE;
@@ -16,7 +14,7 @@ interface AlbumItemProps {
 const RecentAlbumItem = ({ albumInfo, onClick }: AlbumItemProps) => {
 	return (
 		<div className={style.albumItem} onClick={onClick}>
-			<Link href={`/detail/album/track/${albumInfo.id}`}>
+			<Link href={`/detail/album/track/${albumInfo.clientKey}`}>
 				<Image
 					src={albumInfo.thumbnail}
 					alt={albumInfo.title}

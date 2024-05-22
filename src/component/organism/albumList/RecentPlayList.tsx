@@ -22,7 +22,6 @@ const RecentPlayList = ({
 }: RecentPlayListProps) => {
 	const { setSubTitle } = useContext(SubTitleContext);
 
-	//console.log("props--> ", recentList, "props ");
 	return (
 		<div className={style.albumListContainer} style={{ paddingBottom: "10px" }}>
 			{recentList && (

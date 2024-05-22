@@ -53,7 +53,7 @@ export default function Main() {
 			<TextBanner banner={data?.TXT_BANNER[0]} isFetched={isFetched} />
 
 			{recentPlayList && (<RecentPlayList showTitle={true} recommendList={recentPlayList} />)}
-			{/*recent && <RecentAlbumList showTitle={true} recommendList={recent} />*/}
+			{recent && <RecentAlbumList showTitle={true} recommendList={recent} />}
 			{recentTrackList && (<RecentTrackList showTitle={true} recommendList={recentTrackList} />)}
 			{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
 				return (
