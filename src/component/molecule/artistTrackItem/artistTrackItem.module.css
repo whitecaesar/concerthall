@@ -1,0 +1,53 @@
+.artistTrackItem {
+	white-space: wrap;
+	word-break: break-all;
+	display: grid;
+	grid-template-columns: 1fr 60px;
+	gap: 0 15px;
+	align-items: center;
+	padding: 12px 15px;
+}
+
+.artistTrackItem > span {
+	white-space: wrap;
+	word-break: break-all;
+	display: grid;
+	grid-template-columns: 45px 1fr;
+	gap: 0 15px;
+	align-items: center;
+}
+
+.artistTrackItem .thumbnail {
+	border-radius: 4px;
+	grid-area: 1 / 1 / 3 / 2;
+}
+
+.artistTrackItem .title {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	grid-area: 1 / 2 / 2 / 3;
+	font-size: 14px;
+	white-space: nowrap;
+}
+.artistTrackItem .artist {
+	font-size: 13px;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	grid-area: 2 / 2 / 3 / 3;
+	color: var(--DarkGrey);
+}
+.artistTrackItem .bottomInfo {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.artistTrackItem .buttonGroup {
+	width: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}

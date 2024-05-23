@@ -1,0 +1,8 @@
+.aboutContent {
+	padding: 10px 15px 20px;
+}
+.aboutContent p {
+	line-height: 20px;
+	font-size: 15px;
+	font-weight: lighter;
+}

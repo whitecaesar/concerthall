@@ -1,0 +1,31 @@
+.artistList {
+	display: flex;
+	width: 100vw;
+	overflow-x: auto;
+	padding: 0 15px 15px;
+	gap: 20px;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+}
+.artistList li {
+	width: 130px;
+}
+
+.noScroll {
+	flex-wrap: wrap;
+	gap: 18px 0;
+	width: 100%;
+	padding: 0 10px 15px;
+}
+.noScroll li {
+	width: calc(100% / 3);
+	padding: 0 5px;
+}
+.noScroll li > div,
+.noScroll li > div a {
+	width: 100%;
+}
+.noScroll li img {
+	width: 100%;
+	height: auto;
+}

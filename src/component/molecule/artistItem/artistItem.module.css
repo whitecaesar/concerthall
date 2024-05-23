@@ -1,0 +1,23 @@
+.artistItem {
+	width: 130px;
+}
+
+.artistItem .thumbnail {
+	border-radius: 50%;
+}
+
+.artistItem a {
+	width: 130px;
+	white-space: wrap;
+	word-break: break-all;
+}
+.artistItem .title {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	font-size: 14px;
+	line-height: 16px;
+	padding-top: 3px;
+}

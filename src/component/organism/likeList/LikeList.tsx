@@ -6,14 +6,15 @@ import { getAlbumAxios } from "@/services/contents/AlbumAxios";
 import { useQuery } from "@tanstack/react-query";
 import AlbumViewAll from "@/component/template/AlbumViewAll";
 import TrackList from "@/component/organism/trackList/TrackList";
+import ArtistViewAll from "@/component/template/ArtistViewAll";
 
 type Props = {};
 interface AlbumTrackProps {
 	album_id: string;
 }
 export default function LikeList(album: AlbumTrackProps, props: Props) {
+	//탭 기능
 	const [activeTab, setActiveTab] = useState<string>("Tab1");
-
 	const handleTabClick = (tabName: string) => {
 		setActiveTab(tabName);
 	};
@@ -62,26 +63,10 @@ export default function LikeList(album: AlbumTrackProps, props: Props) {
 				</div>
 
 				<div className={style.tabContent}>
-					{activeTab === "Tab1" && (
-						<div>
-							<TrackList trackList={AlbumItem} />
-						</div>
-					)}
-					{activeTab === "Tab2" && (
-						<div>
-							<AlbumViewAll />
-						</div>
-					)}
-					{activeTab === "Tab3" && (
-						<div>
-							<TrackList trackList={AlbumItem} />
-						</div>
-					)}
-					{activeTab === "Tab4" && (
-						<div>
-							<AlbumViewAll />
-						</div>
-					)}
+					{activeTab === "Tab1" && <TrackList trackList={AlbumItem} />}
+					{activeTab === "Tab2" && <AlbumViewAll />}
+					{activeTab === "Tab3" && <ArtistViewAll />}
+					{activeTab === "Tab4" && <AlbumViewAll />}
 				</div>
 			</SubTitleProvider>
 		</>

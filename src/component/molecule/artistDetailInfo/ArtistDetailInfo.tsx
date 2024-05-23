@@ -5,22 +5,22 @@ import Image from "next/image";
 import RoundPlayButton from "@/component/atom/button/RoundPlayButton";
 import RoundShuffleButton from "@/component/atom/button/RoundSuffleButton";
 import { ALBUM_DETAIL_TYPE } from "@/services/contents/AlbumAxios";
-import style from "./detailInfo.module.css";
+import style from "./artistDetailInfo.module.css";
 
-interface DetailInfoProps {
+interface ArtistDetailInfoProps {
 	detailInfo: ALBUM_DETAIL_TYPE;
 }
 
-const DetailInfo = ({ detailInfo }: DetailInfoProps) => {
+const ArtistDetailInfo = ({ detailInfo }: ArtistDetailInfoProps) => {
 	const isLongTitle = detailInfo.TITLE.length > 20;
 
 	return (
-		<div className={style.albumDetailInfo}>
+		<div className={style.artistDetailInfo}>
 			<Image
 				src={detailInfo.THUMBNAIL}
 				alt={detailInfo.TITLE}
 				width={720}
-				height={611}
+				height={720}
 				priority
 				className={style.detailThumbnail}
 			/>
@@ -41,4 +41,4 @@ const DetailInfo = ({ detailInfo }: DetailInfoProps) => {
 	);
 };
 
-export default DetailInfo;
+export default ArtistDetailInfo;
