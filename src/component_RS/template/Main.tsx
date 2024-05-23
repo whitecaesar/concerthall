@@ -40,13 +40,13 @@ export default function Main({ slug }: { slug?: string }) {
 					index: index,
 				})
 			);
-			setMenuItems(menuItems);
+			//setMenuItems(menuItems);
 			if (menuItems.length > 0) {
 				const selectedMenu = menuItems.find(
 					(menu) => `${menu.mainId}` === slug
 				);
 				setSubTitle(selectedMenu?.name);
-				setSelectedMenuItem(selectedMenu || menuItems[0]);
+				//setSelectedMenuItem(selectedMenu || menuItems[0]);
 			}
 		}
 	}, [isFetched]);
@@ -57,7 +57,7 @@ export default function Main({ slug }: { slug?: string }) {
 				(content, index) =>
 					content ? (
 						<React.Fragment key={index}>
-							{content.TYPE === "SINGLE" ? (
+							{content.TYPE === "TRACK" ? (
 								<TrackList recommendList={content} isTitle={false} />
 							) : (
 								<AlbumList recommendList={content} isTitle={false} />

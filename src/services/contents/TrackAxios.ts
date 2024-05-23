@@ -13,22 +13,24 @@ export type TRACK_DATA_INFO_TYPE = {
 }
 
 export type TRACK_ITEM_TYPE = {
-	ID: string;
+	TRACK_ID: string;
 	THUMBNAIL: string;
 	TITLE: string;
-	ARTIST?: TRACK_ARTIST_INFO_TYPE;
+	ARTIST?: [];
 	GENRE?: string;
-	media_type?: string;
-	album_id: string;
-	album_name: string;
-	album_thumbnail? : string;
+	MEDIA_TYPE?: string;
+	ALBUM_ID: string;
+	ALBUM_NAME: string;
+	ALBUM_THUMBNAIL? : string;
 	data? : TRACK_DATA_INFO_TYPE;
+	DURATION? : string;
+	S_ARTIST?: string;
 };
 
 export type TRACK_INFO_RESPONSE = {
 	idTrack: string;
 	RES_CODE: string;
-    RES_MSG: string;
+    RES_MSG?: string;
 	TRACK_INFO: TRACK_ITEM_TYPE;
 };
 
@@ -41,6 +43,10 @@ export async function getTrackAxios(
 	);
 
 	if (response.status === 200) {
+		const trackData = response.data;
+		if (trackData.TRACK_INFO.S_ARTIST) {
+            trackData.TRACK_INFO.ARTIST = JSON.parse(trackData.TRACK_INFO.S_ARTIST); // 앨범 수준의 S_ARTIST 파싱
+        }
 		return response.data;
 	} else {
 		throw new Error(`에러입니다. ${response.status}`);

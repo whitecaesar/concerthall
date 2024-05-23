@@ -1,17 +1,44 @@
 "use client";
-import React, { useState } from "react";
+import { setPLLIKEAxios } from "@/services/contents/PLLikeAxio";
+import React, { useEffect, useState } from "react";
 
-const ThumbupButton = () => {
-	const [isActive, setIsActive] = useState(false);
+interface thumbupProp {
+	status: boolean;
+	targetId : string;
+}
+const ThumbupButton = ({status,targetId} : thumbupProp) => {
+	const [isActive, setIsActive] = useState('');
+	useEffect(() => {
+		if(status)
+		{
+			setIsActive('on');
+		} 
+	}, [status]);
+	
 	const toggleButton = () => {
-		setIsActive(!isActive);
+		if(!isActive)
+		{
+			/* 안좋아요 */
+			const param = {	targetId:targetId, 
+							type:'PLAY_LIST',
+							thumbup:true}
+			setPLLIKEAxios(param).then(data => data.code == '200'? setIsActive('on'):alert('error'));
+		}
+		else
+		{
+			/* 좋아요 */
+			const param = {	targetId:targetId, 
+							type:'PLAY_LIST',
+							thumbup:false}
+			setPLLIKEAxios(param).then(data => data.code == '200'? setIsActive(''):alert('error'));
+		}
 	};
 
 	return (
 		<>
 			<button
 				onClick={toggleButton}
-				className={`thumbupBtn ${isActive ? "on" : ""}`}
+				className={`thumbupBtn ${isActive}`}
 			></button>
 			<style jsx>{`
 				.thumbupBtn {

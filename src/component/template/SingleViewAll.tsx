@@ -9,22 +9,24 @@ import {
 } from "@/services/contents/ViewAllAxios";
 import { ReactNode, useContext, useEffect, useState } from "react";
 
-export default function SingleViewAll() {
+interface SingleViewAllProps {
+	list_id?: string;
+}
+
+export default function SingleViewAll({list_id} : SingleViewAllProps) {
 	const [AlbumContent, setAlbumContent] = useState<TVIEWALL_LIST_RESPONSE>();
 	
 	useEffect(() => {
 		// const recent = ;
-		getViewallAxios(2).then(data => 
+		getViewallAxios(list_id).then(data => 
 			data?setAlbumContent(data):null
 		);
 	}, []);
 
-	console.log(AlbumContent?.VIEWALL_LIST);
-
 	return (
 		<>
 			<PlayButtonGroup />
-			{AlbumContent?.VIEWALL_LIST.map(
+			{AlbumContent?.RECOMMEND_LIST.map(
 				(content: VIEWALL_LIST_TYPE) => {
 					return (
 						<>

@@ -21,7 +21,7 @@ export default function SingleListViewAll({
 			<ul className={`${style.singleList} ${style.noScroll}`}>
 				{ITEM_INFO.map((item: ITEM_INFO_TYPE) => (
 					<li key={item.ID}>
-						<SingleItem singleInfo={item} />
+						{/*<SingleItem singleInfo={item} />*/}
 					</li>
 				))}
 			</ul>

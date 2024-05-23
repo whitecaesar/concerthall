@@ -25,13 +25,13 @@ const AlbumItem = ({ albumInfo, onClick }: AlbumItemProps) => {
 					className={style.thumbnail}
 				/>
 				<p className={style.title}>{albumInfo.TITLE}</p>
-				<div className={style.bottomInfo}>
+				{/*<div className={style.bottomInfo}>
 					<span className={style.thumbupCnt}>
 						<Icon iconName="thumbUp" /> {albumInfo.NUM_THUMBUP}
 					</span>
 					<span className={style.bar}></span>
 					<span>{albumInfo.TOTAL_NUM_TRACK}곡</span>
-				</div>
+				</div>*/}
 			</Link>
 		</div>
 	);

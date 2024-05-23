@@ -4,17 +4,23 @@ import Link from "next/link";
 import LikeButton from "@/component/atom/button/LikeButton";
 import FuncButton from "@/component/atom/button/FuncButton";
 import style from "./singleItem.module.css";
-import { ITEM_INFO_TYPE } from "@/services/contents/ViewAllAxios";
+import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
 import { useQuery } from "@tanstack/react-query";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
-import { funcTrackPlayClick } from "@/services/common";
 import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
+import { funcTrackPlayClick } from "@/services/common";
 
 
 export default function SingleItem({
-	singleInfo
+	singleInfo,
+	trackListInfo,
+	position,
+	star,
 }: {
 	singleInfo: ITEM_INFO_TYPE;
+	trackListInfo: VIEWALL_LIST_TYPE;
+	position:number;
+	star:number;
 }) {
 
 	const { data : trackData, isError, isLoading } = useQuery({
@@ -50,10 +56,10 @@ export default function SingleItem({
 				<p className={style.title}>{singleInfo.TITLE}</p>
 			</span>
 			<div className={style.bottomInfo}>
-				<p className={style.artist}>{singleInfo.ARTIST?.artist_name}</p>
+				<p className={style.artist}>{singleInfo.ARTIST_NAME}</p>
 				<div className={style.buttonGroup}>
-					<LikeButton starPoint={singleInfo.star || 0} />
-					<FuncButton method="trackMore" track_info={trackData} play_info={playData}/>
+					<LikeButton track_info={singleInfo} starPoint={singleInfo.STAR || 0} />
+					<FuncButton method="trackMore" track_info={trackData} play_info={playData} trackListInfo={trackListInfo} position={position}/>
 					{/* 기능 로직 넣으세요. */}
 				</div>
 			</div>

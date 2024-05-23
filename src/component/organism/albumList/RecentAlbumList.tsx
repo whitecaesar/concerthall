@@ -30,7 +30,6 @@ const RecentAlbumList = ({
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
 
-	//console.log("props--> ", recentList, "props ");
 	return (
 		<div className={style.albumListContainer} style={{ paddingBottom: "10px" }}>
 			{showTitle && recentList && (
@@ -50,10 +49,12 @@ const RecentAlbumList = ({
 					<li key={item.album.id}>
 						<RecentAlbumItem
 							albumInfo={item.album}
+							/*
 							onClick={() => {
 								setSubTitle(item.album.title);
 								router.push(`/detail/album/track/${item.album.id}`);
 							}}
+							*/
 						/>
 					</li>
 				))}

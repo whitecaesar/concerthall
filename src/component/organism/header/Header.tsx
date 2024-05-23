@@ -27,6 +27,7 @@ export default function Header() {
 		};
 	}, []);
 
+
 	const path = usePathname();
 	const ynMainNav = useMemo(
 		() => path === "/my" || path === "/explore" || path === "/main",

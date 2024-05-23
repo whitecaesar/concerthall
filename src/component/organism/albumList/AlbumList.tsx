@@ -27,7 +27,7 @@ const AlbumList = ({
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
 
-	//console.log("props--> ", ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO, "props ");
+	
 	return (
 		<div className={style.albumListContainer} style={{ paddingBottom: "10px" }}>
 			{showTitle && TITLE && (
@@ -49,7 +49,7 @@ const AlbumList = ({
 							albumInfo={item}
 							onClick={() => {
 								setSubTitle(item.TITLE);
-								router.push(`/detail/album/track/${item.ID}`);
+								//router.push(`/detail/album/track/${item.ID}`);
 							}}
 						/>
 					</li>

@@ -4,11 +4,10 @@ import Link from "next/link";
 import LikeButton from "@/component/atom/button/LikeButton";
 import FuncButton from "@/component/atom/button/FuncButton";
 import style from "./trackItem.module.css";
-import { TRACK_ITEM_TYPE } from "@/services/contents/AlbumAxios";
 import { funcTrackPlayClick } from "@/services/common";
 import { useQuery } from "@tanstack/react-query";
 import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
-import { getTrackAxios } from "@/services/contents/TrackAxios";
+import { TRACK_ITEM_TYPE, getTrackAxios } from "@/services/contents/TrackAxios";
 
 interface TrackItemProps {
 	trackInfo: TRACK_ITEM_TYPE;
@@ -19,7 +18,7 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 	const { data : trackData, isError, isLoading } = useQuery({
 		queryKey: ["TRACK-LIST"],
 		queryFn: () => {
-			const TrackItem = getTrackAxios(trackInfo.ID);
+			const TrackItem = getTrackAxios(trackInfo.TRACK_ID);
 			return TrackItem;
 		},
 	});
@@ -27,7 +26,7 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 	const { data :playData, isError: playError, isLoading: playLoding } = useQuery({
 		queryKey: ["PLAY-INFO"],
 		queryFn: () => {
-			const PlayInfo = getPlayInfoAxios(trackInfo.ID);
+			const PlayInfo = getPlayInfoAxios(trackInfo.TRACK_ID);
 			return PlayInfo;
 		},
 	});
@@ -48,7 +47,7 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 					className={style.thumbnail}
 				/>
 				<p className={style.title}>{trackInfo.TITLE}</p>
-				<p className={style.artist}>{trackInfo.ARTIST?.artist_name}</p>
+				<p className={style.artist}>{}</p>
 			</span>
 			<div className={style.buttonGroup}>
 				<LikeButton starPoint={0}/>

@@ -12,22 +12,24 @@ import Dropdown from "../atom/dropdown/dropdown";
 import { dropdownOptions, albumDropdownOptions } from "@/interface/DropdownType";
 import { ReactNode, useContext, useEffect, useState } from "react";
 
-export default function AlbumViewAll() {
+interface AlbumViewAllProps {
+	list_id?: string;
+}
+
+export default function AlbumViewAll({list_id} : AlbumViewAllProps) {
 
 	const [AlbumContent, setAlbumContent] = useState<TVIEWALL_LIST_RESPONSE>();
 	const { setSubTitle } = useContext(SubTitleContext);
 	
 	useEffect(() => {
 		// const recent = ;
-		getViewallAxios(1).then(data => 
-			data?setAlbumContent(data):null
-		);
+		getViewallAxios(list_id).then(data => data?setAlbumContent(data):null);
 	}, []);
 
 	const handleRecentChange = (event : string) => {
 		if(event == 'preference')
 		{
-			AlbumContent?.VIEWALL_LIST[0].ITEM_INFO.sort((a , b) => a.TITLE.localeCompare(b.TITLE));
+			AlbumContent?.RECOMMEND_LIST[0].ITEM_INFO.sort((a , b) => a.TITLE.localeCompare(b.TITLE));
 		}
 		/*
 		else if(event == 'preference')
@@ -37,14 +39,13 @@ export default function AlbumViewAll() {
 		*/
 		else if(event == 'ascending')
 		{
-			AlbumContent?.VIEWALL_LIST[0].ITEM_INFO.sort((a , b) => a.TITLE.localeCompare(b.TITLE));
+			AlbumContent?.RECOMMEND_LIST[0].ITEM_INFO.sort((a , b) => a.TITLE.localeCompare(b.TITLE));
 		}
 		else if(event == 'descending')
 		{
-			AlbumContent?.VIEWALL_LIST[0].ITEM_INFO.sort((a , b) => -a.TITLE.localeCompare(b.TITLE));
+			AlbumContent?.RECOMMEND_LIST[0].ITEM_INFO.sort((a , b) => -a.TITLE.localeCompare(b.TITLE));
 		}
 
-		console.log(AlbumContent);
 		AlbumContent && setAlbumContent({...AlbumContent});
 	};
 
@@ -53,7 +54,7 @@ export default function AlbumViewAll() {
 			<SubTitleProvider>
 				{/* <PlayButtonGroup /> */}
 				<Dropdown options={albumDropdownOptions}  onRecentChange={handleRecentChange} />
-				{AlbumContent?.VIEWALL_LIST.map(
+				{AlbumContent?.RECOMMEND_LIST.map(
 					(content: VIEWALL_LIST_TYPE, index: number) => (
 						<AlbumListViewAll key={content.ID} viewAllList={content} />
 					)
