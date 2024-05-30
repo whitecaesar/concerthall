@@ -4,21 +4,23 @@ import React from "react";
 import Image from "next/image";
 import RoundPlayButton from "@/component/atom/button/RoundPlayButton";
 import RoundShuffleButton from "@/component/atom/button/RoundSuffleButton";
-import { ALBUM_DETAIL_TYPE } from "@/services/contents/AlbumAxios";
 import style from "./artistDetailInfo.module.css";
+import { ARTISTINFO_INFO_TYPE } from "@/services/contents/ArtistInfoAxios";
+import AlbumLikeButton from "@/component/atom/button/AlbumLikeButton";
+import ArtistLikeButton from "@/component/atom/button/ArtistLikeButton";
 
 interface ArtistDetailInfoProps {
-	detailInfo: ALBUM_DETAIL_TYPE;
+	detailInfo: ARTISTINFO_INFO_TYPE;
 }
 
 const ArtistDetailInfo = ({ detailInfo }: ArtistDetailInfoProps) => {
-	const isLongTitle = detailInfo.TITLE.length > 20;
+	const isLongTitle = detailInfo.NM_ARTIST?.length > 20;
 
 	return (
 		<div className={style.artistDetailInfo}>
 			<Image
-				src={detailInfo.THUMBNAIL}
-				alt={detailInfo.TITLE}
+				src={detailInfo.IMG_ARTIST}
+				alt={detailInfo.NM_ARTIST}
 				width={720}
 				height={720}
 				priority
@@ -30,12 +32,15 @@ const ArtistDetailInfo = ({ detailInfo }: ArtistDetailInfoProps) => {
 						isLongTitle ? style.longTitle : ""
 					}`}
 				>
-					<p>{detailInfo.TITLE}</p>
+					<p>{detailInfo.NM_ARTIST}<ArtistLikeButton starPoint={1} artistInfo={detailInfo}/></p>
 				</div>
+				{/*
 				<div className={style.buttonGroup}>
+
 					<RoundPlayButton AlbumItem={detailInfo} />
 					<RoundShuffleButton AlbumItem={detailInfo} />
 				</div>
+				*/}
 			</div>
 		</div>
 	);

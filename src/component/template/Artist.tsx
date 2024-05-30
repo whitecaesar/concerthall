@@ -8,42 +8,44 @@ import ArtistTrackList from "../organism/ArtistTrackList/ArtistTrackList";
 import ArtistAbout from "../molecule/artistAbout/ArtistAbout";
 import ArtistList from "../organism/artistList/ArtistList";
 import AlbumList from "../organism/albumList/AlbumList";
-import ArtistPage from "@/app/artist/page";
+import ArtistPage from "@/app/artist/[id]/page";
+import { getArtistInfoAxios } from "@/services/contents/ArtistInfoAxios";
+import ArtistAlbumList from "../organism/albumList/ArtistAlbumList";
 
-interface AlbumTrackProps {
-	album_id: string;
+interface ArtistInfoProps {
+	artist_id: string;
 }
 
-export default function AlbumTrack(album: AlbumTrackProps) {
+export default function ArtistInfo(artist: ArtistInfoProps) {
 	// useQuery 호출을 옵션 객체를 사용하는 형태로 수정
 
 	const { data, isError, isLoading } = useQuery({
-		queryKey: ["ALBUM-ITEM"],
+		queryKey: ["ARTIST-ITEM"],
 		queryFn: () => {
-			const TrackList = getAlbumAxios(album.album_id);
-			return TrackList;
+			const ArtistInfo = getArtistInfoAxios(artist.artist_id);
+			return ArtistInfo;
 		},
 	});
 
 	if (isLoading) return <div>Loading...</div>;
 	if (isError || !data) return <div>Error occurred</div>;
 
-	// data가 non-null임을 보장하기 위한 optional chaining
-	const AlbumItem = data?.LIST[0]; // 예시로 첫 번째 아이템 사용
-	if (!AlbumItem) return <div>No data available</div>;
-
 	return (
 		<>
-			<ArtistDetailInfo detailInfo={AlbumItem} />
-			<FuncButtonGroup pageType={ArtistPage} AlbumItem={AlbumItem} />
-			{/* 선택한 아티스트 Top Tracks */}
-			<ArtistTrackList trackList={AlbumItem} />
-			{/* 아티스트의 앨범들이 들어감 */}
+			{data.ARTIST_INFO && <ArtistDetailInfo detailInfo={data.ARTIST_INFO} />}
+			{data.ARTIST_INFO.DESC_ARTIST && <ArtistAbout artist_desc={data.ARTIST_INFO.DESC_ARTIST}/>}
+			{/*<FuncButtonGroup AlbumItem={data}/>*/}
+			{data.ARTIST_TRACK_INFO && <ArtistTrackList ArtistTrackList={data.ARTIST_TRACK_INFO} />}
+			{data && <ArtistAlbumList showTitle={true} recommendList={data} />}
+			
+			{/*FuncButtonGroup pageType={ArtistPage} AlbumItem={AlbumItem} />
+			
 			<AlbumList showTitle={true} recommendList={AlbumItem} />
-			{/* 관련 아티스트들 리스트 */}
+			
 			<ArtistList artistList={AlbumItem} />
-			{/* 선택한 아티스트의 텍스트 정보 */}
-			<ArtistAbout artistInfo={AlbumItem} />
+			
+			
+			*/}
 		</>
 	);
 }

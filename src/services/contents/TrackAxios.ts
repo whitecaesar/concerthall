@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { ARTIST_INFO_TYPE } from "./ViewAllAxios";
 
 export type TRACK_ARTIST_INFO_TYPE = {
 	artist_id: string;
@@ -16,7 +17,7 @@ export type TRACK_ITEM_TYPE = {
 	TRACK_ID: string;
 	THUMBNAIL: string;
 	TITLE: string;
-	ARTIST?: [];
+	ARTIST?: TRACK_ARTIST_INFO_TYPE[];
 	GENRE?: string;
 	MEDIA_TYPE?: string;
 	ALBUM_ID: string;
@@ -25,6 +26,7 @@ export type TRACK_ITEM_TYPE = {
 	data? : TRACK_DATA_INFO_TYPE;
 	DURATION? : string;
 	S_ARTIST?: string;
+	STAR?: number;
 };
 
 export type TRACK_INFO_RESPONSE = {
