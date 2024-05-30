@@ -32,7 +32,12 @@ const ArtistDetailInfo = ({ detailInfo }: ArtistDetailInfoProps) => {
 						isLongTitle ? style.longTitle : ""
 					}`}
 				>
-					<p>{detailInfo.NM_ARTIST}<ArtistLikeButton starPoint={1} artistInfo={detailInfo}/></p>
+					<div className={style.artistDetailInfo}>
+						<p>{detailInfo.NM_ARTIST}</p>
+						<div className={style.buttonGroup}>
+							<ArtistLikeButton starPoint={1} artistInfo={detailInfo} />
+						</div>
+					</div>
 				</div>
 				{/*
 				<div className={style.buttonGroup}>
