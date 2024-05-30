@@ -1,70 +1,63 @@
 "use client";
 import Image from "next/image";
-import LikeButton from "@/component/atom/button/LikeButton";
-import FuncButton from "@/component/atom/button/FuncButton";
-import style from "./artistTrackItem.module.css";
-import { TRACK_ITEM_TYPE } from "@/services/contents/AlbumAxios";
-import { funcTrackPlayClick } from "@/services/common";
+import style from "../trackItem/trackItem.module.css";
+import { funcAlbumTrackPlayClick} from "@/services/common";
 import { useQuery } from "@tanstack/react-query";
 import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
-
-interface ArtistTrackItemProps {
-	trackInfo: TRACK_ITEM_TYPE;
+import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
+import AlbumTrackLikeButton from "@/component/atom/button/AlbumTrackLikeButton";
+import AlbumFuncButton from "@/component/atom/button/AlbumFuncButton";
+import Link from "next/link";
+interface TrackItemProps {
+	ArtistTrackInfo: ALBUM_ITEM_TYPE;
+	ArtistTrackList: ALBUM_ITEM_TYPE[];
 }
 
-export default function ArtistTrackItem({ trackInfo }: ArtistTrackItemProps) {
-	const {
-		data: trackData,
-		isError,
-		isLoading,
-	} = useQuery({
+export default function ArtistTrackItem({ ArtistTrackInfo, ArtistTrackList }: TrackItemProps) {
+
+	const { data : trackData, isError, isLoading } = useQuery({
 		queryKey: ["TRACK-LIST"],
 		queryFn: () => {
-			const TrackItem = getTrackAxios(trackInfo.ID);
+			const TrackItem = getTrackAxios(ArtistTrackInfo.ID);
 			return TrackItem;
 		},
 	});
 
-	const {
-		data: playData,
-		isError: playError,
-		isLoading: playLoding,
-	} = useQuery({
+
+	const { data :playData, isError: playError, isLoading: playLoding } = useQuery({
 		queryKey: ["PLAY-INFO"],
 		queryFn: () => {
-			const PlayInfo = getPlayInfoAxios(trackInfo.ID);
+			const PlayInfo = getPlayInfoAxios(ArtistTrackInfo.ID);
 			return PlayInfo;
 		},
 	});
 
-	if (isLoading || playLoding) return <div>Loading...</div>;
-	if (isError || playError || !playData || !trackData)
-		return <div>Error occurred</div>;
+	if ( playLoding ) return <div>Loading...</div>;
+	if ( playError || !playData ) return <div>Error occurred</div>;
 
 	return (
-		<div className={style.artistTrackItem}>
-			<span
-				onClick={() => funcTrackPlayClick("trackPlay", playData, trackInfo)}
-			>
+		<div className={style.trackItem}>
+			<span onClick={() => funcAlbumTrackPlayClick('trackPlay',playData, ArtistTrackInfo)}>
+				{/* Link에는 트랙 재생하는 url이 들어가야 함 */}
 				<Image
-					src={trackInfo.THUMBNAIL}
-					alt={trackInfo.TITLE}
+					src={ArtistTrackInfo.THUMBNAIL}
+					alt={ArtistTrackInfo.TITLE}
 					width={45}
 					height={45}
 					priority={true}
 					className={style.thumbnail}
 				/>
-				<p className={style.title}>{trackInfo.TITLE}</p>
-				<p className={style.artist}>{trackInfo.ARTIST?.artist_name}</p>
+				<p className={style.title}>{ArtistTrackInfo.TITLE}</p>
+				<p className={style.artist}>
+					{ArtistTrackInfo.ARTIST?.map((item, index) => (
+						<div>{item.artist_name}</div>
+					))} 
+				</p>
 			</span>
 			<div className={style.buttonGroup}>
-				<LikeButton starPoint={0} />
-				<FuncButton
-					method="trackMore"
-					track_info={trackData}
-					play_info={playData}
-				/>
+				<AlbumTrackLikeButton track_info={ArtistTrackInfo}/>
+				<AlbumFuncButton method="albumTrackMore" track_info={trackData} play_info={playData} albumTrackList={ArtistTrackList}/>
 			</div>
 		</div>
 	);

@@ -19,23 +19,27 @@ export default function ArtistViewAll() {
 	const [AlbumContent, setAlbumContent] = useState<TVIEWALL_LIST_RESPONSE>();
 	const { setSubTitle } = useContext(SubTitleContext);
 
+
 	useEffect(() => {
 		// const recent = ;
-		getViewallAxios(1).then((data) => (data ? setAlbumContent(data) : null));
+//		getViewallAxios(1).then((data) => (data ? setAlbumContent(data) : null));
 	}, []);
 
 	const handleRecentChange = (event: string) => {
+		/*
 		if (event == "preference") {
 			AlbumContent?.VIEWALL_LIST[0].ITEM_INFO.sort((a, b) =>
 				a.TITLE.localeCompare(b.TITLE)
 			);
 		} else if (event == "ascending") {
-			/*
+		*/
+		/*
 		else if(event == 'preference')
 		{
 			AlbumContent?.VIEWALL_LIST[0].ITEM_INFO.sort((a , b) => b.album.star - a.album.star);
 		}
 		*/
+		/*
 			AlbumContent?.VIEWALL_LIST[0].ITEM_INFO.sort((a, b) =>
 				a.TITLE.localeCompare(b.TITLE)
 			);
@@ -47,10 +51,12 @@ export default function ArtistViewAll() {
 
 		console.log(AlbumContent);
 		AlbumContent && setAlbumContent({ ...AlbumContent });
+		*/
 	};
 
 	return (
 		<>
+			{/*
 			<SubTitleProvider>
 				<Dropdown
 					options={albumDropdownOptions}
@@ -62,6 +68,7 @@ export default function ArtistViewAll() {
 					)
 				)}
 			</SubTitleProvider>
+			*/}
 		</>
 	);
 }

@@ -223,6 +223,78 @@ export function funcAlbumTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONS
   }
 };
 
+export function funcArtistTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, track : TRACK_ITEM_TYPE, tracklistInfo? : VIEWALL_LIST_TYPE, position? : number) {
+       
+  // 버튼 클릭 시 실행할 로직
+  if(type == 'trackMore')
+  {
+    const WebStreamTrackItem: any[] = [];
+
+    tracklistInfo?.ITEM_INFO.forEach(async (item :ITEM_INFO_TYPE) => {
+      const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
+      const trackItem = {
+        track_id : item.ID,
+        title : item.TITLE,
+        thumbnail : item.THUMBNAIL,
+        url : item.URL,
+        playable_code : item.PLAYABLE_CODE,
+        media_type : item.MEDIA_TYPE,
+        album_id : item.ALBUM_ID,
+        album_name : item.ALBUM_NAME,
+        artist : item.ARTIST,
+        duration : duratinon
+      };
+      WebStreamTrackItem.push(trackItem);
+    });
+
+    console.log(WebStreamTrackItem);
+
+    const trackData = {
+      webstreamtrackitem : WebStreamTrackItem,
+      position : position
+    };
+
+    let json_track_data: string = JSON.stringify(trackData);
+    (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+  }
+  else if(type == 'trackPlay' || type == 'trackShare')
+  {
+     const duratinon = track.DURATION && convertToMilliseconds(track.DURATION);
+     const trackItem = {
+      track_id : track.TRACK_ID,
+      title : track.TITLE,
+      album_thumbnail : track.ALBUM_THUMBNAIL,
+      thumbnail : track.THUMBNAIL,
+      url : playUrl?.INFO.URL,
+      playable : playUrl?.RES_CODE,
+      media_type : track.MEDIA_TYPE,
+      album_id : track.ALBUM_ID,
+      album_name : track.ALBUM_NAME,
+      artist : track.ARTIST,
+      duration : duratinon
+    };
+
+    const WebStreamTrackItem: any[] = [trackItem];
+
+    console.log(WebStreamTrackItem);
+  
+    const trackData = {
+      webstreamtrackitem : WebStreamTrackItem
+    }
+  
+    let json_track_data: string = JSON.stringify(trackData);
+    
+    if(type == 'trackPlay')
+    {
+      (window as any).HifiRose.webStreamTrackClick(json_track_data);
+    }
+    else if(type == 'trackShare')
+    {
+      (window as any).HifiRose.webStreamGotoShareTrack(json_track_data);
+    }
+  }
+};
+
 export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
   const WebStreamTrackItem: any[] = [];
 

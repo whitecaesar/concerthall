@@ -24,7 +24,7 @@ export default function RecentAlbumViewAll(total : RecentAlbumViewAllProps) {
 	const handleRecentChange = (event : string) => {
 		if(event == 'recent')
 		{
-			recent?.recentList.sort((a , b) => a.album.playTime.localeCompare(b.album.playTime));
+			//recent?.recentList.sort((a , b) => a.album.playTime.localeCompare(b.album.playTime));
 		}
 		else if(event == 'preference')
 		{

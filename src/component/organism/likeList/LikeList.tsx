@@ -12,6 +12,8 @@ import RecentTrackList from "../singleList/RecentTrackList";
 import RCTTrackList from "../trackList/RCTTrackList";
 import { ALBUM_LIKE_LIST_RESPONSE, getLikeAlbumListAxios } from "@/services/contents/LikeAlbumListAxios";
 import LikeAlbumList from "../albumList/LikeAlbumList";
+import MyPlayViewAll from "../albumList/LikePlayList";
+import { MY_RECENT_LIST_RESPONSE, getLikePlayListAxios } from "@/services/contents/LikePlayListAxios";
 
 type Props = {};
 interface AlbumTrackProps {
@@ -21,13 +23,14 @@ export default function LikeList(album: AlbumTrackProps, props: Props) {
 	const [activeTab, setActiveTab] = useState<string>("Tab1");
 	const [trackList, setTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
 	const [AlbumList, setAlubmList] = useState<ALBUM_LIKE_LIST_RESPONSE>();
-	//const [ArtistList, setArtistList] = useState<TRACK_RECENT_LIST_RESPONSE>();
-	//const [PlayList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
+	const [ArtistList, setArtistList] = useState<TRACK_RECENT_LIST_RESPONSE>();
+	const [PlayList, setPlayList] = useState<MY_RECENT_LIST_RESPONSE>();
 
 	useEffect(() => {
 		// const recent = ;
 		getLikeTrackListAxios().then((data) => setTrackList(data));
 		getLikeAlbumListAxios().then((data) => setAlubmList(data));
+		getLikePlayListAxios().then((data) => setPlayList(data));
 	}, []);
 
 	const handleTabClick = (tabName: string) => {
@@ -38,30 +41,38 @@ export default function LikeList(album: AlbumTrackProps, props: Props) {
 		<>
 			<SubTitleProvider>
 				<div className={style.tab}>
-					<button
-						className={activeTab === "Tab1" ? style.active : ""}
-						onClick={() => handleTabClick("Tab1")}
-					>
-						Tracks({trackList?.totalCount})
-					</button>
-					<button
-						className={activeTab === "Tab2" ? style.active : ""}
-						onClick={() => handleTabClick("Tab2")}
-					>
-						Albums({AlbumList?.totalCount})
-					</button>
-					<button
-						className={activeTab === "Tab3" ? style.active : ""}
-						onClick={() => handleTabClick("Tab3")}
-					>
-						Artist(2)
-					</button>
-					<button
-						className={activeTab === "Tab4" ? style.active : ""}
-						onClick={() => handleTabClick("Tab4")}
-					>
-						Playlist(2)
-					</button>
+					{trackList?.totalCount != 0 && (
+						<button
+							className={activeTab === "Tab1" ? style.active : ""}
+							onClick={() => handleTabClick("Tab1")}
+						>
+							Tracks({trackList?.totalCount})
+						</button>
+					)}
+					{AlbumList?.totalCount != 0 && (
+						<button
+							className={activeTab === "Tab2" ? style.active : ""}
+							onClick={() => handleTabClick("Tab2")}
+						>
+							Albums({AlbumList?.totalCount})
+						</button>
+					)}
+					{ArtistList?.totalCount != 0 && (
+						<button
+							className={activeTab === "Tab3" ? style.active : ""}
+							onClick={() => handleTabClick("Tab3")}
+						>
+							Artist({ArtistList?.totalCount})
+						</button>
+					)}
+					{PlayList?.totalCount != 0 && (
+						<button
+							className={activeTab === "Tab4" ? style.active : ""}
+							onClick={() => handleTabClick("Tab4")}
+						>
+							Playlist({PlayList?.totalCount})
+						</button>
+					)}
 				</div>
 
 
@@ -83,7 +94,7 @@ export default function LikeList(album: AlbumTrackProps, props: Props) {
 					)}
 					{activeTab === "Tab4" && (
 						<div>
-							
+							{PlayList && <MyPlayViewAll totalCnt={PlayList.totalCount}/>}
 						</div>
 					)}
 				</div>
