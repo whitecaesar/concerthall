@@ -11,7 +11,7 @@ export default function RecentViewAllTrackList() {
     const [recentTrackList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
     useEffect(() => {
 			getRecentTrackListAxios("", size).then((trackdata) => setRecentTrackList(trackdata));
-	}, []);
+	}, [size]);
 
 	return (
 		<>

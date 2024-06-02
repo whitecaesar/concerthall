@@ -41,13 +41,14 @@ const ArtistList = ({
 			<ul className={style.artistList}>
 				{ITEM_INFO.map((item: ITEM_INFO_TYPE) => (
 					<li key={item.ID}>
+						{/*
 						<ArtistItem
 							albumInfo={item}
 							onClick={() => {
 								setSubTitle(item.TITLE);
 								router.push(`/detail/album/track/${item.ID}`);
 							}}
-						/>
+						/>*/}
 					</li>
 				))}
 			</ul>

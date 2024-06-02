@@ -28,10 +28,14 @@
 .singleItem .artist {
 	font-size: 13px;
 	color: var(--DarkGrey);
-	width: calc(100% - 50px);
+	width: calc(100% - 55px);
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+.singleItem .artist .artistName{
+	display:flex;
+	gap:5px
 }
 .singleItem .bottomInfo .buttonGroup {
 	width: 50px;

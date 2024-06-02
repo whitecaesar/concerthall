@@ -56,10 +56,10 @@ export default function SingleItem({
 				<p className={style.title}>{singleInfo.TITLE}</p>
 			</span>
 			<div className={style.bottomInfo}>
-				<p className={style.artist}>
+				<p className={style.artist}><div className={style.artistName}>
 					{singleInfo.ARTIST.map((item, index) => (
-						<Link href={`/artist/${item.artist_id}`}>{item.artist_name}</Link>
-					))}
+						<Link key={index} href={`/artist/${item.artist_id}`}>{item.artist_name}</Link>
+					))}</div>
 				</p>
 				<div className={style.buttonGroup}>
 					<LikeButton track_info={singleInfo} starPoint={singleInfo.STAR || 0} />

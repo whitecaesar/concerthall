@@ -40,6 +40,7 @@ export default function AlbumTrackItem({ albumTrackInfo, AlbumTrackList }: Track
 	return (
 		<div className={style.trackItem}>
 			<span onClick={() => funcAlbumTrackPlayClick('trackPlay',playData, albumTrackInfo)}>
+				<span>
 				{/* Link에는 트랙 재생하는 url이 들어가야 함 */}
 				<Image
 					src={albumTrackInfo.THUMBNAIL}
@@ -50,7 +51,10 @@ export default function AlbumTrackItem({ albumTrackInfo, AlbumTrackList }: Track
 					className={style.thumbnail}
 				/>
 				<p className={style.title}>{albumTrackInfo.TITLE}</p>
-				<p className={style.artist}>{albumTrackInfo.ARTIST?.[0].artist_name}</p>
+				</span>
+				{albumTrackInfo.ARTIST?.map((item, index) => (
+				<Link key={index} href={`/artist/${item.artist_id}`}><p className={style.artist}>{item.artist_name}</p></Link>
+				))}				
 			</span>
 			<div className={style.buttonGroup}>
 				<AlbumTrackLikeButton track_info={albumTrackInfo}/>

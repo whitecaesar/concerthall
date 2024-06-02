@@ -19,7 +19,7 @@ export type ALBUM_LIKE_LIST_RESPONSE = {
 export async function getLikeAlbumListAxios(
 ): Promise<ALBUM_LIKE_LIST_RESPONSE> {
 	const response: AxiosResponse<ALBUM_LIKE_LIST_RESPONSE> = await axios.get(
-		`https://dev.api.roseaudio.kr/v1/member/album/favorite?mediaType=QOBUZ&sortType=TITLE_ASC`,{
+		`https://dev.api.roseaudio.kr/v1/member/album/favorite?mediaType=CONCERT_HALL&sortType=TITLE_ASC`,{
 		headers: {
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.

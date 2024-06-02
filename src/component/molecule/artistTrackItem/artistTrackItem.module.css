@@ -39,6 +39,11 @@
 	grid-area: 2 / 2 / 3 / 3;
 	color: var(--DarkGrey);
 }
+.artistTrackItem .artist .artistName{
+	display:flex;
+	gap:5px;
+}
+
 .artistTrackItem .bottomInfo {
 	display: flex;
 	align-items: center;
@@ -51,3 +56,5 @@
 	align-items: center;
 	justify-content: space-between;
 }
+
+

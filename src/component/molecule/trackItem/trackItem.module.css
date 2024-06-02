@@ -15,6 +15,7 @@
 	grid-template-columns: 45px 1fr;
 	gap: 0 15px;
 	align-items: center;
+	position:relative;
 }
 
 .trackItem .thumbnail {
@@ -38,6 +39,10 @@
 	white-space: nowrap;
 	grid-area: 2 / 2 / 3 / 3;
 	color: var(--DarkGrey);
+	position:absolute;
+	bottom:3px;
+	left:0;
+	cursor:pointer;
 }
 .trackItem .bottomInfo {
 	display: flex;
@@ -50,4 +55,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.artist .artistName{
+	display:flex;
+	gap:5px;
 }

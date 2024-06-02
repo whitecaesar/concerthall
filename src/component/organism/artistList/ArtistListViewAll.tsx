@@ -10,13 +10,14 @@ import {
 	VIEWALL_LIST_TYPE,
 } from "@/services/contents/ViewAllAxios";
 import ArtistItem from "@/component/molecule/artistItem/ArtistItem";
+import { ARTIST_LIST_ARTISTDTOS_TYPE, ARTIST_LIST_RESPONSE_TYPE } from "@/services/contents/LikeArtistAxios";
 
 interface ArtistListViewAllProps {
-	viewAllList: VIEWALL_LIST_TYPE;
+	viewAllList: ARTIST_LIST_RESPONSE_TYPE;
 }
 
 export default function ArtistListViewAll({
-	viewAllList: { ITEM_INFO },
+	viewAllList: { artistDtos },
 }: ArtistListViewAllProps) {
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
@@ -24,14 +25,10 @@ export default function ArtistListViewAll({
 	return (
 		<div className={style.artistListContainer}>
 			<ul className={`${style.artistList} ${style.noScroll}`}>
-				{ITEM_INFO.map((item: ITEM_INFO_TYPE) => (
-					<li key={item.ID}>
+				{artistDtos.map((item: ARTIST_LIST_ARTISTDTOS_TYPE) => (
+					<li key={item.id}>
 						<ArtistItem
-							albumInfo={item}
-							onClick={() => {
-								setSubTitle(item.TITLE);
-								router.push(`/detail/album/track/${item.ID}`);
-							}}
+							artistInfo={item}
 						/>
 					</li>
 				))}

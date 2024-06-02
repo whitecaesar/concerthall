@@ -14,6 +14,7 @@ interface PlayListShareInfoProps {
 	like:boolean;
 }
 const FuncPlayListButtonGroup = ({ trackItem, pageType, like }: PlayListShareInfoProps) => {
+
 	const handleClick = async (Item: TRACK_PLAYLIST_TYPE) => {
 		funcPlayListPlayClick('share', Item);
 	};

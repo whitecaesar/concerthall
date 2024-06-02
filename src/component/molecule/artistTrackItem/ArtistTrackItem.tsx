@@ -50,9 +50,11 @@ export default function ArtistTrackItem({ ArtistTrackInfo, ArtistTrackList }: Tr
 				/>
 				<p className={style.title}>{ArtistTrackInfo.TITLE}</p>
 				<p className={style.artist}>
+					<div className={style.artistName}>
 					{ArtistTrackInfo.ARTIST?.map((item, index) => (
-						<div>{item.artist_name}</div>
+						<span key={index}>{item.artist_name}</span>
 					))} 
+					</div>
 				</p>
 			</span>
 			<div className={style.buttonGroup}>

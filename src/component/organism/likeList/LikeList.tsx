@@ -14,6 +14,8 @@ import { ALBUM_LIKE_LIST_RESPONSE, getLikeAlbumListAxios } from "@/services/cont
 import LikeAlbumList from "../albumList/LikeAlbumList";
 import MyPlayViewAll from "../albumList/LikePlayList";
 import { MY_RECENT_LIST_RESPONSE, getLikePlayListAxios } from "@/services/contents/LikePlayListAxios";
+import { ARTIST_LIST_RESPONSE_TYPE, getArtistListAxios } from "@/services/contents/LikeArtistAxios";
+import ArtistListViewAll from "../artistList/ArtistListViewAll";
 
 type Props = {};
 interface AlbumTrackProps {
@@ -23,7 +25,7 @@ export default function LikeList(album: AlbumTrackProps, props: Props) {
 	const [activeTab, setActiveTab] = useState<string>("Tab1");
 	const [trackList, setTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
 	const [AlbumList, setAlubmList] = useState<ALBUM_LIKE_LIST_RESPONSE>();
-	const [ArtistList, setArtistList] = useState<TRACK_RECENT_LIST_RESPONSE>();
+	const [ArtistList, setArtistList] = useState<ARTIST_LIST_RESPONSE_TYPE>();
 	const [PlayList, setPlayList] = useState<MY_RECENT_LIST_RESPONSE>();
 
 	useEffect(() => {
@@ -31,6 +33,7 @@ export default function LikeList(album: AlbumTrackProps, props: Props) {
 		getLikeTrackListAxios().then((data) => setTrackList(data));
 		getLikeAlbumListAxios().then((data) => setAlubmList(data));
 		getLikePlayListAxios().then((data) => setPlayList(data));
+		getArtistListAxios().then((data) => setArtistList(data));
 	}, []);
 
 	const handleTabClick = (tabName: string) => {
@@ -89,7 +92,7 @@ export default function LikeList(album: AlbumTrackProps, props: Props) {
 					)}
 					{activeTab === "Tab3" && (
 						<div>
-
+							{ArtistList && <ArtistListViewAll viewAllList={ArtistList} />}
 						</div>
 					)}
 					{activeTab === "Tab4" && (

@@ -33,18 +33,12 @@ export default function ArtistInfo(artist: ArtistInfoProps) {
 	return (
 		<>
 			{data.ARTIST_INFO && <ArtistDetailInfo detailInfo={data.ARTIST_INFO} />}
-			{data.ARTIST_INFO.DESC_ARTIST && <ArtistAbout artist_desc={data.ARTIST_INFO.DESC_ARTIST}/>}
-			{/*<FuncButtonGroup AlbumItem={data}/>*/}
+						{/*<FuncButtonGroup AlbumItem={data}/>*/}
 			{data.ARTIST_TRACK_INFO && <ArtistTrackList ArtistTrackList={data.ARTIST_TRACK_INFO} />}
 			{data && <ArtistAlbumList showTitle={true} recommendList={data} />}
-			
+			{data.ARTIST_INFO.DESC_ARTIST && <ArtistAbout artist_desc={data.ARTIST_INFO.DESC_ARTIST}/>}
 			{/*FuncButtonGroup pageType={ArtistPage} AlbumItem={AlbumItem} />
-			
 			<AlbumList showTitle={true} recommendList={AlbumItem} />
-			
-			<ArtistList artistList={AlbumItem} />
-			
-			
 			*/}
 		</>
 	);
