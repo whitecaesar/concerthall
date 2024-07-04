@@ -7,6 +7,7 @@ export type TTXT_BANNER_RES = {
 	TYPE: string;
 	CONTENTS: string;
 	LINK: string;
+	LINK_TARGAT: string;
 };
 
 //이미지 배너 타입
@@ -25,9 +26,10 @@ export type TRECOMMEND_LIST_RES = {
 
 export type TMAIN_RESPONSE = {
 	RES_CODE: string;
-	RES_MSG: string;
+	RES_MSG?: string;
+	TOP_IMG_BANNER: TIMAGE_BANNER_RES[];
+	TOP_TXT_BANNER: TTXT_BANNER_RES[]; //나중에 [] 빼야함
 	IMG_BANNER: TIMAGE_BANNER_RES[];
-	TXT_BANNER: TTXT_BANNER_RES[]; //나중에 [] 빼야함
 	RECOMMEND_LIST: VIEWALL_LIST_TYPE[];
 };
 
@@ -37,6 +39,7 @@ export async function getBannersAxios(): Promise<TMAIN_RESPONSE | void> {
 	);
 	if (response.status === 200) {
 		const data = response.data as TMAIN_RESPONSE;
+		
 		const parsedRecommendList = data.RECOMMEND_LIST.map(list => ({
 			...list,
 			ITEM_INFO: list.ITEM_INFO.map(item => ({

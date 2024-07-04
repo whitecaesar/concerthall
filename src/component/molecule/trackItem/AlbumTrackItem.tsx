@@ -1,8 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import LikeButton from "@/component/atom/button/LikeButton";
-import FuncButton from "@/component/atom/button/FuncButton";
 import style from "./trackItem.module.css";
 import { funcAlbumTrackPlayClick } from "@/services/common";
 import { useQuery } from "@tanstack/react-query";
@@ -10,17 +8,19 @@ import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
 import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
 import AlbumTrackLikeButton from "@/component/atom/button/AlbumTrackLikeButton";
-import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
 import AlbumFuncButton from "@/component/atom/button/AlbumFuncButton";
 interface TrackItemProps {
 	albumTrackInfo: ALBUM_ITEM_TYPE;
 	AlbumTrackList: ALBUM_ITEM_TYPE[];
+	position:number;
 }
 
 export default function AlbumTrackItem({
 	albumTrackInfo,
 	AlbumTrackList,
+	position
 }: TrackItemProps) {
+
 	const {
 		data: trackData,
 		isError,
@@ -84,6 +84,7 @@ export default function AlbumTrackItem({
 					track_info={trackData}
 					play_info={playData}
 					albumTrackList={AlbumTrackList}
+					position={position}
 				/>
 			</div>
 		</div>

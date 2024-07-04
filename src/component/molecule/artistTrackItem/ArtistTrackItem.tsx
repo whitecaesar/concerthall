@@ -12,9 +12,10 @@ import Link from "next/link";
 interface TrackItemProps {
 	ArtistTrackInfo: ALBUM_ITEM_TYPE;
 	ArtistTrackList: ALBUM_ITEM_TYPE[];
+	position:number;
 }
 
-export default function ArtistTrackItem({ ArtistTrackInfo, ArtistTrackList }: TrackItemProps) {
+export default function ArtistTrackItem({ ArtistTrackInfo, ArtistTrackList, position }: TrackItemProps) {
 
 	const { data : trackData, isError, isLoading } = useQuery({
 		queryKey: ["TRACK-LIST"],
@@ -59,7 +60,7 @@ export default function ArtistTrackItem({ ArtistTrackInfo, ArtistTrackList }: Tr
 			</span>
 			<div className={style.buttonGroup}>
 				<AlbumTrackLikeButton track_info={ArtistTrackInfo}/>
-				<AlbumFuncButton method="albumTrackMore" track_info={trackData} play_info={playData} albumTrackList={ArtistTrackList}/>
+				<AlbumFuncButton method="albumTrackMore" track_info={trackData} play_info={playData} albumTrackList={ArtistTrackList} position={position}/>
 			</div>
 		</div>
 	);

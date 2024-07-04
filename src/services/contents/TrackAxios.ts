@@ -27,6 +27,8 @@ export type TRACK_ITEM_TYPE = {
 	DURATION? : string;
 	S_ARTIST?: string;
 	STAR?: number;
+	PRICE?:number;
+	ALBUM_PRICE?:number;
 };
 
 export type TRACK_INFO_RESPONSE = {

@@ -16,6 +16,8 @@ export type ARTIST_TRACK_INFO_TYPE = {
     TOTAL_NUM_TRACK: number;
     ARTIST?: ARTIST_DEFAULT_INFO_TYPE[];
 	S_ARTIST?: string;
+    ALBUM_PRICE?:number;
+    PRICE?:number;
 }
 
 export type ARTIST_ALBUM_INFO_TYPE = {
@@ -25,6 +27,8 @@ export type ARTIST_ALBUM_INFO_TYPE = {
     TOTAL_NUM_TRACK: number;
 	ARTIST?: ARTIST_DEFAULT_INFO_TYPE[];
 	S_ARTIST?: string;
+    ALBUM_PRICE?:number;
+    PRICE?:number;
 }
 
 export type ARTISTINFO_INFO_TYPE = {

@@ -43,12 +43,12 @@ const ArtistTrackList = ({ ArtistTrackList }: ArtistTrackListProps) => {
 					};
 					const response = await getStarAxios('TRACK', params);
 					addPropertyToItemInfo(track.ID, 'STAR', response.code === '200' ? response.contents[0].star: 0);
-					setIsFetch(true);
 				} else {
 					addPropertyToItemInfo(track.ID, 'STAR', 0);
 				}
+				setIsFetch(true);
 			} catch (error) {
-			console.error('Error fetching star rating', error);
+				console.error('Error fetching star rating', error);
 				addPropertyToItemInfo(track.ID, 'STAR', 0);
 			}
         });
@@ -57,7 +57,7 @@ const ArtistTrackList = ({ ArtistTrackList }: ArtistTrackListProps) => {
 	function setSubTitle(arg0: string) {
 		throw new Error("Function not implemented.");
 	}
-
+	
 	return isFetch && <div className="trackListWrap">
 		{ArtistTrackList && (
 			<ItemListTitle.ViewAll
@@ -65,7 +65,7 @@ const ArtistTrackList = ({ ArtistTrackList }: ArtistTrackListProps) => {
 				text='아티스트 트랙'
 				count={ArtistTrackList.length}
 				onClick={() => {
-					setSubTitle('아티스트 트랙');
+					
 				}}
 			/>
 		)}
@@ -78,7 +78,7 @@ const ArtistTrackList = ({ ArtistTrackList }: ArtistTrackListProps) => {
 			{ArtistTrackList.map((itemInfo, index) => {
 				return (
 					<li key={itemInfo.ID}>
-						<ArtistTrackItem ArtistTrackInfo={itemInfo} ArtistTrackList={ArtistTrackList}/>
+						<ArtistTrackItem ArtistTrackInfo={itemInfo} ArtistTrackList={ArtistTrackList} position={index}/>
 					</li>)
 			})}
 		</ul>

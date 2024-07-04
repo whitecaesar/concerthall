@@ -102,6 +102,7 @@ export type REG_ALBUM_REQEUST_ITEM_TYPE = {
 	clientKey: string;
 	star: number;
 	thumbnail: string;
+	artist?: string;
 	title: string;
 	type : string;
 	favorite? : boolean;

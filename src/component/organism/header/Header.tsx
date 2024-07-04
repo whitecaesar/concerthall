@@ -14,16 +14,20 @@ declare global {
 
 export default function Header() {
 	useEffect(() => {
-		window.userInfo = (token :any, app_type : any, loc : any) => {
+		window.userInfo = (token :any, app_type : any, loc : any, lang : any, userid : any,) => {
 			setCookie("token", token, 2);
 			setCookie("app_type", app_type, 2);
 			setCookie("loc", loc, 2);
+			setCookie("lang", loc, 2);
+			setCookie("userid", loc, 2);
 		};
 
 		window.logout = () => {
 			deleteCookie("token");
 			deleteCookie("app_type");
+			deleteCookie("lang");
 			deleteCookie("loc");
+			deleteCookie("userid");
 		};
 	}, []);
 

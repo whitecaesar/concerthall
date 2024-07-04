@@ -27,6 +27,8 @@ export type ALBUM_ITEM_TYPE = {
 	URL?: string;
 	STAR?: number;
 	DURATION?: string;
+	PRICE?:number;
+	ALBUM_PRICE?:number;
 };
 
 export type ALBUM_DETAIL_TYPE = {
@@ -40,6 +42,7 @@ export type ALBUM_DETAIL_TYPE = {
 	ARTIST?: ALBUM_ARTIST_INFO_TYPE[];
 	STAR?:number;
 	S_ARTIST?: string;
+	ALBUM_PRICE? : number;
 };
 
 export async function getAlbumAxios(
@@ -55,9 +58,9 @@ export async function getAlbumAxios(
         // 파싱 로직을 여기에 추가
         if (albumData.S_ARTIST) {
             albumData.ARTIST = JSON.parse(albumData.S_ARTIST); // 앨범 수준의 S_ARTIST 파싱
-        }
+		}
 
-        // ITEM_INFO 배열 내의 각 아이템에 대해 S_ARTIST를 파싱
+		// ITEM_INFO 배열 내의 각 아이템에 대해 S_ARTIST를 파싱
         albumData.ITME_INFO = albumData.ITME_INFO.map(item => ({
             ...item,
             ARTIST: item.S_ARTIST ? JSON.parse(item.S_ARTIST) : []

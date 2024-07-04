@@ -23,8 +23,12 @@ import RecentPlayList from "../organism/albumList/RecentPlayList";
 import { TRACK_RECENT_LIST_RESPONSE, getRecentTrackListAxios } from "@/services/contents/RecentTrackListAxios";
 import RecentTrackList from "../organism/singleList/RecentTrackList";
 import TextBanner from "../organism/textBanner/TextBanner";
+import { setCookie, getCookie, deleteCookie } from "@/services/common";
 
 export default function Main() {
+
+	
+	const [error, setError] =  useState<string | null>(null);
 
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
@@ -38,23 +42,38 @@ export default function Main() {
 	const [recentPlayList, setRecentPlayList] = useState<PLAY_RECENT_LIST_RESPONSE>();
 	const [recentTrackList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
 	useEffect(() => {
+			const token = getCookie("token");
+	
 		// const recent = ;
-			getRecentAlbumAxios("", 20).then((data) => setRecent(data));
-			getRecentPlayListAxios("", 20).then((playdata) => setRecentPlayList(playdata));
-			getRecentTrackListAxios("", 20).then((trackdata) =>	setRecentTrackList(trackdata));
+			getRecentAlbumAxios("", 20).then((data) => setRecent(data)).catch((error) => {
+				setError("error");
+			});
+			getRecentPlayListAxios("", 20).then((playdata) => setRecentPlayList(playdata)).catch((error) => {
+				setError("error");
+			});
+			getRecentTrackListAxios("", 20).then((trackdata) =>	setRecentTrackList(trackdata)).catch((error) => {
+				setError("error");
+			});
 
 
 	}, []);
 
+	if(error)
+	{
+		
+	}
+
 	return (
 		<>
 			
-			<ImageBanner list={data?.IMG_BANNER} isFetched={isFetched} />
-			<TextBanner banner={data?.TXT_BANNER[0]} isFetched={isFetched} />
+			<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
+			<TextBanner banner={data?.TOP_TXT_BANNER[0]} isFetched={isFetched} />
 
 			{recentPlayList && (<RecentPlayList showTitle={true} recommendList={recentPlayList} />)}
 			{recent && <RecentAlbumList showTitle={true} recommendList={recent} />}
 			{recentTrackList && (<RecentTrackList showTitle={true} recommendList={recentTrackList} />)}
+			<ImageBanner list={data?.IMG_BANNER} isFetched={isFetched} />
+
 			{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
 				return (
 					<>

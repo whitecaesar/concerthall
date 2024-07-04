@@ -1,7 +1,7 @@
 "use client";
 import { ALBUM_DETAIL_TYPE } from "@/services/contents/AlbumAxios";
-import { REG_ALBUM_REQEUST_TYPE, REG_TRACK_REQEUST_TYPE, setAlbumStarAxios, setPLTStarAxios, setRegAlbumAxios } from "@/services/contents/PLTStarAxios";
-import { STAR_ALBUM_REQUEST_TYPE, STAR_TRACK_REQUEST_TYPE, getStarAlbumAxios, getStarTrackAxios } from "@/services/contents/StarAxios";
+import { REG_ALBUM_REQEUST_TYPE, setAlbumStarAxios, setRegAlbumAxios } from "@/services/contents/PLTStarAxios";
+import { STAR_ALBUM_REQUEST_TYPE, getStarAlbumAxios } from "@/services/contents/StarAxios";
 import React, { useState, useEffect } from "react";
 
 interface LikeButtonProps {
@@ -23,8 +23,10 @@ const AlbumLikeButton = ({ starPoint, album_info } : LikeButtonProps) => {
         await setAlbumStarAxios(param);
         setNumber(prevStar => (prevStar + 1) % 4);
       } else {
+        const artistNames = album_info.ARTIST?.map(artist => artist.artist_name).join(', ');
+        console.log(artistNames);
         const setTrackParam: REG_ALBUM_REQEUST_TYPE = {
-          album: { clientKey: album_info.ID, star: 1, thumbnail: album_info.THUMBNAIL, title: album_info.TITLE, type: 'CONCERT_HALL' }
+          album: { clientKey: album_info.ID, star: 1, thumbnail: album_info.THUMBNAIL, artist: artistNames,title: album_info.TITLE, type: 'CONCERT_HALL' }
         };
         await setRegAlbumAxios(setTrackParam);
         const regstarparam = { ratingInfo: { type: 'CONCERT_HALL', star: 1 }, album: { id: album_info.ID } };

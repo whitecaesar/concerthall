@@ -76,6 +76,7 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
       position : position
     };
 
+    console.log(trackData);
     let json_track_data: string = JSON.stringify(trackData);
     (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
   }
@@ -106,7 +107,7 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
       webstreamtrackitem : WebStreamTrackItem,
       position : position
     };
-
+    console.log(trackData);
     let json_track_data: string = JSON.stringify(trackData);
     (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
   }
@@ -181,7 +182,7 @@ export function funcAlbumTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONS
       webstreamtrackitem : WebStreamTrackItem,
       position : position
     };
-
+    console.log(trackData);
     let json_track_data: string = JSON.stringify(trackData);
     (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
   }
@@ -253,7 +254,7 @@ export function funcArtistTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPON
       webstreamtrackitem : WebStreamTrackItem,
       position : position
     };
-
+    console.log(trackData);
     let json_track_data: string = JSON.stringify(trackData);
     (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
   }

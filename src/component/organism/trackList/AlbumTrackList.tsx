@@ -42,10 +42,10 @@ const AlbumTrackList = ({ AlbumTrackList }: TrackListProps) => {
 					};
 					const response = await getStarAxios('TRACK', params);
 					addPropertyToItemInfo(track.ID, 'STAR', response.code === '200' ? response.contents[0].star: 0);
-					setIsFetch(true);
 				} else {
 					addPropertyToItemInfo(track.ID, 'STAR', 0);
 				}
+				setIsFetch(true);
 			} catch (error) {
 			console.error('Error fetching star rating', error);
 				addPropertyToItemInfo(track.ID, 'STAR', 0);
@@ -59,9 +59,10 @@ const AlbumTrackList = ({ AlbumTrackList }: TrackListProps) => {
 		</div>
 		<ul className="trackList">
 			{AlbumTrackList.map((itemInfo, index) => {
+				console.log('position=>',index);
 				return (
 					<li key={itemInfo.ID}>
-						<AlbumTrackItem albumTrackInfo={itemInfo} AlbumTrackList={AlbumTrackList}/>
+						<AlbumTrackItem albumTrackInfo={itemInfo} AlbumTrackList={AlbumTrackList} position={index}/>
 					</li>)
 			})}
 		</ul>

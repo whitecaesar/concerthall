@@ -52,10 +52,10 @@ export default function SingleList({
         };
         const response = await getStarAxios('TRACK', params);
         addPropertyToItemInfo(track.ID, 'STAR', response.code === '200' ? response.contents[0].star: 0);
-        setIsFetch(true);
       } else {
         addPropertyToItemInfo(track.ID, 'STAR', 0);
       }
+      setIsFetch(true);
     } catch (error) {
     console.error('Error fetching star rating', error);
       addPropertyToItemInfo(track.ID, 'STAR', 0);
