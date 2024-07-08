@@ -46,7 +46,7 @@ const ErrorPage = () => {
 				} else {
 					const layout = document.querySelector(".layout") as HTMLElement;
 					const container = document.querySelector(
-						".loadingCcontainer"
+						".loadingContainer"
 					) as HTMLElement;
 
 					if (layout && container) {

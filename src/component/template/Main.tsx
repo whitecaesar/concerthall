@@ -4,11 +4,7 @@ import SingleList from "../organism/singleList/SingleList";
 import AlbumList from "../organism/albumList/AlbumList";
 import { useQuery } from "@tanstack/react-query";
 import {getBannersAxios } from "@/services/main/MainInfoAxios";
-import {
-	ARTIST_INFO_TYPE,
-	ITEM_INFO_TYPE,
-	VIEWALL_LIST_TYPE,
-} from "@/services/contents/ViewAllAxios";
+import {VIEWALL_LIST_TYPE} from "@/services/contents/ViewAllAxios";
 import { useEffect, useState } from "react";
 import {
 	getRecentAlbumAxios,
@@ -24,6 +20,7 @@ import { TRACK_RECENT_LIST_RESPONSE, getRecentTrackListAxios } from "@/services/
 import RecentTrackList from "../organism/singleList/RecentTrackList";
 import TextBanner from "../organism/textBanner/TextBanner";
 import { setCookie, getCookie, deleteCookie } from "@/services/common";
+import ErrorPage from "../organism/error/Error";
 
 export default function Main() {
 
@@ -43,50 +40,51 @@ export default function Main() {
 	const [recentTrackList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
 	useEffect(() => {
 			const token = getCookie("token");
-	
+
 		// const recent = ;
 			getRecentAlbumAxios("", 20).then((data) => setRecent(data)).catch((error) => {
-				setError("error");
+				setError(error);
 			});
 			getRecentPlayListAxios("", 20).then((playdata) => setRecentPlayList(playdata)).catch((error) => {
-				setError("error");
+				setError(error);
 			});
 			getRecentTrackListAxios("", 20).then((trackdata) =>	setRecentTrackList(trackdata)).catch((error) => {
-				setError("error");
+				setError(error);
 			});
-
-
 	}, []);
 
 	if(error)
 	{
-		
+		return(
+		<ErrorPage></ErrorPage>
+		);
 	}
-
-	return (
-		<>
-			
-			<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
-			<TextBanner banner={data?.TOP_TXT_BANNER[0]} isFetched={isFetched} />
-
-			{recentPlayList && (<RecentPlayList showTitle={true} recommendList={recentPlayList} />)}
-			{recent && <RecentAlbumList showTitle={true} recommendList={recent} />}
-			{recentTrackList && (<RecentTrackList showTitle={true} recommendList={recentTrackList} />)}
-			<ImageBanner list={data?.IMG_BANNER} isFetched={isFetched} />
-
-			{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
-				return (
-					<>
-						{content.TYPE == "TRACK" ? (
-							<SingleList showTitle={true} recommendList={content} />
-						) : (
-							<AlbumList showTitle={true} recommendList={content} />
-						)}
-					</>
-				);
-			})}
-		</>
-	);
+	else{
+		return (
+			<>
+				
+				<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
+				<TextBanner banner={data?.TOP_TXT_BANNER[0]} isFetched={isFetched} />
+	
+				{recentPlayList && (<RecentPlayList showTitle={true} recommendList={recentPlayList} />)}
+				{recent && <RecentAlbumList showTitle={true} recommendList={recent} />}
+				{recentTrackList && (<RecentTrackList showTitle={true} recommendList={recentTrackList} />)}
+				<ImageBanner list={data?.IMG_BANNER} isFetched={isFetched} />
+	
+				{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
+					return (
+						<>
+							{content.TYPE == "TRACK" ? (
+								<SingleList showTitle={true} recommendList={content} />
+							) : (
+								<AlbumList showTitle={true} recommendList={content} />
+							)}
+						</>
+					);
+				})}
+			</>
+		);
+	}
 }
 
 
