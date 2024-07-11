@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from "axios";
 import {TRACK_TRACKS_ITEM_TYPE } from "./PlayListTrackAxios";
 import { getCookie } from "../common";
 
-
 export type ALBUM_RECENT_ITEM_TYPE = {
 	id: string;
 	title: string;
@@ -36,7 +35,8 @@ export async function getRecentAlbumAxios(
 	mediaTypes?: string, // idAlbum 파라미터를 추가했습니다.
 	size?:number
 ): Promise<ALBUM_RECENT_LIST_RESPONSE> {
-	const token = getCookie("token");
+	//const token = getCookie("token");
+	const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzIwMDU3MzUyLCJleHAiOjIwMzU0MTczNTIsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.ot5L_vba_Bq3fXRyetjnxkU2EPmuZlvaELWlefI1CDikPbGIEAEFWHpknBm8vWwr8bWQHwxIH5t12g2Zg6Vpdw";
 	const response: AxiosResponse<ALBUM_RECENT_LIST_RESPONSE> = await axios.get(
 		`https://dev.api.roseaudio.kr/v1/member/album/recent?mediaTypes=CONCERT_HALL&page=0&size=${size}`,{
 		headers: {

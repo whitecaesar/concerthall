@@ -23,7 +23,8 @@ export type PLT_STAR_RESPONSE_TYPE = {
 export async function setPLTStarAxios(
     param?: PLT_STAR_REQUEST_TYPE
 ): Promise<PLT_STAR_RESPONSE_TYPE> {
-	const token = getCookie("token");
+	//const token = getCookie("token");
+	const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzIwMDU3MzUyLCJleHAiOjIwMzU0MTczNTIsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.ot5L_vba_Bq3fXRyetjnxkU2EPmuZlvaELWlefI1CDikPbGIEAEFWHpknBm8vWwr8bWQHwxIH5t12g2Zg6Vpdw";
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=TRACK`, param,
         {
@@ -52,7 +53,8 @@ export type ALBUM_STAR_RESPONSE_TYPE = {
 export async function setAlbumStarAxios(
     param?: ALBUM_STAR_REQUEST_TYPE
 ): Promise<ALBUM_STAR_RESPONSE_TYPE> {
-	const token = getCookie("token");
+	//const token = getCookie("token");
+	const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzIwMDU3MzUyLCJleHAiOjIwMzU0MTczNTIsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.ot5L_vba_Bq3fXRyetjnxkU2EPmuZlvaELWlefI1CDikPbGIEAEFWHpknBm8vWwr8bWQHwxIH5t12g2Zg6Vpdw";
 	const response: AxiosResponse<ALBUM_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=ALBUM`, param,
         {
@@ -85,7 +87,8 @@ export type REG_TRACK_REQEUST_TYPE = {
 export async function setRegTrackAxios(
     param?: REG_TRACK_REQEUST_TYPE
 ): Promise<PLT_STAR_RESPONSE_TYPE> {
-	const token = getCookie("token");
+	//const token = getCookie("token");
+	const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzIwMDU3MzUyLCJleHAiOjIwMzU0MTczNTIsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.ot5L_vba_Bq3fXRyetjnxkU2EPmuZlvaELWlefI1CDikPbGIEAEFWHpknBm8vWwr8bWQHwxIH5t12g2Zg6Vpdw";
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/track`, param,
         {
@@ -118,7 +121,8 @@ export type REG_ALBUM_REQEUST_TYPE = {
 export async function setRegAlbumAxios(
     param?: REG_ALBUM_REQEUST_TYPE
 ): Promise<PLT_STAR_RESPONSE_TYPE> {
-	const token = getCookie("token");
+	//const token = getCookie("token");
+	const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzIwMDU3MzUyLCJleHAiOjIwMzU0MTczNTIsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.ot5L_vba_Bq3fXRyetjnxkU2EPmuZlvaELWlefI1CDikPbGIEAEFWHpknBm8vWwr8bWQHwxIH5t12g2Zg6Vpdw";
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/album`, param,
         {

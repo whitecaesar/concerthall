@@ -26,6 +26,7 @@ export default function Main() {
 
 	
 	const [error, setError] =  useState<string | null>(null);
+	const [t, setT] =  useState<string | null>(null);
 
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
@@ -62,7 +63,7 @@ export default function Main() {
 */
 		return (
 			<>
-				
+				{t}
 				<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
 				<TextBanner banner={data?.TOP_TXT_BANNER[0]} isFetched={isFetched} />
 	
