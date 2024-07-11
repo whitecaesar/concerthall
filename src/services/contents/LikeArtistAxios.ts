@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { PLAY_RECENT_ITEM_TYPE } from "./RecentPlayListAxios";
+import { getCookie } from "../common";
 
-const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzExNTAzMDA0LCJleHAiOjIwMjY4NjMwMDQsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJyb3NldHViZVJlY2VudFBsYXlsaXN0IjoxNTUwNCwidXNlcm5hbWUiOiJKYW1pZSIsImlzRW1haWxDb25maXJtIjpmYWxzZSwiYXV0aG9yaXRpZXMiOlsiUk9TRV9NRU1CRVIiLCJST0xFX1VTRVJfT05MSU5FIl19.3ZLPsp98wTCgMOChwwm2XtzRhKO7bMih556OtA6tnzvWAM_xSUSFtdMrlXCZR0k5142qpG3Cxd1L33qkRkPAaw"; // 동적으로 토큰을 얻는 로직
 
 export type ARTIST_REG_REQUEST_ITEM = {
     type : string;
@@ -21,6 +21,7 @@ export type ARTIST_REG_RESPONSE_TYPE = {
 export async function getRegArtistInfoAxios(
 	param?:ARTIST_REG_REQUEST_TYPE // idAlbum 파라미터를 추가했습니다.
 ): Promise<ARTIST_REG_RESPONSE_TYPE> {
+    const token = getCookie("token");
 	const response: AxiosResponse<ARTIST_REG_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/artist/check`,param, {
 		headers: {
@@ -57,6 +58,7 @@ export type ARTIST_STAR_RESPOSNE_TYPE = {
 export async function setArtistStarAxios(
     param?: ARTIST_STAR_REQUEST_TYPE
 ): Promise<ARTIST_STAR_RESPOSNE_TYPE> {
+    const token = getCookie("token");
 	const response: AxiosResponse<ARTIST_STAR_RESPOSNE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=ARTIST`, param,
         {
@@ -92,6 +94,7 @@ export type ARTIST_SETREG_RESPOSNE_TYPE = {
 export async function setRegArtistAxios(
     param?: ARTIST_SETREG_REQUEST_TYPE
 ): Promise<ARTIST_SETREG_RESPOSNE_TYPE> {
+    const token = getCookie("token");
 	const response: AxiosResponse<ARTIST_SETREG_RESPOSNE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/artist`, param,
         {
@@ -127,6 +130,7 @@ export type ARTIST_GET_STAR_RESPONSE_TYPE = {
 export async function getArtistStarAxios(
 	param?:ARTIST_GET_STAR_REQUEST_TYPE // idAlbum 파라미터를 추가했습니다.
 ): Promise<ARTIST_GET_STAR_RESPONSE_TYPE> {
+    const token = getCookie("token");
 	const response: AxiosResponse<ARTIST_GET_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/rating?type=ARTIST&mediaType=CONCERT_HALL`,param,
         {
@@ -169,6 +173,7 @@ export async function getArtistListAxios(
 	size?:number, // idAlbum 파라미터를 추가했습니다.
     page?:number
 ): Promise<ARTIST_LIST_RESPONSE_TYPE> {
+    const token = getCookie("token");
 	const response: AxiosResponse<ARTIST_LIST_RESPONSE_TYPE> = await axios.get(
 		`https://dev.api.roseaudio.kr/v1/member/artist/favorite?mediaTypes=CONCERT_HALL&sortType=ARTIST_NAME_ASC&page=${page}&size=${size}`,
         {

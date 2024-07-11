@@ -13,7 +13,7 @@ export type PLAY_ITEM_RESPONSE = {
 export async function getPlayInfoAxios(
     idTrack?: string
 ): Promise<PLAY_ITEM_RESPONSE> {
-
+	
 	const response: AxiosResponse<PLAY_ITEM_RESPONSE> = await axios.get(
 		`http://cip.ontown.co.kr/hch/track/${idTrack}/playInfo.json` // URL 구성을 동적으로 변경했습니다.
 	);

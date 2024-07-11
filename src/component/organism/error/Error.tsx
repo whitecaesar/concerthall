@@ -39,7 +39,8 @@ const ErrorPage = () => {
 
 				if (isMobile.any()) {
 					if (isMobile.Android()) {
-						window.HifiRose?.reLoad();
+						//window.HifiRose?.reLoad();
+						(window as any).HifiRose.reLoad();
 					} else if (isMobile.iOS()) {
 						console.log("IOS 호출");
 					}

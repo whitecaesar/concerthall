@@ -1,19 +1,11 @@
 "use client";
 import {
 	TVIEWALL_LIST_RESPONSE,
-	VIEWALL_LIST_TYPE,
-	getViewallAxios,
 } from "@/services/contents/ViewAllAxios";
-import SubTitleProvider, {
+import {
 	SubTitleContext,
 } from "@/providers/SubTitleProvider";
-import Dropdown from "../atom/dropdown/dropdown";
-import {
-	dropdownOptions,
-	albumDropdownOptions,
-} from "@/interface/DropdownType";
-import { ReactNode, useContext, useEffect, useState } from "react";
-import ArtistListViewAll from "../organism/artistList/ArtistListViewAll";
+import {useContext, useEffect, useState } from "react";
 
 export default function ArtistViewAll() {
 	const [AlbumContent, setAlbumContent] = useState<TVIEWALL_LIST_RESPONSE>();

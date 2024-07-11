@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es5",
+		"target": "es2015",
 		// "downlevelIteration": true, // 필요한 경우 추가
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,

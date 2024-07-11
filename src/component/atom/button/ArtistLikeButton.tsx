@@ -15,6 +15,7 @@ const ArtistLikeButton = ({ starPoint, artistInfo } : ArtistLikeButtonProps) => 
   const [star, setNumber] = useState(starPoint);
   const likeClick = async() => {
     try {
+      
       const starTrackParam: ARTIST_REG_REQUEST_TYPE = {
         artist: { type: 'CONCERT_HALL', clientKey: artistInfo.ID_ARTIST}
       };

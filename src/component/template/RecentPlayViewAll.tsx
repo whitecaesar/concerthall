@@ -1,51 +1,46 @@
 "use client";
 import RecentPlayListViewAll from "../organism/albumList/RecentPlayListViewAll";
-import PlayButtonGroup from "../molecule/buttonGroup/PlayButtonGroup";
-import { useQuery } from "@tanstack/react-query";
 import { getRecentPlayListAxios, PLAY_RECENT_LIST_RESPONSE } from "@/services/contents/RecentPlayListAxios";
 import { useEffect, useState } from "react";
 import Dropdown from "../atom/dropdown/dropdown";
-import { dropdownOptions } from "@/interface/DropdownType";
+import { getDropdownOptions, DropdownOption } from "@/interface/DropdownType";
+import { getCookie } from "@/services/common";
 
 interface RecentPlayViewAllProps {
-	totalCnt: any;
+  totalCnt: any;
 }
 
-export default function RecentPlayViewAll(total : RecentPlayViewAllProps) {
-	const [recent, setRecent] = useState<PLAY_RECENT_LIST_RESPONSE>();
-	useEffect(() => {
-		// const recent = ;
-		getRecentPlayListAxios('', total.totalCnt).then(data => 
-			setRecent(data)
-		);
+export default function RecentPlayViewAll(total: RecentPlayViewAllProps) {
+  const [recent, setRecent] = useState<PLAY_RECENT_LIST_RESPONSE>();
+  const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>([]);
 
-	}, []);
+  useEffect(() => {
+    const lang = getCookie("lang") || "en"; // 쿠키에서 언어 값을 가져오거나 기본값으로 영어를 설정
+    const options = getDropdownOptions(lang);
+    setDropdownOptions(options);
 
-	const handleRecentChange = (event : string) => {
-		if(event == 'recent')
-		{
-			recent?.recentList.sort((a , b) => a.playlist.playTime.localeCompare(b.playlist.playTime));
-		}
-		else if(event == 'preference')
-		{
-			recent?.recentList.sort((a , b) => b.playlist.star - a.playlist.star);
-		}
-		else if(event == 'ascending')
-		{
-			recent?.recentList.sort((a , b) => a.playlist.title.localeCompare(b.playlist.title));
-		}
-		else if(event == 'descending')
-		{
-			recent?.recentList.sort((a , b) => -a.playlist.title.localeCompare(b.playlist.title));
-		}
+    // 데이터 가져오기
+    getRecentPlayListAxios('', total.totalCnt).then(data => setRecent(data));
+  }, [total.totalCnt]);
 
-		recent && setRecent({...recent});
-	};
+  const handleRecentChange = (event: string) => {
+    if (event === 'recent') {
+      recent?.recentList.sort((a, b) => a.playlist.playTime.localeCompare(b.playlist.playTime));
+    } else if (event === 'preference') {
+      recent?.recentList.sort((a, b) => b.playlist.star - a.playlist.star);
+    } else if (event === 'ascending') {
+      recent?.recentList.sort((a, b) => a.playlist.title.localeCompare(b.playlist.title));
+    } else if (event === 'descending') {
+      recent?.recentList.sort((a, b) => -a.playlist.title.localeCompare(b.playlist.title));
+    }
 
-	return (
-		<>
-			<Dropdown options={dropdownOptions} onRecentChange={handleRecentChange} />
-            {recent&&<RecentPlayListViewAll playListViewAllList={recent} />}
-		</>
-	);
+    recent && setRecent({ ...recent });
+  };
+
+  return (
+    <>
+      <Dropdown options={dropdownOptions} onRecentChange={handleRecentChange} />
+      {recent && <RecentPlayListViewAll playListViewAllList={recent} />}
+    </>
+  );
 }

@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { DropdownProps} from "@/interface/DropdownType";
 import Icon from "../../../component_RS/button/icon/Icon";
 import style from "./dropdown.module.css";
+import { DropdownProps } from "@/interface/DropdownType";
 
 function Dropdown({ options, onRecentChange}: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false); // 드롭다운이 열렸는지 여부
 	const [selectedOption, setSelectedOption] = useState<string>( // 선택된 옵션
-		options.length > 0 ? options[0].value : "" //초기값으로는 options 배열의 첫 번째 요소를 사용
+		options && options.length > 0 ? options[0].value : "" //초기값으로는 options 배열의 첫 번째 요소를 사용
 	);
 	const [data, setData] = useState<string[]>([]); // 드롭다운 데이터
 
@@ -26,7 +26,7 @@ function Dropdown({ options, onRecentChange}: DropdownProps) {
 
 	// 선택된 옵션의 라벨을 반환하는 함수
 	const getLabelByValue = (value: string) => {
-		const selected = options.find((option) => option.value === value);
+		const selected = options?.find((option) => option.value === value);
 		return selected ? selected.label : "";
 	};
 
@@ -47,7 +47,7 @@ function Dropdown({ options, onRecentChange}: DropdownProps) {
 
 			{isOpen && (
 				<ul className={style.dropdownContent}>
-					{options.map((option, i) => (
+					{options?.map((option, i) => (
 						<li key={i} onClick={() => handleOptionClick(option.value)}>
 							{option.label}
 						</li>

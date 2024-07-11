@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzExNTAzMDA0LCJleHAiOjIwMjY4NjMwMDQsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJyb3NldHViZVJlY2VudFBsYXlsaXN0IjoxNTUwNCwidXNlcm5hbWUiOiJKYW1pZSIsImlzRW1haWxDb25maXJtIjpmYWxzZSwiYXV0aG9yaXRpZXMiOlsiUk9TRV9NRU1CRVIiLCJST0xFX1VTRVJfT05MSU5FIl19.3ZLPsp98wTCgMOChwwm2XtzRhKO7bMih556OtA6tnzvWAM_xSUSFtdMrlXCZR0k5142qpG3Cxd1L33qkRkPAaw"; // 동적으로 토큰을 얻는 로직
+import { getCookie } from "../common";
 
 export type PLT_STAR_REQUEST_TRACK_TYPE = {
 	id: string;
@@ -23,6 +23,7 @@ export type PLT_STAR_RESPONSE_TYPE = {
 export async function setPLTStarAxios(
     param?: PLT_STAR_REQUEST_TYPE
 ): Promise<PLT_STAR_RESPONSE_TYPE> {
+	const token = getCookie("token");
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=TRACK`, param,
         {
@@ -51,6 +52,7 @@ export type ALBUM_STAR_RESPONSE_TYPE = {
 export async function setAlbumStarAxios(
     param?: ALBUM_STAR_REQUEST_TYPE
 ): Promise<ALBUM_STAR_RESPONSE_TYPE> {
+	const token = getCookie("token");
 	const response: AxiosResponse<ALBUM_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=ALBUM`, param,
         {
@@ -83,6 +85,7 @@ export type REG_TRACK_REQEUST_TYPE = {
 export async function setRegTrackAxios(
     param?: REG_TRACK_REQEUST_TYPE
 ): Promise<PLT_STAR_RESPONSE_TYPE> {
+	const token = getCookie("token");
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/track`, param,
         {
@@ -115,6 +118,7 @@ export type REG_ALBUM_REQEUST_TYPE = {
 export async function setRegAlbumAxios(
     param?: REG_ALBUM_REQEUST_TYPE
 ): Promise<PLT_STAR_RESPONSE_TYPE> {
+	const token = getCookie("token");
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/album`, param,
         {

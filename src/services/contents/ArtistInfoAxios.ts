@@ -50,7 +50,7 @@ export async function getArtistInfoAxios(
 	idArtist: string // idAlbum 파라미터를 추가했습니다.
 ): Promise<ARTIST_INFO_RESPONSE> {
 
-    console.log(idArtist);
+
 	const response: AxiosResponse<ARTIST_INFO_RESPONSE> = await axios.get(
 		`http://cip.ontown.co.kr/hch/artist/${idArtist}/info.json` // URL 구성을 동적으로 변경했습니다.
 	);

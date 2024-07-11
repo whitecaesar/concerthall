@@ -35,11 +35,11 @@ const RecentAlbumList = ({
 			{showTitle && recentList && (
 				<ItemListTitle.ViewAll
 					isPresent={true}
-					text='최근 재생 앨범'
+					text='최근 재생 앨범 리스트'
 					count={totalCount}
 					href={`/detail/recentAlbum?totalcount=${totalCount}`}
 					onClick={() => {
-						setSubTitle('최근 재생 앨범');
+						setSubTitle('최근 재생 앨범 리스트');
 					}}
 				/>
 			)}

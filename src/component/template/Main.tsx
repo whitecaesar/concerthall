@@ -39,8 +39,6 @@ export default function Main() {
 	const [recentPlayList, setRecentPlayList] = useState<PLAY_RECENT_LIST_RESPONSE>();
 	const [recentTrackList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
 	useEffect(() => {
-			const token = getCookie("token");
-
 		// const recent = ;
 			getRecentAlbumAxios("", 20).then((data) => setRecent(data)).catch((error) => {
 				setError(error);
@@ -52,14 +50,16 @@ export default function Main() {
 				setError(error);
 			});
 	}, []);
+/*
 
-	if(error)
+	if(!error)
 	{
 		return(
 		<ErrorPage></ErrorPage>
 		);
 	}
 	else{
+*/
 		return (
 			<>
 				
@@ -84,7 +84,8 @@ export default function Main() {
 				})}
 			</>
 		);
-	}
+//	}
+
 }
 
 

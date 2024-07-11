@@ -1,53 +1,50 @@
 "use client";
 import SubTitleProvider, { SubTitleContext } from "@/providers/SubTitleProvider";
 import Dropdown from "../atom/dropdown/dropdown";
-import { dropdownOptions } from "@/interface/DropdownType";
+import { DropdownOption, getDropdownOptions } from "@/interface/DropdownType";
 import { getRecentAlbumAxios, ALBUM_RECENT_LIST_TYPE, ALBUM_RECENT_LIST_RESPONSE } from "@/services/contents/RecentAlbumAxios";
 import { ReactNode, useContext, useEffect, useState } from "react";
 import RecentAlbumListViewAll from "../organism/albumList/RecentAlbumListViewAll";
+import { getCookie } from "@/services/common";
 
 interface RecentAlbumViewAllProps {
-	totalCnt: any;
+  totalCnt: any;
 }
 
-export default function RecentAlbumViewAll(total : RecentAlbumViewAllProps) {
-    const [recent, setRecent] = useState<ALBUM_RECENT_LIST_RESPONSE>();
-	const { setSubTitle } = useContext(SubTitleContext);
-	
-	useEffect(() => {
-		// const recent = ;
-		getRecentAlbumAxios('', total.totalCnt).then(data => 
-			setRecent(data)
-		);
-	}, []);
+export default function RecentAlbumViewAll(total: RecentAlbumViewAllProps) {
+  const [recent, setRecent] = useState<ALBUM_RECENT_LIST_RESPONSE>();
+  const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>([]);
+  const { setSubTitle } = useContext(SubTitleContext);
 
-	const handleRecentChange = (event : string) => {
-		if(event == 'recent')
-		{
-			//recent?.recentList.sort((a , b) => a.album.playTime.localeCompare(b.album.playTime));
-		}
-		else if(event == 'preference')
-		{
-			recent?.recentList.sort((a , b) => b.album.star - a.album.star);
-		}
-		else if(event == 'ascending')
-		{
-			recent?.recentList.sort((a , b) => a.album.title.localeCompare(b.album.title));
-		}
-		else if(event == 'descending')
-		{
-			recent?.recentList.sort((a , b) => -a.album.title.localeCompare(b.album.title));
-		}
+  useEffect(() => {
+    const lang = getCookie("lang") || "en"; // 쿠키에서 언어 값을 가져오거나 기본값으로 영어를 설정
+    const options = getDropdownOptions(lang);
+    setDropdownOptions(options);
 
-		recent && setRecent({...recent});
-	};
+    // 데이터 가져오기
+    getRecentAlbumAxios("", total.totalCnt).then(data => setRecent(data));
+  }, [total.totalCnt]);
 
-	return (
-		<>
-			<SubTitleProvider>
-				<Dropdown options={dropdownOptions} onRecentChange={handleRecentChange} />
-				{recent&&<RecentAlbumListViewAll  recentViewAllList={recent} />}
-			</SubTitleProvider>
-		</>
-	);
+  const handleRecentChange = (event: string) => {
+    if (event === "recent") {
+      //recent?.recentList.sort((a , b) => a.album.playTime.localeCompare(b.album.playTime));
+    } else if (event === "preference") {
+      recent?.recentList.sort((a, b) => b.album.star - a.album.star);
+    } else if (event === "ascending") {
+      recent?.recentList.sort((a, b) => a.album.title.localeCompare(b.album.title));
+    } else if (event === "descending") {
+      recent?.recentList.sort((a, b) => -a.album.title.localeCompare(b.album.title));
+    }
+
+    recent && setRecent({ ...recent });
+  };
+
+  return (
+    <>
+      <SubTitleProvider>
+        <Dropdown options={dropdownOptions} onRecentChange={handleRecentChange} />
+        {recent && <RecentAlbumListViewAll recentViewAllList={recent} />}
+      </SubTitleProvider>
+    </>
+  );
 }

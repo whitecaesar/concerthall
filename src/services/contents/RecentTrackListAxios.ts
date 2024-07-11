@@ -1,7 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { TRACK_TRACKS_ITEM_TYPE } from "./PlayListTrackAxios";
-
-const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzExNTAzMDA0LCJleHAiOjIwMjY4NjMwMDQsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJyb3NldHViZVJlY2VudFBsYXlsaXN0IjoxNTUwNCwidXNlcm5hbWUiOiJKYW1pZSIsImlzRW1haWxDb25maXJtIjpmYWxzZSwiYXV0aG9yaXRpZXMiOlsiUk9TRV9NRU1CRVIiLCJST0xFX1VTRVJfT05MSU5FIl19.3ZLPsp98wTCgMOChwwm2XtzRhKO7bMih556OtA6tnzvWAM_xSUSFtdMrlXCZR0k5142qpG3Cxd1L33qkRkPAaw"; // 동적으로 토큰을 얻는 로직
+import { getCookie } from "../common";
 
 export type TRACK_RECENT_ITME_ARTIST_TYPE = {
     albums_count : string;
@@ -112,6 +110,7 @@ export async function getRecentTrackListAxios(
 	mediaTypes?: string,
 	size?:number // idAlbum 파라미터를 추가했습니다.
 ): Promise<TRACK_RECENT_LIST_RESPONSE> {
+    const token = getCookie("token");
 	const response: AxiosResponse<TRACK_RECENT_LIST_RESPONSE> = await axios.get(
 		`https://dev.api.roseaudio.kr/v1/member/track/recent?mediaTypes=CONCERT_HALL&page=0&size=${size}`,{
 		headers: {
