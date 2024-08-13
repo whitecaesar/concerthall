@@ -104,7 +104,7 @@ export type TRACK_PLAYLIST_TYPE = {
 	type: string;
     star: number;
     share: string;
-    ownerId: number;
+    ownerId: string;
     ownerName:string;
     favoriteTrack?:boolean;
     favorite: string;

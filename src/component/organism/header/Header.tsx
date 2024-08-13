@@ -18,8 +18,8 @@ export default function Header() {
 			setCookie("token", token, 2);
 			setCookie("app_type", app_type, 2);
 			setCookie("loc", loc, 2);
-			setCookie("lang", loc, 2);
-			setCookie("userid", loc, 2);
+			setCookie("lang", lang, 2); 
+			setCookie("userid", userid, 2);
 		};
 
 		window.logout = () => {

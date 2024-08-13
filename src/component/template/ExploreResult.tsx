@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SubTitleProvider from "@/providers/SubTitleProvider";
 import SingleList from "@/component/organism/singleList/SingleList";
 import { useQuery } from "@tanstack/react-query";
@@ -8,32 +8,75 @@ import {
 	TRESULT_LIST_RESPONSE,
 } from "@/services/explore/ExploreResultAxios";
 import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
+import ErrorPage from "../organism/error/Error";
+import AlbumList from "../organism/albumList/AlbumList";
+import ExploreArtistList from "../organism/artistList/ExploreArtistList";
 
-export default function ExploreResult() {
-	const { data, isFetched, isLoading, isError, error } = useQuery<
-		TRESULT_LIST_RESPONSE,
-		Error
-	>({
-		queryKey: ["KEYWORD-RESRULT"],
-		queryFn: getExploreResults,
-	});
+interface ExploreResultProps {
+	key?: string;
+}
 
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
-	if (isError) {
-		return <div>Error: {error?.message}</div>;
+interface Texts {
+	artist: string;
+}
+
+const texts: { [key: string]: Texts } = {
+	en: {
+		artist: "Artist",
+	},
+	kr: {
+		artist: "아티스트",
+	},
+	de: {
+		artist: "Artist",
+	},
+	jp: {
+		artist: "Artist",
+	},
+	fr: {
+		artist: "Artist",
+	},
+	zh: {
+		artist: "Artist",
+	},
+  };
+
+export default function ExploreResult({key}:ExploreResultProps) {
+
+	const [error, setError] =  useState<string | null>(null);
+	const [exploreResult, setExploreResult] = useState<TRESULT_LIST_RESPONSE>();
+	
+	useEffect(() => {
+		// const recent = ;
+			getExploreResults(key).then((exploredata) => setExploreResult(exploredata)).catch((error) => {
+				setError(error);
+			});
+	}, []);
+
+	if(error)
+	{
+		return(
+		<ErrorPage></ErrorPage>
+		);
 	}
 
 	return (
 		<SubTitleProvider>
 			<div className="exploreResultPage">
-				{isFetched &&
-					data?.RESULT_LIST?.map((content: VIEWALL_LIST_TYPE) => (
-						<React.Fragment key={content.ID}>
-							<SingleList showTitle={true} recommendList={content} />
-						</React.Fragment>
-					))}
+				{exploreResult?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
+					return (
+						<>
+							{content.TYPE == "TRACK" ? (
+								<SingleList showTitle={true} recommendList={content} />
+							) : (
+								<AlbumList showTitle={true} recommendList={content} />
+							)}
+						</>
+					);
+				})}
+
+				{exploreResult&&<ExploreArtistList artistList={exploreResult?.ARTIST_LIST}/>}
+
 			</div>
 		</SubTitleProvider>
 	);

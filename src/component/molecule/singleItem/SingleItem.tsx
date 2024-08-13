@@ -57,7 +57,7 @@ export default function SingleItem({
 			</span>
 			<div className={style.bottomInfo}>
 				<p className={style.artist}><div className={style.artistName}>
-					{singleInfo.ARTIST.map((item, index) => (
+					{singleInfo.ARTIST&&singleInfo.ARTIST.map((item, index) => (
 						<Link key={index} href={`/artist/${item.artist_id}`}>{item.artist_name}</Link>
 					))}</div>
 				</p>

@@ -8,13 +8,15 @@ import {
 	CATEGORY_LIST_RESPONSE, // getExploreAxios 함수의 반환 타입
 } from "@/services/explore/ExploreAxios";
 import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
+import AlbumList from "../organism/albumList/AlbumList";
+import SubTitleProvider from "@/providers/SubTitleProvider";
 
 // Explore 컴포넌트의 Props 타입 정의 (이 경우는 Props가 없지만 예시로 추가)
 interface ExploreProps {}
 
 const Explore = (props: ExploreProps) => {
 	const [categories, setCategories] = useState<TCATEGORY_RES[]>([]);
-	const [recommendList, setRecommendList] = useState<VIEWALL_LIST_TYPE | null>(
+	const [recommendList, setRecommendList] = useState<VIEWALL_LIST_TYPE[] | null>(
 		null
 	);
 
@@ -25,7 +27,7 @@ const Explore = (props: ExploreProps) => {
 				if (response) {
 					setCategories(response.CATEGORY);
 					if (response.RECOMMEND_LIST.length > 0) {
-						setRecommendList(response.RECOMMEND_LIST[0]); // 첫 번째 추천 리스트 사용
+						setRecommendList(response.RECOMMEND_LIST); // 첫 번째 추천 리스트 사용
 					}
 				}
 			} catch (error) {
@@ -41,11 +43,22 @@ const Explore = (props: ExploreProps) => {
 			{categories.map((category, index) => (
 				<KeywordList key={index} categoryList={category} />
 			))}
-			{recommendList && (
-				<SingleList recommendList={recommendList} showTitle={true} />
-			)}
+			<SubTitleProvider>
+			{recommendList?.map((content: VIEWALL_LIST_TYPE) => {
+				return (
+					<>
+						{content.TYPE == "TRACK" ? (
+							<SingleList showTitle={true} recommendList={content} />
+						) : (
+							<AlbumList showTitle={true} recommendList={content} />
+						)}
+					</>
+				);
+			})}
+			</SubTitleProvider>
 		</>
 	);
 };
 
 export default Explore;
+

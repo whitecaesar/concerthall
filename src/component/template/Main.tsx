@@ -41,7 +41,7 @@ export default function Main() {
 	const [recentTrackList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
 	useEffect(() => {
 		// const recent = ;
-			getRecentAlbumAxios("", 20).then((data) => setRecent(data)).catch((error) => {
+			getRecentAlbumAxios("", 20).then((albumdata) => setRecent(albumdata)).catch((error) => {
 				setError(error);
 			});
 			getRecentPlayListAxios("", 20).then((playdata) => setRecentPlayList(playdata)).catch((error) => {
@@ -51,19 +51,16 @@ export default function Main() {
 				setError(error);
 			});
 	}, []);
-/*
 
-	if(!error)
+	if(error)
 	{
 		return(
 		<ErrorPage></ErrorPage>
 		);
 	}
 	else{
-*/
 		return (
 			<>
-				{t}
 				<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
 				<TextBanner banner={data?.TOP_TXT_BANNER[0]} isFetched={isFetched} />
 	
@@ -85,7 +82,7 @@ export default function Main() {
 				})}
 			</>
 		);
-//	}
+	}
 
 }
 

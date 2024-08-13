@@ -29,7 +29,7 @@ const KeywordList = ({ categoryList: { TITLE, KEWORD } }: CategoryProps) => {
 							keywordInfo={keyword}
 							onClick={() => {
 								setSubTitle(keyword.NAME);
-								router.push(`/explore/result?keyword=${keyword.NAME}`);
+								router.push(`/explore/result?key=${keyword.KEY}`);
 							}}
 						/>
 					</li>
