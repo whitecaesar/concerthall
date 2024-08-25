@@ -2,20 +2,25 @@
 
 "use client";
 import React, { useContext } from "react";
+import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
 import { useRouter } from "next/navigation";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
 import style from "./artistList.module.css";
 import {
-	ARTIST_INFO_TYPE,
+	ITEM_INFO_TYPE,
+	VIEWALL_LIST_TYPE,
 } from "@/services/contents/ViewAllAxios";
-import ExploreArtistItem from "@/component/molecule/artistItem/ExploreArtistItem";
+import ArtistItem from "@/component/molecule/artistItem/ArtistItem";
 
 interface ArtistListProps {
-	artistList: ARTIST_INFO_TYPE[];
+	artistList: VIEWALL_LIST_TYPE;
+	showTitle: boolean;
+	viewAllLink?: string;
 }
 
-const ArtistList = (
-	{artistList}: ArtistListProps) => {
+const ArtistList = ({
+	artistList: { ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO },
+}: ArtistListProps) => {
 	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
 
@@ -24,7 +29,6 @@ const ArtistList = (
 			className={style.artistListContainer}
 			style={{ paddingBottom: "10px" }}
 		>
-			{/*}
 			<ItemListTitle.ViewAll
 				isPresent={true}
 				text={"Related Artist"}
@@ -34,13 +38,17 @@ const ArtistList = (
 					setSubTitle(TITLE);
 				}}
 			/>
-			*/}
 			<ul className={style.artistList}>
-				{artistList.map((item: ARTIST_INFO_TYPE) => (
-					<li key={item.artist_id}>
-						<ExploreArtistItem
-							artistInfo={item}
-						/>
+				{ITEM_INFO.map((item: ITEM_INFO_TYPE) => (
+					<li key={item.ID}>
+						{/*
+						<ArtistItem
+							albumInfo={item}
+							onClick={() => {
+								setSubTitle(item.TITLE);
+								router.push(`/detail/album/track/${item.ID}`);
+							}}
+						/>*/}
 					</li>
 				))}
 			</ul>
