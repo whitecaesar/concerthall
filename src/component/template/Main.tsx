@@ -24,7 +24,6 @@ import ErrorPage from "../organism/error/Error";
 
 export default function Main() {
 
-	
 	const [error, setError] =  useState<string | null>(null);
 	const [t, setT] =  useState<string | null>(null);
 

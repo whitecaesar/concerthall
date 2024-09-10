@@ -22,7 +22,7 @@ export async function getRegArtistInfoAxios(
 	param?:ARTIST_REG_REQUEST_TYPE // idAlbum 파라미터를 추가했습니다.
 ): Promise<ARTIST_REG_RESPONSE_TYPE> {
     //const token = getCookie("token");
-	const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzIwMDU3MzUyLCJleHAiOjIwMzU0MTczNTIsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.ot5L_vba_Bq3fXRyetjnxkU2EPmuZlvaELWlefI1CDikPbGIEAEFWHpknBm8vWwr8bWQHwxIH5t12g2Zg6Vpdw";
+	const token = process.env.NEXT_PUBLIC_TOKEN;
 	const response: AxiosResponse<ARTIST_REG_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/artist/check`,param, {
 		headers: {
@@ -60,7 +60,7 @@ export async function setArtistStarAxios(
     param?: ARTIST_STAR_REQUEST_TYPE
 ): Promise<ARTIST_STAR_RESPOSNE_TYPE> {
     //const token = getCookie("token");
-	const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzIwMDU3MzUyLCJleHAiOjIwMzU0MTczNTIsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.ot5L_vba_Bq3fXRyetjnxkU2EPmuZlvaELWlefI1CDikPbGIEAEFWHpknBm8vWwr8bWQHwxIH5t12g2Zg6Vpdw";
+	const token = process.env.NEXT_PUBLIC_TOKEN;
 	const response: AxiosResponse<ARTIST_STAR_RESPOSNE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=ARTIST`, param,
         {
@@ -97,7 +97,7 @@ export async function setRegArtistAxios(
     param?: ARTIST_SETREG_REQUEST_TYPE
 ): Promise<ARTIST_SETREG_RESPOSNE_TYPE> {
     //const token = getCookie("token");
-	const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzIwMDU3MzUyLCJleHAiOjIwMzU0MTczNTIsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.ot5L_vba_Bq3fXRyetjnxkU2EPmuZlvaELWlefI1CDikPbGIEAEFWHpknBm8vWwr8bWQHwxIH5t12g2Zg6Vpdw";
+	const token = process.env.NEXT_PUBLIC_TOKEN;
 	const response: AxiosResponse<ARTIST_SETREG_RESPOSNE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/artist`, param,
         {
@@ -134,7 +134,7 @@ export async function getArtistStarAxios(
 	param?:ARTIST_GET_STAR_REQUEST_TYPE // idAlbum 파라미터를 추가했습니다.
 ): Promise<ARTIST_GET_STAR_RESPONSE_TYPE> {
     //const token = getCookie("token");
-	const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzIwMDU3MzUyLCJleHAiOjIwMzU0MTczNTIsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.ot5L_vba_Bq3fXRyetjnxkU2EPmuZlvaELWlefI1CDikPbGIEAEFWHpknBm8vWwr8bWQHwxIH5t12g2Zg6Vpdw";
+	const token = process.env.NEXT_PUBLIC_TOKEN;
 	const response: AxiosResponse<ARTIST_GET_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/rating?type=ARTIST&mediaType=CONCERT_HALL`,param,
         {
@@ -178,7 +178,7 @@ export async function getArtistListAxios(
     page?:number
 ): Promise<ARTIST_LIST_RESPONSE_TYPE> {
     //const token = getCookie("token");
-	const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzIwMDU3MzUyLCJleHAiOjIwMzU0MTczNTIsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.ot5L_vba_Bq3fXRyetjnxkU2EPmuZlvaELWlefI1CDikPbGIEAEFWHpknBm8vWwr8bWQHwxIH5t12g2Zg6Vpdw";
+	const token = process.env.NEXT_PUBLIC_TOKEN;
 	const response: AxiosResponse<ARTIST_LIST_RESPONSE_TYPE> = await axios.get(
 		`https://dev.api.roseaudio.kr/v1/member/artist/favorite?mediaTypes=CONCERT_HALL&sortType=ARTIST_NAME_ASC&page=${page}&size=${size}`,
         {
