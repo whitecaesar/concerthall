@@ -23,8 +23,11 @@ export type PLT_STAR_RESPONSE_TYPE = {
 export async function setPLTStarAxios(
     param?: PLT_STAR_REQUEST_TYPE
 ): Promise<PLT_STAR_RESPONSE_TYPE> {
-	//const token = getCookie("token");
-	const token = process.env.NEXT_PUBLIC_TOKEN;
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=TRACK`, param,
         {
@@ -53,8 +56,11 @@ export type ALBUM_STAR_RESPONSE_TYPE = {
 export async function setAlbumStarAxios(
     param?: ALBUM_STAR_REQUEST_TYPE
 ): Promise<ALBUM_STAR_RESPONSE_TYPE> {
-	//const token = getCookie("token");
-	const token = process.env.NEXT_PUBLIC_TOKEN;
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
 	const response: AxiosResponse<ALBUM_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=ALBUM`, param,
         {
@@ -87,8 +93,11 @@ export type REG_TRACK_REQEUST_TYPE = {
 export async function setRegTrackAxios(
     param?: REG_TRACK_REQEUST_TYPE
 ): Promise<PLT_STAR_RESPONSE_TYPE> {
-	//const token = getCookie("token");
-	const token = process.env.NEXT_PUBLIC_TOKEN;
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/track`, param,
         {
@@ -121,8 +130,11 @@ export type REG_ALBUM_REQEUST_TYPE = {
 export async function setRegAlbumAxios(
     param?: REG_ALBUM_REQEUST_TYPE
 ): Promise<PLT_STAR_RESPONSE_TYPE> {
-	//const token = getCookie("token");
-	const token = process.env.NEXT_PUBLIC_TOKEN;
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/album`, param,
         {

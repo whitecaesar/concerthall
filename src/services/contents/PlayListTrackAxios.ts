@@ -134,8 +134,11 @@ export async function getPlayListTrackListAxios(
 	playlistId: string,
 	size:number // idAlbum 파라미터를 추가했습니다.
 ): Promise<TRACK_LIST_RESPONSE> {
-    //const token = getCookie("token");
-	const token = process.env.NEXT_PUBLIC_TOKEN;
+    let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
 	const response: AxiosResponse<TRACK_LIST_RESPONSE> = await axios.get(
 		`https://dev.api.roseaudio.kr/v1/member/playlist/${playlistId}?page=0&size=${size}`,{
 		headers: {

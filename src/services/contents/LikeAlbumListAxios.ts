@@ -17,8 +17,11 @@ export type ALBUM_LIKE_LIST_RESPONSE = {
 
 export async function getLikeAlbumListAxios(
 ): Promise<ALBUM_LIKE_LIST_RESPONSE> {
-	//const token = getCookie("token");
-	const token = process.env.NEXT_PUBLIC_TOKEN;
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
 	const response: AxiosResponse<ALBUM_LIKE_LIST_RESPONSE> = await axios.get(
 		`https://dev.api.roseaudio.kr/v1/member/album/favorite?mediaType=CONCERT_HALL&sortType=TITLE_ASC`,{
 		headers: {

@@ -40,6 +40,7 @@ export default function Main() {
 	const [recentTrackList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
 	useEffect(() => {
 		// const recent = ;
+
 			getRecentAlbumAxios("", 20).then((albumdata) => setRecent(albumdata)).catch((error) => {
 				setError(error);
 			});

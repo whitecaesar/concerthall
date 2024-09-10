@@ -17,8 +17,11 @@ export async function getMyPlayListAxios(
 	mediaTypes?: string,
 	size?:number // idAlbum 파라미터를 추가했습니다.
 ): Promise<MY_RECENT_LIST_RESPONSE> {
-	//const token = getCookie("token");
-	const token = process.env.NEXT_PUBLIC_TOKEN;
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
 	const response: AxiosResponse<MY_RECENT_LIST_RESPONSE> = await axios.get(
 		`https://dev.api.roseaudio.kr/v1/member/playlist?sortType=PLAYLIST_RECENT&mediaTypes=CONCERT_HALL&page=0&size=${size}`,{
 		headers: {
