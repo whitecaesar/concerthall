@@ -3,8 +3,8 @@ import ImageBanner from "../organism/imageBanner/ImageBanner";
 import SingleList from "../organism/singleList/SingleList";
 import AlbumList from "../organism/albumList/AlbumList";
 import { useQuery } from "@tanstack/react-query";
-import {getBannersAxios } from "@/services/main/MainInfoAxios";
-import {VIEWALL_LIST_TYPE} from "@/services/contents/ViewAllAxios";
+import { getBannersAxios } from "@/services/main/MainInfoAxios";
+import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
 import { useEffect, useState } from "react";
 import {
 	getRecentAlbumAxios,
@@ -16,16 +16,19 @@ import {
 } from "@/services/contents/RecentPlayListAxios";
 import RecentAlbumList from "../organism/albumList/RecentAlbumList";
 import RecentPlayList from "../organism/albumList/RecentPlayList";
-import { TRACK_RECENT_LIST_RESPONSE, getRecentTrackListAxios } from "@/services/contents/RecentTrackListAxios";
+import {
+	TRACK_RECENT_LIST_RESPONSE,
+	getRecentTrackListAxios,
+} from "@/services/contents/RecentTrackListAxios";
 import RecentTrackList from "../organism/singleList/RecentTrackList";
 import TextBanner from "../organism/textBanner/TextBanner";
 import { setCookie, getCookie, deleteCookie } from "@/services/common";
 import ErrorPage from "../organism/error/Error";
+import Loading from "@/app/loading";
 
 export default function Main() {
-
-	const [error, setError] =  useState<string | null>(null);
-	const [t, setT] =  useState<string | null>(null);
+	const [error, setError] = useState<string | null>(null);
+	const [t, setT] = useState<string | null>(null);
 
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
@@ -36,39 +39,47 @@ export default function Main() {
 	});
 
 	const [recent, setRecent] = useState<ALBUM_RECENT_LIST_RESPONSE>();
-	const [recentPlayList, setRecentPlayList] = useState<PLAY_RECENT_LIST_RESPONSE>();
-	const [recentTrackList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
+	const [recentPlayList, setRecentPlayList] =
+		useState<PLAY_RECENT_LIST_RESPONSE>();
+	const [recentTrackList, setRecentTrackList] =
+		useState<TRACK_RECENT_LIST_RESPONSE>();
 	useEffect(() => {
 		// const recent = ;
 
-			getRecentAlbumAxios("", 20).then((albumdata) => setRecent(albumdata)).catch((error) => {
+		getRecentAlbumAxios("", 20)
+			.then((albumdata) => setRecent(albumdata))
+			.catch((error) => {
 				setError(error);
 			});
-			getRecentPlayListAxios("", 20).then((playdata) => setRecentPlayList(playdata)).catch((error) => {
+		getRecentPlayListAxios("", 20)
+			.then((playdata) => setRecentPlayList(playdata))
+			.catch((error) => {
 				setError(error);
 			});
-			getRecentTrackListAxios("", 20).then((trackdata) =>	setRecentTrackList(trackdata)).catch((error) => {
+		getRecentTrackListAxios("", 20)
+			.then((trackdata) => setRecentTrackList(trackdata))
+			.catch((error) => {
 				setError(error);
 			});
 	}, []);
 
-	if(error)
-	{
-		return(
-		<ErrorPage></ErrorPage>
-		);
-	}
-	else{
+	if (error) {
+		return <ErrorPage></ErrorPage>;
+	} else {
 		return (
 			<>
 				<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
 				<TextBanner banner={data?.TOP_TXT_BANNER[0]} isFetched={isFetched} />
-	
-				{recentPlayList && (<RecentPlayList showTitle={true} recommendList={recentPlayList} />)}
+
+				{recentPlayList && (
+					<RecentPlayList showTitle={true} recommendList={recentPlayList} />
+				)}
 				{recent && <RecentAlbumList showTitle={true} recommendList={recent} />}
-				{recentTrackList && (<RecentTrackList showTitle={true} recommendList={recentTrackList} />)}
+				{recentTrackList && (
+					<RecentTrackList showTitle={true} recommendList={recentTrackList} />
+				)}
 				<ImageBanner list={data?.IMG_BANNER} isFetched={isFetched} />
-	
+
 				{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
 					return (
 						<>
@@ -83,8 +94,4 @@ export default function Main() {
 			</>
 		);
 	}
-
 }
-
-
-

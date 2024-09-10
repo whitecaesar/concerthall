@@ -7,16 +7,21 @@ import PLTrackList from "../organism/trackList/PLTrackList";
 import { getPLLIKEAxios } from "@/services/contents/PLLikeAxio";
 import { useContext, useEffect, useState } from "react";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
+import Loading from "@/app/loading";
 
 interface PlayListTrackProps {
 	playList_id: string;
-	func_type? : string;
-	size:number;
+	func_type?: string;
+	size: number;
 }
 
-export default function PlayListTrack({playList_id, func_type, size} : PlayListTrackProps) {
+export default function PlayListTrack({
+	playList_id,
+	func_type,
+	size,
+}: PlayListTrackProps) {
 	// useQuery 호출을 옵션 객체를 사용하는 형태로 수정
-	const[like, setLike] = useState(false);
+	const [like, setLike] = useState(false);
 	const { setSubTitle } = useContext(SubTitleContext);
 	const { data, isError, isLoading } = useQuery({
 		queryKey: ["ALBUM-ITEM"],
@@ -27,10 +32,12 @@ export default function PlayListTrack({playList_id, func_type, size} : PlayListT
 	});
 
 	useEffect(() => {
-		getPLLIKEAxios(playList_id).then(data => data.code == '200' ?setLike(data.result):alert(data.code));
+		getPLLIKEAxios(playList_id).then((data) =>
+			data.code == "200" ? setLike(data.result) : alert(data.code)
+		);
 	}, []);
 
-	if (isLoading) return <div>Loading...</div>;
+	if (isLoading) return <Loading />;
 	if (isError || !data) return <div>Error occurred</div>;
 
 	// data가 non-null임을 보장하기 위한 optional chaining
@@ -39,9 +46,12 @@ export default function PlayListTrack({playList_id, func_type, size} : PlayListT
 	return (
 		<>
 			<PlaylistDetailInfo detailInfo={PlayList} />
-			<FuncPlayListButtonGroup trackItem={PlayList} pageType={"PlayListPage"} like={like}/>
-			{PlayList && <PLTrackList trackList={PlayList}/>}
+			<FuncPlayListButtonGroup
+				trackItem={PlayList}
+				pageType={"PlayListPage"}
+				like={like}
+			/>
+			{PlayList && <PLTrackList trackList={PlayList} />}
 		</>
 	);
-
 }

@@ -6,6 +6,7 @@ import ArtistTrackList from "../organism/ArtistTrackList/ArtistTrackList";
 import ArtistAbout from "../molecule/artistAbout/ArtistAbout";
 import { getArtistInfoAxios } from "@/services/contents/ArtistInfoAxios";
 import ArtistAlbumList from "../organism/albumList/ArtistAlbumList";
+import Loading from "@/app/loading";
 
 interface ArtistInfoProps {
 	artist_id: string;
@@ -22,17 +23,21 @@ export default function ArtistInfo(artist: ArtistInfoProps) {
 		},
 	});
 
-	if (isLoading) return <div>Loading...</div>;
+	if (isLoading) return <Loading />;
 	if (isError || !data) return <div>Error occurred</div>;
 
 	return (
 		<>
 			{data.ARTIST_INFO && <ArtistDetailInfo detailInfo={data.ARTIST_INFO} />}
-						{/*<FuncButtonGroup AlbumItem={data}/>*/}
-			{data.ARTIST_TRACK_INFO && <ArtistTrackList ArtistTrackList={data.ARTIST_TRACK_INFO} />}
+			{/*<FuncButtonGroup AlbumItem={data}/>*/}
+			{data.ARTIST_TRACK_INFO && (
+				<ArtistTrackList ArtistTrackList={data.ARTIST_TRACK_INFO} />
+			)}
 			{data && <ArtistAlbumList showTitle={true} recommendList={data} />}
-			{data.ARTIST_INFO.DESC_ARTIST && <ArtistAbout artist_desc={data.ARTIST_INFO.DESC_ARTIST}/>}
-			
+			{data.ARTIST_INFO.DESC_ARTIST && (
+				<ArtistAbout artist_desc={data.ARTIST_INFO.DESC_ARTIST} />
+			)}
+
 			{/*FuncButtonGroup pageType={ArtistPage} AlbumItem={AlbumItem} />
 			
 			<AlbumList showTitle={true} recommendList={AlbumItem} />

@@ -9,18 +9,18 @@ import { getTrackAxios } from "@/services/contents/TrackAxios";
 import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
 import AlbumTrackLikeButton from "@/component/atom/button/AlbumTrackLikeButton";
 import AlbumFuncButton from "@/component/atom/button/AlbumFuncButton";
+import Loading from "@/app/loading";
 interface TrackItemProps {
 	albumTrackInfo: ALBUM_ITEM_TYPE;
 	AlbumTrackList: ALBUM_ITEM_TYPE[];
-	position:number;
+	position: number;
 }
 
 export default function AlbumTrackItem({
 	albumTrackInfo,
 	AlbumTrackList,
-	position
+	position,
 }: TrackItemProps) {
-
 	const {
 		data: trackData,
 		isError,
@@ -45,7 +45,7 @@ export default function AlbumTrackItem({
 		},
 	});
 
-	if (isLoading || playLoding) return <div>Loading...</div>;
+	if (isLoading || playLoding) return <Loading />;
 	if (isError || playError || !playData || !trackData)
 		return <div>Error occurred</div>;
 
