@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 const BackButton = () => {
 	const router = useRouter();
 	const goBackClick = () => {
-		router.back();
+		(window as any).HifiRose.Close();
+		//router.back();
 	};
 
 	return (
