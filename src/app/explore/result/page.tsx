@@ -5,7 +5,7 @@ export default function ExploreResultPage({ params }: { params: { key: string } 
 	return (
 		<>
 			{<div className="exploreResultPage">
-				<ExploreResult key={params.key}/>
+				<ExploreResult exploreKey={params.key}/>
 			</div>}
 		</>
 	);
