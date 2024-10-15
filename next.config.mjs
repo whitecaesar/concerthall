@@ -14,18 +14,15 @@ const nextConfig = {
 			{
 				protocol: 'http',
 				hostname: 'cip.ontown.co.kr'
-			}
-			,
+			},
 			{
 				protocol: 'https',
 				hostname: 'static.qobuz.com'
-			}
-			,
+			},
 			{
 				protocol: 'https',
 				hostname: 'imgcdn.cinehotel.co.kr'
-			}
-			,
+			},
 			{
 				protocol: 'http',
 				hostname: 'ons.ontown.co.kr'
@@ -41,7 +38,6 @@ const nextConfig = {
 			},
 		]
 	},
-
 }
 
-module.exports = nextConfig
+export default nextConfig;
