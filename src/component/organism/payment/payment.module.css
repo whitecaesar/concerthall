@@ -1,0 +1,63 @@
+.paymentArea {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	background: #000;
+	display: flex;
+	margin: 0 auto;
+}
+.paymentAreaInner {
+	max-width: 720px;
+	margin: 0 auto;
+	padding-top: 30dvh;
+}
+.paymentAreaInner p {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	color: var(--mainColor);
+	font-weight: 500;
+	font-size: 20px;
+}
+.pinDots {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 5dvh;
+	gap: 4px;
+}
+.dot {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	border: 1px solid var(--mainColor);
+	margin: 0 5px;
+	background-color: transparent;
+}
+.dot.filled {
+	background-color: var(--mainColor); /* 채워지는 동그라미 색상 */
+}
+.hiddenInput {
+	position: absolute;
+	left: -9999px; /* 실제 화면에 보이지 않게 숨김 */
+}
+.erroText {
+	padding-top: 40px;
+}
+p.textWhite {
+	color: #fff;
+	font-size: 15px;
+}
+p.textRed {
+	color: #f00;
+	font-size: 12px;
+	font-weight: 300;
+	margin-top: 8px;
+}

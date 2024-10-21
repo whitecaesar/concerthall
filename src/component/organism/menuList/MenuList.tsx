@@ -12,38 +12,36 @@ interface Texts {
 
 const texts: { [key: string]: Texts } = {
 	en: {
-	  playlist: "My Playlist",
-	  bookmark: "Bookmark",
-	  purchase: "Purchase List",
+		playlist: "My Playlist",
+		bookmark: "Bookmark",
+		purchase: "Purchase List",
 	},
 	kr: {
-	  playlist: "재생 목록",
-	  bookmark: "즐겨찾기",
-	  purchase: "구매 목록",
+		playlist: "재생 목록",
+		bookmark: "즐겨찾기",
+		purchase: "구매 목록",
 	},
 	de: {
-	  playlist: "Meine Wiedergabeliste",
-	  bookmark: "Lesezeichen",
-	  purchase: "Einkaufsliste",
+		playlist: "Meine Wiedergabeliste",
+		bookmark: "Lesezeichen",
+		purchase: "Einkaufsliste",
 	},
 	jp: {
-	  playlist: "マイプレイリスト",
-	  bookmark: "ブックマーク",
-	  purchase: "購入リスト",
+		playlist: "マイプレイリスト",
+		bookmark: "ブックマーク",
+		purchase: "購入リスト",
 	},
 	fr: {
-	  playlist: "Ma playlist",
-	  bookmark: "Marque-page",
-	  purchase: "Liste d'achats",
+		playlist: "Ma playlist",
+		bookmark: "Marque-page",
+		purchase: "Liste d'achats",
 	},
 	zh: {
-	  playlist: "我的播放列表",
-	  bookmark: "书签",
-	  purchase: "购买清单",
+		playlist: "我的播放列表",
+		bookmark: "书签",
+		purchase: "购买清单",
 	},
-  };
-  
-
+};
 
 const MenuList = () => {
 	const { setSubTitle } = useContext(SubTitleContext);
@@ -61,10 +59,7 @@ const MenuList = () => {
 		setPlaylist(texts[lang]?.playlist || texts.en.playlist);
 		setBookmark(texts[lang]?.bookmark || texts.en.bookmark);
 		setPurchase(texts[lang]?.purchase || texts.en.purchase);
-
 	}, [texts]);
-
-
 
 	return (
 		<div className="menuList">
@@ -82,6 +77,13 @@ const MenuList = () => {
 					onClick={menuItemClick(bookmark)}
 				>
 					{bookmark}
+				</MenuItem>
+				<MenuItem
+					href="/my/purchaseList"
+					iconName="purchaseList"
+					onClick={menuItemClick(purchase)}
+				>
+					{purchase}
 				</MenuItem>
 			</ul>
 		</div>

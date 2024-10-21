@@ -117,7 +117,10 @@
 	background: url(/images/icon/png/icon_list_play.png) center center no-repeat;
 	background-size: contain;
 }
-
+.iconDollar {
+	background: url(/images/icon/png/icon_dollar.png) center center no-repeat;
+	background-size: contain;
+}
 .iconShare {
 	background: url(/images/icon/png/icon_share.png) center center no-repeat;
 	background-size: contain;
@@ -149,6 +152,26 @@
 .playList {
 	background: url(/images/icon/png/icon_playlist.png) center center no-repeat;
 	background-size: contain;
+}
+.purchaseList {
+	background: url(/images/icon/png/icon_purchaselist.png) center center
+		no-repeat;
+	background-size: contain;
+}
+.paymentLogo {
+	background: url(/images/icon/png/icon_purchaselogo.png) center center
+		no-repeat;
+	background-size: contain;
+	width: 25px;
+	height: 25px;
+}
+
+.purchasePoint {
+	background: url(/images/icon/png/icon_purchasepoint.png) center center
+		no-repeat;
+	background-size: contain;
+	width: 20px;
+	height: 20px;
 }
 
 .thumbUp {

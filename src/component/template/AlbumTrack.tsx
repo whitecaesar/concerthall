@@ -6,6 +6,7 @@ import FuncButtonGroup from "../molecule/buttonGroup/FuncButtonGroup";
 import TrackList from "@/component/organism/trackList/TrackList";
 import AlbumTrackList from "../organism/trackList/AlbumTrackList";
 import Loading from "@/app/loading";
+import PriceArea from "../molecule/priceGroup/priceArea";
 
 interface AlbumTrackProps {
 	album_id: string;
@@ -34,6 +35,9 @@ export default function AlbumTrack({ album_id, func_type }: AlbumTrackProps) {
 			<>
 				<DetailInfo detailInfo={data} />
 				<FuncButtonGroup AlbumItem={data} />
+				{/* 구매 영역 */}
+				<PriceArea />
+
 				{trackItem && <AlbumTrackList AlbumTrackList={trackItem} />}
 			</>
 		);
