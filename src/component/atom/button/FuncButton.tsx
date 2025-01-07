@@ -56,6 +56,7 @@ type Props = {
 		});
 
 		console.log(trackListInfo?.ITEM_INFO);
+		
 
 		funcTrackPlayClick(method, play_info, track_info.TRACK_INFO, trackListInfo, position);
 	  } else if(method == 'albumMore'){
