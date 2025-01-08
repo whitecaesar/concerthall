@@ -10,6 +10,18 @@
 	align-items: center;
 	gap: 5px;
 }
+.btnPayment {
+	color: #fff;
+	border: 1px solid var(--borderDark);
+	border-radius: 3px;
+	width: 120px;
+	height: 38px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	background-color: #ac8357;
+}
 
 .priceButtonGroup {
 	border-top: 1px solid var(--borderDark);
@@ -31,8 +43,4 @@
 	align-items: center;
 	justify-content: center;
 	font-size: 14px;
-}
-
-.priceButtonGroup .btnPayment {
-	background-color: #ac8357;
 }
