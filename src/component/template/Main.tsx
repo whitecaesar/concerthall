@@ -25,6 +25,8 @@ import TextBanner from "../organism/textBanner/TextBanner";
 import { setCookie, getCookie, deleteCookie } from "@/services/common";
 import ErrorPage from "../organism/error/Error";
 import Loading from "@/app/loading";
+import Popup from "../atom/popup/Popup";
+import Button from "../atom/button/Button";
 
 export default function Main() {
 	const [error, setError] = useState<string | null>(null);
@@ -63,11 +65,35 @@ export default function Main() {
 			});
 	}, []);
 
+	//팝업 관련
+	const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+	const handleConfirm = () => {
+		alert("확인 버튼 클릭!");
+		setIsPopupOpen(false);
+	};
+
+	const handleCancel = () => {
+		alert("취소 버튼 클릭!");
+		setIsPopupOpen(false);
+	};
+
 	if (error) {
 		return <ErrorPage></ErrorPage>;
 	} else {
 		return (
 			<>
+				<button onClick={() => setIsPopupOpen(true)}>팝업여는것</button>
+				<Popup
+					isOpen={isPopupOpen}
+					onClose={() => setIsPopupOpen(false)}
+					title="구매하기"
+					description="ㅇㅇㅇ을 구매하시겠습니까?"
+					buttons={[
+						{ text: "취소", className: "cancel", onClick: handleCancel },
+						{ text: "확인", className: "ok", onClick: handleConfirm },
+					]}
+				/>
 				<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
 				<TextBanner banner={data?.TOP_TXT_BANNER[0]} isFetched={isFetched} />
 
