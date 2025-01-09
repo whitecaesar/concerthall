@@ -33,13 +33,24 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.singleItem .artist .artistName{
-	display:flex;
-	gap:5px
+.singleItem .artist .artistName {
+	display: flex;
+	gap: 5px;
 }
 .singleItem .bottomInfo .buttonGroup {
 	width: 50px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.priceNum {
+	display: flex;
+	align-items: center;
+	font-size: 12px;
+	gap: 2px;
+}
+.priceNum i {
+	width: 13px;
+	height: 13px;
 }

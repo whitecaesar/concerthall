@@ -13,6 +13,7 @@ import { getTrackAxios } from "@/services/contents/TrackAxios";
 import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 import { funcTrackPlayClick } from "@/services/common";
 import Loading from "@/app/loading";
+import Icon from "@/component/atom/icon/Icon";
 
 export default function SingleItem({
 	singleInfo,
@@ -81,7 +82,12 @@ export default function SingleItem({
 							))}
 					</div>
 				</p>
-				<div className={style.buttonGroup}>
+
+				<p className={style.priceNum}>
+					<span>2,699</span>
+					<Icon iconName="purchasePoint" />
+				</p>
+				{/* <div className={style.buttonGroup}>
 					<LikeButton
 						track_info={singleInfo}
 						starPoint={singleInfo.STAR || 0}
@@ -93,8 +99,7 @@ export default function SingleItem({
 						trackListInfo={trackListInfo}
 						position={position}
 					/>
-					{/* 기능 로직 넣으세요. */}
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

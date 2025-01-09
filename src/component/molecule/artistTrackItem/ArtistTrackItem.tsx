@@ -10,6 +10,7 @@ import AlbumTrackLikeButton from "@/component/atom/button/AlbumTrackLikeButton";
 import AlbumFuncButton from "@/component/atom/button/AlbumFuncButton";
 import Link from "next/link";
 import Loading from "@/app/loading";
+import Icon from "@/component/atom/icon/Icon";
 interface TrackItemProps {
 	ArtistTrackInfo: ALBUM_ITEM_TYPE;
 	ArtistTrackList: ALBUM_ITEM_TYPE[];
@@ -73,7 +74,22 @@ export default function ArtistTrackItem({
 					</div>
 				</p>
 			</span>
-			<div className={style.buttonGroup}>
+			{/* 구매 관련 버튼튼 */}
+			<div className={`${style.buttonGroup} ${style.payment}`}>
+				{/* 구매 가능 버튼튼 */}
+				<button type="button" className={style.btnPayment}>
+					<p className={style.priceNum}>
+						<span>2,699</span>
+						<Icon iconName="purchasePoint" />
+					</p>
+				</button>
+				{/* 구매 불가가 버튼 */}
+				{/* <button type="button" className={`${style.btnPayment} ${style.no}`}>
+					<p className={style.priceNum}>구매불가</p>
+				</button> */}
+			</div>
+			{/* 기존 기능 버튼 */}
+			{/* <div className={style.buttonGroup}>
 				<AlbumTrackLikeButton track_info={ArtistTrackInfo} />
 				<AlbumFuncButton
 					method="albumTrackMore"
@@ -82,7 +98,7 @@ export default function ArtistTrackItem({
 					albumTrackList={ArtistTrackList}
 					position={position}
 				/>
-			</div>
+			</div> */}
 		</div>
 	);
 }

@@ -1,0 +1,94 @@
+/* common popup */
+.popup {
+	flex-direction: column;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	z-index: 300;
+	width: 100%;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+.dimmed {
+	background: #000;
+	bottom: 0;
+	height: 150%;
+	position: fixed;
+	width: 100%;
+	z-index: -1;
+	opacity: 0.8;
+	transition-delay: 0ms;
+	transition-duration: 450ms;
+	transition-property: all;
+	transition-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+.popupContent {
+	position: relative;
+	width: 90dvw;
+	min-width: 300px;
+	max-width: 420px;
+	background: #333;
+	border-radius: 10px;
+	padding: 25px 20px;
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+}
+.titleWrap {
+	display: flex;
+	align-items: center;
+	padding-bottom: 20px;
+	gap: 5px;
+}
+.titleWrap i {
+	width: 20px;
+	height: 20px;
+}
+.title {
+	text-align: center;
+	font-size: 17px;
+
+	color: #fff;
+	font-weight: 600;
+}
+.descriptionText {
+	font-size: 14px;
+	color: var(--textGrey2);
+	padding-bottom: 25px;
+	line-height: 19px;
+}
+
+.buttonGroup {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	gap: 15px;
+}
+.buttonGroup button {
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	background: #212121;
+	padding: 10px 0;
+	border-radius: 3px;
+	font-size: 14px;
+}
+.buttonGroup button.ok {
+	background: #ac8357;
+}
+
+@media (min-width: 721px) {
+	.title {
+		font-size: 20px;
+	}
+	.descriptionText {
+		font-size: 15px;
+		line-height: 19px;
+		padding-bottom: 40px;
+	}
+}
