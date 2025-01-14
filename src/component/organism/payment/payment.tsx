@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import style from "./payment.module.css";
 import Icon from "@/component/atom/icon/Icon";
+import Button from "@/component/atom/button/Button";
 
 interface PaymentProps {
 	onClose: () => void;
@@ -50,6 +51,7 @@ export default function Payment({ onClose, isOpen }: PaymentProps) {
 						<p className={style.textWhite}>다시 입력해 주세요.</p>
 						<p className={style.textRed}>비밀번호가 일치하지 않습니다.</p>
 					</div>
+					<button className={style.btnOk}>확인</button>
 				</div>
 			</div>
 		</div>
