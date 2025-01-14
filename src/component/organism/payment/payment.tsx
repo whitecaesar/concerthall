@@ -16,32 +16,7 @@ export default function Payment() {
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
-
-		// 최대 6자리까지만 입력 허용
-		if (value.length <= 6) {
-			setPin(value);
-		}
-	};
-
-	// 동그라미를 클릭했을 때 input에 포커스
-	const handleDotClick = () => {
-		if (inputRef.current) {
-			inputRef.current.focus();
-		}
-	};
-
-	// 동그라미를 채우기 위한 함수
-	const renderDots = () => {
-		const filledDots = pin.length;
-		return Array(6)
-			.fill(0)
-			.map((_, index) => (
-				<span
-					key={index}
-					className={`${style.dot} ${index < filledDots ? style.filled : ""}`}
-					onClick={handleDotClick} // 동그라미를 클릭했을 때 input에 포커스
-				></span>
-			));
+		setPin(value);
 	};
 
 	return (
@@ -51,11 +26,10 @@ export default function Payment() {
 					<Icon iconName="paymentLogo" />
 					Point 결제 비밀번호
 				</p>
-				<div className={style.pinDots}>{renderDots()}</div>
 				<input
 					type="password"
 					id="pin-input"
-					maxLength={6}
+					//maxLength={6}
 					inputMode="numeric"
 					autoComplete="off"
 					value={pin}

@@ -45,8 +45,16 @@
 	background-color: var(--mainColor); /* 채워지는 동그라미 색상 */
 }
 .hiddenInput {
-	position: absolute;
-	left: -9999px; /* 실제 화면에 보이지 않게 숨김 */
+	background: transparent;
+	color: var(--mainColor);
+	border-bottom: 1px solid var(--mainColor);
+	font-size: 25px;
+	max-width: 230px;
+	letter-spacing: 0px;
+	margin-top: 30px;
+	outline: 0;
+	padding: 10px 5px;
+	/* text-align: center; */
 }
 .erroText {
 	padding-top: 40px;
