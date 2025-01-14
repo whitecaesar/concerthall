@@ -4,7 +4,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.8);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -12,16 +12,16 @@
 }
 .paymentArea {
 	position: relative;
-	background: #fff;
-	padding: 20px;
+	background: #2b2b2b;
+	padding: 50px 30px;
 	border-radius: 8px;
 	max-width: 400px;
 	width: 90%;
 }
 .closeButton {
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	top: 15px;
+	right: 15px;
 	background: none;
 	border: none;
 	cursor: pointer;
@@ -29,7 +29,6 @@
 .paymentAreaInner {
 	max-width: 720px;
 	margin: 0 auto;
-	padding-top: 30dvh;
 }
 .paymentAreaInner p {
 	display: flex;
@@ -64,15 +63,16 @@
 	color: var(--mainColor);
 	border-bottom: 1px solid var(--mainColor);
 	font-size: 25px;
-	max-width: 230px;
+	width: 250px;
 	letter-spacing: 0px;
 	margin-top: 30px;
 	outline: 0;
 	padding: 10px 5px;
+	display: block;
+	margin: 25px auto;
 	/* text-align: center; */
 }
 .erroText {
-	padding-top: 40px;
 }
 p.textWhite {
 	color: #fff;

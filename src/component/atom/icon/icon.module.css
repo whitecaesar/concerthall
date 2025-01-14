@@ -195,3 +195,10 @@
 	background: url(/images/icon/png/icon_back_white.png) center center no-repeat;
 	background-size: contain;
 }
+
+.popClose {
+	width: 20px;
+	height: 20px;
+	background: url(/images/icon/png/icon_close_brown.png) center center no-repeat;
+	background-size: contain;
+}

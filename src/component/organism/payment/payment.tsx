@@ -29,7 +29,7 @@ export default function Payment({ onClose, isOpen }: PaymentProps) {
 		<div className={style.modalOverlay}>
 			<div className={style.paymentArea}>
 				<button className={style.closeButton} onClick={onClose}>
-					<Icon iconName="close" />
+					<Icon iconName="popClose" />
 				</button>
 				<div className={style.paymentAreaInner}>
 					<p>
