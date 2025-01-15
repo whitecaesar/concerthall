@@ -43,4 +43,5 @@ export default function Header() {
 	}, [path]);
 
 	return <>{ynMainNav ? <MainNav /> : <SubNav title="타이틀" />}</>;
+
 }

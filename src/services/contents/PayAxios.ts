@@ -15,14 +15,19 @@ export type PASS_CHECK_RESPONSE = {
 	code: string;
 };
 
+export type PASS_CHECK_REQUEST = {
+    password: string;
+}
+
 export async function getPassCheckAxios(
-	param?:string
+	param?:PASS_CHECK_REQUEST
 ): Promise<PASS_CHECK_RESPONSE> {
 	let token = getCookie("token");
 	if(!token)
 	{
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
+    console.log(token);
 	const response: AxiosResponse<PASS_CHECK_RESPONSE> = await axios.post(
 		`https://dev.api.roseaudio.kr/v1/member/member/password/check`,param, {
 		headers: {
@@ -31,13 +36,7 @@ export async function getPassCheckAxios(
 	});
 	
 	if (response.status === 200) {
-		if(response.data.code === '200')
-        {
-            return response.data;
-        }
-        else{
-            throw new Error(`에러입니다. ${response.data.message}`);
-        }
+        return response.data;
 	} else {
 		throw new Error(`에러입니다. ${response.status}`);
 	}
@@ -56,15 +55,13 @@ export type BALANCE_CHECK_RESPONSE = {
 };
 
 export async function getBalanceCheckAxios(
-	mediaTypes?: string, // idAlbum 파라미터를 추가했습니다.
-	size?:number
 ): Promise<BALANCE_CHECK_RESPONSE> {
 	let token = getCookie("token");
 	if(!token)
 	{
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
-	console.log("token : ", token);
+	//console.log("token : ", token);
 	const response: AxiosResponse<BALANCE_CHECK_RESPONSE> = await axios.get(
 		`https://dev.api.roseaudio.kr/payment/v1/balance`,{
 		headers: {
@@ -73,13 +70,7 @@ export async function getBalanceCheckAxios(
 	});
 	
 	if (response.status === 200) {
-		if(response.data.code === '200.1')
-        {
-            return response.data;
-        }
-        else{
-            throw new Error(`에러입니다. ${response.data.message}`);
-        }
+        return response.data;
 	} else {
 		throw new Error(`에러입니다. ${response.status}`);
 	}

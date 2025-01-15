@@ -20,16 +20,20 @@ export function setCookie(name: string, value: string, days: number) {
 	document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-export function getCookie(name: string): string | undefined {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';'); // 쿠키를 세미콜론으로 분리하여 배열 생성
-    for(let i=0;i < ca.length;i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') c = c.substring(1,c.length); // 앞 공백 제거
-      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length); // 쿠키 값 반환
+export const getCookie = (name: string): string | undefined => {
+    // 서버 사이드에서 실행되는 경우
+    if (typeof window === 'undefined') {
+        return undefined;
     }
-    return undefined; // 해당 이름의 쿠키가 없는 경우 undefined 반환
- }
+
+    // 클라이언트 사이드에서 실행되는 경우
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+        return parts.pop()?.split(';').shift();
+    }
+    return undefined;
+};
 
 export function deleteCookie(name: string): void {
 // 쿠키의 만료일을 과거로 설정하여 삭제

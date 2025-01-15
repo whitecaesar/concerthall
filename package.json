@@ -11,6 +11,7 @@
 	"dependencies": {
 		"@tanstack/react-query": "^5.25.0",
 		"axios": "^1.6.5",
+		"crypto-js": "^4.2.0",
 		"json-server": "^0.17.4",
 		"next": "14.0.4",
 		"react": "^18",
@@ -19,6 +20,7 @@
 		"swiper": "^11.0.5"
 	},
 	"devDependencies": {
+		"@types/crypto-js": "^4.2.2",
 		"@types/node": "20.11.17",
 		"@types/react": "18.2.55",
 		"@types/react-dom": "^18",

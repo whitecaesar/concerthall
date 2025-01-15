@@ -28,6 +28,7 @@ export type TRACK_ITEM_TYPE = {
 	S_ARTIST?: string;
 	STAR?: number;
 	PRICE?:number;
+	YN_SALE?:string;
 	ALBUM_PRICE?:number;
 };
 

@@ -15,6 +15,7 @@ export type ARTIST_TRACK_INFO_TYPE = {
 	MEDIA_TYPE: string;
     TOTAL_NUM_TRACK: number;
     ARTIST?: ARTIST_DEFAULT_INFO_TYPE[];
+    YN_SALE?: string;
 	S_ARTIST?: string;
     ALBUM_PRICE?:number;
     PRICE?:number;

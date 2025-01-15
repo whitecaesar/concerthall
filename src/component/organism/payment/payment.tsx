@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import style from "./payment.module.css";
 import Icon from "@/component/atom/icon/Icon";
 import Button from "@/component/atom/button/Button";
+import sha1 from 'crypto-js/sha1';
+import { getPassCheckAxios, getBalanceCheckAxios } from "@/services/contents/PayAxios";
 
 interface PaymentProps {
 	onClose: () => void;
@@ -11,6 +13,7 @@ interface PaymentProps {
 
 export default function Payment({ onClose, isOpen }: PaymentProps) {
 	const [pin, setPin] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -22,6 +25,38 @@ export default function Payment({ onClose, isOpen }: PaymentProps) {
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
 		setPin(value);
+		setErrorMessage("");
+	};
+
+	const handleSubmit = async () => {
+		try {
+			if (pin.length === 0) {
+				setErrorMessage("비밀번호를 입력해주세요.");
+				return;
+			}
+
+			// PIN을 SHA-1으로 암호화
+			const hashedPin = sha1(pin).toString();
+			// 비밀번호 확인
+			const passCheckResponse = await getPassCheckAxios({
+				password: hashedPin
+			});
+			
+			if (passCheckResponse.code === "200") {
+				// 잔액 확인
+				const balanceResponse = await getBalanceCheckAxios();
+				console.log("잔액 정보:", balanceResponse.data);
+				
+				// 입력값 초기화 및 모달 닫기
+				setPin("");
+				onClose();
+			} else {
+				setErrorMessage("비밀번호가 일치하지 않습니다.");
+			}
+		} catch (error) {
+			console.error("결제 처리 중 오류 발생:", error);
+			setErrorMessage("결제 처리 중 오류가 발생했습니다.");
+		}
 	};
 
 	if (!isOpen) return null;
@@ -48,10 +83,19 @@ export default function Payment({ onClose, isOpen }: PaymentProps) {
 						className={style.hiddenInput}
 					/>
 					<div className={style.erroText}>
-						<p className={style.textWhite}>다시 입력해 주세요.</p>
-						<p className={style.textRed}>비밀번호가 일치하지 않습니다.</p>
+						{errorMessage && (
+							<>
+								<p className={style.textWhite}>다시 입력해 주세요.</p>
+								<p className={style.textRed}>{errorMessage}</p>
+							</>
+						)}
 					</div>
-					<button className={style.btnOk}>확인</button>
+					<button 
+						className={style.btnOk} 
+						onClick={handleSubmit}
+					>
+						확인
+					</button>
 				</div>
 			</div>
 		</div>

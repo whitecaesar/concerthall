@@ -27,6 +27,7 @@ export type ALBUM_ITEM_TYPE = {
 	URL?: string;
 	STAR?: number;
 	DURATION?: string;
+	YN_SALE?: string;
 	PRICE?:number;
 	ALBUM_PRICE?:number;
 };
@@ -40,6 +41,8 @@ export type ALBUM_DETAIL_TYPE = {
 	TOTAL_NUM_TRACK: number;
 	ITME_INFO: ALBUM_ITEM_TYPE[];
 	ARTIST?: ALBUM_ARTIST_INFO_TYPE[];
+	YN_SALE?: string;
+	YN_PAYMENT?: string;
 	STAR?:number;
 	S_ARTIST?: string;
 	ALBUM_PRICE? : number;
@@ -66,6 +69,7 @@ export async function getAlbumAxios(
             ARTIST: item.S_ARTIST ? JSON.parse(item.S_ARTIST) : []
         }));
 
+		console.log("album_data : ", albumData);
         return albumData;
 	} else {
 		throw new Error(`에러입니다. ${response.status}`);

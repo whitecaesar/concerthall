@@ -29,19 +29,21 @@ const DetailInfo = ({ detailInfo }: DetailInfoProps) => {
 				priority
 				className={style.detailThumbnail}
 			/>
-			<div className={style.bottomInfo}>
-				<div
-					className={`${style.titleContainer} ${
-						isLongTitle ? style.longTitle : ""
-					}`}
-				>
-					<p>{detailInfo.TITLE}</p>
+			{detailInfo.YN_PAYMENT == 'Y' && (
+				<div className={style.bottomInfo}>
+					<div
+						className={`${style.titleContainer} ${
+							isLongTitle ? style.longTitle : ""
+						}`}
+					>
+						<p>{detailInfo.TITLE}</p>
+					</div>
+					<div className={style.buttonGroup}>
+						<RoundPlayButton AlbumItem={detailInfo} />
+						<RoundShuffleButton AlbumItem={detailInfo} />
+					</div>
 				</div>
-				<div className={style.buttonGroup}>
-					<RoundPlayButton AlbumItem={detailInfo} />
-					<RoundShuffleButton AlbumItem={detailInfo} />
-				</div>
-			</div>
+			)}
 		</div>
 	);
 };

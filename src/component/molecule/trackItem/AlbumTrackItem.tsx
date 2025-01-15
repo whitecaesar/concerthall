@@ -87,6 +87,7 @@ export default function AlbumTrackItem({
 				{/* 구매 관련 버튼튼 */}
 				<div className={`${style.buttonGroup} ${style.payment}`}>
 					{/* 구매 가능 버튼 */}
+					{albumTrackInfo.YN_SALE === 'Y' ? (
 					<button 
 						type="button" 
 						className={style.btnPayment}
@@ -97,10 +98,12 @@ export default function AlbumTrackItem({
 							<Icon iconName="purchasePoint" />
 						</p>
 					</button>
-					{/* 구매 불가가 버튼 */}
-					{/*<button type="button" className={`${style.btnPayment} ${style.no}`}>
+					):(
+						
+					<button type="button" className={`${style.btnPayment} ${style.no}`}>
 						<p className={style.priceNum}>구매불가</p>
-					</button>*/}
+					</button>
+					)}
 				</div>
 				{/* 기존 기능 버튼 */}
 				{/* <div className={style.buttonGroup}>
