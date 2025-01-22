@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { getCookie } from "../common";
 
 export type ALBUM_ARTIST_INFO_TYPE = {
 	artist_id: string;
@@ -27,6 +28,7 @@ export type ALBUM_ITEM_TYPE = {
 	URL?: string;
 	STAR?: number;
 	DURATION?: string;
+	YN_PAYMENT?: string;
 	YN_SALE?: string;
 	PRICE?:number;
 	ALBUM_PRICE?:number;
@@ -52,8 +54,9 @@ export async function getAlbumAxios(
 	idAlbum?: string // idAlbum 파라미터를 추가했습니다.
 ): Promise<ALBUM_DETAIL_TYPE> {
 
+	const ID_CUST = getCookie("userid");
 	const response: AxiosResponse<ALBUM_DETAIL_TYPE> = await axios.get(
-		`http://cip.ontown.co.kr/hch/album/${idAlbum}/contents.json` // URL 구성을 동적으로 변경했습니다.
+		`http://cip.ontown.co.kr/hch/album/${idAlbum}/contents.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
 	);
 
 	if (response.status === 200) {
@@ -69,7 +72,6 @@ export async function getAlbumAxios(
             ARTIST: item.S_ARTIST ? JSON.parse(item.S_ARTIST) : []
         }));
 
-		console.log("album_data : ", albumData);
         return albumData;
 	} else {
 		throw new Error(`에러입니다. ${response.status}`);

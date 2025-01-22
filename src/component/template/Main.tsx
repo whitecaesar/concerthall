@@ -32,6 +32,8 @@ export default function Main() {
 	const [error, setError] = useState<string | null>(null);
 	const [t, setT] = useState<string | null>(null);
 
+	setCookie("userid", "mjkim@citech.kr", 24);
+
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
 		queryFn: () => {

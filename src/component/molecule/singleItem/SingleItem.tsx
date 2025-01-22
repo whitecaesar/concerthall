@@ -14,6 +14,9 @@ import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 import { funcTrackPlayClick } from "@/services/common";
 import Loading from "@/app/loading";
 import Icon from "@/component/atom/icon/Icon";
+import { useState } from "react";
+import Payment from "@/component/organism/payment/payment";
+import Popup from "@/component/atom/popup/Popup";
 
 export default function SingleItem({
 	singleInfo,
@@ -26,6 +29,19 @@ export default function SingleItem({
 	position: number;
 	star: number;
 }) {
+
+	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+	const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+	const handleConfirm = () => {
+		setIsPopupOpen(false);
+	};
+
+	const handleCancel = () => {
+		alert("취소 버튼 클릭!");
+		setIsPopupOpen(false);
+	};
+	
 	const {
 		data: trackData,
 		isError,
@@ -55,10 +71,14 @@ export default function SingleItem({
 		return <div>Error occurred</div>;
 
 	return (
+		<>
 		<div className={style.singleItem} id={`${singleInfo.ID}`}>
 			<span
 				onClick={() =>
-					funcTrackPlayClick("trackPlay", playData, trackData.TRACK_INFO)
+					
+					singleInfo.YN_PAYMENT === 'Y' 
+								? funcTrackPlayClick("trackPlay", playData, trackData.TRACK_INFO)
+								: (singleInfo.YN_SALE === 'N' ? setIsPopupOpen(true) : setIsPaymentOpen(true))
 				}
 			>
 				<Image
@@ -82,12 +102,15 @@ export default function SingleItem({
 							))}
 					</div>
 				</p>
-
-				<p className={style.priceNum}>
-					<span>2,699</span>
+				{( singleInfo.YN_PAYMENT === 'N' || singleInfo.YN_PAYMENT == null) ? (
+				<p className={style.priceNum}
+					onClick={() => setIsPaymentOpen(true)}
+				>
+					<span>{singleInfo.PRICE}</span>
 					<Icon iconName="purchasePoint" />
 				</p>
-				{/* <div className={style.buttonGroup}>
+				):( 
+				<div className={style.buttonGroup}>
 					<LikeButton
 						track_info={singleInfo}
 						starPoint={singleInfo.STAR || 0}
@@ -99,8 +122,24 @@ export default function SingleItem({
 						trackListInfo={trackListInfo}
 						position={position}
 					/>
-				</div> */}
+				</div>
+				)}
 			</div>
 		</div>
+		<Payment 
+				isOpen={isPaymentOpen}
+				onClose={() => setIsPaymentOpen(false)}
+				trackId={singleInfo.ID}
+		/>
+		<Popup
+			isOpen={isPopupOpen}
+			onClose={() => setIsPopupOpen(false)}
+			title="안내"
+			description="구매가 불가한 트랙입니다."
+			buttons={[
+				{ text: "확인", className: "ok", onClick: handleConfirm },
+			]}
+		/>
+		</>
 	);
 }

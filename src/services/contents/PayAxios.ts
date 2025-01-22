@@ -88,7 +88,7 @@ export type PAYMENT_REQUEST_TYPE = {
     paymentId : string;
 }
 
-export async function getPaymentAxios(
+export async function setPaymentAxios(
 	param?: PAYMENT_REQUEST_TYPE
 ): Promise<PASS_CHECK_RESPONSE> {
 	let token = getCookie("token");
@@ -115,6 +115,47 @@ export async function getPaymentAxios(
         }
         else{
             throw new Error(`에러입니다. ${response.data.message}`);
+        }
+	} else {
+		throw new Error(`에러입니다. ${response.status}`);
+	}
+}
+
+export type TRACK_PURCHASE_RESPONSE = {
+	RES_CODE: string;
+	RES_MSG: string;
+};
+
+export type TRACK_PURCHASE_REQUEST_TYPE = {
+    ID_CUST : string;
+    PRICE : number;
+}
+
+export async function setTrackPurchaseAxios(
+	idTrack?: string,
+	param?: TRACK_PURCHASE_REQUEST_TYPE
+): Promise<TRACK_PURCHASE_RESPONSE> {
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
+	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
+		`http://cip.ontown.co.kr/hch/track/${idTrack}/purchase.json`,
+		null, 
+		{
+			params: param,
+		}
+	);
+
+	
+	if (response.status === 200) {
+		if(response.data.RES_CODE === '0000')
+        {
+            return response.data;
+        }
+        else{
+            throw new Error(`에러입니다. ${response.data.RES_MSG}`);
         }
 	} else {
 		throw new Error(`에러입니다. ${response.status}`);

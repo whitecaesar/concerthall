@@ -11,22 +11,25 @@ import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE } from "./contents/ViewAllAxios";
 export const MediaType = 'CONCERT_HALL';
 
 export function setCookie(name: string, value: string, days: number) {
-	let expires = "";
-	if (days) {
-		const date = new Date();
-		date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-		expires = "; expires=" + date.toUTCString();
-	}
-	document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    if (typeof window === 'undefined') {
+        console.warn("setCookie는 클라이언트 사이드에서만 사용할 수 있습니다.");
+        return;
+    }
+
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
 export const getCookie = (name: string): string | undefined => {
-    // 서버 사이드에서 실행되는 경우
     if (typeof window === 'undefined') {
         return undefined;
     }
 
-    // 클라이언트 사이드에서 실행되는 경우
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) {
@@ -36,7 +39,11 @@ export const getCookie = (name: string): string | undefined => {
 };
 
 export function deleteCookie(name: string): void {
-// 쿠키의 만료일을 과거로 설정하여 삭제
+    if (typeof window === 'undefined') {
+        console.warn("deleteCookie는 클라이언트 사이드에서만 사용할 수 있습니다.");
+        return;
+    }
+
     document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
 }
 

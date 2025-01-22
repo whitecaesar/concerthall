@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ARTIST_INFO_TYPE } from "./ViewAllAxios";
+import { getCookie } from "../common";
 
 export type TRACK_ARTIST_INFO_TYPE = {
 	artist_id: string;
@@ -43,8 +44,9 @@ export async function getTrackAxios(
 	idTrack?: string // idAlbum 파라미터를 추가했습니다.
 ): Promise<TRACK_INFO_RESPONSE> {
 
+	const ID_CUST = getCookie("userid");
 	const response: AxiosResponse<TRACK_INFO_RESPONSE> = await axios.get(
-		`http://cip.ontown.co.kr/hch/track/${idTrack}/info.json` // URL 구성을 동적으로 변경했습니다.
+		`http://cip.ontown.co.kr/hch/track/${idTrack}/info.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
 	);
 
 	if (response.status === 200) {

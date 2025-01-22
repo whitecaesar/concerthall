@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE, TVIEWALL_LIST_RESPONSE, ARTIST_INFO_TYPE } from "../contents/ViewAllAxios";
+import { getCookie } from "../common";
 
 //텍스트 배너 타입
 export type TTXT_BANNER_RES = {
@@ -34,8 +35,9 @@ export type TMAIN_RESPONSE = {
 };
 
 export async function getBannersAxios(): Promise<TMAIN_RESPONSE | void> {
+	const ID_CUST = getCookie("userid");
 	const response = await axios.get(
-		"http://cip.ontown.co.kr/hch/home/info.json"
+		`http://cip.ontown.co.kr/hch/home/info.json?ID_CUST=${ID_CUST}`
 	);
 	if (response.status === 200) {
 		const data = response.data as TMAIN_RESPONSE;

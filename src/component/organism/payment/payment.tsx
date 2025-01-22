@@ -4,14 +4,19 @@ import style from "./payment.module.css";
 import Icon from "@/component/atom/icon/Icon";
 import Button from "@/component/atom/button/Button";
 import sha1 from 'crypto-js/sha1';
-import { getPassCheckAxios, getBalanceCheckAxios } from "@/services/contents/PayAxios";
+import { getPassCheckAxios, getBalanceCheckAxios, setTrackPurchaseAxios } from "@/services/contents/PayAxios";
+import { getCookie } from "@/services/common";
 
 interface PaymentProps {
 	onClose: () => void;
 	isOpen: boolean;
+	trackId? : string;
+	albumId? : string;
+	type? : string;
+	price? : number;
 }
 
-export default function Payment({ onClose, isOpen }: PaymentProps) {
+export default function Payment({ onClose, isOpen, trackId, albumId, type, price }: PaymentProps) {
 	const [pin, setPin] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -36,12 +41,14 @@ export default function Payment({ onClose, isOpen }: PaymentProps) {
 			}
 
 			// PIN을 SHA-1으로 암호화
+			/*
 			const hashedPin = sha1(pin).toString();
 			// 비밀번호 확인
 			const passCheckResponse = await getPassCheckAxios({
 				password: hashedPin
 			});
 			
+
 			if (passCheckResponse.code === "200") {
 				// 잔액 확인
 				const balanceResponse = await getBalanceCheckAxios();
@@ -53,6 +60,28 @@ export default function Payment({ onClose, isOpen }: PaymentProps) {
 			} else {
 				setErrorMessage("비밀번호가 일치하지 않습니다.");
 			}
+			*/
+
+			const IDCUST = getCookie("userid");
+			if (!IDCUST || !price || !trackId) {
+				throw new Error("필수 정보가 누락되었습니다.");
+			}
+
+			const param = {
+				ID_CUST: IDCUST,
+				PRICE: price // number 타입 유지
+			};
+
+			const purchaseResponse = await setTrackPurchaseAxios(trackId, param);
+
+			if (purchaseResponse.RES_CODE === "0000") {
+				// 잔액 확인
+				console.log("결제완료");
+				// 여기에 플레이 시키는 로직 들어가야함.
+			} else {
+				setErrorMessage(purchaseResponse.RES_MSG);
+			}
+
 		} catch (error) {
 			console.error("결제 처리 중 오류 발생:", error);
 			setErrorMessage("결제 처리 중 오류가 발생했습니다.");

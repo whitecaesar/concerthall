@@ -59,7 +59,6 @@ const AlbumTrackList = ({ AlbumTrackList }: TrackListProps) => {
 		</div>
 		<ul className="trackList">
 			{AlbumTrackList.map((itemInfo, index) => {
-				console.log('position=>',index);
 				return (
 					<li key={itemInfo.ID}>
 						<AlbumTrackItem albumTrackInfo={itemInfo} AlbumTrackList={AlbumTrackList} position={index}/>

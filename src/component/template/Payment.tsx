@@ -5,7 +5,7 @@ import Payment from "../organism/payment/payment";
 export default function PaymentTemplate() {
 	return (
 		<>
-			<Payment />
+			{/*<Payment />*/}
 		</>
 	);
 }
