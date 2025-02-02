@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import style from "./PriceArea.module.css";
+import style from "./priceArea.module.css";
 import Icon from "@/component/atom/icon/Icon";
 import Payment from "@/component/organism/payment/payment";
 import { ALBUM_DETAIL_TYPE } from "@/services/contents/AlbumAxios";
@@ -8,6 +8,9 @@ interface PriceAreaProps {
 	AlbumItem: ALBUM_DETAIL_TYPE;
 }
 
+const handlePurchaseComplete = () => {
+//	refetch();
+};
 const PriceArea = ({ AlbumItem }: PriceAreaProps) => {
 	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 	{/*여기에 앨범? id 넘겨야 겠네*/}
@@ -29,6 +32,7 @@ const PriceArea = ({ AlbumItem }: PriceAreaProps) => {
 				isOpen={isPaymentOpen}
 				onClose={() => setIsPaymentOpen(false)}
 				trackId="test"
+				onPurchaseComplete={handlePurchaseComplete}
 			/>
 		</>
 	);

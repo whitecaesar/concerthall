@@ -150,13 +150,7 @@ export async function setTrackPurchaseAxios(
 
 	
 	if (response.status === 200) {
-		if(response.data.RES_CODE === '0000')
-        {
             return response.data;
-        }
-        else{
-            throw new Error(`에러입니다. ${response.data.RES_MSG}`);
-        }
 	} else {
 		throw new Error(`에러입니다. ${response.status}`);
 	}

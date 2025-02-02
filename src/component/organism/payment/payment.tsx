@@ -14,9 +14,11 @@ interface PaymentProps {
 	albumId? : string;
 	type? : string;
 	price? : number;
+	onPurchaseComplete: () => void;
+	onError?: (message: string) => void; // 새로운 prop 추가
 }
 
-export default function Payment({ onClose, isOpen, trackId, albumId, type, price }: PaymentProps) {
+export default function Payment({ onClose, isOpen, trackId, albumId, type, price, onPurchaseComplete, onError }: PaymentProps) {
 	const [pin, setPin] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -30,13 +32,14 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
 		setPin(value);
-		setErrorMessage("");
 	};
 
 	const handleSubmit = async () => {
 		try {
 			if (pin.length === 0) {
-				setErrorMessage("비밀번호를 입력해주세요.");
+				if (onError) {
+					onError("비밀번호를 입력해주세요."); // 직접 에러 메시지 전달
+				}
 				return;
 			}
 
@@ -58,7 +61,9 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				setPin("");
 				onClose();
 			} else {
-				setErrorMessage("비밀번호가 일치하지 않습니다.");
+				if (onError) {
+					onError("비밀번호가 일치하지 않습니다."); // 직접 에러 메시지 전달
+				}
 			}
 			*/
 
@@ -75,16 +80,24 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 			const purchaseResponse = await setTrackPurchaseAxios(trackId, param);
 
 			if (purchaseResponse.RES_CODE === "0000") {
-				// 잔액 확인
 				console.log("결제완료");
-				// 여기에 플레이 시키는 로직 들어가야함.
+				onPurchaseComplete();
+				onClose();
 			} else {
 				setErrorMessage(purchaseResponse.RES_MSG);
+				if (onError) {
+					onError(purchaseResponse.RES_MSG); // 직접 에러 메시지 전달
+				}
+				onClose();
 			}
 
 		} catch (error) {
 			console.error("결제 처리 중 오류 발생:", error);
 			setErrorMessage("결제 처리 중 오류가 발생했습니다.");
+			if (onError) {
+				onError(error instanceof Error ? error.message : String(error));
+			}
+			onClose();
 		}
 	};
 

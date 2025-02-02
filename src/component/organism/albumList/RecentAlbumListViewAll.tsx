@@ -17,7 +17,6 @@ interface AlbumListViewAllProps {
 export default function RecentAlbumListViewAll({
 	recentViewAllList: { totalCount, recentList },
 }: AlbumListViewAllProps) {
-	const router = useRouter();
 	const { setSubTitle } = useContext(SubTitleContext);
 	
 	return (
@@ -29,7 +28,6 @@ export default function RecentAlbumListViewAll({
 							albumInfo={item.album}
 							onClick={() => {
 								setSubTitle(item.album.title);
-								router.push(`/detail/album/track/${item.album.id}`);
 							}}
 						/>
 					</li>

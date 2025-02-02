@@ -58,6 +58,7 @@ export default function SingleItem({
 		data: playData,
 		isError: playError,
 		isLoading: playLoding,
+		refetch
 	} = useQuery({
 		queryKey: ["PLAY-INFO"],
 		queryFn: () => {
@@ -65,6 +66,10 @@ export default function SingleItem({
 			return PlayInfo;
 		},
 	});
+
+	const handlePurchaseComplete = () => {
+		refetch();
+	};
 
 	if (isLoading || playLoding) return <Loading />;
 	if (isError || playError || !playData || !trackData)
@@ -130,6 +135,7 @@ export default function SingleItem({
 				isOpen={isPaymentOpen}
 				onClose={() => setIsPaymentOpen(false)}
 				trackId={singleInfo.ID}
+				onPurchaseComplete={handlePurchaseComplete}
 		/>
 		<Popup
 			isOpen={isPopupOpen}

@@ -14,6 +14,7 @@ import Icon from "@/component/atom/icon/Icon";
 import { useState } from "react";
 import Popup from "@/component/atom/popup/Popup";
 import Payment from "@/component/organism/payment/payment";
+
 interface TrackItemProps {
 	ArtistTrackInfo: ALBUM_ITEM_TYPE;
 	ArtistTrackList: ALBUM_ITEM_TYPE[];
@@ -44,6 +45,7 @@ export default function ArtistTrackItem({
 		data: trackData,
 		isError,
 		isLoading,
+		refetch,
 	} = useQuery({
 		queryKey: ["TRACK-LIST"],
 		queryFn: () => {
@@ -63,6 +65,10 @@ export default function ArtistTrackItem({
 			return PlayInfo;
 		},
 	});
+
+	const handlePurchaseComplete = () => {
+		refetch();
+	};
 
 	if (playLoding) return <Loading />;
 	if (playError || !playData) return <div>Error occurred</div>;
@@ -134,6 +140,7 @@ export default function ArtistTrackItem({
 				isOpen={isPaymentOpen}
 				onClose={() => setIsPaymentOpen(false)}
 				trackId={ArtistTrackInfo.ID}
+				onPurchaseComplete={handlePurchaseComplete}
 		/>
 		<Popup
 			isOpen={isPopupOpen}

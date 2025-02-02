@@ -33,6 +33,7 @@ export default function Main() {
 	const [t, setT] = useState<string | null>(null);
 
 	setCookie("userid", "mjkim@citech.kr", 24);
+	const token = getCookie("token");
 
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
@@ -52,52 +53,29 @@ export default function Main() {
 	useEffect(() => {
 		// const recent = ;
 
-		getRecentAlbumAxios("", 20)
+		getRecentAlbumAxios("", 5)
 			.then((albumdata) => setRecent(albumdata))
 			.catch((error) => {
-				setError(error);
+				//setError(error);
 			});
-		getRecentPlayListAxios("", 20)
+		getRecentPlayListAxios("", 5)
 			.then((playdata) => setRecentPlayList(playdata))
 			.catch((error) => {
-				setError(error);
+				//setError(error);
 			});
-		getRecentTrackListAxios("", 20)
+		getRecentTrackListAxios("", 5)
 			.then((trackdata) => setRecentTrackList(trackdata))
 			.catch((error) => {
-				setError(error);
+				//setError(error);
 			});
 	}, []);
-
-	//팝업 관련
-	const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-	const handleConfirm = () => {
-		alert("확인 버튼 클릭!");
-		setIsPopupOpen(false);
-	};
-
-	const handleCancel = () => {
-		alert("취소 버튼 클릭!");
-		setIsPopupOpen(false);
-	};
 
 	if (error) {
 		return <ErrorPage></ErrorPage>;
 	} else {
 		return (
 			<>
-				<button onClick={() => setIsPopupOpen(true)}>팝업여는것</button>
-				<Popup
-					isOpen={isPopupOpen}
-					onClose={() => setIsPopupOpen(false)}
-					title="구매하기"
-					description="ㅇㅇㅇ을 구매하시겠습니까?"
-					buttons={[
-						{ text: "취소", className: "cancel", onClick: handleCancel },
-						{ text: "확인", className: "ok", onClick: handleConfirm },
-					]}
-				/>
+				<div>현재토큰 : {token}</div>
 				<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
 				<TextBanner banner={data?.TOP_TXT_BANNER[0]} isFetched={isFetched} />
 

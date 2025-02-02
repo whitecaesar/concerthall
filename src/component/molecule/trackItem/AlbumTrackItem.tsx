@@ -28,6 +28,7 @@ export default function AlbumTrackItem({
 }: TrackItemProps) {
 	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const [popupDescription, setPopupDescription] = useState("구매가 불가한 트랙입니다.");
 
 	const handleConfirm = () => {
 		setIsPopupOpen(false);
@@ -42,6 +43,7 @@ export default function AlbumTrackItem({
 		data: trackData,
 		isError,
 		isLoading,
+		refetch,
 	} = useQuery({
 		queryKey: ["TRACK-LIST"],
 		queryFn: () => {
@@ -61,6 +63,15 @@ export default function AlbumTrackItem({
 			return PlayInfo;
 		},
 	});
+
+	const handlePurchaseComplete = () => {
+		refetch();
+	};
+
+	const handleError = (message: string) => {
+		setPopupDescription(message);
+		setIsPopupOpen(true);
+	};
 
 	if (isLoading || playLoding) return <Loading />;
 	if (isError || playError || !playData || !trackData)
@@ -138,12 +149,14 @@ export default function AlbumTrackItem({
 				onClose={() => setIsPaymentOpen(false)}
 				trackId={albumTrackInfo.ID}
 				price={2000}
+				onPurchaseComplete={handlePurchaseComplete}
+				onError={handleError}
 			/>
 			<Popup
 				isOpen={isPopupOpen}
 				onClose={() => setIsPopupOpen(false)}
 				title="안내"
-				description="구매가 불가한 트랙입니다."
+				description={popupDescription}
 				buttons={[
 					{ text: "확인", className: "ok", onClick: handleConfirm },
 				]}
