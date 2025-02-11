@@ -19,6 +19,7 @@ const DetailInfo = ({ detailInfo }: DetailInfoProps) => {
 	}
 	const isLongTitle = detailInfo.TITLE.length > 20;
 
+	console.log(detailInfo);
 	return (
 		<div className={style.albumDetailInfo}>
 			<Image

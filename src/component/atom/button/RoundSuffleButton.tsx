@@ -23,7 +23,10 @@ const RoundShuffleButton = ({AlbumItem} :allPlayProp) => {
 			try {
 				const playInfo = getPlayInfoAxios(item.ID);
 				addPropertyToItemInfo(item.ID, 'playable_code',(await playInfo).RES_CODE);
-				addPropertyToItemInfo(item.ID, 'url',(await playInfo).INFO.URL);
+				if((await playInfo).INFO.URL)
+				{
+					addPropertyToItemInfo(item.ID, 'url',(await playInfo).INFO.URL);
+				}
 			} catch (error) {
 				console.error("Error fetching data for item", item.ID, error);
 			}

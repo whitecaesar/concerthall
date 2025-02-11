@@ -14,7 +14,7 @@ declare global {
 
 export default function Header() {
 	useEffect(() => {
-		window.userInfo = (token :any, app_type : any, lang : any, userid : any,) => {
+		window.userInfo = (token :any, app_type : any, lang : any, userid : any) => {
 			setCookie("token", token, 2);
 			setCookie("app_type", app_type, 2);
 			setCookie("lang", lang, 2); 

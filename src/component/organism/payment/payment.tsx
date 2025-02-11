@@ -44,13 +44,12 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 			}
 
 			// PIN을 SHA-1으로 암호화
-			/*
+
 			const hashedPin = sha1(pin).toString();
 			// 비밀번호 확인
 			const passCheckResponse = await getPassCheckAxios({
 				password: hashedPin
 			});
-			
 
 			if (passCheckResponse.code === "200") {
 				// 잔액 확인
@@ -58,38 +57,36 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				console.log("잔액 정보:", balanceResponse.data);
 				
 				// 입력값 초기화 및 모달 닫기
-				setPin("");
+				const IDCUST = getCookie("userid");
+				if (!IDCUST || !price || !trackId) {
+					throw new Error("필수 정보가 누락되었습니다.");
+				}
+	
+				const param = {
+					ID_CUST: IDCUST,
+					PRICE: price // number 타입 유지
+				};
+	
+				const purchaseResponse = await setTrackPurchaseAxios(trackId, param);
+	
+				if (purchaseResponse.RES_CODE === "0000") {
+					console.log("결제완료");
+					onPurchaseComplete();
+					setPin("");
+				} else {
+					setErrorMessage(purchaseResponse.RES_MSG);
+					if (onError) {
+						onError(purchaseResponse.RES_MSG); // 직접 에러 메시지 전달
+					}
+				}
 				onClose();
 			} else {
 				if (onError) {
 					onError("비밀번호가 일치하지 않습니다."); // 직접 에러 메시지 전달
 				}
 			}
-			*/
 
-			const IDCUST = getCookie("userid");
-			if (!IDCUST || !price || !trackId) {
-				throw new Error("필수 정보가 누락되었습니다.");
-			}
 
-			const param = {
-				ID_CUST: IDCUST,
-				PRICE: price // number 타입 유지
-			};
-
-			const purchaseResponse = await setTrackPurchaseAxios(trackId, param);
-
-			if (purchaseResponse.RES_CODE === "0000") {
-				console.log("결제완료");
-				onPurchaseComplete();
-				onClose();
-			} else {
-				setErrorMessage(purchaseResponse.RES_MSG);
-				if (onError) {
-					onError(purchaseResponse.RES_MSG); // 직접 에러 메시지 전달
-				}
-				onClose();
-			}
 
 		} catch (error) {
 			console.error("결제 처리 중 오류 발생:", error);

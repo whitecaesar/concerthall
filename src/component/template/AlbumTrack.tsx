@@ -7,6 +7,8 @@ import TrackList from "@/component/organism/trackList/TrackList";
 import AlbumTrackList from "../organism/trackList/AlbumTrackList";
 import Loading from "@/app/loading";
 import PriceArea from "../molecule/priceGroup/priceArea";
+import { SubTitleContext } from "@/providers/SubTitleProvider";
+import { useContext, useEffect } from "react";
 
 interface AlbumTrackProps {
 	album_id: string;
@@ -14,6 +16,7 @@ interface AlbumTrackProps {
 }
 
 export default function AlbumTrack({ album_id, func_type }: AlbumTrackProps) {
+	const { setSubTitle } = useContext(SubTitleContext);
 	// useQuery 호출을 옵션 객체를 사용하는 형태로 수정
 
 	const { data, isError, isLoading } = useQuery({
@@ -45,12 +48,19 @@ export default function AlbumTrack({ album_id, func_type }: AlbumTrackProps) {
 		},
 	});
 
+	useEffect(() => {
+		if (data && data.TITLE) {
+			setSubTitle(data.TITLE);
+		}
+	}, [data, setSubTitle]);
+
 	if (isLoading) return <Loading />;
 	if (isError || !data) return <div>Error occurred</div>;
 
 	// data가 non-null임을 보장하기 위한 optional chaining
 	const trackItem = data.ITME_INFO; // 예시로 첫 번째 아이템 사용
 
+	console.log(data);
 
 	if (data) {
 		return (
