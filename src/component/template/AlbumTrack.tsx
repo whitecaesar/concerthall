@@ -15,9 +15,8 @@ interface AlbumTrackProps {
 	func_type?: string;
 }
 
-export default function AlbumTrack({ album_id, func_type }: AlbumTrackProps) {
-	const { setSubTitle } = useContext(SubTitleContext);
-	// useQuery 호출을 옵션 객체를 사용하는 형태로 수정
+export default function AlbumTrack({ album_id, func_type}: AlbumTrackProps) {
+
 
 	const { data, isError, isLoading } = useQuery({
 		queryKey: ["ALBUM-ITEM"],
@@ -48,13 +47,6 @@ export default function AlbumTrack({ album_id, func_type }: AlbumTrackProps) {
 		},
 	});
 
-	useEffect(() => {
-		if (data && data.TITLE) {
-			console.log("title=>",data.TITLE);
-			setSubTitle(data.TITLE);
-		}
-	}, [data, setSubTitle]);
-
 	if (isLoading) return <Loading />;
 	if (isError || !data) return <div>Error occurred</div>;
 
@@ -65,6 +57,7 @@ export default function AlbumTrack({ album_id, func_type }: AlbumTrackProps) {
 	if (data) {
 		return (
 			<>
+			
 				<DetailInfo detailInfo={data} />
 
 				{ data.YN_SALE === 'Y' ? (

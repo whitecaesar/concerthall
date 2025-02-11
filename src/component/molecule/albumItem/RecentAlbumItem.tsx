@@ -14,7 +14,7 @@ interface AlbumItemProps {
 const RecentAlbumItem = ({ albumInfo, onClick }: AlbumItemProps) => {
 	return (
 		<div className={style.albumItem} onClick={onClick}>
-			<Link href={`/detail/album/track/${albumInfo.clientKey}`}>
+			<Link href={`/detail/album/track/${albumInfo.clientKey}?title=${encodeURIComponent(albumInfo.title)}`}>
 				<Image
 					src={albumInfo.thumbnail}
 					alt={albumInfo.title}

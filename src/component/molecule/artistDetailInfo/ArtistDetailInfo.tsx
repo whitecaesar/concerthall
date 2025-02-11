@@ -12,7 +12,7 @@ interface ArtistDetailInfoProps {
 }
 
 const ArtistDetailInfo = ({ detailInfo }: ArtistDetailInfoProps) => {
-	const isLongTitle = detailInfo.NM_ARTIST?.length > 20;
+	const isLongTitle = (detailInfo?.NM_ARTIST ?? "").length > 20;
 	const [star, setStarNumber] = useState(0);
 	const [isFetch, setIsFetch] = useState<boolean>(false);
 

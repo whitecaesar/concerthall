@@ -12,12 +12,13 @@ interface PlayListDetailInfoProps {
 }
 
 const playlistDetailInfo = ({ detailInfo }: PlayListDetailInfoProps) => {
-	const isLongTitle = detailInfo.title.length > 20;
+	const isLongTitle = (detailInfo?.title ?? "").length > 20;
+	
 	return (
 		<div className={style.albumDetailInfo}>
 			<Image
-				src={detailInfo.thumbnail}
-				alt={detailInfo.title}
+				src={detailInfo?.thumbnail ?? ""}
+				alt={detailInfo?.title ?? ""}
 				width={720}
 				height={611}
 				priority

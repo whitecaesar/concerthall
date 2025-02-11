@@ -17,7 +17,8 @@ const DetailInfo = ({ detailInfo }: DetailInfoProps) => {
 	if (!detailInfo) {
 		router.back(); // 또는 router.push('/some-path');
 	}
-	const isLongTitle = detailInfo.TITLE.length > 20;
+	const isLongTitle = (detailInfo?.TITLE ?? "").length > 20;
+	
 	return (
 		<div className={style.albumDetailInfo}>
 			<Image
