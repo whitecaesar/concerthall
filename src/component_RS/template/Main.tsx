@@ -3,7 +3,6 @@ import React, { useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getBannersAxios } from "@/services/main/MainInfoAxios";
 import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
-import { useMenu } from "@/providers/RSMenuProvider";
 import { SubTitleContext } from "@/providers/SubTitleProvider";
 import { useRouter } from "next/navigation";
 import TrackList from "../trackList/TrackList";
@@ -15,7 +14,6 @@ export default function Main({ slug }: { slug?: string }) {
 		queryFn: getBannersAxios,
 	});
 	const { setSubTitle } = useContext(SubTitleContext);
-	const { setMenuItems, setSelectedMenuItem } = useMenu();
 	const router = useRouter();
 
 	useEffect(() => {

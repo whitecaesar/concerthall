@@ -50,6 +50,7 @@ export default function AlbumTrack({ album_id, func_type }: AlbumTrackProps) {
 
 	useEffect(() => {
 		if (data && data.TITLE) {
+			console.log("title=>",data.TITLE);
 			setSubTitle(data.TITLE);
 		}
 	}, [data, setSubTitle]);
@@ -60,7 +61,6 @@ export default function AlbumTrack({ album_id, func_type }: AlbumTrackProps) {
 	// data가 non-null임을 보장하기 위한 optional chaining
 	const trackItem = data.ITME_INFO; // 예시로 첫 번째 아이템 사용
 
-	console.log(data);
 
 	if (data) {
 		return (

@@ -4,7 +4,6 @@ import Keyword from "@/component/atom/keyword/Keyword";
 import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
 import style from "./keywordList.module.css";
 import { useRouter } from "next/navigation";
-import { SubTitleContext } from "@/providers/SubTitleProvider";
 import { TCATEGORY_RES, TKEYWORD_INFO } from "@/services/explore/ExploreAxios";
 
 interface CategoryProps {
@@ -14,7 +13,6 @@ interface CategoryProps {
 
 const KeywordList = ({ categoryList: { TITLE, KEWORD } }: CategoryProps) => {
 	const router = useRouter();
-	const { setSubTitle } = useContext(SubTitleContext);
 	return (
 		<div className={style.keywordListWrap}>
 			<ItemListTitle.ViewAll
@@ -28,7 +26,6 @@ const KeywordList = ({ categoryList: { TITLE, KEWORD } }: CategoryProps) => {
 						<Keyword
 							keywordInfo={keyword}
 							onClick={() => {
-								setSubTitle(keyword.NAME);
 								router.push(`/explore/result?search=${keyword.KEY}`);
 							}}
 						/>

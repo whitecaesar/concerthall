@@ -5,8 +5,7 @@ import PlaylistDetailInfo from "../molecule/detailInfo/PlaylistDetailInfo";
 import FuncPlayListButtonGroup from "../molecule/buttonGroup/FuncPlayListButtonGroup";
 import PLTrackList from "../organism/trackList/PLTrackList";
 import { getPLLIKEAxios } from "@/services/contents/PLLikeAxio";
-import { useContext, useEffect, useState } from "react";
-import { SubTitleContext } from "@/providers/SubTitleProvider";
+import { useEffect, useState } from "react";
 import Loading from "@/app/loading";
 
 interface PlayListTrackProps {
@@ -22,7 +21,6 @@ export default function PlayListTrack({
 }: PlayListTrackProps) {
 	// useQuery 호출을 옵션 객체를 사용하는 형태로 수정
 	const [like, setLike] = useState(false);
-	const { setSubTitle } = useContext(SubTitleContext);
 	const { data, isError, isLoading } = useQuery({
 		queryKey: ["ALBUM-ITEM"],
 		queryFn: () => {

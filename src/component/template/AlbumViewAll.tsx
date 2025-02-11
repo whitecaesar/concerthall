@@ -7,8 +7,8 @@ import {
 } from "@/services/contents/ViewAllAxios";
 import Dropdown from "../atom/dropdown/dropdown";
 import { getAlbumDropdownOptions, DropdownOption } from "@/interface/DropdownType";
-import { useContext, useEffect, useState } from "react";
-import SubTitleProvider, { SubTitleContext } from "@/providers/SubTitleProvider";
+import { useEffect, useState } from "react";
+import SubTitleProvider from "@/providers/SubTitleProvider";
 import { getCookie } from "@/services/common";
 
 interface AlbumViewAllProps {
@@ -18,7 +18,6 @@ interface AlbumViewAllProps {
 export default function AlbumViewAll({ list_id }: AlbumViewAllProps) {
 	const [AlbumContent, setAlbumContent] = useState<TVIEWALL_LIST_RESPONSE>();
 	const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>([]);
-	const { setSubTitle } = useContext(SubTitleContext);
 
 	useEffect(() => {
 		const lang = getCookie("lang") || "en"; // 쿠키에서 언어 값을 가져오거나 기본값으로 영어를 설정

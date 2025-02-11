@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
 import SingleItem from "@/component/molecule/singleItem/SingleItem";
-import { SubTitleContext } from "@/providers/SubTitleProvider";
 import style from "./singleList.module.css";
 import {
   ITEM_INFO_TYPE,
@@ -18,7 +17,6 @@ interface SingleListProps {
 export default function SingleList({
   recommendList
 }: SingleListProps) {
-  const { setSubTitle } = useContext(SubTitleContext);
   const [isFetch, setIsFetch] = useState<boolean>(false);
 
   function addPropertyToItemInfo(id :string, propertyName:string, propertyValue:number) {
@@ -70,7 +68,6 @@ export default function SingleList({
         text={recommendList.TITLE}
         count={recommendList.TOTAL_NUM_ITEM}
         href={`/detail/single/${recommendList.ID}`}
-        onClick={() => setSubTitle(recommendList.TITLE)}
       />
       <ul className={style.singleList}>
         {recommendList.ITEM_INFO.map((item, index) => (

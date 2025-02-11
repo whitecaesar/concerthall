@@ -3,8 +3,6 @@
 import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { SubTitleContext } from "@/providers/SubTitleProvider";
 import style from "./albumList.module.css";
 import {
 	ITEM_INFO_TYPE,
@@ -21,18 +19,12 @@ const AlbumList = ({
 	recommendList: { ID, TITLE, TOTAL_NUM_ITEM, ITEM_INFO },
 	isTitle = true,
 }: AlbumListProps) => {
-	const router = useRouter();
-	const { setSubTitle } = useContext(SubTitleContext);
-
 	return (
 		<div className={style.albumListContainer}>
 			<ul className={style.albumList}>
 				{ITEM_INFO.map((albumInfo: ITEM_INFO_TYPE) => (
 					<li
 						key={albumInfo.ID}
-						onClick={() => {
-							setSubTitle(albumInfo.TITLE);
-						}}
 					>
 						<Link href={`/RS/track/${albumInfo.ID}`}>
 							<Image

@@ -2,10 +2,7 @@
 //가로 스크롤 없이 해당 리스트의 앨범들만 나열
 
 "use client";
-import React, { useContext } from "react";
 import style from "./albumList.module.css";
-import { useRouter } from "next/navigation";
-import { SubTitleContext } from "@/providers/SubTitleProvider";
 import {ALBUM_RECENT_LIST_TYPE, ALBUM_RECENT_LIST_RESPONSE} from "@/services/contents/RecentAlbumAxios";
 import RecentAlbumItem from "@/component/molecule/albumItem/RecentAlbumItem";
 
@@ -17,7 +14,6 @@ interface AlbumListViewAllProps {
 export default function RecentAlbumListViewAll({
 	recentViewAllList: { totalCount, recentList },
 }: AlbumListViewAllProps) {
-	const { setSubTitle } = useContext(SubTitleContext);
 	
 	return (
 		<div className={style.albumListContainer}>
@@ -26,9 +22,6 @@ export default function RecentAlbumListViewAll({
 					<li key={item.album.id}>
 						<RecentAlbumItem
 							albumInfo={item.album}
-							onClick={() => {
-								setSubTitle(item.album.title);
-							}}
 						/>
 					</li>
 				))}

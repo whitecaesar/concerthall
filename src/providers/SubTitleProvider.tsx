@@ -16,18 +16,17 @@ export const SubTitleContext = createContext<SubTitleContextType>({
 });
 
 export default function SubTitleProvider({ children }: SubTitleProviderProps) {
-	// 서버와 클라이언트 모두에서 초기값은 항상 빈 문자열(""), 
-	// 이렇게 하면 SSR 시에 출력된 내용과 클라이언트의 초기 상태가 일치합니다.
+	// SSR에서는 빈 문자열로 초기화 (서버환경에서는 localStorage 접근 불가)
 	const [subTitle, setSubTitle] = useState<ReactNode>("");
 
-	// 클라이언트가 마운트된 후 localStorage에서 subtitle 값을 불러와 상태를 업데이트합니다.
 	useEffect(() => {
+		// 클라이언트 마운트 이후 localStorage에서 제목을 불러올 수도 있음
 		const storedSubtitle = localStorage.getItem("subtitle") || "";
 		setSubTitle(storedSubtitle);
 	}, []);
 
-	// subTitle이 변경될 때마다 localStorage에 저장합니다.
 	useEffect(() => {
+		console.log("SubTitle이 업데이트 되었습니다:", subTitle);
 		localStorage.setItem("subtitle", subTitle?.toString() || "");
 	}, [subTitle]);
 

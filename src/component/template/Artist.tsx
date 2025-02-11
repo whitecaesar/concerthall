@@ -7,12 +7,15 @@ import ArtistAbout from "../molecule/artistAbout/ArtistAbout";
 import { getArtistInfoAxios } from "@/services/contents/ArtistInfoAxios";
 import ArtistAlbumList from "../organism/albumList/ArtistAlbumList";
 import Loading from "@/app/loading";
+import { SubTitleContext } from "@/providers/SubTitleProvider";
+import { useContext, useEffect } from "react";
 
 interface ArtistInfoProps {
 	artist_id: string;
 }
 
 export default function ArtistInfo(artist: ArtistInfoProps) {
+	const { setSubTitle } = useContext(SubTitleContext);
 	// useQuery 호출을 옵션 객체를 사용하는 형태로 수정
 
 	const { data, isError, isLoading } = useQuery({
@@ -22,6 +25,12 @@ export default function ArtistInfo(artist: ArtistInfoProps) {
 			return ArtistInfo;
 		},
 	});
+
+	useEffect(() => {
+		if (data && data.ARTIST_INFO.NM_ARTIST) {
+			setSubTitle(data.ARTIST_INFO.NM_ARTIST);
+		}
+	}, [data, setSubTitle]);
 
 	if (isLoading) return <Loading />;
 	if (isError || !data) return <div>Error occurred</div>;

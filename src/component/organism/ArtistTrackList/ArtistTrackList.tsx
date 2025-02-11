@@ -54,19 +54,12 @@ const ArtistTrackList = ({ ArtistTrackList }: ArtistTrackListProps) => {
         });
     };
 
-	function setSubTitle(arg0: string) {
-		throw new Error("Function not implemented.");
-	}
-	
 	return isFetch && <div className="trackListWrap">
 		{ArtistTrackList && (
 			<ItemListTitle.ViewAll
 				isPresent={false}
 				text='아티스트 트랙'
 				count={ArtistTrackList.length}
-				onClick={() => {
-					
-				}}
 			/>
 		)}
 		{/*

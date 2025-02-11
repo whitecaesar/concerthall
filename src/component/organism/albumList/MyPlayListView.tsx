@@ -5,7 +5,6 @@ import React, { useContext } from "react";
 import RecentPlayListItem from "@/component/molecule/albumItem/RecentPlayListItem";
 import style from "./albumList.module.css";
 import {PLAY_RECENT_ITEM_TYPE} from "@/services/contents/RecentPlayListAxios";
-import { SubTitleContext } from "@/providers/SubTitleProvider";
 import { MY_RECENT_LIST_RESPONSE } from "@/services/contents/MyPlayListAxios";
 
 interface MyPlayListViewProps {
@@ -13,7 +12,6 @@ interface MyPlayListViewProps {
 }
 
 export default function MyPlayListView({myPlayListViewList}: MyPlayListViewProps) {
-	const { setSubTitle } = useContext(SubTitleContext);
 	return (
 		<div className={style.albumListContainer}>
 			<ul className={`${style.albumList} ${style.noScroll}`}>
@@ -21,9 +19,6 @@ export default function MyPlayListView({myPlayListViewList}: MyPlayListViewProps
 					<li key={item.id}>
 						<RecentPlayListItem
 							playListInfo={item}
-							onClick={() => {
-								setSubTitle(item.title);
-							}}
 						/>
 					</li>
 				))}

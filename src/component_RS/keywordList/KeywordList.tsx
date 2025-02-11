@@ -2,9 +2,9 @@
 "use client";
 
 import React, { useContext, useState } from "react";
-import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
-import { useRouter } from "next/navigation";
-import { SubTitleContext } from "@/providers/SubTitleProvider";
+//import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
+//import { useRouter } from "next/navigation";
+//import { SubTitleContext } from "@/providers/SubTitleProvider";
 import { TCATEGORY_RES, TKEYWORD_INFO } from "@/services/explore/ExploreAxios";
 import style from "./kewordList.module.css";
 interface CategoryProps {
@@ -12,8 +12,8 @@ interface CategoryProps {
 }
 
 const KeywordList = ({ categoryList: { TITLE, KEWORD } }: CategoryProps) => {
-	const router = useRouter();
-	const { setSubTitle } = useContext(SubTitleContext);
+	//const router = useRouter();
+	//const { setSubTitle } = useContext(SubTitleContext);
 
 	return (
 		<div className={style.keywordListWrap}>
@@ -28,7 +28,7 @@ const KeywordList = ({ categoryList: { TITLE, KEWORD } }: CategoryProps) => {
 						<button
 							className={style.keyword}
 							onClick={() => {
-								setSubTitle(keyword.NAME);
+								//setSubTitle(keyword.NAME);
 								//router.push(`/RS/explore/result?keyword=${keyword.NAME}`);
 							}}
 						>

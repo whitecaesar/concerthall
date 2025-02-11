@@ -2,15 +2,10 @@
 import {
 	TVIEWALL_LIST_RESPONSE,
 } from "@/services/contents/ViewAllAxios";
-import {
-	SubTitleContext,
-} from "@/providers/SubTitleProvider";
 import {useContext, useEffect, useState } from "react";
 
 export default function ArtistViewAll() {
 	const [AlbumContent, setAlbumContent] = useState<TVIEWALL_LIST_RESPONSE>();
-	const { setSubTitle } = useContext(SubTitleContext);
-
 
 	useEffect(() => {
 		// const recent = ;

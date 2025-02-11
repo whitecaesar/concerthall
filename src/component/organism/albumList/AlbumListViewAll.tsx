@@ -2,11 +2,8 @@
 //가로 스크롤 없이 해당 리스트의 앨범들만 나열
 
 "use client";
-import React, { useContext } from "react";
 import AlbumItem from "@/component/molecule/albumItem/AlbumItem";
 import style from "./albumList.module.css";
-import { useRouter } from "next/navigation";
-import { SubTitleContext } from "@/providers/SubTitleProvider";
 import {
 	ITEM_INFO_TYPE,
 	VIEWALL_LIST_TYPE,
@@ -19,8 +16,6 @@ interface AlbumListViewAllProps {
 export default function AlbumListViewAll({
 	viewAllList: { ITEM_INFO },
 }: AlbumListViewAllProps) {
-	const router = useRouter();
-	const { setSubTitle } = useContext(SubTitleContext);
 
 	return (
 		<div className={style.albumListContainer}>
@@ -29,10 +24,6 @@ export default function AlbumListViewAll({
 					<li key={item.ID}>
 						<AlbumItem
 							albumInfo={item}
-							onClick={() => {
-								setSubTitle(item.TITLE);
-								router.push(`/detail/album/track/${item.ID}`);
-							}}
 						/>
 					</li>
 				))}

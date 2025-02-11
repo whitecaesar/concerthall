@@ -1,11 +1,8 @@
 // 앨범 리스트들
 
 "use client";
-import React, { useContext } from "react";
 import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
 import AlbumItem from "@/component/molecule/albumItem/AlbumItem";
-import { useRouter } from "next/navigation";
-import { SubTitleContext } from "@/providers/SubTitleProvider";
 import style from "./albumList.module.css";
 import {
 	ITEM_INFO_TYPE,
@@ -24,9 +21,6 @@ const AlbumList = ({
 	showTitle,
 	noScroll = false,
 }: AlbumListProps) => {
-	const router = useRouter();
-	const { setSubTitle } = useContext(SubTitleContext);
-
 	
 	return (
 		<div className={style.albumListContainer} style={{ paddingBottom: "10px" }}>
@@ -36,9 +30,6 @@ const AlbumList = ({
 					text={TITLE}
 					count={TOTAL_NUM_ITEM}
 					href={`/detail/album/${ID}`}
-					onClick={() => {
-						setSubTitle(TITLE);
-					}}
 				/>
 			)}
 			<ul className={style.albumList}>
@@ -47,10 +38,6 @@ const AlbumList = ({
 					<li key={item.ID}>
 						<AlbumItem
 							albumInfo={item}
-							onClick={() => {
-								setSubTitle(item.TITLE);
-								//router.push(`/detail/album/track/${item.ID}`);
-							}}
 						/>
 					</li>
 				))}

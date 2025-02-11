@@ -1,10 +1,11 @@
 "use client";
 import RecentPlayListViewAll from "../organism/albumList/RecentPlayListViewAll";
 import { getRecentPlayListAxios, PLAY_RECENT_LIST_RESPONSE } from "@/services/contents/RecentPlayListAxios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Dropdown from "../atom/dropdown/dropdown";
 import { getDropdownOptions, DropdownOption } from "@/interface/DropdownType";
 import { getCookie } from "@/services/common";
+import SubTitleProvider, { SubTitleContext } from "@/providers/SubTitleProvider";
 
 interface RecentPlayViewAllProps {
   totalCnt: any;
@@ -41,6 +42,6 @@ export default function RecentPlayViewAll(total: RecentPlayViewAllProps) {
     <>
       <Dropdown options={dropdownOptions} onRecentChange={handleRecentChange} />
       {recent && <RecentPlayListViewAll playListViewAllList={recent} />}
-    </>
+    </> 
   );
 }
