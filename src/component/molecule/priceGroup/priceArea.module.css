@@ -4,6 +4,7 @@
 	justify-content: space-between;
 	padding: 15px;
 	border-bottom: 1px solid var(--borderDark);
+	gap: 15px;
 }
 
 .priceNum {
@@ -15,7 +16,7 @@
 	color: #fff;
 	border: 1px solid var(--borderDark);
 	border-radius: 3px;
-	width: 120px;
+	width: 100%;
 	height: 38px;
 	display: flex;
 	align-items: center;
@@ -34,6 +35,18 @@
 }
 
 .priceButtonGroup button {
+	color: #fff;
+	background: #000;
+	border: 1px solid var(--borderDark);
+	border-radius: 3px;
+	width: 100%;
+	height: 38px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+}
+.btnPreview {
 	color: #fff;
 	background: #000;
 	border: 1px solid var(--borderDark);

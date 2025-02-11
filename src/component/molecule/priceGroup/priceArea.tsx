@@ -9,26 +9,33 @@ interface PriceAreaProps {
 }
 
 const handlePurchaseComplete = () => {
-//	refetch();
+	//	refetch();
 };
 const PriceArea = ({ AlbumItem }: PriceAreaProps) => {
 	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-	{/*여기에 앨범? id 넘겨야 겠네*/}
+	{
+		/*여기에 앨범? id 넘겨야 겠네*/
+	}
 
 	return (
 		<>
 			<div className={style.price}>
-				<p className={style.priceNum}>
-					<span>{AlbumItem.ALBUM_PRICE}</span>
-					<Icon iconName="purchasePoint" />
-				</p>
-				<button type="button" className={style.btnPayment} 
-				onClick={() => setIsPaymentOpen(true)}
+				<button type="button" className={style.btnPreview}>
+					미리보기
+				</button>
+				<button
+					type="button"
+					className={style.btnPayment}
+					onClick={() => setIsPaymentOpen(true)}
 				>
-					구매하기
+					구매하기&nbsp;&nbsp;
+					<p className={style.priceNum}>
+						<span>{AlbumItem.ALBUM_PRICE}</span>
+						<Icon iconName="purchasePoint" />
+					</p>
 				</button>
 			</div>
-			<Payment 
+			<Payment
 				isOpen={isPaymentOpen}
 				onClose={() => setIsPaymentOpen(false)}
 				trackId="test"
