@@ -29,7 +29,7 @@ const AlbumList = ({
 					isPresent={true}
 					text={TITLE}
 					count={TOTAL_NUM_ITEM}
-					href={`/detail/album/${ID}`}
+					href={`/detail/album/${ID}?title=${encodeURIComponent(TITLE)}`}
 				/>
 			)}
 			<ul className={style.albumList}>

@@ -348,3 +348,5 @@ nav {
 		-moz-transform: rotate(360deg);
 	}
 }
+
+nav + div[class*="Page"]{min-height:500px;}

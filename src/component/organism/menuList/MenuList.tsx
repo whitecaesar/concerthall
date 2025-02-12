@@ -65,23 +65,20 @@ const MenuList = () => {
 		<div className="menuList">
 			<ul>
 				<MenuItem
-					href="/my/playList"
+					href={`/my/playList?title=${encodeURIComponent(playlist)}`}
 					iconName="playList"
-					onClick={menuItemClick(playlist)}
 				>
 					{playlist}
 				</MenuItem>
 				<MenuItem
-					href="/my/likeList"
+					href={`/my/likeList?title=${encodeURIComponent(bookmark)}`}
 					iconName="likeList"
-					onClick={menuItemClick(bookmark)}
 				>
 					{bookmark}
 				</MenuItem>
 				<MenuItem
-					href="/my/purchaseList"
+					href={`/my/purchaseList?title=${encodeURIComponent(purchase)}`}
 					iconName="purchaseList"
-					onClick={menuItemClick(purchase)}
 				>
 					{purchase}
 				</MenuItem>

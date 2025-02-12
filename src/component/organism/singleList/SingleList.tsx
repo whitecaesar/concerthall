@@ -34,6 +34,7 @@ export default function SingleList({
   const fetchStarRatings = async () => {
     recommendList.ITEM_INFO.map(async (track :ITEM_INFO_TYPE) => {
     try {
+      /*
       const starTrackParam: STAR_TRACK_REQUEST_TYPE = {
         tracks: [{ type: 'CONCERT_HALL', clientKey: track.ID }]
       };
@@ -52,7 +53,7 @@ export default function SingleList({
         addPropertyToItemInfo(track.ID, 'STAR', response.code === '200' ? response.contents[0].star: 0);
       } else {
         addPropertyToItemInfo(track.ID, 'STAR', 0);
-      }
+      }*/
       setIsFetch(true);
     } catch (error) {
     console.error('Error fetching star rating', error);
@@ -64,10 +65,10 @@ export default function SingleList({
   return isFetch &&
     <div style={{ paddingBottom: "10px" }}>
       <ItemListTitle.ViewAll
-        isPresent={false}
+        isPresent={true}
         text={recommendList.TITLE}
         count={recommendList.TOTAL_NUM_ITEM}
-        href={`/detail/single/${recommendList.ID}`}
+        href={`/detail/single/${recommendList.ID}?title=${encodeURIComponent(recommendList.TITLE)}`}
       />
       <ul className={style.singleList}>
         {recommendList.ITEM_INFO.map((item, index) => (

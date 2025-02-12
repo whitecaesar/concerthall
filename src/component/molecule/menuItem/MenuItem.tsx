@@ -7,13 +7,12 @@ interface MenuItemProps {
 	href: string;
 	iconName: string;
 	children: string;
-	onClick: () => void;
 }
 
-function MenuItem({ href, iconName, children, onClick }: MenuItemProps) {
+function MenuItem({ href, iconName, children}: MenuItemProps) {
 	return (
 		<>
-			<li className="menuItem" onClick={onClick}>
+			<li className="menuItem">
 				<Link href={href}>
 					<Icon iconName={iconName} />
 					{children}

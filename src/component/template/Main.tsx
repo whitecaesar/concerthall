@@ -63,17 +63,17 @@ export default function Main() {
 
 	useEffect(() => {
 		// const recent = ;
-		getRecentAlbumAxios("", 5)
+		getRecentAlbumAxios("", 1)
 			.then((albumdata) => setRecent(albumdata))
 			.catch((error) => {
 				//setError(error);
 			});
-		getRecentPlayListAxios("", 5)
+		getRecentPlayListAxios("", 1)
 			.then((playdata) => setRecentPlayList(playdata))
 			.catch((error) => {
 				//setError(error);
 			});
-		getRecentTrackListAxios("", 5)
+		getRecentTrackListAxios("", 1)
 			.then((trackdata) => setRecentTrackList(trackdata))
 			.catch((error) => {
 				//setError(error);

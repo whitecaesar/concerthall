@@ -65,7 +65,7 @@ export async function getAlbumAxios(
         if (albumData.S_ARTIST) {
             albumData.ARTIST = JSON.parse(albumData.S_ARTIST); // 앨범 수준의 S_ARTIST 파싱
 		}
-
+		
 		// ITEM_INFO 배열 내의 각 아이템에 대해 S_ARTIST를 파싱
         albumData.ITME_INFO = albumData.ITME_INFO.map(item => ({
             ...item,
