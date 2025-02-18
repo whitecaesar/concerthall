@@ -67,8 +67,9 @@
 
 span.albumTrackInfoWrap {
 	display: flex;
-	width: calc(100% - 50px);
+	/* width: calc(100% - 50px); */
 	overflow: hidden;
+	flex: 1;
 }
 span.albumTrackInfoWrap .albumTrackInfo {
 	display: flex;
@@ -118,4 +119,11 @@ span.albumTrackInfoWrap .albumArtistInfo .artist {
 }
 .btnPayment.no p {
 	color: #959595;
+}
+
+.btnPaymentCancel {
+	color: #ac8357;
+	font-size: 13px;
+	border-bottom: 1px solid #5e472e;
+	margin-right: 5px;
 }

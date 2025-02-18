@@ -26,11 +26,12 @@ export default function AlbumTrackItem({
 	albumTrackInfo,
 	AlbumTrackList,
 	position,
-	type
+	type,
 }: TrackItemProps) {
 	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
-	const [popupDescription, setPopupDescription] = useState("구매가 불가한 트랙입니다.");
+	const [popupDescription, setPopupDescription] =
+		useState("구매가 불가한 트랙입니다.");
 
 	const handleConfirm = () => {
 		setIsPopupOpen(false);
@@ -78,17 +79,19 @@ export default function AlbumTrackItem({
 	if (isLoading || playLoding) return <Loading />;
 	if (isError || playError || !playData || !trackData)
 		return <div>Error occurred</div>;
- 
+
 	return (
 		<>
 			<div className={style.trackItem}>
 				<span className={style.albumTrackInfoWrap}>
 					<span
 						className={style.albumTrackInfo}
-						onClick={() => 
-							albumTrackInfo.YN_PAYMENT === 'Y' 
+						onClick={() =>
+							albumTrackInfo.YN_PAYMENT === "Y"
 								? funcAlbumTrackPlayClick("trackPlay", playData, albumTrackInfo)
-								: (albumTrackInfo.YN_SALE === 'N' ? setIsPopupOpen(true) : setIsPaymentOpen(true))
+								: albumTrackInfo.YN_SALE === "N"
+								? setIsPopupOpen(true)
+								: setIsPaymentOpen(true)
 						}
 					>
 						{/* Link에는 트랙 재생하는 url이 들어가야 함 */}
@@ -110,44 +113,46 @@ export default function AlbumTrackItem({
 						))}
 					</div>
 				</span>
-				{/* 구매 관련 버튼튼 */}
-				{albumTrackInfo.YN_SALE == 'N' || albumTrackInfo.YN_PAYMENT == null ? (
-				<div className={`${style.buttonGroup} ${style.payment}`}>
-					
-				{/* 구매 가능 버튼 */}
-					{albumTrackInfo.YN_SALE == 'Y' ? (
-					<button 
-						type="button" 
-						className={style.btnPayment}
-						onClick={() => setIsPaymentOpen(true)}
-					>
-						<p className={style.priceNum}>
-							<span>{albumTrackInfo.PRICE}</span>
-							<Icon iconName="purchasePoint" />
-						</p>
-					</button>
-					):(
-						
-					<button type="button" className={`${style.btnPayment} ${style.no}`}>
-						<p className={style.priceNum}>구매불가</p>
-					</button>
-					)}
-				</div>
+				<button className={style.btnPaymentCancel}>구매취소</button>
+				{/* 구매 관련 버튼 */}
+				{albumTrackInfo.YN_SALE == "N" || albumTrackInfo.YN_PAYMENT == null ? (
+					<div className={`${style.buttonGroup} ${style.payment}`}>
+						{/* 구매 가능 버튼 */}
+						{albumTrackInfo.YN_SALE == "Y" ? (
+							<button
+								type="button"
+								className={style.btnPayment}
+								onClick={() => setIsPaymentOpen(true)}
+							>
+								<p className={style.priceNum}>
+									<span>{albumTrackInfo.PRICE}</span>
+									<Icon iconName="purchasePoint" />
+								</p>
+							</button>
+						) : (
+							<button
+								type="button"
+								className={`${style.btnPayment} ${style.no}`}
+							>
+								<p className={style.priceNum}>구매불가</p>
+							</button>
+						)}
+					</div>
 				) : (
-				<div className={style.buttonGroup}>
-					<AlbumTrackLikeButton track_info={albumTrackInfo} />
-					<AlbumFuncButton
-						method="albumTrackMore"
-						track_info={trackData}
-						play_info={playData}
-						albumTrackList={AlbumTrackList}
-						position={position}
-					/>
-				</div>
+					<div className={style.buttonGroup}>
+						<AlbumTrackLikeButton track_info={albumTrackInfo} />
+						<AlbumFuncButton
+							method="albumTrackMore"
+							track_info={trackData}
+							play_info={playData}
+							albumTrackList={AlbumTrackList}
+							position={position}
+						/>
+					</div>
 				)}
 			</div>
-			
-			<Payment 
+
+			<Payment
 				isOpen={isPaymentOpen}
 				onClose={() => setIsPaymentOpen(false)}
 				trackId={albumTrackInfo.ID}
@@ -160,9 +165,7 @@ export default function AlbumTrackItem({
 				onClose={() => setIsPopupOpen(false)}
 				title="안내"
 				description={popupDescription}
-				buttons={[
-					{ text: "확인", className: "ok", onClick: handleConfirm },
-				]}
+				buttons={[{ text: "확인", className: "ok", onClick: handleConfirm }]}
 			/>
 		</>
 	);
