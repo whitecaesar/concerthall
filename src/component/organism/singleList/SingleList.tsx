@@ -62,10 +62,12 @@ export default function SingleList({
       });
   };
 
+  console.log(recommendList);
+
   return isFetch &&
     <div style={{ paddingBottom: "10px" }}>
       <ItemListTitle.ViewAll
-        isPresent={true}
+        isPresent={false}
         text={recommendList.TITLE}
         count={recommendList.TOTAL_NUM_ITEM}
         href={`/detail/single/${recommendList.ID}?title=${encodeURIComponent(recommendList.TITLE)}`}

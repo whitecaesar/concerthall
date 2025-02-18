@@ -10,12 +10,13 @@ import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAx
 interface AlbumItemProps {
 	albumInfo: ITEM_INFO_TYPE;
 	onClick?: () => void;
+	type?: string;
 }
 
-const AlbumItem = ({ albumInfo, onClick }: AlbumItemProps) => {
+const AlbumItem = ({ albumInfo, onClick, type }: AlbumItemProps) => {
 	return (
 		<div className={style.albumItem} onClick={onClick}>
-			<Link href={`/detail/album/track/${albumInfo.ID}?title=${encodeURIComponent(albumInfo.TITLE)}`}>
+			<Link href={`/detail/album/track/${albumInfo.ID}?title=${encodeURIComponent(albumInfo.TITLE)}&type=${type}`}>
 				<Image
 					src={albumInfo.THUMBNAIL}
 					alt={albumInfo.TITLE}

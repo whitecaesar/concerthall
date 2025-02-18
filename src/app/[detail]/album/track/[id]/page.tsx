@@ -8,6 +8,7 @@ import { useContext, useEffect } from "react";
 export default function trackPage({ params }: { params: { id: string} }) {
 	const searchParams = useSearchParams();
 	const title = searchParams.get('title') || '';
+	const type = searchParams.get('type') || '';
 
 	const { setSubTitle } = useContext(SubTitleContext);
 	// useQuery 호출을 옵션 객체를 사용하는 형태로 수정
@@ -18,7 +19,7 @@ export default function trackPage({ params }: { params: { id: string} }) {
 	return (
 		<SubTitleProvider>
 			<div className="trackPage">
-				<AlbumTrack album_id={params.id}/>
+				<AlbumTrack album_id={params.id} func_type={type}/>
 			</div>
 		</SubTitleProvider>
 	);

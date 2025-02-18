@@ -17,13 +17,13 @@ const ArtistAlbumList = ({
 	showTitle,
 	noScroll = false,
 }: ArtistAlbumListProps) => {
-    console.log(recommendList.ARTIST_ALBUM_INFO);
 
+	console.log(recommendList);
 	return (
 		<div className={style.albumListContainer} style={{ paddingBottom: "10px" }}>
 			{showTitle && recommendList && (
 				<ItemListTitle.ViewAll
-					isPresent={true}
+					isPresent={false}
 					text='아티스트 앨범'
 					count={recommendList.ARTIST_ALBUM_INFO.length}
 					href={`/detail/album/`}

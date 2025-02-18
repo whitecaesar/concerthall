@@ -19,12 +19,14 @@ interface TrackItemProps {
 	albumTrackInfo: ALBUM_ITEM_TYPE;
 	AlbumTrackList: ALBUM_ITEM_TYPE[];
 	position: number;
+	type?: string;
 }
 
 export default function AlbumTrackItem({
 	albumTrackInfo,
 	AlbumTrackList,
 	position,
+	type
 }: TrackItemProps) {
 	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -109,10 +111,11 @@ export default function AlbumTrackItem({
 					</div>
 				</span>
 				{/* 구매 관련 버튼튼 */}
-				{albumTrackInfo.YN_PAYMENT === 'N' || albumTrackInfo.YN_PAYMENT == null ? (
+				{albumTrackInfo.YN_SALE == 'N' || albumTrackInfo.YN_PAYMENT == null ? (
 				<div className={`${style.buttonGroup} ${style.payment}`}>
-					{/* 구매 가능 버튼 */}
-					{albumTrackInfo.YN_SALE === 'Y' ? (
+					
+				{/* 구매 가능 버튼 */}
+					{albumTrackInfo.YN_SALE == 'Y' ? (
 					<button 
 						type="button" 
 						className={style.btnPayment}

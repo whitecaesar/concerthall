@@ -15,7 +15,7 @@ interface SingleViewAllProps {
 
 export default function SingleViewAll({list_id} : SingleViewAllProps) {
 	const [AlbumContent, setAlbumContent] = useState<TVIEWALL_LIST_RESPONSE>();
-	
+
 	useEffect(() => {
 		// const recent = ;
 		getViewallAxios(list_id).then(data => 
@@ -25,7 +25,7 @@ export default function SingleViewAll({list_id} : SingleViewAllProps) {
 
 	return (
 		<>
-			<PlayButtonGroup />
+			{/*<PlayButtonGroup />*/}
 			{AlbumContent?.RECOMMEND_LIST.map(
 				(content: VIEWALL_LIST_TYPE) => {
 					return (

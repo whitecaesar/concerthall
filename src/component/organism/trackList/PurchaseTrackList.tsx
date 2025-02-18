@@ -5,11 +5,10 @@ import AlbumTrackItem from "@/component/molecule/trackItem/AlbumTrackItem";
 import { STAR_REQUEST_ITEM_TYPE, STAR_REQUEST_TYPE, STAR_TRACK_REQUEST_TYPE, getStarAxios, getStarTrackAxios } from "@/services/contents/StarAxios";
 
 interface TrackListProps {
-	AlbumTrackList: ALBUM_ITEM_TYPE[];
-	type?:string;
+	PurchaseTrackList: ALBUM_ITEM_TYPE[];
 }
 
-const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
+const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 	const [isFetch, setIsFetch] = useState<boolean>(false);
 	const [visibleTracks, setVisibleTracks] = useState<ALBUM_ITEM_TYPE[]>([]);
 	const [page, setPage] = useState(0);
@@ -17,7 +16,7 @@ const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
 	const ITEMS_PER_PAGE = 20;
 
 	function addPropertyToItemInfo(id: string, propertyName: string, propertyValue: number) {
-		const item = AlbumTrackList.find(item => item.ID === id);
+		const item = PurchaseTrackList.find(item => item.ID === id);
 		if (item) {
 			(item as any)[propertyName] = propertyValue;
 		}
@@ -25,18 +24,18 @@ const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
 
 	useEffect(() => {
 		fetchStarRatings();
-	}, [AlbumTrackList]);
+	}, [PurchaseTrackList]);
 
 	// 초기 트랙 로드 및 star ratings 설정 후 visible tracks 업데이트
 	useEffect(() => {
-		if (isFetch && AlbumTrackList) {
+		if (isFetch && PurchaseTrackList) {
 			setPage(0);
-			setVisibleTracks(AlbumTrackList.slice(0, ITEMS_PER_PAGE));
+			setVisibleTracks(PurchaseTrackList.slice(0, ITEMS_PER_PAGE));
 		}
-	}, [isFetch, AlbumTrackList]);
+	}, [isFetch, PurchaseTrackList]);
 
 	const fetchStarRatings = async () => {
-		const promises = AlbumTrackList.map(async (track: ALBUM_ITEM_TYPE) => {
+		const promises = PurchaseTrackList.map(async (track: ALBUM_ITEM_TYPE) => {
 			try {
 				const starTrackParam: STAR_TRACK_REQUEST_TYPE = {
 					tracks: [{ type: 'CONCERT_HALL', clientKey: track.ID }]
@@ -77,8 +76,8 @@ const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
 				const start = nextPage * ITEMS_PER_PAGE;
 				const end = start + ITEMS_PER_PAGE;
 
-				if (AlbumTrackList && start < AlbumTrackList.length) {
-					const newTracks = AlbumTrackList.slice(0, end);
+				if (PurchaseTrackList && start < PurchaseTrackList.length) {
+					const newTracks = PurchaseTrackList.slice(0, end);
 					setVisibleTracks(newTracks);
 					setPage(nextPage);
 				}
@@ -98,30 +97,28 @@ const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
 				trackListElement.removeEventListener('scroll', handleScroll);
 			}
 		};
-	}, [page, AlbumTrackList]);
+	}, [page, PurchaseTrackList]);
 
 	return isFetch && (
 		<div 
 			className="trackListWrap"
 			ref={trackListRef}
 		>
-			<div className="trackNum">
-				<span>{AlbumTrackList.length} Tracks</span>
-			</div>
 			<ul className="trackList">
 				{visibleTracks.map((itemInfo, index) => (
 					<li key={itemInfo.ID}>
 						<AlbumTrackItem 
 							albumTrackInfo={itemInfo} 
-							AlbumTrackList={AlbumTrackList} 
+							AlbumTrackList={PurchaseTrackList} 
 							position={index}
+              type='purchase'
 						/>
 					</li>
 				))}
 			</ul>
 
 			{/* 로딩 표시 */}
-			{AlbumTrackList && visibleTracks.length < AlbumTrackList.length && (
+			{PurchaseTrackList && visibleTracks.length < PurchaseTrackList.length && (
 				<div className="loading">Loading more tracks...</div>
 			)}
 
@@ -157,4 +154,4 @@ const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
 	);
 };
 
-export default AlbumTrackList;
+export default PurchaseTrackList;

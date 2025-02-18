@@ -28,10 +28,10 @@ const FuncPlayListButtonGroup = ({ trackItem, pageType, like }: PlayListShareInf
 
 	return (
 		<div className="FuncButtonGroup">
-			{trackItem.ownerId === id ? (
-				<LikeButton starPoint={trackItem.star} />
+			{trackItem?.ownerId === id ? (
+				<LikeButton starPoint={trackItem?.star} />
 			) : (
-				<ThumbupButton status={like} targetId={trackItem.id}/>
+				<ThumbupButton status={like} targetId={trackItem?.id}/>
 			)}
 			<Button
 				type="button"

@@ -30,7 +30,7 @@ const playlistDetailInfo = ({ detailInfo }: PlayListDetailInfoProps) => {
 						isLongTitle ? style.longTitle : ""
 					}`}
 				>
-					<p>{detailInfo.title}</p>
+					<p>{detailInfo?.title}</p>
 				</div>
 				<div className={style.buttonGroup}>
 					<PlayListAllButton ListItem={detailInfo}/>

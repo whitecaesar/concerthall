@@ -27,7 +27,7 @@ export type ITEM_INFO_TYPE = {
 	YN_SALE? : string;
 	PRICE?:number;
 	ALBUM_PRICE?:number;
-
+	YN_CANCEL?: string;
 };
 
 export type VIEWALL_LIST_TYPE = {

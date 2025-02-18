@@ -20,6 +20,7 @@ export type ALBUM_ITEM_TYPE = {
 	ARTIST?: ALBUM_ARTIST_INFO_TYPE[];
 	S_ARTIST?: string;
 	MEDIA_TYPE?: string;
+	TOTAL_NUM_TRACK?: number;
 	ALBUM_ID: string;
 	ALBUM_NAME: string;
 	ALBUM_THUMBNAIL?: string;
@@ -32,6 +33,7 @@ export type ALBUM_ITEM_TYPE = {
 	YN_SALE?: string;
 	PRICE?:number;
 	ALBUM_PRICE?:number;
+	YN_CANCEL?: string;
 };
 
 export type ALBUM_DETAIL_TYPE = {

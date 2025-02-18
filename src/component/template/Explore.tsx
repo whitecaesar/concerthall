@@ -38,11 +38,15 @@ const Explore = (props: ExploreProps) => {
 		fetchData();
 	}, []);
 
+	console.log(recommendList);
+
 	return (
 		<>
 			{categories.map((category, index) => (
-				<KeywordList key={index} categoryList={category} />
-			))}
+				category.TITLE === 'GENRE' ? (
+					<KeywordList key={index} categoryList={category} />
+				) : null
+			)).filter(Boolean)}
 			<SubTitleProvider>
 			{recommendList?.map((content: VIEWALL_LIST_TYPE) => {
 				return (

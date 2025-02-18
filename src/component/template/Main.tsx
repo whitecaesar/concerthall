@@ -44,8 +44,6 @@ export default function Main() {
 		},
 	});
 
-	//setCookie("token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMDI5IiwiaWF0IjoxNzI1OTQ1OTQ1LCJleHAiOjIwNDEzMDU5NDUsImlkIjozMDI5LCJuYW1lIjoiSmFtaWUiLCJubyI6MzAyOSwiZnJpZW5kIjoyMzY1LCJ1c2VybmFtZSI6IkphbWllIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.MAX2itEGOBE16A-VQnJGvO8Hunn45PBCi87Dr9n3B_YZuSUPC6S254FHQ5fjP8Z0Pj5uqmW07vvMQiu3CLW7WA", 24);
-
 	const [recent, setRecent] = useState<ALBUM_RECENT_LIST_RESPONSE>();
 	const [recentPlayList, setRecentPlayList] = useState<PLAY_RECENT_LIST_RESPONSE>();
 	const [recentTrackList, setRecentTrackList] =	useState<TRACK_RECENT_LIST_RESPONSE>();
@@ -63,24 +61,24 @@ export default function Main() {
 
 	useEffect(() => {
 		// const recent = ;
-		getRecentAlbumAxios("", 1)
+		getRecentAlbumAxios("", 0, 10)
 			.then((albumdata) => setRecent(albumdata))
 			.catch((error) => {
 				//setError(error);
 			});
-		getRecentPlayListAxios("", 1)
+		getRecentPlayListAxios("", 0, 10)
 			.then((playdata) => setRecentPlayList(playdata))
 			.catch((error) => {
 				//setError(error);
 			});
-		getRecentTrackListAxios("", 1)
+		getRecentTrackListAxios("", 0, 10)
 			.then((trackdata) => setRecentTrackList(trackdata))
 			.catch((error) => {
 				//setError(error);
 			});
 	}, []);
 
-	if (error) {
+if (error) {
 		return <ErrorPage></ErrorPage>;
 	} else {
 		return (
@@ -89,13 +87,10 @@ export default function Main() {
 				<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
 				<TextBanner banner={data?.TOP_TXT_BANNER[0]} isFetched={isFetched} />
 
-				{recentPlayList && (
-					<RecentPlayList showTitle={true} recommendList={recentPlayList} title={playTxt} />
-				)}
+				{recentPlayList && (<RecentPlayList showTitle={true} recommendList={recentPlayList} title={playTxt} />)}
 				{recent && <RecentAlbumList showTitle={true} recommendList={recent} title={albumTxt}/>}
-				{recentTrackList && (
-					<RecentTrackList showTitle={true} recommendList={recentTrackList} title={trackTxt}/>
-				)}
+				{recentTrackList && (<RecentTrackList showTitle={true} recommendList={recentTrackList} title={trackTxt}/>)}
+
 				<ImageBanner list={data?.IMG_BANNER} isFetched={isFetched} />
 
 				{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {

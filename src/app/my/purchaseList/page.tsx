@@ -1,8 +1,9 @@
 "use client";
-import SubTitleProvider, { SubTitleContext } from "@/providers/SubTitleProvider";
+import PurchaseList from "@/component/organism/purchaseList/PurchaseList";
+import { SubTitleContext } from "@/providers/SubTitleProvider";
 import { useSearchParams } from "next/navigation";
-import MyPlayViewAll from "@/component/template/MyPlayList";
 import { useContext, useEffect } from "react";
+
 
 export default function RecentViewAllPlayList() {
 	const params = useSearchParams();
@@ -17,11 +18,9 @@ export default function RecentViewAllPlayList() {
 
 	return (
 		<>
-			<SubTitleProvider>
-				<div className="datailSinglePage">
-					<MyPlayViewAll totalCnt={cnt} />
-				</div>
-			</SubTitleProvider>
+			<div className="playListPage" style={{ paddingBottom: "20px" }}>
+				<PurchaseList />
+			</div>
 		</>
 	);
 }

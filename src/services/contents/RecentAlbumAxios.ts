@@ -33,6 +33,7 @@ export type ALBUM_RECENT_LIST_RESPONSE = {
 
 export async function getRecentAlbumAxios(
 	mediaTypes?: string, // idAlbum 파라미터를 추가했습니다.
+	page?:number,
 	size?:number
 ): Promise<ALBUM_RECENT_LIST_RESPONSE> {
 	let token = getCookie("token");
@@ -42,7 +43,7 @@ export async function getRecentAlbumAxios(
 	}
 	console.log("token : ", token);
 	const response: AxiosResponse<ALBUM_RECENT_LIST_RESPONSE> = await axios.get(
-		`https://dev.api.roseaudio.kr/v1/member/album/recent?mediaTypes=CONCERT_HALL&page=0&size=${size}`,{
+		`https://dev.api.roseaudio.kr/v1/member/album/recent?mediaTypes=CONCERT_HALL&page=${page}&size=${size}`,{
 		headers: {
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.

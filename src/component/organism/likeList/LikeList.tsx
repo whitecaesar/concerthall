@@ -2,13 +2,8 @@
 import React, { useEffect, useState } from "react";
 import style from "./likeList.module.css";
 import SubTitleProvider from "@/providers/SubTitleProvider";
-import { getAlbumAxios } from "@/services/contents/AlbumAxios";
-import { useQuery } from "@tanstack/react-query";
-import AlbumViewAll from "@/component/template/AlbumViewAll";
-import TrackList from "@/component/organism/trackList/TrackList";
 import { TRACK_RECENT_LIST_RESPONSE } from "@/services/contents/RecentTrackListAxios";
 import { getLikeTrackListAxios } from "@/services/contents/LikeTrackListAxios";
-import RecentTrackList from "../singleList/RecentTrackList";
 import RCTTrackList from "../trackList/RCTTrackList";
 import { ALBUM_LIKE_LIST_RESPONSE, getLikeAlbumListAxios } from "@/services/contents/LikeAlbumListAxios";
 import LikeAlbumList from "../albumList/LikeAlbumList";
@@ -18,10 +13,8 @@ import { ARTIST_LIST_RESPONSE_TYPE, getArtistListAxios } from "@/services/conten
 import ArtistListViewAll from "../artistList/ArtistListViewAll";
 
 type Props = {};
-interface AlbumTrackProps {
-	album_id: string;
-}
-export default function LikeList(album: AlbumTrackProps, props: Props) {
+
+export default function LikeList(props: Props) {
 	const [activeTab, setActiveTab] = useState<string>("Tab1");
 	const [trackList, setTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
 	const [AlbumList, setAlubmList] = useState<ALBUM_LIKE_LIST_RESPONSE>();

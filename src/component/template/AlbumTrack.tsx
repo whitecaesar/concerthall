@@ -22,7 +22,7 @@ export default function AlbumTrack({ album_id, func_type}: AlbumTrackProps) {
 		queryKey: ["ALBUM-ITEM"],
 		queryFn: async () => {
 			const trackList = await getAlbumAxios(album_id);
-			
+
 			// ITEM_INFO의 모든 트랙의 YN_SALE 값을 확인
 			const hasPaymentTrack = trackList.ITME_INFO.some(
 				(track: any) => track.YN_PAYMENT === 'N' || track.YN_PAYMENT == null
@@ -53,20 +53,19 @@ export default function AlbumTrack({ album_id, func_type}: AlbumTrackProps) {
 	// data가 non-null임을 보장하기 위한 optional chaining
 	const trackItem = data.ITME_INFO; // 예시로 첫 번째 아이템 사용
 
-
 	if (data) {
 		return (
 			<>
 			
 				<DetailInfo detailInfo={data} />
 
-				{ data.YN_SALE === 'Y' ? (
+				{ data.YN_PAYMENT === 'Y' ? (
 					<FuncButtonGroup AlbumItem={data} />
 				) : (
 					<PriceArea AlbumItem={data}/>
 				)}
 
-				{trackItem && <AlbumTrackList AlbumTrackList={trackItem} />}
+				{trackItem && <AlbumTrackList AlbumTrackList={trackItem}/>}
 			
 			</>
 		);

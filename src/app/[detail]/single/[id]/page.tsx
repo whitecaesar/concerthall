@@ -19,7 +19,7 @@ export default function ViewAllSingle({ params }: { params: { id: string} }) {
 		<>
 			<SubTitleProvider>
 				<div className="datailSinglePage">
-					<SingleViewAll />
+					<SingleViewAll list_id={params.id}/>
 				</div>
 			</SubTitleProvider>
 		</>
