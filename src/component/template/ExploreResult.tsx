@@ -16,13 +16,29 @@ interface Texts {
   artist: string;
 }
 
-const texts: { [key: string]: Texts } = {
+export const texts: { [key: string]: Texts } = {
   en: { artist: "Artist" },
-  kr: { artist: "아티스트" },
-  de: { artist: "Artist" },
-  jp: { artist: "Artist" },
-  fr: { artist: "Artist" },
-  zh: { artist: "Artist" },
+  US: { artist: "Artist" },
+  ko: { artist: "아티스트" },
+  KR: { artist: "아티스트" },
+  de: { artist: "Künstler" },
+  DE: { artist: "Künstler" },
+  es: { artist: "Artista" },
+  ES: { artist: "Artista" },
+  fr: { artist: "Artiste" },
+  FR: { artist: "Artiste" },
+  it: { artist: "Artista" },
+  IT: { artist: "Artista" },
+  nl: { artist: "Artiest" },
+  NL: { artist: "Artiest" },
+  ja: { artist: "アーティスト" },
+  JP: { artist: "アーティスト" },
+  zh: { artist: "艺术家" },
+  CN: { artist: "艺术家" },
+  tw: { artist: "藝術家" },
+  TW: { artist: "藝術家" },
+  ru: { artist: "Артист" },
+  RU: { artist: "Артист" },
 };
 
 export default function ExploreResult({ exploreKey }: ExploreResultProps) {

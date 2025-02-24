@@ -16,7 +16,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 1;
+	line-clamp: 1;
 	font-size: 14px;
 	line-height: 16px;
 	padding-top: 3px;

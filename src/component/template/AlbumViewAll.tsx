@@ -42,8 +42,6 @@ export default function AlbumViewAll({ list_id }: AlbumViewAllProps) {
 		AlbumContent && setAlbumContent({ ...AlbumContent });
 	};
 
-	console.log("AlbumContent",AlbumContent);
-
 	return (
 		<>
 			<SubTitleProvider>

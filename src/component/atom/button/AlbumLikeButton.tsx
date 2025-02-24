@@ -24,7 +24,6 @@ const AlbumLikeButton = ({ starPoint, album_info } : LikeButtonProps) => {
         setNumber(prevStar => (prevStar + 1) % 4);
       } else {
         const artistNames = album_info.ARTIST?.map(artist => artist.artist_name).join(', ');
-        console.log(artistNames);
         const setTrackParam: REG_ALBUM_REQEUST_TYPE = {
           album: { clientKey: album_info.ID, star: 1, thumbnail: album_info.THUMBNAIL, artist: artistNames,title: album_info.TITLE, type: 'CONCERT_HALL' }
         };

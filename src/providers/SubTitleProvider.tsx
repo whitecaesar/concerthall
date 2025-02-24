@@ -26,7 +26,6 @@ export default function SubTitleProvider({ children }: SubTitleProviderProps) {
 	}, []);
 
 	useEffect(() => {
-		console.log("SubTitle이 업데이트 되었습니다:", subTitle);
 		localStorage.setItem("subtitle", subTitle?.toString() || "");
 	}, [subTitle]);
 

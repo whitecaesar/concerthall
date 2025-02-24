@@ -4,7 +4,7 @@ import style from "./payment.module.css";
 import Icon from "@/component/atom/icon/Icon";
 import Button from "@/component/atom/button/Button";
 import sha1 from 'crypto-js/sha1';
-import { getPassCheckAxios, getBalanceCheckAxios, setTrackPurchaseAxios } from "@/services/contents/PayAxios";
+import { getPassCheckAxios, getBalanceCheckAxios, setTrackPurchaseAxios, setPaymentAxios, setAlbumPurchaseAxios } from "@/services/contents/PayAxios";
 import { getCookie } from "@/services/common";
 
 interface PaymentProps {
@@ -14,11 +14,21 @@ interface PaymentProps {
 	albumId? : string;
 	type? : string;
 	price? : number;
+	idKey : string;
 	onPurchaseComplete: () => void;
 	onError?: (message: string) => void; // 새로운 prop 추가
 }
 
-export default function Payment({ onClose, isOpen, trackId, albumId, type, price, onPurchaseComplete, onError }: PaymentProps) {
+export function generateUniqueId() {
+  // 현재 시간(ms)
+  const currentTime = Date.now();
+  // Math.random()을 이용해 8자리 랜덤 문자열 생성
+  const randomStr = Math.random().toString(36).substring(2, 10);
+  // 두 값을 결합하여 고유 ID 생성 (예: "1644761723456_ab12cd34")
+  return `${currentTime}_${randomStr}`;
+}
+
+export default function Payment({ onClose, isOpen, trackId, albumId, type, price, onPurchaseComplete, onError, idKey }: PaymentProps) {
 	const [pin, setPin] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +48,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 		try {
 			if (pin.length === 0) {
 				if (onError) {
-					onError("비밀번호를 입력해주세요."); // 직접 에러 메시지 전달
+					onError("Please enter your password."); // 직접 에러 메시지 전달
 				}
 				return;
 			}
@@ -54,43 +64,72 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 			if (passCheckResponse.code === "200") {
 				// 잔액 확인
 				const balanceResponse = await getBalanceCheckAxios();
-				console.log("잔액 정보:", balanceResponse.data);
-				
 				// 입력값 초기화 및 모달 닫기
-				const IDCUST = getCookie("userid");
-				if (!IDCUST || !price || !trackId) {
-					throw new Error("필수 정보가 누락되었습니다.");
-				}
-	
-				const param = {
-					ID_CUST: IDCUST,
-					PRICE: price // number 타입 유지
-				};
-	
-				const purchaseResponse = await setTrackPurchaseAxios(trackId, param);
-	
-				if (purchaseResponse.RES_CODE === "0000") {
-					console.log("결제완료");
-					onPurchaseComplete();
-					setPin("");
-				} else {
-					setErrorMessage(purchaseResponse.RES_MSG);
-					if (onError) {
-						onError(purchaseResponse.RES_MSG); // 직접 에러 메시지 전달
+				const point = balanceResponse.data.rewardPoint + balanceResponse.data.chargePoint;
+				if(price && point  > price)
+				{
+					const IDCUST = getCookie("userid");
+					if (!IDCUST || !price) {
+						setErrorMessage("Required information is missing.");
+						if (onError) {
+							onError("Required information is missing."); // 직접 에러 메시지 전달
+						}
+					}
+					
+					const paymentId = generateUniqueId();
+					const paymentParam = {
+						price : price,
+						cpCode : "TEST_CP",
+						appType : "CONCERTHALL",
+						paymentId : paymentId,
+					}; 
+					const paymentResponse = await setPaymentAxios(paymentParam, idKey);
+					if (paymentResponse.code === "200.1" && paymentResponse.message === "ok") {
+						const param = {
+							ID_CUST: IDCUST?IDCUST:'',
+							PRICE: price, // number 타입 유지
+							PAYMENT_ID : paymentId,
+						};
+						
+						const purchaseResponse = type ==='track'?
+						await setTrackPurchaseAxios(trackId, param):
+						await setAlbumPurchaseAxios(albumId, param);
+
+						if (purchaseResponse.RES_CODE === "0000") {
+							onPurchaseComplete();
+							setPin("");
+						} else {
+							setErrorMessage(purchaseResponse.RES_MSG);
+							if (onError) {
+								onError(purchaseResponse.RES_MSG); // 직접 에러 메시지 전달
+							}
+						}
+						onClose();
+					} else {
+						setErrorMessage(paymentResponse.message);
+						if (onError) {
+							onError(paymentResponse.message); // 직접 에러 메시지 전달
+						}
 					}
 				}
-				onClose();
+				else
+				{
+					setErrorMessage(balanceResponse.message);
+					if (onError) {
+						onError(balanceResponse.message); // 직접 에러 메시지 전달
+					}
+				}
 			} else {
 				if (onError) {
-					onError("비밀번호가 일치하지 않습니다."); // 직접 에러 메시지 전달
+					onError(passCheckResponse.message); // 직접 에러 메시지 전달
 				}
 			}
 
 
 
 		} catch (error) {
-			console.error("결제 처리 중 오류 발생:", error);
-			setErrorMessage("결제 처리 중 오류가 발생했습니다.");
+			console.error("An error occurred during payment processing:", error);
+			setErrorMessage("An error occurred during payment processing.");
 			if (onError) {
 				onError(error instanceof Error ? error.message : String(error));
 			}
@@ -109,7 +148,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				<div className={style.paymentAreaInner}>
 					<p>
 						<Icon iconName="paymentLogo" />
-						Point 결제 비밀번호
+						PASSWORD
 					</p>
 					<input
 						type="password"
@@ -124,7 +163,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 					<div className={style.erroText}>
 						{errorMessage && (
 							<>
-								<p className={style.textWhite}>다시 입력해 주세요.</p>
+								<p className={style.textWhite}>Please re-enter.</p>
 								<p className={style.textRed}>{errorMessage}</p>
 							</>
 						)}
@@ -133,7 +172,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 						className={style.btnOk} 
 						onClick={handleSubmit}
 					>
-						확인
+						OK
 					</button>
 				</div>
 			</div>

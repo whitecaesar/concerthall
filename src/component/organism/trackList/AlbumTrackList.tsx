@@ -121,7 +121,7 @@ const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
 			<div className="trackListWrap" ref={trackListRef}>
 				<div className="trackNum">
 					<span>{AlbumTrackList.length} Tracks</span>
-					<button className="btnPaymentCancel">앨범 구매취소</button>
+					<button className="btnPaymentCancel">Not for sale</button>
 				</div>
 				<ul className="trackList">
 					{visibleTracks.map((itemInfo, index) => (

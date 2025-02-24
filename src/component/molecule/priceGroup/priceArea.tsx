@@ -3,6 +3,7 @@ import style from "./priceArea.module.css";
 import Icon from "@/component/atom/icon/Icon";
 import Payment from "@/component/organism/payment/payment";
 import { ALBUM_DETAIL_TYPE } from "@/services/contents/AlbumAxios";
+import { generateClientRandomString } from "@/services/common";
 
 interface PriceAreaProps {
 	AlbumItem: ALBUM_DETAIL_TYPE;
@@ -13,6 +14,8 @@ const handlePurchaseComplete = () => {
 };
 const PriceArea = ({ AlbumItem }: PriceAreaProps) => {
 	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+	const id_key = generateClientRandomString();
+
 	{
 		/*여기에 앨범? id 넘겨야 겠네*/
 	}
@@ -21,14 +24,14 @@ const PriceArea = ({ AlbumItem }: PriceAreaProps) => {
 		<>
 			<div className={style.price}>
 				<button type="button" className={style.btnPreview}>
-					미리보기
+					Preview
 				</button>
 				<button
 					type="button"
 					className={style.btnPayment}
 					onClick={() => setIsPaymentOpen(true)}
 				>
-					구매하기&nbsp;&nbsp;
+					Buy Now&nbsp;&nbsp;
 					<p className={style.priceNum}>
 						<span>{AlbumItem.ALBUM_PRICE}</span>
 						<Icon iconName="purchasePoint" />
@@ -38,7 +41,9 @@ const PriceArea = ({ AlbumItem }: PriceAreaProps) => {
 			<Payment
 				isOpen={isPaymentOpen}
 				onClose={() => setIsPaymentOpen(false)}
-				trackId="test"
+				albumId={AlbumItem.ID}
+				idKey={id_key}
+				type="album"
 				onPurchaseComplete={handlePurchaseComplete}
 			/>
 		</>

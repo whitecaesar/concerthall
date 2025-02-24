@@ -80,14 +80,11 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
       WebStreamTrackItem.push(trackItem);
     });
 
-    console.log(WebStreamTrackItem);
-
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem,
       position : position
     };
 
-    console.log(trackData);
     let json_track_data: string = JSON.stringify(trackData);
     (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
   }
@@ -112,13 +109,11 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
       WebStreamTrackItem.push(trackItem);
     });
 
-    console.log(WebStreamTrackItem);
-
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem,
       position : position
     };
-    console.log(trackData);
+
     let json_track_data: string = JSON.stringify(trackData);
     (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
   }
@@ -143,8 +138,7 @@ export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, tr
 
     const WebStreamTrackItem: any[] = [trackItem];
 
-    console.log(WebStreamTrackItem);
-  
+      
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem
     }
@@ -187,13 +181,11 @@ export function funcAlbumTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONS
       WebStreamTrackItem.push(trackItem);
     });
 
-    console.log(WebStreamTrackItem);
-
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem,
       position : position
     };
-    console.log(trackData);
+    
     let json_track_data: string = JSON.stringify(trackData);
     (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
   }
@@ -216,8 +208,6 @@ export function funcAlbumTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONS
 
     const WebStreamTrackItem: any[] = [trackItem];
 
-    console.log(WebStreamTrackItem);
-  
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem
     }
@@ -259,13 +249,11 @@ export function funcArtistTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPON
       WebStreamTrackItem.push(trackItem);
     });
 
-    console.log(WebStreamTrackItem);
-
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem,
       position : position
     };
-    console.log(trackData);
+    
     let json_track_data: string = JSON.stringify(trackData);
     (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
   }
@@ -288,8 +276,6 @@ export function funcArtistTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPON
 
     const WebStreamTrackItem: any[] = [trackItem];
 
-    console.log(WebStreamTrackItem);
-  
     const trackData = {
       webstreamtrackitem : WebStreamTrackItem
     }
@@ -359,12 +345,10 @@ export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
       isShufflePlay : false
     };
     let All_data: string = JSON.stringify(allData);
-    console.log(All_data);
     (window as any).HifiRose.webStreamAlbumClick(All_data);
   }
   else if(type == 'SufflePlay')
   {
-    console.log('shuffle');
     allData = {
       webstreamtrackitem : WebStreamTrackItem,
       webstreamalbumitem : WebStreamAlbumItem,
@@ -440,3 +424,13 @@ export function funcPlayListPlayClick(type:string, playlist:TRACK_RECENT_LIST_RE
     }
   }
 };
+
+
+export function generateClientRandomString() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const array = new Uint32Array(10);
+  window.crypto.getRandomValues(array);
+
+  return Array.from(array, (num) => characters[num % characters.length]).join('');
+}
+

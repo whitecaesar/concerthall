@@ -11,7 +11,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
 import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
-import { funcTrackPlayClick } from "@/services/common";
+import { funcTrackPlayClick, generateClientRandomString } from "@/services/common";
 import Loading from "@/app/loading";
 import Icon from "@/component/atom/icon/Icon";
 import { useState } from "react";
@@ -32,16 +32,15 @@ export default function SingleItem({
 
 	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const [popupDescription, setPopupDescription] =
+		useState("Track not for sale.");
+
+	const id_key = generateClientRandomString();
 
 	const handleConfirm = () => {
 		setIsPopupOpen(false);
 	};
 
-	const handleCancel = () => {
-		alert("취소 버튼 클릭!");
-		setIsPopupOpen(false);
-	};
-	
 	const {
 		data: trackData,
 		isError,
@@ -69,6 +68,11 @@ export default function SingleItem({
 
 	const handlePurchaseComplete = () => {
 		refetch();
+	};
+
+	const handleError = (message: string) => {
+		setPopupDescription(message);
+		setIsPopupOpen(true);
 	};
 
 	if (isLoading || playLoding) return <Loading />;
@@ -135,17 +139,19 @@ export default function SingleItem({
 				isOpen={isPaymentOpen}
 				onClose={() => setIsPaymentOpen(false)}
 				trackId={singleInfo.ID}
+				price={singleInfo.PRICE}
+				idKey={id_key}
+				type="track"
 				onPurchaseComplete={handlePurchaseComplete}
+				onError={handleError}
 		/>
 		<Popup
-			isOpen={isPopupOpen}
-			onClose={() => setIsPopupOpen(false)}
-			title="안내"
-			description="구매가 불가한 트랙입니다."
-			buttons={[
-				{ text: "확인", className: "ok", onClick: handleConfirm },
-			]}
-		/>
+				isOpen={isPopupOpen}
+				onClose={() => setIsPopupOpen(false)}
+				title="INFORMATION"
+				description={popupDescription}
+				buttons={[{ text: "OK", className: "ok", onClick: handleConfirm }]}
+			/>
 		</>
 	);
 }

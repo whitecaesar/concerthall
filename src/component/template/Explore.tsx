@@ -38,8 +38,6 @@ const Explore = (props: ExploreProps) => {
 		fetchData();
 	}, []);
 
-	console.log(recommendList);
-
 	return (
 		<>
 			{categories.map((category, index) => (

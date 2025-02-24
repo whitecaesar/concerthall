@@ -14,7 +14,6 @@ interface ArtistItemProps {
 }
 
 const ArtistItem = ({ artistInfo, onClick }: ArtistItemProps) => {
-	console.log(artistInfo);
 	const [thumbnail, setThumbnail] = useState(artistInfo.thumbnail?artistInfo.thumbnail[0]:'');
 
 	useEffect(() => {

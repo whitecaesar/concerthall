@@ -18,7 +18,6 @@ const ArtistAlbumList = ({
 	noScroll = false,
 }: ArtistAlbumListProps) => {
 
-	console.log(recommendList);
 	return (
 		<div className={style.albumListContainer} style={{ paddingBottom: "10px" }}>
 			{showTitle && recommendList && (

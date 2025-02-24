@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import style from "./trackItem.module.css";
-import { funcAlbumTrackPlayClick } from "@/services/common";
+import { funcAlbumTrackPlayClick, generateClientRandomString } from "@/services/common";
 import { useQuery } from "@tanstack/react-query";
 import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
@@ -32,13 +32,14 @@ export default function AlbumTrackItem({
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [popupDescription, setPopupDescription] =
 		useState("구매가 불가한 트랙입니다.");
+		
+	const id_key = generateClientRandomString();
 
 	const handleConfirm = () => {
 		setIsPopupOpen(false);
 	};
 
 	const handleCancel = () => {
-		alert("취소 버튼 클릭!");
 		setIsPopupOpen(false);
 	};
 
@@ -77,8 +78,7 @@ export default function AlbumTrackItem({
 	};
 
 	if (isLoading || playLoding) return <Loading />;
-	if (isError || playError || !playData || !trackData)
-		return <div>Error occurred</div>;
+	if (isError || playError || !playData || !trackData)return <div>Error occurred</div>;
 
 	return (
 		<>
@@ -113,9 +113,9 @@ export default function AlbumTrackItem({
 						))}
 					</div>
 				</span>
-				<button className={style.btnPaymentCancel}>구매취소</button>
+				{albumTrackInfo.YN_CANCEL == "Y" && (<button className={style.btnPaymentCancel}>CANCEL</button>)}
 				{/* 구매 관련 버튼 */}
-				{albumTrackInfo.YN_SALE == "N" || albumTrackInfo.YN_PAYMENT == null ? (
+				{albumTrackInfo.YN_PAYMENT == "N" || albumTrackInfo.YN_PAYMENT == null ? (
 					<div className={`${style.buttonGroup} ${style.payment}`}>
 						{/* 구매 가능 버튼 */}
 						{albumTrackInfo.YN_SALE == "Y" ? (
@@ -134,7 +134,7 @@ export default function AlbumTrackItem({
 								type="button"
 								className={`${style.btnPayment} ${style.no}`}
 							>
-								<p className={style.priceNum}>구매불가</p>
+								<p className={style.priceNum}>Not for sale</p>
 							</button>
 						)}
 					</div>
@@ -156,16 +156,18 @@ export default function AlbumTrackItem({
 				isOpen={isPaymentOpen}
 				onClose={() => setIsPaymentOpen(false)}
 				trackId={albumTrackInfo.ID}
-				price={2000}
+				price={albumTrackInfo.PRICE}
+				idKey={id_key}
+				type="track"
 				onPurchaseComplete={handlePurchaseComplete}
 				onError={handleError}
 			/>
 			<Popup
 				isOpen={isPopupOpen}
 				onClose={() => setIsPopupOpen(false)}
-				title="안내"
+				title="INFOMATION"
 				description={popupDescription}
-				buttons={[{ text: "확인", className: "ok", onClick: handleConfirm }]}
+				buttons={[{ text: "OK", className: "ok", onClick: handleConfirm }]}
 			/>
 		</>
 	);

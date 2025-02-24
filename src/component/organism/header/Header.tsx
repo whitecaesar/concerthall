@@ -15,10 +15,10 @@ declare global {
 export default function Header() {
 	useEffect(() => {
 		window.userInfo = (token :any, app_type : any, lang : any, userid : any) => {
-			setCookie("token", token, 2);
-			setCookie("app_type", app_type, 2);
-			setCookie("lang", lang, 2); 
-			setCookie("userid", userid, 2);
+			setCookie("token", token, 7);
+			setCookie("app_type", app_type, 7);
+			setCookie("lang", lang, 7); 
+			setCookie("userid", userid, 7);
 		};
 
 		window.logout = () => {
@@ -26,7 +26,18 @@ export default function Header() {
 			deleteCookie("app_type");
 			deleteCookie("lang");
 			deleteCookie("userid");
+			deleteCookie("ip");
 		};
+
+		fetch('https://api.ipify.org?format=json')
+		.then(response => response.json())
+		.then(data => {
+			// data.ip에 IP 주소가 담겨 있음
+			setCookie("ip", data.ip, 7); // IP를 2일간 유효한 쿠키로 저장
+		})
+		.catch(error => {
+			console.error('IP 주소 가져오기 실패:', error);
+		});
 	}, []);
 
 

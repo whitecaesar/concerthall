@@ -34,6 +34,7 @@ export default function Main() {
 	const [t, setT] = useState<string | null>(null);
 
 	setCookie("userid", "mjkim@citech.kr", 24);
+	setCookie("lang", "en", 24);
 	const token = getCookie("token");
 
 	const { data, isFetched } = useQuery({

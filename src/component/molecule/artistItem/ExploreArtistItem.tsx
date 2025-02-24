@@ -10,7 +10,6 @@ interface ExplireArtistItemProps {
 }
 
 const ExplireArtistItem = ({ artistInfo }: ExplireArtistItemProps) => {
-	console.log(artistInfo);
 
 	return (
 		<div className={style.artistItem}>

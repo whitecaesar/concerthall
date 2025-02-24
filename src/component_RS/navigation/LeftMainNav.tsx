@@ -27,14 +27,12 @@ export const LeftMainNav = () => {
 	});
 
 	useEffect(() => {
-		console.log("data?.RECOMMEND_LIST ", mainData.data?.RECOMMEND_LIST);
 		mainData.data?.RECOMMEND_LIST &&
 			setMainFirstIdx(mainData.data?.RECOMMEND_LIST[0].ID);
 		// data?.RECOMMEND_LIST && setMainFirstIdx(data?.RECOMMEND_LIST[0].ID);
 	}, [mainData.isFetched]);
 
 	useEffect(() => {
-		console.log("data?.CATEGORY ", exploreData.data?.CATEGORY);
 		exploreData.data?.CATEGORY &&
 			setExploreFirstIdx(exploreData?.data?.CATEGORY[0].KEWORD[0].KEY);
 		// data?.RECOMMEND_LIST && setMainFirstIdx(data?.RECOMMEND_LIST[0].ID);

@@ -36,7 +36,6 @@ export default function ArtistViewAll() {
 			);
 		}
 
-		console.log(AlbumContent);
 		AlbumContent && setAlbumContent({ ...AlbumContent });
 		*/
 	};

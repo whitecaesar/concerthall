@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import style from "../trackItem/trackItem.module.css";
-import { funcAlbumTrackPlayClick } from "@/services/common";
+import { funcAlbumTrackPlayClick, generateClientRandomString } from "@/services/common";
 import { useQuery } from "@tanstack/react-query";
 import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
@@ -27,10 +27,13 @@ export default function ArtistTrackItem({
 	position,
 }: TrackItemProps) {
 
-	console.log("ati=>", ArtistTrackInfo);
-
 	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const [popupDescription, setPopupDescription] =
+		useState("구매가 불가한 트랙입니다.");
+
+	const id_key = generateClientRandomString();
+	
 
 	const handleConfirm = () => {
 		setIsPopupOpen(false);
@@ -68,6 +71,11 @@ export default function ArtistTrackItem({
 
 	const handlePurchaseComplete = () => {
 		refetch();
+	};
+
+	const handleError = (message: string) => {
+		setPopupDescription(message);
+		setIsPopupOpen(true);
 	};
 
 	if (playLoding) return <Loading />;
@@ -119,7 +127,7 @@ export default function ArtistTrackItem({
 					):(
 						
 					<button type="button" className={`${style.btnPayment} ${style.no}`}>
-						<p className={style.priceNum}>구매불가</p>
+						<p className={style.priceNum}>Not for Sale</p>
 					</button>
 					)}
 				</div>
@@ -140,17 +148,19 @@ export default function ArtistTrackItem({
 				isOpen={isPaymentOpen}
 				onClose={() => setIsPaymentOpen(false)}
 				trackId={ArtistTrackInfo.ID}
+				price={ArtistTrackInfo.PRICE}
+				idKey={id_key}
+				type="track"
 				onPurchaseComplete={handlePurchaseComplete}
+				onError={handleError}
 		/>
 		<Popup
-			isOpen={isPopupOpen}
-			onClose={() => setIsPopupOpen(false)}
-			title="안내"
-			description="구매가 불가한 트랙입니다."
-			buttons={[
-				{ text: "확인", className: "ok", onClick: handleConfirm },
-			]}
-		/>
+				isOpen={isPopupOpen}
+				onClose={() => setIsPopupOpen(false)}
+				title="INFORMATION"
+				description={popupDescription}
+				buttons={[{ text: "OK", className: "ok", onClick: handleConfirm }]}
+			/>
 		</>
 	);
 }

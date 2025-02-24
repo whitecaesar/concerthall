@@ -56,13 +56,11 @@ export default function SingleList({
       }*/
       setIsFetch(true);
     } catch (error) {
-    console.error('Error fetching star rating', error);
+      console.error('Error fetching star rating', error);
       addPropertyToItemInfo(track.ID, 'STAR', 0);
     }
       });
   };
-
-  console.log(recommendList);
 
   return isFetch &&
     <div style={{ paddingBottom: "10px" }}>

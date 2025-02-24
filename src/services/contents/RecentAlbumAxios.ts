@@ -41,7 +41,6 @@ export async function getRecentAlbumAxios(
 	{
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
-	console.log("token : ", token);
 	const response: AxiosResponse<ALBUM_RECENT_LIST_RESPONSE> = await axios.get(
 		`https://dev.api.roseaudio.kr/v1/member/album/recent?mediaTypes=CONCERT_HALL&page=${page}&size=${size}`,{
 		headers: {

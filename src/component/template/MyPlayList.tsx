@@ -37,8 +37,6 @@ export default function MyPlayViewAll(total: MyPlayViewAllProps) {
     recent && setRecent({ ...recent });
   };
 
-  console.log(recent);
-
   return (
     <>
       <Dropdown options={dropdownOptions} onRecentChange={handleRecentChange} />

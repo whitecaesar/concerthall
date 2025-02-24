@@ -19,7 +19,6 @@ export default function RecentTrackList({
 	recommendList, showTitle, noScroll, title
 }: RecentTrackListProps) {
 	const tracks = recommendList.tracks;
-	console.log(title);
 	return (
 		<div style={{ paddingBottom: "10px" }}>
 			<ItemListTitle.ViewAll

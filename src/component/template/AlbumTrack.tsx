@@ -34,7 +34,7 @@ export default function AlbumTrack({ album_id, func_type}: AlbumTrackProps) {
 
 			 // YN_SALE이 'Y'인 트랙의 PRICE 합산
 			 const totalAlbumPrice = trackList.ITME_INFO
-			 .filter((track: any) => track.YN_SALE === 'Y')
+			 .filter((track: any) => track.YN_PAYMENT === 'N' && track.YN_SALE === 'Y')
 			 .reduce((total: number, track: any) => total + (track.PRICE || 0), 0);
 			
 			// 전체 앨범의 YN_SALE 값 설정
@@ -52,7 +52,7 @@ export default function AlbumTrack({ album_id, func_type}: AlbumTrackProps) {
 
 	// data가 non-null임을 보장하기 위한 optional chaining
 	const trackItem = data.ITME_INFO; // 예시로 첫 번째 아이템 사용
-
+	console.log("data=>",data)
 	if (data) {
 		return (
 			<>
