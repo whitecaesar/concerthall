@@ -87,7 +87,7 @@ export default function AlbumTrackItem({
 					<span
 						className={style.albumTrackInfo}
 						onClick={() =>
-							albumTrackInfo.YN_PAYMENT === "Y"
+							albumTrackInfo.YN_PURCHASED === "Y"
 								? funcAlbumTrackPlayClick("trackPlay", playData, albumTrackInfo)
 								: albumTrackInfo.YN_SALE === "N"
 								? setIsPopupOpen(true)
@@ -115,7 +115,7 @@ export default function AlbumTrackItem({
 				</span>
 				{albumTrackInfo.YN_CANCEL == "Y" && (<button className={style.btnPaymentCancel}>CANCEL</button>)}
 				{/* 구매 관련 버튼 */}
-				{albumTrackInfo.YN_PAYMENT == "N" || albumTrackInfo.YN_PAYMENT == null ? (
+				{albumTrackInfo.YN_PURCHASED == "N" || albumTrackInfo.YN_PURCHASED == null ? (
 					<div className={`${style.buttonGroup} ${style.payment}`}>
 						{/* 구매 가능 버튼 */}
 						{albumTrackInfo.YN_SALE == "Y" ? (

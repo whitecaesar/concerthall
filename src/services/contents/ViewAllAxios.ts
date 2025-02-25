@@ -23,7 +23,7 @@ export type ITEM_INFO_TYPE = {
 	ALBUM_NAME?:string;
 	STAR?:number;
 	S_ARTIST:string;
-	YN_PAYMENT? : string;
+	YN_PURCHASED? : string;
 	YN_SALE? : string;
 	PRICE?:number;
 	ALBUM_PRICE?:number;

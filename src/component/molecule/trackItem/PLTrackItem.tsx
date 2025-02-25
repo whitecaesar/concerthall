@@ -14,7 +14,7 @@ interface PLTrackItemProps {
 	method: string;
 }
 
-export default function PLTrackItem({ trackInfo, trackListInfo, position, method }: PLTrackItemProps) {
+export default function PLTrackItem({trackInfo, trackListInfo, position, method }: PLTrackItemProps) {
 
 	return (
 		<div className={style.trackItem}>

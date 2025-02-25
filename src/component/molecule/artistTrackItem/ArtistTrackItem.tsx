@@ -86,7 +86,7 @@ export default function ArtistTrackItem({
 		<div className={style.trackItem}>
 			<span
 				onClick={() =>
-					ArtistTrackInfo.YN_PAYMENT === 'Y' 
+					ArtistTrackInfo.YN_PURCHASED === 'Y' 
 					? funcAlbumTrackPlayClick("trackPlay", playData, ArtistTrackInfo)
 					: (ArtistTrackInfo.YN_SALE === 'N' ? setIsPopupOpen(true) : setIsPaymentOpen(true))
 				}
@@ -110,7 +110,7 @@ export default function ArtistTrackItem({
 				</p>
 			</span>
 			{/* 구매 관련 버튼튼 */}
-			{(ArtistTrackInfo.YN_PAYMENT === 'N' || ArtistTrackInfo.YN_PAYMENT == null) ? (
+			{(ArtistTrackInfo.YN_PURCHASED === 'N' || ArtistTrackInfo.YN_PURCHASED == null) ? (
 				<div className={`${style.buttonGroup} ${style.payment}`}>
 					{/* 구매 가능 버튼 */}
 					{ArtistTrackInfo.YN_SALE === 'Y' ? (

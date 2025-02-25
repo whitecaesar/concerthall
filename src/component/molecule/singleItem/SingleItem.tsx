@@ -85,7 +85,7 @@ export default function SingleItem({
 			<span
 				onClick={() =>
 					
-					singleInfo.YN_PAYMENT === 'Y' 
+					singleInfo.YN_PURCHASED === 'Y' 
 								? funcTrackPlayClick("trackPlay", playData, trackData.TRACK_INFO)
 								: (singleInfo.YN_SALE === 'N' ? setIsPopupOpen(true) : setIsPaymentOpen(true))
 				}
@@ -111,7 +111,7 @@ export default function SingleItem({
 							))}
 					</div>
 				</p>
-				{( singleInfo.YN_PAYMENT === 'N' || singleInfo.YN_PAYMENT == null) ? (
+				{( singleInfo.YN_PURCHASED === 'N' || singleInfo.YN_PURCHASED == null) ? (
 				<p className={style.priceNum}
 					onClick={() => setIsPaymentOpen(true)}
 				>

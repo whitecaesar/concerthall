@@ -29,7 +29,7 @@ export type ALBUM_ITEM_TYPE = {
 	URL?: string;
 	STAR?: number;
 	DURATION?: string;
-	YN_PAYMENT?: string;
+	YN_PURCHASED?: string;
 	YN_SALE?: string;
 	PRICE?:number;
 	ALBUM_PRICE?:number;
@@ -46,7 +46,7 @@ export type ALBUM_DETAIL_TYPE = {
 	ITME_INFO: ALBUM_ITEM_TYPE[];
 	ARTIST?: ALBUM_ARTIST_INFO_TYPE[];
 	YN_SALE?: string;
-	YN_PAYMENT?: string;
+	YN_PURCHASED?: string;
 	STAR?:number;
 	S_ARTIST?: string;
 	ALBUM_PRICE? : number;

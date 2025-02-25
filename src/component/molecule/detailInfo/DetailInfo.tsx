@@ -29,7 +29,7 @@ const DetailInfo = ({ detailInfo }: DetailInfoProps) => {
 				priority
 				className={style.detailThumbnail}
 			/>
-			{detailInfo.YN_PAYMENT == 'Y' && (
+			{detailInfo.YN_PURCHASED == 'Y' && (
 				<div className={style.bottomInfo}>
 					<div
 						className={`${style.titleContainer} ${

@@ -88,6 +88,8 @@ export default function PlayListTrack({
 	if (isError || !data) return <div>Error occurred</div>;
 	const PlayList = data?.playlist;
 
+	console.log(PlayList);
+
 	return (
 		<>
 			<PlaylistDetailInfo detailInfo={PlayList} />
