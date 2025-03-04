@@ -4,7 +4,6 @@ import Link from "next/link";
 import style from "./trackItem.module.css";
 import { funcAlbumTrackPlayClick, generateClientRandomString } from "@/services/common";
 import { useQuery } from "@tanstack/react-query";
-import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
 import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
 import AlbumTrackLikeButton from "@/component/atom/button/AlbumTrackLikeButton";
@@ -34,7 +33,7 @@ export default function AlbumTrackItem({
 		useState("구매가 불가한 트랙입니다.");
 		
 	const id_key = generateClientRandomString();
-
+	
 	const handleConfirm = () => {
 		setIsPopupOpen(false);
 	};
@@ -56,18 +55,6 @@ export default function AlbumTrackItem({
 		},
 	});
 
-	const {
-		data: playData,
-		isError: playError,
-		isLoading: playLoding,
-	} = useQuery({
-		queryKey: ["PLAY-INFO"],
-		queryFn: () => {
-			const PlayInfo = getPlayInfoAxios(albumTrackInfo.ID);
-			return PlayInfo;
-		},
-	});
-
 	const handlePurchaseComplete = () => {
 		refetch();
 	};
@@ -77,8 +64,8 @@ export default function AlbumTrackItem({
 		setIsPopupOpen(true);
 	};
 
-	if (isLoading || playLoding) return <Loading />;
-	if (isError || playError || !playData || !trackData)return <div>Error occurred</div>;
+	if (isLoading) return <Loading />;
+	if (isError || !trackData)return <div>Error occurred</div>;
 
 	return (
 		<>
@@ -88,7 +75,7 @@ export default function AlbumTrackItem({
 						className={style.albumTrackInfo}
 						onClick={() =>
 							albumTrackInfo.YN_PURCHASED === "Y"
-								? funcAlbumTrackPlayClick("trackPlay", playData, albumTrackInfo)
+								? funcAlbumTrackPlayClick("trackPlay", albumTrackInfo)
 								: albumTrackInfo.YN_SALE === "N"
 								? setIsPopupOpen(true)
 								: setIsPaymentOpen(true)
@@ -144,7 +131,6 @@ export default function AlbumTrackItem({
 						<AlbumFuncButton
 							method="albumTrackMore"
 							track_info={trackData}
-							play_info={playData}
 							albumTrackList={AlbumTrackList}
 							position={position}
 						/>

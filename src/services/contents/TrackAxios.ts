@@ -29,14 +29,17 @@ export type TRACK_ITEM_TYPE = {
 	S_ARTIST?: string;
 	STAR?: number;
 	PRICE?:number;
+	YN_PURCHASED?:string;
 	YN_SALE?:string;
 	ALBUM_PRICE?:number;
+	URL?:string;
+	PLAYABLE_CODE?:string;
 };
 
 export type TRACK_INFO_RESPONSE = {
 	idTrack: string;
 	RES_CODE: string;
-    RES_MSG?: string;
+  RES_MSG?: string;
 	TRACK_INFO: TRACK_ITEM_TYPE;
 };
 

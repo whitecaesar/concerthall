@@ -86,32 +86,32 @@ export default function PlayListTrack({
 	}, [handleScroll]);
 
 	if (isError || !data) return <div>Error occurred</div>;
-	const PlayList = data?.playlist;
+	const recentPlayList = data?.playlist;
 
-	console.log(PlayList);
+	console.log("recentPlayList : ", recentPlayList);
 
 	return (
 		<>
-			<PlaylistDetailInfo detailInfo={PlayList} />
+			<PlaylistDetailInfo detailInfo={recentPlayList} />
 			<FuncPlayListButtonGroup
-				trackItem={PlayList}
+				trackItem={recentPlayList}
 				pageType={"PlayListPage"}
 				like={like}
 			/>
-			{PlayList && 
+			{recentPlayList && 
 				<div 
 					className="trackListWrap"
 					ref={containerRef}
 				>
 					<div className="trackNum">
-						<span>{PlayList.tracks.length} Tracks</span>
+						<span>{recentPlayList.tracks.length} Tracks</span>
 					</div>
 					<ul className="trackList">
 						{visibleTracks.map((itemInfo:TRACK_TRACKS_ITEM_TYPE, index:number) => (
 							<li key={itemInfo.id}>
 								<PLTrackItem 
 									trackInfo={itemInfo} 
-									trackListInfo={PlayList} 
+									trackListInfo={recentPlayList} 
 									position={index} 
 									method='playlist'
 								/>

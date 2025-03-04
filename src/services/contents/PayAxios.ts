@@ -75,7 +75,7 @@ export type PAYMENT_REQUEST_TYPE = {
     price : number;
     cpCode : string;
     appType : string;
-    paymentId : string;
+    purchaseId : string;
 }
 
 export async function setPaymentAxios(
@@ -112,12 +112,13 @@ export async function setPaymentAxios(
 export type TRACK_PURCHASE_RESPONSE = {
 	RES_CODE: string;
 	RES_MSG: string;
+	CPCODE : string;
 };
 
 export type TRACK_PURCHASE_REQUEST_TYPE = {
     ID_CUST : string;
     PRICE : number;
-		PAYMENT_ID : string;
+		PURCHASE_ID : string;
 }
 
 export async function setTrackPurchaseAxios(
@@ -158,6 +159,58 @@ export async function setAlbumPurchaseAxios(
 
 	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
 		`http://cip.ontown.co.kr/hch/album/${idAlbum}/purchase.json`,
+		null, 
+		{
+			params: param,
+		}
+	);
+
+	
+	if (response.status === 200) {
+            return response.data;
+	} else {
+		throw new Error(`에러입니다. ${response.status}`);
+	}
+}
+
+export async function setTrackPurchaseCancelAxios(
+	idTrack?: string,
+	param?: TRACK_PURCHASE_REQUEST_TYPE
+): Promise<TRACK_PURCHASE_RESPONSE> {
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
+
+	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
+		`http://cip.ontown.co.kr/hch/track/${idTrack}/cancelPurchase.json`,
+		null, 
+		{
+			params: param,
+		}
+	);
+
+	
+	if (response.status === 200) {
+            return response.data;
+	} else {
+		throw new Error(`에러입니다. ${response.status}`);
+	}
+}
+
+export async function setAlbumPurchaseCancelAxios(
+	idAlbum?: string,
+	param?: TRACK_PURCHASE_REQUEST_TYPE
+): Promise<TRACK_PURCHASE_RESPONSE> {
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
+
+	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
+		`http://cip.ontown.co.kr/hch/album/${idAlbum}/cancelPurchase.json`,
 		null, 
 		{
 			params: param,

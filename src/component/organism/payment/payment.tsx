@@ -4,7 +4,7 @@ import style from "./payment.module.css";
 import Icon from "@/component/atom/icon/Icon";
 import Button from "@/component/atom/button/Button";
 import sha1 from 'crypto-js/sha1';
-import { getPassCheckAxios, getBalanceCheckAxios, setTrackPurchaseAxios, setPaymentAxios, setAlbumPurchaseAxios } from "@/services/contents/PayAxios";
+import { getPassCheckAxios, getBalanceCheckAxios, setTrackPurchaseAxios, setPaymentAxios, setAlbumPurchaseAxios, setTrackPurchaseCancelAxios, setAlbumPurchaseCancelAxios } from "@/services/contents/PayAxios";
 import { getCookie } from "@/services/common";
 
 interface PaymentProps {
@@ -54,7 +54,6 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 			}
 
 			// PIN을 SHA-1으로 암호화
-
 			const hashedPin = sha1(pin).toString();
 			// 비밀번호 확인
 			const passCheckResponse = await getPassCheckAxios({
@@ -66,6 +65,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				const balanceResponse = await getBalanceCheckAxios();
 				// 입력값 초기화 및 모달 닫기
 				const point = balanceResponse.data.rewardPoint + balanceResponse.data.chargePoint;
+				console.log("point",point);
 				if(price && point  > price)
 				{
 					const IDCUST = getCookie("userid");
@@ -75,40 +75,49 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 							onError("Required information is missing."); // 직접 에러 메시지 전달
 						}
 					}
-					
-					const paymentId = generateUniqueId();
-					const paymentParam = {
-						price : price,
-						cpCode : "TEST_CP",
-						appType : "CONCERTHALL",
-						paymentId : paymentId,
-					}; 
-					const paymentResponse = await setPaymentAxios(paymentParam, idKey);
-					if (paymentResponse.code === "200.1" && paymentResponse.message === "ok") {
-						const param = {
-							ID_CUST: IDCUST?IDCUST:'',
-							PRICE: price, // number 타입 유지
-							PAYMENT_ID : paymentId,
-						};
-						
-						const purchaseResponse = type ==='track'?
-						await setTrackPurchaseAxios(trackId, param):
-						await setAlbumPurchaseAxios(albumId, param);
 
-						if (purchaseResponse.RES_CODE === "0000") {
+					const purchaseId = generateUniqueId();
+					const param = {
+						ID_CUST: IDCUST?IDCUST:'',
+						PRICE: price, // number 타입 유지
+						PURCHASE_ID : purchaseId,
+					};
+					
+					const purchaseResponse = type ==='track'?	await setTrackPurchaseAxios(trackId, param): await setAlbumPurchaseAxios(albumId, param);
+					console.log("purchaseResponse",purchaseResponse);
+					if (purchaseResponse.RES_CODE === "0000") {
+
+						const cpCode = purchaseResponse.CPCODE;
+						const paymentParam = {
+							price : price,
+							cpCode : cpCode,
+							appType : "CONCERTHALL",
+							purchaseId : purchaseId,
+						}; 
+						const paymentResponse = await setPaymentAxios(paymentParam, idKey);
+						if (paymentResponse.code === "200.1" && paymentResponse.message === "ok") {
 							onPurchaseComplete();
 							setPin("");
 						} else {
-							setErrorMessage(purchaseResponse.RES_MSG);
+							// 로즈쪽 구매 실패시 구매 취소
+							const purchaseCancelResponse = type ==='track'?	await setTrackPurchaseCancelAxios(trackId, param): await setAlbumPurchaseCancelAxios(albumId, param);
+							if (purchaseCancelResponse.RES_CODE !== "0000") {
+								setErrorMessage(purchaseCancelResponse.RES_MSG);
+								if (onError) {
+									onError(purchaseCancelResponse.RES_MSG); // 직접 에러 메시지 전달
+								}
+							}
+							//구매 취소 로직 넣어야 함.
+							setErrorMessage(paymentResponse.message);
 							if (onError) {
-								onError(purchaseResponse.RES_MSG); // 직접 에러 메시지 전달
+								onError(paymentResponse.message); // 직접 에러 메시지 전달
 							}
 						}
 						onClose();
 					} else {
-						setErrorMessage(paymentResponse.message);
+						setErrorMessage(purchaseResponse.RES_MSG);
 						if (onError) {
-							onError(paymentResponse.message); // 직접 에러 메시지 전달
+							onError(purchaseResponse.RES_MSG); // 직접 에러 메시지 전달
 						}
 					}
 				}

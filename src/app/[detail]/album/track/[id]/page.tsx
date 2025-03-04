@@ -5,7 +5,7 @@ import AlbumTrack from "@/component/template/AlbumTrack";
 import { useSearchParams } from "next/navigation";
 import { useContext, useEffect } from "react";
 
-export default function trackPage({ params }: { params: { id: string} }) {
+export default function TrackPage({ params }: { params: { id: string} }) {
 	const searchParams = useSearchParams();
 	const title = searchParams.get('title') || '';
 	const type = searchParams.get('type') || '';

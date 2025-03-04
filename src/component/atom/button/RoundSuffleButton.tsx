@@ -10,29 +10,6 @@ interface allPlayProp {
 
 const RoundShuffleButton = ({AlbumItem} :allPlayProp) => {
 
-	function addPropertyToItemInfo(id :string, propertyName:string, propertyValue:string) {
-		const item = AlbumItem.ITME_INFO.find(item => item.ID === id);
-		if (item) {
-		// 속성 추가
-			(item as any)[propertyName] = propertyValue;
-		}
-	}
-
-	useEffect(() => {
-		AlbumItem.ITME_INFO.forEach(async (item: ALBUM_ITEM_TYPE) => {
-			try {
-				const playInfo = getPlayInfoAxios(item.ID);
-				addPropertyToItemInfo(item.ID, 'playable_code',(await playInfo).RES_CODE);
-				if((await playInfo).INFO.URL)
-				{
-					addPropertyToItemInfo(item.ID, 'url',(await playInfo).INFO.URL);
-				}
-			} catch (error) {
-				console.error("Error fetching data for item", item.ID, error);
-			}
-		});
-	}, [])
-
 	const handleClick = async() => {
 		funcAlbumPlayClick('SufflePlay',AlbumItem);
 	}

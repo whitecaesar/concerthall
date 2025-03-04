@@ -43,7 +43,7 @@ export type ALBUM_DETAIL_TYPE = {
 	TITLE: string;
 	THUMBNAIL: string;
 	TOTAL_NUM_TRACK: number;
-	ITME_INFO: ALBUM_ITEM_TYPE[];
+	ITEM_INFO: ALBUM_ITEM_TYPE[];
 	ARTIST?: ALBUM_ARTIST_INFO_TYPE[];
 	YN_SALE?: string;
 	YN_PURCHASED?: string;
@@ -57,6 +57,18 @@ export async function getAlbumAxios(
 ): Promise<ALBUM_DETAIL_TYPE> {
 
 	const ID_CUST = getCookie("userid");
+	const IP = getCookie("ip");
+	const LANG = getCookie("lang");
+	/*
+	const response: AxiosResponse<ALBUM_DETAIL_TYPE> = await axios.get(
+		`http://cip.ontown.co.kr/hch/album/${idAlbum}/contents.json?ID_CUST=${ID_CUST}`, {
+			headers: {
+				'X-Forwarded-For': IP,
+				'Accept-Language': LANG
+			} // URL 구성을 동적으로 변경했습니다. // URL 구성을 동적으로 변경했습니다.
+		}
+	);
+	*/
 	const response: AxiosResponse<ALBUM_DETAIL_TYPE> = await axios.get(
 		`http://cip.ontown.co.kr/hch/album/${idAlbum}/contents.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
 	);
@@ -69,7 +81,7 @@ export async function getAlbumAxios(
 		}
 		
 		// ITEM_INFO 배열 내의 각 아이템에 대해 S_ARTIST를 파싱
-        albumData.ITME_INFO = albumData.ITME_INFO.map(item => ({
+        albumData.ITEM_INFO = albumData.ITEM_INFO.map(item => ({
             ...item,
             ARTIST: item.S_ARTIST ? JSON.parse(item.S_ARTIST) : []
         }));

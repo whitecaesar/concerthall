@@ -57,17 +57,6 @@ export default function ArtistTrackItem({
 		},
 	});
 
-	const {
-		data: playData,
-		isError: playError,
-		isLoading: playLoding,
-	} = useQuery({
-		queryKey: ["PLAY-INFO"],
-		queryFn: () => {
-			const PlayInfo = getPlayInfoAxios(ArtistTrackInfo.ID);
-			return PlayInfo;
-		},
-	});
 
 	const handlePurchaseComplete = () => {
 		refetch();
@@ -78,8 +67,8 @@ export default function ArtistTrackItem({
 		setIsPopupOpen(true);
 	};
 
-	if (playLoding) return <Loading />;
-	if (playError || !playData) return <div>Error occurred</div>;
+	if (isLoading) return <Loading />;
+	if (isError || !trackData) return <div>Error occurred</div>;
 
 	return (
 		<>
@@ -87,7 +76,7 @@ export default function ArtistTrackItem({
 			<span
 				onClick={() =>
 					ArtistTrackInfo.YN_PURCHASED === 'Y' 
-					? funcAlbumTrackPlayClick("trackPlay", playData, ArtistTrackInfo)
+					? funcAlbumTrackPlayClick("trackPlay", ArtistTrackInfo)
 					: (ArtistTrackInfo.YN_SALE === 'N' ? setIsPopupOpen(true) : setIsPaymentOpen(true))
 				}
 			>
@@ -137,7 +126,6 @@ export default function ArtistTrackItem({
 					<AlbumFuncButton
 						method="albumTrackMore"
 						track_info={trackData}
-						play_info={playData}
 						albumTrackList={ArtistTrackList}
 						position={position}
 					/>

@@ -1,11 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
 import { ALBUM_DETAIL_TYPE, ALBUM_ITEM_TYPE } from "./contents/AlbumAxios";
 import { PLAY_ITEM_RESPONSE, getPlayInfoAxios } from "./contents/PlayInfoAxios";
-import { TRACK_PLAYLIST_TYPE, TRACK_TRACKS_ITEM_TYPE } from "./contents/PlayListTrackAxios";
+import { TRACK_PLAYLIST_TYPE } from "./contents/PlayListTrackAxios";
 import { TRACK_RECENT_ITEM_TYPE, TRACK_RECENT_LIST_RESPONSE } from "./contents/RecentTrackListAxios";
 import { TRACK_ITEM_TYPE } from "./contents/TrackAxios";
-import { getRecentAlbumAxios } from "./contents/RecentAlbumAxios";
 import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE } from "./contents/ViewAllAxios";
 
 export const MediaType = 'CONCERT_HALL';
@@ -56,108 +54,169 @@ function convertToMilliseconds(duration : string) {
   return (seconds * 1000) + millisecondsPart;
 }
 
-export function funcTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, track? : TRACK_ITEM_TYPE, tracklistInfo? : VIEWALL_LIST_TYPE, position? : number, albumTrackList? : ALBUM_ITEM_TYPE[]) {
+export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE, tracklistInfo? : VIEWALL_LIST_TYPE, position? : number, albumTrackList? : ALBUM_ITEM_TYPE[]) {
   
    // 버튼 클릭 시 실행할 로직
   if(type == 'trackMore')
   {
     const WebStreamTrackItem: any[] = [];
     tracklistInfo?.ITEM_INFO.forEach(async (item :ITEM_INFO_TYPE) => {
-      
-      const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
-      const trackItem = {
-        track_id : item.ID,
-        title : item.TITLE,
-        thumbnail : item.THUMBNAIL,
-        url : item.URL,
-        playable_code : item.PLAYABLE_CODE,
-        media_type : item.MEDIA_TYPE,
-        album_id : item.ALBUM_ID,
-        album_name : item.ALBUM_NAME,
-        artist : item.ARTIST,
-        duration : duratinon
-      };
-      WebStreamTrackItem.push(trackItem);
+      if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
+      {
+        if (item.ID) {
+          try {
+            const result = await getPlayInfoAxios(item.ID);
+            if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
+              item.URL = result.INFO.URL;
+              item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+            }
+          } catch (error) {
+            console.error(`Failed to fetch play info for ID ${item.ID}:`, error);
+          }
+        }
+
+        const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
+        const trackItem = {
+          track_id : item.ID,
+          title : item.TITLE,
+          thumbnail : item.THUMBNAIL,
+          url : item.URL,
+          playable_code : item.PLAYABLE_CODE,
+          media_type : item.MEDIA_TYPE,
+          album_id : item.ALBUM_ID,
+          album_name : item.ALBUM_NAME,
+          artist : item.ARTIST,
+          duration : duratinon
+        };
+        WebStreamTrackItem.push(trackItem);
+      }
     });
+    
+    if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
+    {
+      console.error(`No playable tracks available.`);
 
-    const trackData = {
-      webstreamtrackitem : WebStreamTrackItem,
-      position : position
-    };
+    } else {
+      const trackData = {
+        webstreamtrackitem : WebStreamTrackItem,
+        position : position
+      };
 
-    let json_track_data: string = JSON.stringify(trackData);
-    (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+      let json_track_data: string = JSON.stringify(trackData);
+      (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+    }
   }
   else if(type == 'albumTrackMore')
   {
     const WebStreamTrackItem: any[] = [];
 
+    console.log(albumTrackList);
     albumTrackList?.forEach(async (item :ALBUM_ITEM_TYPE) => {
-      const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
-      const trackItem = {
-        track_id : item.ID,
-        title : item.TITLE,
-        thumbnail : item.THUMBNAIL,
-        url : item.URL,
-        playable_code : item.PLAYABLE_CODE,
-        media_type : item.MEDIA_TYPE,
-        album_id : item.ALBUM_ID,
-        album_name : item.ALBUM_NAME,
-        artist : item.ARTIST,
-        duration : duratinon
-      };
-      WebStreamTrackItem.push(trackItem);
+      if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
+      {
+        if (item.ID) {
+          try {
+            const result = await getPlayInfoAxios(item.ID);
+            if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
+              item.URL = result.INFO.URL;
+              item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+            }
+          } catch (error) {
+            console.error(`Failed to fetch play info for ID ${item.ID}:`, error);
+          }
+        }
+
+        const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
+        const trackItem = {
+          track_id : item.ID,
+          title : item.TITLE,
+          thumbnail : item.THUMBNAIL,
+          url : item.URL,
+          playable_code : item.PLAYABLE_CODE,
+          media_type : item.MEDIA_TYPE,
+          album_id : item.ALBUM_ID,
+          album_name : item.ALBUM_NAME,
+          artist : item.ARTIST,
+          duration : duratinon
+        };
+        WebStreamTrackItem.push(trackItem);
+      }
     });
 
-    const trackData = {
-      webstreamtrackitem : WebStreamTrackItem,
-      position : position
-    };
+    if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
+    {
+      console.error(`No playable tracks available.`);
 
-    let json_track_data: string = JSON.stringify(trackData);
-    (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+    } else {
+      const trackData = {
+        webstreamtrackitem : WebStreamTrackItem,
+        position : position
+      };
+
+      let json_track_data: string = JSON.stringify(trackData);
+      (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+    }
   }
   else if(type == 'trackPlay' || type == 'trackShare')
   {
-     const duratinon = track?.DURATION && convertToMilliseconds(track.DURATION);
-     const trackItem = {
-      track_id : track?.TRACK_ID,
-      title : track?.TITLE,
-      album_thumbnail : track?.ALBUM_THUMBNAIL,
-      thumbnail : track?.THUMBNAIL,
-      url : playUrl?.INFO.URL,
-      playable : playUrl?.RES_CODE,
-      media_type : track?.MEDIA_TYPE,
-      album_id : track?.ALBUM_ID,
-      album_name : track?.ALBUM_NAME,
-      artist : track?.ARTIST,
-      duration : duratinon,
-      resolution : track?.data?.resolution,
-      codec : track?.data?.codec,
-    };
+    if(track && track.YN_PURCHASED =='Y' && track.YN_SALE == 'Y')
+    {
+      if (track.TRACK_ID) {
+        try {
+          const result = await getPlayInfoAxios(track.TRACK_ID);
+          if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
+            track.URL = result.INFO.URL;
+            track.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+          }
+        } catch (error) {
+          console.error(`Failed to fetch play info for ID ${track.TRACK_ID}:`, error);
+        }
+      }
+      const duratinon = track?.DURATION && convertToMilliseconds(track.DURATION);
 
-    const WebStreamTrackItem: any[] = [trackItem];
+      const WebStreamTrackItem = {
+        track_id : track?.TRACK_ID,
+        title : track?.TITLE,
+        album_thumbnail : track?.ALBUM_THUMBNAIL,
+        thumbnail : track?.THUMBNAIL,
+        url : track?.URL,
+        playable : track?.PLAYABLE_CODE,
+        media_type : track?.MEDIA_TYPE,
+        album_id : track?.ALBUM_ID,
+        album_name : track?.ALBUM_NAME,
+        artist : track?.ARTIST,
+        duration : duratinon,
+        resolution : track?.data?.resolution,
+        codec : track?.data?.codec,
+      };
 
+      if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
+      {
+        console.error(`No playable tracks available.`);
+      } else {
+        const trackData = {
+          webstreamtrackitem : WebStreamTrackItem
+        }
       
-    const trackData = {
-      webstreamtrackitem : WebStreamTrackItem
-    }
-  
-    let json_track_data: string = JSON.stringify(trackData);
-
-    if(type == 'trackPlay')
-    {
-      (window as any).HifiRose.webStreamTrackClick(json_track_data);
-    }
-    else if(type == 'trackShare')
-    {
-      (window as any).HifiRose.webStreamGotoShareTrack(json_track_data);
+        let json_track_data: string = JSON.stringify(trackData);
+    
+        if(type == 'trackPlay')
+        {
+          (window as any).HifiRose.webStreamTrackClick(json_track_data);
+        }
+        else if(type == 'trackShare')
+        {
+          (window as any).HifiRose.webStreamGotoShareTrack(json_track_data);
+        }
+      }
+    } else {
+      console.error(`No playable track available.`);
     }
   }
 };
 
 
-export function funcAlbumTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONSE, track : ALBUM_ITEM_TYPE, tracklistInfo? : VIEWALL_LIST_TYPE, position? : number) {
+export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_TYPE, tracklistInfo? : VIEWALL_LIST_TYPE, position? : number) {
        
   // 버튼 클릭 시 실행할 로직
   if(type == 'trackMore')
@@ -165,62 +224,103 @@ export function funcAlbumTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPONS
     const WebStreamTrackItem: any[] = [];
 
     tracklistInfo?.ITEM_INFO.forEach(async (item :ITEM_INFO_TYPE) => {
-      const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
-      const trackItem = {
-        track_id : item.ID,
-        title : item.TITLE,
-        thumbnail : item.THUMBNAIL,
-        url : item.URL,
-        playable_code : item.PLAYABLE_CODE,
-        media_type : item.MEDIA_TYPE,
-        album_id : item.ALBUM_ID,
-        album_name : item.ALBUM_NAME,
-        artist : item.ARTIST,
-        duration : duratinon
-      };
-      WebStreamTrackItem.push(trackItem);
+      if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
+      {
+        if (item.ID) {
+          try {
+            const result = await getPlayInfoAxios(item.ID);
+            if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
+              item.URL = result.INFO.URL;
+              item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+            }
+          } catch (error) {
+            console.error(`Failed to fetch play info for ID ${item.ID}:`, error);
+          }
+        }
+
+        const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
+        const trackItem = {
+          track_id : item.ID,
+          title : item.TITLE,
+          thumbnail : item.THUMBNAIL,
+          url : item.URL,
+          playable_code : item.PLAYABLE_CODE,
+          media_type : item.MEDIA_TYPE,
+          album_id : item.ALBUM_ID,
+          album_name : item.ALBUM_NAME,
+          artist : item.ARTIST,
+          duration : duratinon
+        };
+        WebStreamTrackItem.push(trackItem);
+      }
     });
 
-    const trackData = {
-      webstreamtrackitem : WebStreamTrackItem,
-      position : position
-    };
-    
-    let json_track_data: string = JSON.stringify(trackData);
-    (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+    if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
+    {
+      console.error(`No playable tracks available.`);
+    } else {
+      const trackData = {
+        webstreamtrackitem : WebStreamTrackItem,
+        position : position
+      };
+      
+      let json_track_data: string = JSON.stringify(trackData);
+      (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+    }
   }
   else if(type == 'trackPlay' || type == 'trackShare')
   {
-     const duratinon = track.DURATION && convertToMilliseconds(track.DURATION);
-     const trackItem = {
-      track_id : track.ID,
-      title : track.TITLE,
-      album_thumbnail : track.ALBUM_THUMBNAIL,
-      thumbnail : track.THUMBNAIL,
-      url : playUrl?.INFO.URL,
-      playable : playUrl?.RES_CODE,
-      media_type : track.MEDIA_TYPE,
-      album_id : track.ALBUM_ID,
-      album_name : track.ALBUM_NAME,
-      artist : track.ARTIST,
-      duration : duratinon
-    };
+    const WebStreamTrackItem: any[] = [];
+    if(track && track.YN_PURCHASED =='Y' && track.YN_SALE == 'Y')
+    {
+      if (track.ID) {
+        try {
+          const result = await getPlayInfoAxios(track.ID);
+          if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
+            track.URL = result.INFO.URL;
+            track.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+          }
+        } catch (error) {
+          console.error(`Failed to fetch play info for ID ${track.ID}:`, error);
+        }
+      }
 
-    const WebStreamTrackItem: any[] = [trackItem];
-
-    const trackData = {
-      webstreamtrackitem : WebStreamTrackItem
+      const duratinon = track.DURATION && convertToMilliseconds(track.DURATION);
+      const trackItem = {
+        track_id : track.ID,
+        title : track.TITLE,
+        album_thumbnail : track.ALBUM_THUMBNAIL,
+        thumbnail : track.THUMBNAIL,
+        url : track.URL,
+        playable : track.PLAYABLE_CODE,
+        media_type : track.MEDIA_TYPE,
+        album_id : track.ALBUM_ID,
+        album_name : track.ALBUM_NAME,
+        artist : track.ARTIST,
+        duration : duratinon
+      };
+      
+      WebStreamTrackItem.push(trackItem);
     }
-  
-    let json_track_data: string = JSON.stringify(trackData);
+
+    if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
+    {
+      console.error(`No playable tracks available.`);
+    } else {
+      const trackData = {
+        webstreamtrackitem : WebStreamTrackItem
+      }
     
-    if(type == 'trackPlay')
-    {
-      (window as any).HifiRose.webStreamTrackClick(json_track_data);
-    }
-    else if(type == 'trackShare')
-    {
-      (window as any).HifiRose.webStreamGotoShareTrack(json_track_data);
+      let json_track_data: string = JSON.stringify(trackData);
+      
+      if(type == 'trackPlay')
+      {
+        (window as any).HifiRose.webStreamTrackClick(json_track_data);
+      }
+      else if(type == 'trackShare')
+      {
+        (window as any).HifiRose.webStreamGotoShareTrack(json_track_data);
+      }
     }
   }
 };
@@ -296,78 +396,104 @@ export function funcArtistTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPON
 export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
   const WebStreamTrackItem: any[] = [];
 
-  album?.ITME_INFO?.forEach(async (item :ALBUM_ITEM_TYPE) => {
-    const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
-    const trackItem = {
-      track_id : item.ID,
-      title : item.TITLE,
-      album_thumbnail : album.THUMBNAIL,
-      thumbnail : item.THUMBNAIL,
-      url : item.URL,
-      playable_code : item.PLAYABLE_CODE,
-      media_type : item.MEDIA_TYPE,
-      album_id : item.ALBUM_ID,
-      album_name : item.ALBUM_NAME,
-      artist : item.ARTIST,
-      duration : duratinon,
-      resolution : item.DATA?.resolution,
-      codec : item.DATA?.codec,
-    };
-    WebStreamTrackItem.push(trackItem);
+  album?.ITEM_INFO?.forEach(async (item :ALBUM_ITEM_TYPE) => {
+    
+    if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
+    {
+      if (item.ID) {
+        try {
+          const result = await getPlayInfoAxios(item.ID);
+          if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
+            item.URL = result.INFO.URL;
+            item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+          }
+        } catch (error) {
+          console.error(`Failed to fetch play info for ID ${item.ID}:`, error);
+        }
+      }
+
+      const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
+      const trackItem = {
+        track_id : item.ID,
+        title : item.TITLE,
+        album_thumbnail : album.THUMBNAIL,
+        thumbnail : item.THUMBNAIL,
+        url : item.URL,
+        playable_code : item.PLAYABLE_CODE,
+        media_type : item.MEDIA_TYPE,
+        album_id : item.ALBUM_ID,
+        album_name : item.ALBUM_NAME,
+        artist : item.ARTIST,
+        duration : duratinon,
+        resolution : item.DATA?.resolution,
+        codec : item.DATA?.codec,
+      };
+      WebStreamTrackItem.push(trackItem);
+    }
   });
 
-  const WebStreamAlbumItem  = {   
-    album_id : album.ID,           
-    album_name : album.TITLE,       
-    thumbnail : album.THUMBNAIL,
-    tracks  : WebStreamTrackItem, 
-    artist  : album.ARTIST 
-  }
-
-  const albumData = {
-    webstreamalbumitem : WebStreamAlbumItem
-  }
-
-  let allData = {}
-
-  let json_album_data: string = JSON.stringify(albumData);
-
-  // 버튼 클릭 시 실행할 로직
-  if(type == 'albumMore')
+  if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
   {
-    (window as any).HifiRose.webStreamAlbumMoreClick(json_album_data);
-  }
-  else if(type == 'AlbumPlay')
-  {
-    allData = { 
-      webstreamtrackitem : WebStreamTrackItem,
-      webstreamalbumitem : WebStreamAlbumItem,
-      isShufflePlay : false
-    };
-    let All_data: string = JSON.stringify(allData);
-    (window as any).HifiRose.webStreamAlbumClick(All_data);
-  }
-  else if(type == 'SufflePlay')
-  {
-    allData = {
-      webstreamtrackitem : WebStreamTrackItem,
-      webstreamalbumitem : WebStreamAlbumItem,
-      isShufflePlay : true
-    };
-    let All_data: string = JSON.stringify(allData);
-    (window as any).HifiRose.webStreamAlbumClick(All_data);
-  }
-  else if(type == 'AlbumShare')
-  {
-    (window as any).HifiRose.webStreamGotoShareAlbum(json_album_data);
+    console.error(`No playable tracks available.`);
+  } else {
+    const WebStreamAlbumItem  = {   
+      album_id : album.ID,           
+      album_name : album.TITLE,       
+      thumbnail : album.THUMBNAIL,
+      tracks  : WebStreamTrackItem, 
+      artist  : album.ARTIST 
+    }
+
+    const albumData = {
+      webstreamalbumitem : WebStreamAlbumItem
+    }
+
+    let allData = {}
+
+    let json_album_data: string = JSON.stringify(albumData);
+
+    // 버튼 클릭 시 실행할 로직
+    if(type == 'albumMore')
+    {
+      (window as any).HifiRose.webStreamAlbumMoreClick(json_album_data);
+    }
+    else if(type == 'AlbumPlay')
+    {
+      allData = { 
+        webstreamtrackitem : WebStreamTrackItem,
+        webstreamalbumitem : WebStreamAlbumItem,
+        isShufflePlay : false
+      };
+      let All_data: string = JSON.stringify(allData);
+      (window as any).HifiRose.webStreamAlbumClick(All_data);
+    }
+    else if(type == 'SufflePlay')
+    {
+      allData = {
+        webstreamtrackitem : WebStreamTrackItem,
+        webstreamalbumitem : WebStreamAlbumItem,
+        isShufflePlay : true
+      };
+      let All_data: string = JSON.stringify(allData);
+      (window as any).HifiRose.webStreamAlbumClick(All_data);
+    }
+    else if(type == 'AlbumShare')
+    {
+      (window as any).HifiRose.webStreamGotoShareAlbum(json_album_data);
+    }
   }
 };
 
-export function funcPlayListTrackClick(type:string, trackItem:TRACK_RECENT_ITEM_TYPE, tracksItem:TRACK_RECENT_LIST_RESPONSE | TRACK_PLAYLIST_TYPE, position:number) {
+export async function funcPlayListTrackClick(type:string, trackItem:TRACK_RECENT_ITEM_TYPE, tracksItem:TRACK_RECENT_LIST_RESPONSE | TRACK_PLAYLIST_TYPE, position:number) {
   if(trackItem)
   {
-    const RoseMemberTrackItem: any[] = [trackItem];
     if(type == 'play'){
+      const result = await getPlayInfoAxios(trackItem.clientKey);
+      if (result && result.INFO && result.INFO.URL) {
+        trackItem.playUrl = result.INFO.URL;
+      }
+  
+      const RoseMemberTrackItem: any[] = [trackItem];
       const trackData = {
         rosemembertrackitem : RoseMemberTrackItem
       }
@@ -376,6 +502,25 @@ export function funcPlayListTrackClick(type:string, trackItem:TRACK_RECENT_ITEM_
     }
     else if(type == 'option')
     {
+      console.log("tracksItem", tracksItem.tracks);
+      if (tracksItem && Array.isArray(tracksItem.tracks)) {
+        await Promise.all(
+          tracksItem.tracks.map(async (track) => {
+            if (track.clientKey) {
+              try {
+                const result = await getPlayInfoAxios(track.clientKey);
+                if (result && result.INFO && result.INFO.URL) {
+                  track.playUrl = result.INFO.URL;
+                }
+              } catch (error) {
+                console.error(`Failed to fetch play info for clientKey ${track.clientKey}:`, error);
+              }
+            }
+          })
+        );
+      }
+
+      console.log("tracksItem.tracks", tracksItem.tracks);
       const trackData = {
         rosemembertrackitem : tracksItem.tracks,
         position:position,
@@ -387,7 +532,24 @@ export function funcPlayListTrackClick(type:string, trackItem:TRACK_RECENT_ITEM_
   }
 };
 
-export function funcPlayListPlayClick(type:string, playlist:TRACK_RECENT_LIST_RESPONSE | TRACK_PLAYLIST_TYPE, position?:number) {
+export async function funcPlayListPlayClick(type:string, playlist:TRACK_RECENT_LIST_RESPONSE | TRACK_PLAYLIST_TYPE, position?:number) {
+
+  // playlist.tracks가 존재하는 경우 각 트랙의 playUrl 업데이트
+  if (playlist && Array.isArray(playlist.tracks)) {
+    await Promise.all(playlist.tracks.map(async (track) => {
+      if (track.clientKey) {
+        try {
+          const result = await getPlayInfoAxios(track.clientKey);
+          if (result && result.INFO && result.INFO.URL) {
+            track.playUrl = result.INFO.URL;
+          }
+        } catch (error) {
+          console.error(`Failed to fetch play info for clientKey ${track.clientKey}:`, error);
+        }
+      }
+    }));
+  }
+
   if(playlist)
   {
     if(type == 'allPlay'){
@@ -424,6 +586,33 @@ export function funcPlayListPlayClick(type:string, playlist:TRACK_RECENT_LIST_RE
     }
   }
 };
+
+export function funcPreviewClick(url : string, playable_code: string, item : ALBUM_ITEM_TYPE, duration?: string) {
+  const WebStreamTrackItem: any[] = [];
+  const duratinon = convertToMilliseconds(duration?duration:'0');
+  const trackItem = {
+    track_id : item.ID,
+    title : item.TITLE,
+    thumbnail : item.THUMBNAIL,
+    url : item.URL,
+    playable_code : item.PLAYABLE_CODE,
+    media_type : item.MEDIA_TYPE,
+    album_id : item.ALBUM_ID,
+    album_name : item.ALBUM_NAME,
+    artist : item.ARTIST,
+    duration : duratinon,
+    resolution : item.DATA?.resolution,
+    codec : item.DATA?.codec,
+  };
+  WebStreamTrackItem.push(trackItem);
+
+  const trackData = {
+    webstreamtrackitem : WebStreamTrackItem
+  }
+
+  let json_track_data: string = JSON.stringify(trackData);
+  (window as any).HifiRose.webStreamTrackClick(json_track_data);
+}
 
 
 export function generateClientRandomString() {

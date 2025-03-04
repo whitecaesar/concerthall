@@ -2,7 +2,7 @@
 import Image from "next/image";
 import style from "./trackItem.module.css";
 import { funcPlayListTrackClick} from "@/services/common";
-import { TRACK_TRACKS_ITEM_TYPE, TRACK_PLAYLIST_TYPE } from "@/services/contents/PlayListTrackAxios";
+import { TRACK_PLAYLIST_TYPE } from "@/services/contents/PlayListTrackAxios";
 import PLTFuncButton from "@/component/atom/button/PLTFuncButton";
 import PLTLikeButton from "@/component/atom/button/PLTLikeButton";
 import { TRACK_RECENT_ITEM_TYPE, TRACK_RECENT_LIST_RESPONSE } from "@/services/contents/RecentTrackListAxios";

@@ -19,10 +19,10 @@ type Props = {
 		}
 		else if(method == 'playlist')
 		{
-        	funcPlayListPlayClick('trackoption', trackListItem, pst);
+      funcPlayListPlayClick('trackoption', trackListItem, pst);
 		}
 	};
-  
+
 	return (
 	  <>
 		<button

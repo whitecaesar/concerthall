@@ -8,7 +8,7 @@ import PurchaseAlbumList from "../albumList/PurchaseAlbumList";
 
 type Props = {};
 
-export default function purchaseList(props: Props) {
+export default function PurchaseList(props: Props) {
 	const [activeTab, setActiveTab] = useState<string>("Tab1");
 	const [purchaseList, setPurchaseList] = useState<PURCHASE_LIST_RESPONSE>();
 

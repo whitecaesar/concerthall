@@ -10,7 +10,6 @@ import {
 } from "@/services/contents/ViewAllAxios";
 import { useQuery } from "@tanstack/react-query";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
-import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 import { funcTrackPlayClick, generateClientRandomString } from "@/services/common";
 import Loading from "@/app/loading";
 import Icon from "@/component/atom/icon/Icon";
@@ -53,21 +52,8 @@ export default function SingleItem({
 		},
 	});
 
-	const {
-		data: playData,
-		isError: playError,
-		isLoading: playLoding,
-		refetch
-	} = useQuery({
-		queryKey: ["PLAY-INFO"],
-		queryFn: () => {
-			const PlayInfo = getPlayInfoAxios(singleInfo.ID);
-			return PlayInfo;
-		},
-	});
-
 	const handlePurchaseComplete = () => {
-		refetch();
+	///	refetch();
 	};
 
 	const handleError = (message: string) => {
@@ -75,8 +61,8 @@ export default function SingleItem({
 		setIsPopupOpen(true);
 	};
 
-	if (isLoading || playLoding) return <Loading />;
-	if (isError || playError || !playData || !trackData)
+	if (isLoading) return <Loading />;
+	if (isError || !trackData)
 		return <div>Error occurred</div>;
 
 	return (
@@ -86,7 +72,7 @@ export default function SingleItem({
 				onClick={() =>
 					
 					singleInfo.YN_PURCHASED === 'Y' 
-								? funcTrackPlayClick("trackPlay", playData, trackData.TRACK_INFO)
+								? funcTrackPlayClick("trackPlay", trackData.TRACK_INFO)
 								: (singleInfo.YN_SALE === 'N' ? setIsPopupOpen(true) : setIsPaymentOpen(true))
 				}
 			>
@@ -127,7 +113,6 @@ export default function SingleItem({
 					<FuncButton
 						method="trackMore"
 						track_info={trackData}
-						play_info={playData}
 						trackListInfo={trackListInfo}
 						position={position}
 					/>

@@ -6,7 +6,7 @@ import {
   ITEM_INFO_TYPE,
   VIEWALL_LIST_TYPE,
 } from "@/services/contents/ViewAllAxios";
-import { STAR_REQUEST_ITEM_TYPE, STAR_REQUEST_TYPE, STAR_TRACK_REQUEST_TYPE, getStarAxios, getStarTrackAxios } from "@/services/contents/StarAxios";
+import { STAR_TRACK_LIST_RESPONSE_TYPE, TRACK_REG_ITEM_TYPE, TRACK_REG_REQUEST_TYPE, TRACK_REG_RESPONSE_ITEM_TYPE, getRegCheckListAxios, getStarTrackListAxios } from "@/services/contents/StarAxios";
 
 interface SingleListProps {
   recommendList: VIEWALL_LIST_TYPE;
@@ -19,48 +19,71 @@ export default function SingleList({
 }: SingleListProps) {
   const [isFetch, setIsFetch] = useState<boolean>(false);
 
-  function addPropertyToItemInfo(id :string, propertyName:string, propertyValue:number) {
-		const item = recommendList.ITEM_INFO.find(item => item.ID === id);
-		if (item) {
-		// 속성 추가
-			(item as any)[propertyName] = propertyValue;
-		}
-	}
-
   useEffect(() => {
     fetchStarRatings();
   }, []);
 
   const fetchStarRatings = async () => {
-    recommendList.ITEM_INFO.map(async (track :ITEM_INFO_TYPE) => {
-    try {
-      /*
-      const starTrackParam: STAR_TRACK_REQUEST_TYPE = {
-        tracks: [{ type: 'CONCERT_HALL', clientKey: track.ID }]
-      };
-      const trackStarResponse = await getStarTrackAxios(starTrackParam);
+		const RegTrackItem: TRACK_REG_ITEM_TYPE[] = [];
 
-      if (trackStarResponse.id !== null) {
-          const contentParam: STAR_REQUEST_ITEM_TYPE[] = [{
-          id: trackStarResponse.id,
-          clientKey: track.ID
-        }];
-        const params: STAR_REQUEST_TYPE = {
-          contents: contentParam,
-          mediaType: 'CONCERT_HALL'
-        };
-        const response = await getStarAxios('TRACK', params);
-        addPropertyToItemInfo(track.ID, 'STAR', response.code === '200' ? response.contents[0].star: 0);
-      } else {
-        addPropertyToItemInfo(track.ID, 'STAR', 0);
-      }*/
-      setIsFetch(true);
-    } catch (error) {
-      console.error('Error fetching star rating', error);
-      addPropertyToItemInfo(track.ID, 'STAR', 0);
-    }
-      });
-  };
+		const promises = recommendList.ITEM_INFO.map(async (track: ITEM_INFO_TYPE) => {
+			const trackItem = {
+				mediaType : "CONCERT_HALL",
+				clientKey : track.ID,
+			};
+			RegTrackItem.push(trackItem);
+		});
+
+		await Promise.all(promises);
+
+		const RegTrackParam: TRACK_REG_REQUEST_TYPE = {
+			tracks: RegTrackItem
+		};
+
+		const regList = await getRegCheckListAxios(RegTrackParam);
+		if(regList.code === '200')
+		{
+			const roseId: any[] = [];
+			const promises = regList.tracks.map(async (track: TRACK_REG_RESPONSE_ITEM_TYPE) => {
+				if(track.id)
+				{
+					roseId.push(track.id);
+				}
+				else{
+					roseId.push(0);
+				}
+			});
+
+			await Promise.all(promises);
+			const StarParam: STAR_TRACK_LIST_RESPONSE_TYPE = {
+				ids : roseId
+			};
+
+			const starList = await getStarTrackListAxios(StarParam);
+			if (regList.code === '200' && starList && Array.isArray(starList.data)) {
+				const promises = recommendList.ITEM_INFO.map(async (track: ITEM_INFO_TYPE) => {
+					// 1. regList에서 track.ID와 일치하는 항목 찾기 (clientKey 기준)
+					const regEntry = regList.tracks.find((entry: TRACK_REG_RESPONSE_ITEM_TYPE) => entry.clientKey === track.ID);
+					// 2. regEntry의 id가 존재하면
+					if (regEntry && regEntry.id) {
+						// 3. starList.data에서 regEntry.id와 동일한 id를 가진 항목 찾기
+						const starEntry = starList.data.find((item: any) => item.id === regEntry.id);
+						// 4. 일치하는 항목이 있으면 해당 star 값을 할당, 없으면 0 할당
+						if (starEntry) {
+							track.STAR = starEntry.star;
+						} else {
+							track.STAR = 0;
+						}
+					} else {
+						// regList에 일치하는 항목이 없거나 id가 null이면 바로 0 할당
+						track.STAR = 0;
+					}
+				});
+				await Promise.all(promises);
+				setIsFetch(true);
+			}
+		}
+	};
 
   return isFetch &&
     <div style={{ paddingBottom: "10px" }}>

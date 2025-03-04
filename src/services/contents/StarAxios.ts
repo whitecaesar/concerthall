@@ -45,7 +45,7 @@ export async function getStarAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`error. ${response.status}`);
 	}
 }
 
@@ -61,7 +61,7 @@ export type STAR_TRACK_REQUEST_TYPE = {
 export type STAR_TRACK_RESPONSE_ITEM_TYPE = {
 	message: string;
 	code: string;
-    id: string | null;
+  id: string | null;
 };
 
 export async function getStarTrackAxios(
@@ -79,6 +79,52 @@ export async function getStarTrackAxios(
                 'Authorization': `Bearer ${token}`
             } // URL 구성
         } // URL 구성을 동적으로 변경했습니다. // URL 구성을 동적으로 변경했습니다.
+	);
+
+	if (response.status === 200) {
+		return response.data;
+	} else {
+		throw new Error(`에러입니다. ${response.status}`);
+	}
+}
+
+
+export type TRACK_REG_ITEM_TYPE = {
+	mediaType: string;
+	clientKey?: string;
+}
+
+export type TRACK_REG_REQUEST_TYPE = {
+	tracks: TRACK_REG_ITEM_TYPE[];
+}
+
+export type TRACK_REG_RESPONSE_ITEM_TYPE = {
+	mediaType: string;
+	clientKey?: string;
+  id: string | null;
+};
+
+export type TRACK_REG_RESPONSE_TYPE = {
+	message: string;
+	code: string;
+  tracks: TRACK_REG_RESPONSE_ITEM_TYPE[];
+};
+
+export async function getRegCheckListAxios(
+	param?: TRACK_REG_REQUEST_TYPE
+): Promise<TRACK_REG_RESPONSE_TYPE> {
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
+	const response: AxiosResponse<TRACK_REG_RESPONSE_TYPE> = await axios.post(
+		`https://dev.api.roseaudio.kr/v1/member/track/check/list`, param,
+				{
+						headers: {
+								'Authorization': `Bearer ${token}`
+						} // URL 구성
+				} // URL 구성을 동적으로 변경했습니다. // URL 구성을 동적으로 변경했습니다.
 	);
 
 	if (response.status === 200) {
@@ -122,8 +168,49 @@ export async function getStarAlbumAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`error. ${response.status}`);
 	}
 }
 
 
+export type STAR_ITEM_TYPE = {
+	id: string | null;
+	star: number;
+  favorite: string | null;
+};
+
+export type STAR_LIST_TYPE = {
+	message: string;
+	code: string;
+  data: STAR_ITEM_TYPE[];
+};
+
+
+export type STAR_TRACK_LIST_RESPONSE_TYPE = {
+	ids: number[];
+}
+
+export async function getStarTrackListAxios(
+	param?: STAR_TRACK_LIST_RESPONSE_TYPE
+): Promise<STAR_LIST_TYPE> {
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
+
+	const response: AxiosResponse<STAR_LIST_TYPE> = await axios.post(
+		`https://dev.api.roseaudio.kr/v1/member/track/rating/search/list`, param,
+				{
+						headers: {
+								'Authorization': `Bearer ${token}`
+						} // URL 구성
+				} // URL 구성을 동적으로 변경했습니다. // URL 구성을 동적으로 변경했습니다.
+	);
+
+	if (response.status === 200) {
+		return response.data;
+	} else {
+		throw new Error(`에러입니다. ${response.status}`);
+	}
+}

@@ -1,43 +1,22 @@
-import { funcAlbumPlayClick, funcTrackPlayClick } from "@/services/common";
-import { ALBUM_DETAIL_TYPE, ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
-import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
-import React, { useState } from "react";
+import { funcAlbumPlayClick} from "@/services/common";
+import { ALBUM_DETAIL_TYPE} from "@/services/contents/AlbumAxios";
+import React from "react";
 
 interface allPlayProp {
 	AlbumItem : ALBUM_DETAIL_TYPE;	
 }
 
 const RoundPlayButton = ({AlbumItem} :allPlayProp) => {
-	const track = AlbumItem.ITME_INFO;
-	function addPropertyToItemInfo(id :string, propertyName:string, propertyValue:string) {
-		const item = AlbumItem.ITME_INFO.find(item => item.ID === id);
-		if (item) {
-		// 속성 추가
-			(item as any)[propertyName] = propertyValue;
-		}
-	}
-	
-	const handleClick = async(trackItem : ALBUM_ITEM_TYPE[]) => {
-		trackItem.forEach(async (item :ALBUM_ITEM_TYPE) => {
-			try {
-				const playInfo = getPlayInfoAxios(item.ID);
-				addPropertyToItemInfo(item.ID, 'PLAYABLE_CODE',(await playInfo).RES_CODE);
-				addPropertyToItemInfo(item.ID, 'URL',(await playInfo).INFO.URL);
-			} catch (error) {
-				console.error('Error fetching data for item', item.ID, error);
-			}
-		});
-	
-		AlbumItem.ITME_INFO = trackItem;
+	const handleClick = () => {
 		funcAlbumPlayClick('AlbumPlay',AlbumItem);
 	}
-	
+
 	return (
 		<>
 			<button
 				type="button"
 				className="trackPlayBtn"
-				onClick={()=> handleClick(track)}
+				onClick={()=> handleClick()}
 			></button>
 			<style jsx>{`
 				.trackPlayBtn {
@@ -53,7 +32,6 @@ const RoundPlayButton = ({AlbumItem} :allPlayProp) => {
 		</>
 	);
 };
-
 
 export default RoundPlayButton;
 

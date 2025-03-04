@@ -3,12 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { getAlbumAxios } from "@/services/contents/AlbumAxios";
 import DetailInfo from "../molecule/detailInfo/DetailInfo";
 import FuncButtonGroup from "../molecule/buttonGroup/FuncButtonGroup";
-import TrackList from "@/component/organism/trackList/TrackList";
 import AlbumTrackList from "../organism/trackList/AlbumTrackList";
 import Loading from "@/app/loading";
 import PriceArea from "../molecule/priceGroup/priceArea";
-import { SubTitleContext } from "@/providers/SubTitleProvider";
-import { useContext, useEffect } from "react";
+import { getStarTrackListAxios, STAR_TRACK_LIST_RESPONSE_TYPE } from "@/services/contents/StarAxios";
 
 interface AlbumTrackProps {
 	album_id: string;
@@ -17,23 +15,22 @@ interface AlbumTrackProps {
 
 export default function AlbumTrack({ album_id, func_type}: AlbumTrackProps) {
 
-
 	const { data, isError, isLoading } = useQuery({
 		queryKey: ["ALBUM-ITEM"],
 		queryFn: async () => {
 			const trackList = await getAlbumAxios(album_id);
 
 			// ITEM_INFO의 모든 트랙의 YN_SALE 값을 확인
-			const hasPaymentTrack = trackList.ITME_INFO.some(
+			const hasPaymentTrack = trackList.ITEM_INFO.some(
 				(track: any) => track.YN_PURCHASED === 'N' || track.YN_PURCHASED == null
 			);
 
-			const hasUnavailableTrack = trackList.ITME_INFO.some(
+			const hasUnavailableTrack = trackList.ITEM_INFO.some(
 				(track: any) => track.YN_SALE === 'N' || track.YN_SALE == null
 			);
 
 			 // YN_SALE이 'Y'인 트랙의 PRICE 합산
-			 const totalAlbumPrice = trackList.ITME_INFO
+			 const totalAlbumPrice = trackList.ITEM_INFO
 			 .filter((track: any) => track.YN_PURCHASED === 'N' && track.YN_SALE === 'Y')
 			 .reduce((total: number, track: any) => total + (track.PRICE || 0), 0);
 			
@@ -51,7 +48,8 @@ export default function AlbumTrack({ album_id, func_type}: AlbumTrackProps) {
 	if (isError || !data) return <div>Error occurred</div>;
 
 	// data가 non-null임을 보장하기 위한 optional chaining
-	const trackItem = data.ITME_INFO; // 예시로 첫 번째 아이템 사용
+	const trackItem = data.ITEM_INFO; // 예시로 첫 번째 아이템 사용
+
 	if (data) {
 		return (
 			<>

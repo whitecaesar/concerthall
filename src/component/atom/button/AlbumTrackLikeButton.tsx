@@ -14,6 +14,7 @@ const AlbumTrackLikeButton =  ({ track_info }: LikeButtonProps) => {
   useEffect(() => {
     track_info?.STAR && setNumber(track_info?.STAR )
   }, [track_info?.STAR]);
+
   if (!track_info) {
     return null;  // track_info가 없으면 아무 것도 렌더링하지 않습니다.
   }
@@ -42,6 +43,7 @@ const AlbumTrackLikeButton =  ({ track_info }: LikeButtonProps) => {
     } catch (error) {
       console.error('Error fetching star rating', error);
     }
+
   };
 
   return (

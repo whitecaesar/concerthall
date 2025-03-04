@@ -23,18 +23,15 @@ import {
 } from "@/services/contents/RecentTrackListAxios";
 import RecentTrackList from "../organism/singleList/RecentTrackList";
 import TextBanner from "../organism/textBanner/TextBanner";
-import { setCookie, getCookie, deleteCookie } from "@/services/common";
+import {getCookie} from "@/services/common";
 import ErrorPage from "../organism/error/Error";
-import Loading from "@/app/loading";
-import Popup from "../atom/popup/Popup";
-import Button from "../atom/button/Button";
 
 export default function Main() {
 	const [error, setError] = useState<string | null>(null);
 	const [t, setT] = useState<string | null>(null);
 
-	setCookie("userid", "mjkim@citech.kr", 24);
-	setCookie("lang", "en", 24);
+	//setCookie("userid", "mjkim@citech.kr", 24);
+	//setCookie("lang", "en", 24);
 	const token = getCookie("token");
 
 	const { data, isFetched } = useQuery({
