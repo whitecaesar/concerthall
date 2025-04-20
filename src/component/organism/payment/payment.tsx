@@ -6,6 +6,7 @@ import Button from "@/component/atom/button/Button";
 import sha1 from 'crypto-js/sha1';
 import { getPassCheckAxios, getBalanceCheckAxios, setTrackPurchaseAxios, setPaymentAxios, setAlbumPurchaseAxios, setTrackPurchaseCancelAxios, setAlbumPurchaseCancelAxios } from "@/services/contents/PayAxios";
 import { getCookie } from "@/services/common";
+import { setCancelAxios } from "@/services/contents/PurchaseCancelAxios";
 
 interface PaymentProps {
 	onClose: () => void;
@@ -65,7 +66,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				const balanceResponse = await getBalanceCheckAxios();
 				// 입력값 초기화 및 모달 닫기
 				const point = balanceResponse.data.rewardPoint + balanceResponse.data.chargePoint;
-				console.log("point",point);
+				console.log("point=>",point,"price=>",price);
 				if(price && point  > price)
 				{
 					const IDCUST = getCookie("userid");
@@ -84,10 +85,9 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 					};
 					
 					const purchaseResponse = type ==='track'?	await setTrackPurchaseAxios(trackId, param): await setAlbumPurchaseAxios(albumId, param);
-					console.log("purchaseResponse",purchaseResponse);
-					if (purchaseResponse.RES_CODE === "0000") {
+					if (purchaseResponse.RES_CODE === "0000") { 
 
-						const cpCode = purchaseResponse.CPCODE;
+						const cpCode = 'test-01';
 						const paymentParam = {
 							price : price,
 							cpCode : cpCode,
@@ -99,18 +99,15 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 							onPurchaseComplete();
 							setPin("");
 						} else {
-							// 로즈쪽 구매 실패시 구매 취소
-							const purchaseCancelResponse = type ==='track'?	await setTrackPurchaseCancelAxios(trackId, param): await setAlbumPurchaseCancelAxios(albumId, param);
-							if (purchaseCancelResponse.RES_CODE !== "0000") {
-								setErrorMessage(purchaseCancelResponse.RES_MSG);
+							// 내부 결제 취소 호출
+							const cancelResponse = await setCancelAxios(purchaseId, {
+								ID_CUST: IDCUST?IDCUST:''
+							});
+							if (cancelResponse.REG_CODE !== "0000") {
+								setErrorMessage(`${cancelResponse.REG_MSG}`);
 								if (onError) {
-									onError(purchaseCancelResponse.RES_MSG); // 직접 에러 메시지 전달
+									onError(`${cancelResponse.REG_MSG}`); // 직접 에러 메시지 전달
 								}
-							}
-							//구매 취소 로직 넣어야 함.
-							setErrorMessage(paymentResponse.message);
-							if (onError) {
-								onError(paymentResponse.message); // 직접 에러 메시지 전달
 							}
 						}
 						onClose();
@@ -133,8 +130,6 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 					onError(passCheckResponse.message); // 직접 에러 메시지 전달
 				}
 			}
-
-
 
 		} catch (error) {
 			console.error("An error occurred during payment processing:", error);

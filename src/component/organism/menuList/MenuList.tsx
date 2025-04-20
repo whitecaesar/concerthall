@@ -10,7 +10,7 @@ export interface Texts {
   purchase: string;
 }
 
-export const texts: { [key: string]: Texts } = {
+export const purchaseTexts: { [key: string]: Texts } = {
   en: {
     playlist: "My Playlist",
     bookmark: "Bookmark",
@@ -131,16 +131,16 @@ const MenuList = () => {
 		setSubTitle(title);
 	};
 
-	const [playlist, setPlaylist] = useState<string>(texts.en.playlist);
-	const [bookmark, setBookmark] = useState<string>(texts.en.bookmark);
-	const [purchase, setPurchase] = useState<string>(texts.en.purchase);
+	const [playlist, setPlaylist] = useState<string>(purchaseTexts.en.playlist);
+	const [bookmark, setBookmark] = useState<string>(purchaseTexts.en.bookmark);
+	const [purchase, setPurchase] = useState<string>(purchaseTexts.en.purchase);
 
 	useEffect(() => {
 		const lang = getCookie("lang") || "en"; // 기본값을 en으로 설정
-		setPlaylist(texts[lang]?.playlist || texts.en.playlist);
-		setBookmark(texts[lang]?.bookmark || texts.en.bookmark);
-		setPurchase(texts[lang]?.purchase || texts.en.purchase);
-	}, [texts]);
+		setPlaylist(purchaseTexts[lang]?.playlist || purchaseTexts.en.playlist);
+		setBookmark(purchaseTexts[lang]?.bookmark || purchaseTexts.en.bookmark);
+		setPurchase(purchaseTexts[lang]?.purchase || purchaseTexts.en.purchase);
+	}, [purchaseTexts]);
 
 	return (
 		<div className="menuList">

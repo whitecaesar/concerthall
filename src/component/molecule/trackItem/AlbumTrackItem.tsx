@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import style from "./trackItem.module.css";
-import { funcAlbumTrackPlayClick, generateClientRandomString } from "@/services/common";
+import { funcAlbumTrackPlayClick, generateClientRandomString, getCookie } from "@/services/common";
 import { useQuery } from "@tanstack/react-query";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
 import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
@@ -13,12 +13,18 @@ import Icon from "@/component_RS/button/icon/Icon";
 import Payment from "@/component/organism/payment/payment";
 import { useState } from "react";
 import Popup from "@/component/atom/popup/Popup";
+import { purchaseTexts } from "@/component/organism/menuList/MenuList";
+import { useRouter } from "next/navigation";
+import { setCancelAxios, setCitechCancelAxios } from "@/services/contents/PurchaseCancelAxios";
 
 interface TrackItemProps {
 	albumTrackInfo: ALBUM_ITEM_TYPE;
 	AlbumTrackList: ALBUM_ITEM_TYPE[];
 	position: number;
 	type?: string;
+	handlePaymentOpen?: (track: ALBUM_ITEM_TYPE) => void;
+	handlePopupOpen?: (message: string) => void;
+	handleCancelOpen?: (track: ALBUM_ITEM_TYPE) => void;
 }
 
 export default function AlbumTrackItem({
@@ -26,22 +32,11 @@ export default function AlbumTrackItem({
 	AlbumTrackList,
 	position,
 	type,
+	handlePaymentOpen,
+	handlePopupOpen,
+	handleCancelOpen
 }: TrackItemProps) {
-	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-	const [isPopupOpen, setIsPopupOpen] = useState(false);
-	const [popupDescription, setPopupDescription] =
-		useState("구매가 불가한 트랙입니다.");
-		
-	const id_key = generateClientRandomString();
 	
-	const handleConfirm = () => {
-		setIsPopupOpen(false);
-	};
-
-	const handleCancel = () => {
-		setIsPopupOpen(false);
-	};
-
 	const {
 		data: trackData,
 		isError,
@@ -54,15 +49,6 @@ export default function AlbumTrackItem({
 			return TrackItem;
 		},
 	});
-
-	const handlePurchaseComplete = () => {
-		refetch();
-	};
-
-	const handleError = (message: string) => {
-		setPopupDescription(message);
-		setIsPopupOpen(true);
-	};
 
 	if (isLoading) return <Loading />;
 	if (isError || !trackData)return <div>Error occurred</div>;
@@ -77,8 +63,8 @@ export default function AlbumTrackItem({
 							albumTrackInfo.YN_PURCHASED === "Y"
 								? funcAlbumTrackPlayClick("trackPlay", albumTrackInfo)
 								: albumTrackInfo.YN_SALE === "N"
-								? setIsPopupOpen(true)
-								: setIsPaymentOpen(true)
+								? handlePopupOpen && handlePopupOpen("구매 불가능 트랙입니다.")
+								: handlePaymentOpen && handlePaymentOpen(albumTrackInfo)
 						}
 					>
 						{/* Link에는 트랙 재생하는 url이 들어가야 함 */}
@@ -100,16 +86,16 @@ export default function AlbumTrackItem({
 						))}
 					</div>
 				</span>
-				{albumTrackInfo.YN_CANCEL == "Y" && (<button className={style.btnPaymentCancel}>CANCEL</button>)}
+				{albumTrackInfo.YN_CANCEL === "Y" && (<button className={style.btnPaymentCancel} onClick={() => handleCancelOpen && handleCancelOpen(albumTrackInfo)}>CANCEL</button>)}
 				{/* 구매 관련 버튼 */}
-				{albumTrackInfo.YN_PURCHASED == "N" || albumTrackInfo.YN_PURCHASED == null ? (
+				{(albumTrackInfo.YN_PURCHASED === "N" || albumTrackInfo.YN_PURCHASED === null) && type !== 'purchase' ? (
 					<div className={`${style.buttonGroup} ${style.payment}`}>
 						{/* 구매 가능 버튼 */}
 						{albumTrackInfo.YN_SALE == "Y" ? (
 							<button
 								type="button"
 								className={style.btnPayment}
-								onClick={() => setIsPaymentOpen(true)}
+								onClick={() => handlePaymentOpen && handlePaymentOpen(albumTrackInfo)}
 							>
 								<p className={style.priceNum}>
 									<span>{albumTrackInfo.PRICE}</span>
@@ -138,23 +124,6 @@ export default function AlbumTrackItem({
 				)}
 			</div>
 
-			<Payment
-				isOpen={isPaymentOpen}
-				onClose={() => setIsPaymentOpen(false)}
-				trackId={albumTrackInfo.ID}
-				price={albumTrackInfo.PRICE}
-				idKey={id_key}
-				type="track"
-				onPurchaseComplete={handlePurchaseComplete}
-				onError={handleError}
-			/>
-			<Popup
-				isOpen={isPopupOpen}
-				onClose={() => setIsPopupOpen(false)}
-				title="INFOMATION"
-				description={popupDescription}
-				buttons={[{ text: "OK", className: "ok", onClick: handleConfirm }]}
-			/>
 		</>
 	);
 }

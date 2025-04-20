@@ -36,7 +36,7 @@ export async function getRegArtistInfoAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -78,7 +78,7 @@ export async function setArtistStarAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -118,7 +118,7 @@ export async function setRegArtistAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -158,7 +158,7 @@ export async function getArtistStarAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -205,6 +205,6 @@ export async function getArtistListAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }

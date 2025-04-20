@@ -1,9 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
-import { STAR_REQUEST_ITEM_TYPE, STAR_REQUEST_TYPE, STAR_TRACK_LIST_RESPONSE_TYPE, STAR_TRACK_REQUEST_TYPE, TRACK_REG_ITEM_TYPE, TRACK_REG_REQUEST_TYPE, TRACK_REG_RESPONSE_ITEM_TYPE, getRegCheckListAxios, getStarAxios, getStarTrackAxios, getStarTrackListAxios } from "@/services/contents/StarAxios";
+import {  STAR_TRACK_LIST_RESPONSE_TYPE, TRACK_REG_ITEM_TYPE, TRACK_REG_REQUEST_TYPE, TRACK_REG_RESPONSE_ITEM_TYPE, getRegCheckListAxios, getStarAxios, getStarTrackAxios, getStarTrackListAxios } from "@/services/contents/StarAxios";
 import ArtistTrackItem from "@/component/molecule/artistTrackItem/ArtistTrackItem";
 import ItemListTitle from "@/component/molecule/itemListTitle/ItemListTitle";
+import { generateClientRandomString, getCookie } from "@/services/common";
+import { useRouter } from "next/navigation";
+import { purchaseTexts } from "../menuList/MenuList";
+import Payment from "@/component/organism/payment/payment";
+import Popup from "@/component/atom/popup/Popup";
 
 interface ArtistTrackListProps {
 	ArtistTrackList: ALBUM_ITEM_TYPE[];
@@ -11,6 +16,41 @@ interface ArtistTrackListProps {
 
 const ArtistTrackList = ({ ArtistTrackList }: ArtistTrackListProps) => {
 	const [isFetch, setIsFetch] = useState<boolean>(false);
+
+	const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+	const [popupDescription, setPopupDescription] = useState("구매가 불가한 트랙입니다.");
+	const [selectedTrack, setSelectedTrack] = useState<ALBUM_ITEM_TYPE | null>(null);
+
+	const id_key = generateClientRandomString();
+	const router = useRouter();
+
+	const lang = getCookie("lang") || "en";
+	const purchaseText = purchaseTexts[lang]?.purchase || purchaseTexts.en.purchase;
+
+	const handlePaymentOpen = (track: ALBUM_ITEM_TYPE) => {
+		setSelectedTrack(track);
+		setIsPaymentOpen(true);
+	};
+
+	const handlePurchaseComplete = () => {
+		if (typeof window !== 'undefined') {
+			router.push(`/my/purchaseList?title=${purchaseText}`);
+		}
+	};
+
+	const handlePopupOpen = (message: string) => {
+		setPopupDescription(message);
+		setIsPopupOpen(true);
+	};
+
+	const handleError = (message: string) => {
+		handlePopupOpen(message);
+	};
+
+	const handleConfirm = () => {
+		setIsPopupOpen(false);
+	};
 
 	useEffect(() => {
 			fetchStarRatings();
@@ -97,10 +137,33 @@ const ArtistTrackList = ({ ArtistTrackList }: ArtistTrackListProps) => {
 			{ArtistTrackList.map((itemInfo, index) => {
 				return (
 					<li key={itemInfo.ID}>
-						<ArtistTrackItem ArtistTrackInfo={itemInfo} ArtistTrackList={ArtistTrackList} position={index}/>
+						<ArtistTrackItem
+							ArtistTrackInfo={itemInfo} 
+							ArtistTrackList={ArtistTrackList} 
+							position={index} 
+							handlePaymentOpen={handlePaymentOpen}
+							handlePopupOpen={handlePopupOpen}
+						/>
 					</li>)
 			})}
 		</ul>
+		<Payment 
+				isOpen={isPaymentOpen}
+				onClose={() => setIsPaymentOpen(false)}
+				trackId={selectedTrack?.ID}
+				price={selectedTrack?.PRICE}
+				idKey={id_key}
+				type="track"
+				onPurchaseComplete={handlePurchaseComplete}
+				onError={handleError}
+		/>
+		<Popup
+				isOpen={isPopupOpen}
+				onClose={() => setIsPopupOpen(false)}
+				title="INFORMATION"
+				description={popupDescription}
+				buttons={[{ text: "OK", className: "ok", onClick: handleConfirm }]}
+			/>
 		<style jsx>{`
 			.trackListWrap {
 				margin-top: 10px;

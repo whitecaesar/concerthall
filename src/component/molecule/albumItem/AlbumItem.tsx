@@ -1,20 +1,23 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import style from "./albumItem.module.css";
-import Icon from "@/component_RS/button/icon/Icon";
 import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
 
 interface AlbumItemProps {
 	albumInfo: ITEM_INFO_TYPE;
 	onClick?: () => void;
 	type?: string;
+	handlePopupOpen?: (message: string) => void;
+	handleCancelOpen?: (track: ITEM_INFO_TYPE) => void;
 }
 
-const AlbumItem = ({ albumInfo, onClick, type }: AlbumItemProps) => {
+const AlbumItem = ({ albumInfo, onClick, type, handleCancelOpen }: AlbumItemProps) => {
+	
 	return (
+		<>
 		<div className={style.albumItem} onClick={onClick}>
 			<Link href={`/detail/album/track/${albumInfo.ID}?title=${encodeURIComponent(albumInfo.TITLE)}&type=${type}`}>
 				<Image
@@ -26,15 +29,14 @@ const AlbumItem = ({ albumInfo, onClick, type }: AlbumItemProps) => {
 					className={style.thumbnail}
 				/>
 				<p className={style.title}>{albumInfo.TITLE}</p>
-				{/*<div className={style.bottomInfo}>
-					<span className={style.thumbupCnt}>
-						<Icon iconName="thumbUp" /> {albumInfo.NUM_THUMBUP}
+				</Link>
+				{albumInfo.YN_CANCEL === 'Y' && <div className={style.bottomInfo}>
+					<span className="albumBottomInfo">
+							<button className="btnPaymentCancel" onClick={() => handleCancelOpen?.(albumInfo)}>CANCEL</button>
 					</span>
-					<span className={style.bar}></span>
-					<span>{albumInfo.TOTAL_NUM_TRACK}곡</span>
-				</div>*/}
-			</Link>
+				</div>}
 		</div>
+		</>
 	);
 };
 

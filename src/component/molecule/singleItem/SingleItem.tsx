@@ -10,35 +10,30 @@ import {
 } from "@/services/contents/ViewAllAxios";
 import { useQuery } from "@tanstack/react-query";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
-import { funcTrackPlayClick, generateClientRandomString } from "@/services/common";
+import { funcTrackPlayClick, generateClientRandomString, getCookie } from "@/services/common";
 import Loading from "@/app/loading";
 import Icon from "@/component/atom/icon/Icon";
 import { useState } from "react";
-import Payment from "@/component/organism/payment/payment";
-import Popup from "@/component/atom/popup/Popup";
+import { useRouter } from "next/navigation";
 
 export default function SingleItem({
 	singleInfo,
 	trackListInfo,
 	position,
 	star,
+	handlePaymentOpen,
+	handlePopupOpen,
 }: {
 	singleInfo: ITEM_INFO_TYPE;
 	trackListInfo: VIEWALL_LIST_TYPE;
 	position: number;
 	star: number;
+	handlePaymentOpen: (track: ITEM_INFO_TYPE) => void;
+	handlePopupOpen: (message: string) => void;
 }) {
-
-	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-	const [isPopupOpen, setIsPopupOpen] = useState(false);
-	const [popupDescription, setPopupDescription] =
-		useState("Track not for sale.");
+	const [popupDescription, setPopupDescription] = useState("Track not for sale.");
 
 	const id_key = generateClientRandomString();
-
-	const handleConfirm = () => {
-		setIsPopupOpen(false);
-	};
 
 	const {
 		data: trackData,
@@ -52,15 +47,6 @@ export default function SingleItem({
 		},
 	});
 
-	const handlePurchaseComplete = () => {
-	///	refetch();
-	};
-
-	const handleError = (message: string) => {
-		setPopupDescription(message);
-		setIsPopupOpen(true);
-	};
-
 	if (isLoading) return <Loading />;
 	if (isError || !trackData)
 		return <div>Error occurred</div>;
@@ -73,7 +59,7 @@ export default function SingleItem({
 					
 					singleInfo.YN_PURCHASED === 'Y' 
 								? funcTrackPlayClick("trackPlay", trackData.TRACK_INFO)
-								: (singleInfo.YN_SALE === 'N' ? setIsPopupOpen(true) : setIsPaymentOpen(true))
+								: (singleInfo.YN_SALE === 'N' ? handlePopupOpen(popupDescription) : handlePaymentOpen(singleInfo))
 				}
 			>
 				<Image
@@ -99,7 +85,7 @@ export default function SingleItem({
 				</p>
 				{( singleInfo.YN_PURCHASED === 'N' || singleInfo.YN_PURCHASED == null) ? (
 				<p className={style.priceNum}
-					onClick={() => setIsPaymentOpen(true)}
+					onClick={() => handlePaymentOpen(singleInfo)}
 				>
 					<span>{singleInfo.PRICE}</span>
 					<Icon iconName="purchasePoint" />
@@ -120,23 +106,6 @@ export default function SingleItem({
 				)}
 			</div>
 		</div>
-		<Payment 
-				isOpen={isPaymentOpen}
-				onClose={() => setIsPaymentOpen(false)}
-				trackId={singleInfo.ID}
-				price={singleInfo.PRICE}
-				idKey={id_key}
-				type="track"
-				onPurchaseComplete={handlePurchaseComplete}
-				onError={handleError}
-		/>
-		<Popup
-				isOpen={isPopupOpen}
-				onClose={() => setIsPopupOpen(false)}
-				title="INFORMATION"
-				description={popupDescription}
-				buttons={[{ text: "OK", className: "ok", onClick: handleConfirm }]}
-			/>
 		</>
 	);
 }

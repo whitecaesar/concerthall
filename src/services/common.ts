@@ -1,5 +1,6 @@
 "use client";
 import { ALBUM_DETAIL_TYPE, ALBUM_ITEM_TYPE } from "./contents/AlbumAxios";
+import { setPaymentConfirmAxios } from "./contents/PayAxios";
 import { PLAY_ITEM_RESPONSE, getPlayInfoAxios } from "./contents/PlayInfoAxios";
 import { TRACK_PLAYLIST_TYPE } from "./contents/PlayListTrackAxios";
 import { TRACK_RECENT_ITEM_TYPE, TRACK_RECENT_LIST_RESPONSE } from "./contents/RecentTrackListAxios";
@@ -69,6 +70,22 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
             if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
               item.URL = result.INFO.URL;
               item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+              const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
+
+              if(PURCHASE_ID)
+              {
+                const purchaseResponse = await setPaymentConfirmAxios({
+                  purchaseId : PURCHASE_ID,
+                  reason : 'STREAMING_PLAY',
+                  cpCode : 'test-01',
+                  appType : 'CONCERTHALL'
+                });
+                
+                if(purchaseResponse.code != '200.1')
+                {
+                  throw new Error('Purchase verification failed');
+                }
+              }
             }
           } catch (error) {
             console.error(`Failed to fetch play info for ID ${item.ID}:`, error);
@@ -120,6 +137,22 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
             if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
               item.URL = result.INFO.URL;
               item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+              const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
+
+              if(PURCHASE_ID)
+              {
+                const purchaseResponse = await setPaymentConfirmAxios({
+                  purchaseId : PURCHASE_ID,
+                  reason : 'STREAMING_PLAY',
+                  cpCode : 'test-01',
+                  appType : 'CONCERTHALL'
+                });
+                
+                if(purchaseResponse.code != '200.1')
+                {
+                  throw new Error('Purchase verification failed');
+                }
+              }
             }
           } catch (error) {
             console.error(`Failed to fetch play info for ID ${item.ID}:`, error);
@@ -167,6 +200,22 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
           if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
             track.URL = result.INFO.URL;
             track.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+            const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
+
+              if(PURCHASE_ID)
+              {
+                const purchaseResponse = await setPaymentConfirmAxios({
+                  purchaseId : PURCHASE_ID,
+                  reason : 'STREAMING_PLAY',
+                  cpCode : 'test-01',
+                  appType : 'CONCERTHALL'
+                });
+                
+                if(purchaseResponse.code != '200.1')
+                {
+                  throw new Error('Purchase verification failed');
+                }
+              }
           }
         } catch (error) {
           console.error(`Failed to fetch play info for ID ${track.TRACK_ID}:`, error);
@@ -232,6 +281,22 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
             if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
               item.URL = result.INFO.URL;
               item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+              const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
+
+              if(PURCHASE_ID)
+              {
+                const purchaseResponse = await setPaymentConfirmAxios({
+                  purchaseId : PURCHASE_ID,
+                  reason : 'STREAMING_PLAY',
+                  cpCode : 'test-01',
+                  appType : 'CONCERTHALL'
+                });
+                
+                if(purchaseResponse.code != '200.1')
+                {
+                  throw new Error('Purchase verification failed');
+                }
+              }
             }
           } catch (error) {
             console.error(`Failed to fetch play info for ID ${item.ID}:`, error);
@@ -279,6 +344,22 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
           if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
             track.URL = result.INFO.URL;
             track.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+            const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
+
+              if(PURCHASE_ID)
+              {
+                const purchaseResponse = await setPaymentConfirmAxios({
+                  purchaseId : PURCHASE_ID,
+                  reason : 'STREAMING_PLAY',
+                  cpCode : 'test-01',
+                  appType : 'CONCERTHALL'
+                });
+                
+                if(purchaseResponse.code != '200.1')
+                {
+                  throw new Error('Purchase verification failed');
+                }
+              }
           }
         } catch (error) {
           console.error(`Failed to fetch play info for ID ${track.ID}:`, error);
@@ -406,6 +487,22 @@ export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
           if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
             item.URL = result.INFO.URL;
             item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
+            const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
+
+              if(PURCHASE_ID)
+              {
+                const purchaseResponse = await setPaymentConfirmAxios({
+                  purchaseId : PURCHASE_ID,
+                  reason : 'STREAMING_PLAY',
+                  cpCode : 'test-01',
+                  appType : 'CONCERTHALL'
+                });
+                
+                if(purchaseResponse.code != '200.1')
+                {
+                  throw new Error('Purchase verification failed');
+                }
+              }
           }
         } catch (error) {
           console.error(`Failed to fetch play info for ID ${item.ID}:`, error);

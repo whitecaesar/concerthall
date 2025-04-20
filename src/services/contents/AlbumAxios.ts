@@ -34,6 +34,7 @@ export type ALBUM_ITEM_TYPE = {
 	PRICE?:number;
 	ALBUM_PRICE?:number;
 	YN_CANCEL?: string;
+	PAYMENT_ID?: string;
 };
 
 export type ALBUM_DETAIL_TYPE = {

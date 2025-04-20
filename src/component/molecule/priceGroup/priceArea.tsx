@@ -1,11 +1,14 @@
+"use client";
 import React, { useState } from "react";
 import style from "./priceArea.module.css";
 import Icon from "@/component/atom/icon/Icon";
 import Payment from "@/component/organism/payment/payment";
 import { ALBUM_DETAIL_TYPE } from "@/services/contents/AlbumAxios";
-import { funcAlbumPlayClick, funcPreviewClick, generateClientRandomString } from "@/services/common";
+import { funcAlbumPlayClick, funcPreviewClick, generateClientRandomString, getCookie } from "@/services/common";
 import Popup from "@/component/atom/popup/Popup";
 import { funcGetPreviewAxios } from "@/services/contents/PlayInfoAxios";
+import { useRouter } from "next/navigation";
+import { purchaseTexts } from "@/component/organism/menuList/MenuList";
 
 interface PriceAreaProps {
 	AlbumItem: ALBUM_DETAIL_TYPE;
@@ -16,9 +19,12 @@ const PriceArea = ({ AlbumItem }: PriceAreaProps) => {
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [popupDescription, setPopupDescription] = useState("No preview tracks available.");
 	const id_key = generateClientRandomString();
+	const router = useRouter();
 
 	const handlePurchaseComplete = () => {
-		//	refetch();
+		const lang = getCookie("lang") || "en";
+		const purchaseText = purchaseTexts[lang]?.purchase || purchaseTexts.en.purchase;
+		router.push(`/my/purchaseList?title=${purchaseText}`);
 	};
 
 	const handleConfirm = () => {
@@ -78,6 +84,7 @@ const PriceArea = ({ AlbumItem }: PriceAreaProps) => {
 				albumId={AlbumItem.ID}
 				idKey={id_key}
 				type="album"
+				price={AlbumItem.ALBUM_PRICE}
 				onPurchaseComplete={handlePurchaseComplete}
 			/>
 

@@ -29,7 +29,7 @@ export async function getPassCheckAxios(
 	if (response.status === 200) {
         return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -58,11 +58,11 @@ export async function getBalanceCheckAxios(
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
 	});
-	
+	console.log("response",response);
 	if (response.status === 200) {
         return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -78,6 +78,13 @@ export type PAYMENT_REQUEST_TYPE = {
     purchaseId : string;
 }
 
+export type PAYMENT_CONFIRM_REQUEST_TYPE = {
+	reason : string;
+	cpCode : string;
+	appType : string;
+	purchaseId : string;
+}
+
 export async function setPaymentAxios(
 	param?: PAYMENT_REQUEST_TYPE,
 	id_key?: string,
@@ -88,11 +95,43 @@ export async function setPaymentAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 
+	console.log("param",param);
+
 	const response: AxiosResponse<PASS_CHECK_RESPONSE> = await axios.post(
-		`https://dev.api.roseaudio.kr/payment/v1/payments`,param, {
+		`https://dev.api.roseaudio.kr/payment/v1/content/purchase`,param, {
 		headers: {
 			'Authorization': `Bearer ${token}`,
       'Idempotency-key': `${id_key}`
+		} // URL 구성을 동적으로 변경했습니다.
+	});
+	
+	if (response.status === 200) {
+		if(response.data.code === '200.1')
+        {
+            return response.data;
+        }
+        else{
+            throw new Error(`System Error. ${response.data.message}`);
+        }
+	} else {
+		throw new Error(`System Error. ${response.status}`);
+	}
+}
+
+export async function setPaymentConfirmAxios(
+	param?: PAYMENT_CONFIRM_REQUEST_TYPE,
+	id_key?: string,
+): Promise<PASS_CHECK_RESPONSE> {
+	let token = getCookie("token");
+	if(!token)
+	{
+		token = process.env.NEXT_PUBLIC_TOKEN;
+	}
+
+	const response: AxiosResponse<PASS_CHECK_RESPONSE> = await axios.post(
+		`https://dev.api.roseaudio.kr/payment/v1/content/purchase/confirm`,param, {
+		headers: {
+			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
 	});
 	
@@ -102,10 +141,10 @@ export async function setPaymentAxios(
             return response.data;
         }
         else{
-            throw new Error(`에러입니다. ${response.data.message}`);
+            throw new Error(`System Error. ${response.data.message}`);
         }
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -141,9 +180,9 @@ export async function setTrackPurchaseAxios(
 
 	
 	if (response.status === 200) {
-            return response.data;
+      return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -164,12 +203,11 @@ export async function setAlbumPurchaseAxios(
 			params: param,
 		}
 	);
-
 	
 	if (response.status === 200) {
-            return response.data;
+    return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -193,9 +231,9 @@ export async function setTrackPurchaseCancelAxios(
 
 	
 	if (response.status === 200) {
-            return response.data;
+    return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -219,8 +257,8 @@ export async function setAlbumPurchaseCancelAxios(
 
 	
 	if (response.status === 200) {
-            return response.data;
+      return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }

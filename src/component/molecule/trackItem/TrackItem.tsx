@@ -46,7 +46,7 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 	return (
 		<div className={style.trackItem}>
 			<span
-				onClick={() => funcTrackPlayClick("trackPlay", playData, trackInfo)}
+				onClick={() => funcTrackPlayClick("trackPlay", trackData.TRACK_INFO)}
 			>
 				{/* Link에는 트랙 재생하는 url이 들어가야 함 */}
 				<Image

@@ -10,6 +10,12 @@ import {
 	getRegCheckListAxios,
 	getStarTrackListAxios,
 } from "@/services/contents/StarAxios";
+import Payment from "@/component/organism/payment/payment";
+import { generateClientRandomString } from "@/services/common";
+import { useRouter } from "next/navigation";
+import { purchaseTexts } from "../menuList/MenuList";
+import { getCookie } from "@/services/common";
+import Popup from "@/component/atom/popup/Popup";
 
 interface TrackListProps {
 	AlbumTrackList: ALBUM_ITEM_TYPE[];
@@ -22,6 +28,41 @@ const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
 	const [page, setPage] = useState(0);
 	const trackListRef = useRef<HTMLDivElement>(null);
 	const ITEMS_PER_PAGE = 20;
+
+	const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+	const [popupDescription, setPopupDescription] = useState("구매가 불가한 트랙입니다.");
+	const [selectedTrack, setSelectedTrack] = useState<ALBUM_ITEM_TYPE | null>(null);
+
+	const id_key = generateClientRandomString();
+	const router = useRouter();
+
+	const lang = getCookie("lang") || "en";
+	const purchaseText = purchaseTexts[lang]?.purchase || purchaseTexts.en.purchase;
+
+	const handlePaymentOpen = (track: ALBUM_ITEM_TYPE) => {
+		setSelectedTrack(track);
+		setIsPaymentOpen(true);
+	};
+
+	const handlePurchaseComplete = () => {
+		if (typeof window !== 'undefined') {
+			router.push(`/my/purchaseList?title=${purchaseText}`);
+		}
+	};
+
+	const handlePopupOpen = (message: string) => {
+		setPopupDescription(message);
+		setIsPopupOpen(true);
+	};
+
+	const handleError = (message: string) => {
+		handlePopupOpen(message);
+	};
+
+	const handleConfirm = () => {
+		setIsPopupOpen(false);
+	};
 
 	useEffect(() => {
 		fetchStarRatings();
@@ -145,6 +186,8 @@ const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
 								albumTrackInfo={itemInfo}
 								AlbumTrackList={AlbumTrackList}
 								position={index}
+								handlePaymentOpen={handlePaymentOpen}
+								handlePopupOpen={handlePopupOpen}
 							/>
 						</li>
 					))}
@@ -154,6 +197,25 @@ const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
 				{AlbumTrackList && visibleTracks.length < AlbumTrackList.length && (
 					<div className="loading">Loading more tracks...</div>
 				)}
+
+				<Payment
+					isOpen={isPaymentOpen}
+					onClose={() => setIsPaymentOpen(false)}
+					trackId={selectedTrack?.ID}
+					price={selectedTrack?.PRICE}
+					idKey={id_key}
+					type="track"
+					onPurchaseComplete={handlePurchaseComplete}
+					onError={handleError}
+				/>
+
+				<Popup
+					isOpen={isPopupOpen}
+					onClose={() => setIsPopupOpen(false)}
+					title="INFOMATION"
+					description={popupDescription}
+					buttons={[{ text: "OK", className: "ok", onClick: handleConfirm }]}
+				/>
 
 				<style jsx>{`
 					.trackListWrap {

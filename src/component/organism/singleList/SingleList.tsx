@@ -7,6 +7,13 @@ import {
   VIEWALL_LIST_TYPE,
 } from "@/services/contents/ViewAllAxios";
 import { STAR_TRACK_LIST_RESPONSE_TYPE, TRACK_REG_ITEM_TYPE, TRACK_REG_REQUEST_TYPE, TRACK_REG_RESPONSE_ITEM_TYPE, getRegCheckListAxios, getStarTrackListAxios } from "@/services/contents/StarAxios";
+import { getCookie } from "@/services/common";
+import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
+import { generateClientRandomString } from "@/services/common";
+import { useRouter } from "next/navigation";
+import { purchaseTexts } from "../menuList/MenuList";
+import Payment from "../payment/payment";
+import Popup from "@/component/atom/popup/Popup";
 
 interface SingleListProps {
   recommendList: VIEWALL_LIST_TYPE;
@@ -18,6 +25,41 @@ export default function SingleList({
   recommendList
 }: SingleListProps) {
   const [isFetch, setIsFetch] = useState<boolean>(false);
+
+	const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+	const [popupDescription, setPopupDescription] = useState("구매가 불가한 트랙입니다.");
+	const [selectedTrack, setSelectedTrack] = useState<ITEM_INFO_TYPE | null>(null);
+
+	const id_key = generateClientRandomString();
+	const router = useRouter();
+
+	const lang = getCookie("lang") || "en";
+	const purchaseText = purchaseTexts[lang]?.purchase || purchaseTexts.en.purchase;
+
+	const handlePaymentOpen = (track: ITEM_INFO_TYPE) => {
+		setSelectedTrack(track);
+		setIsPaymentOpen(true);
+	};
+
+	const handlePurchaseComplete = () => {
+		if (typeof window !== 'undefined') {
+			router.push(`/my/purchaseList?title=${purchaseText}`);
+		}
+	};
+
+	const handlePopupOpen = (message: string) => {
+		setPopupDescription(message);
+		setIsPopupOpen(true);
+	};
+
+	const handleError = (message: string) => {
+		handlePopupOpen(message);
+	};
+
+	const handleConfirm = () => {
+		setIsPopupOpen(false);
+	};
 
   useEffect(() => {
     fetchStarRatings();
@@ -86,6 +128,7 @@ export default function SingleList({
 	};
 
   return isFetch &&
+		<>
     <div style={{ paddingBottom: "10px" }}>
       <ItemListTitle.ViewAll
         isPresent={false}
@@ -101,9 +144,30 @@ export default function SingleList({
               trackListInfo={recommendList}
               position={index}
               star={item.STAR || 0}
+							handlePaymentOpen={handlePaymentOpen}
+							handlePopupOpen={handlePopupOpen}
             />
           </li>
         ))}
       </ul>
     </div>
+			<Payment
+			isOpen={isPaymentOpen}
+			onClose={() => setIsPaymentOpen(false)}
+			trackId={selectedTrack?.ID}
+			price={selectedTrack?.PRICE}
+			idKey={id_key}
+			type="track"
+			onPurchaseComplete={handlePurchaseComplete}
+			onError={handleError}
+		/>
+
+		<Popup
+			isOpen={isPopupOpen}
+			onClose={() => setIsPopupOpen(false)}
+			title="INFOMATION"
+			description={popupDescription}
+			buttons={[{ text: "OK", className: "ok", onClick: handleConfirm }]}
+		/>
+		</>
 }

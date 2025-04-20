@@ -28,6 +28,7 @@ export type ITEM_INFO_TYPE = {
 	PRICE?:number;
 	ALBUM_PRICE?:number;
 	YN_CANCEL?: string;
+	PAYMENT_ID?: string;
 };
 
 export type VIEWALL_LIST_TYPE = {

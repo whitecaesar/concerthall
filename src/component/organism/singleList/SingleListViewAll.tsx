@@ -67,12 +67,7 @@ export default function SingleListViewAll({
 			<ul className={`${style.singleList} ${style.noScroll}`}>
 				{viewAllList.ITEM_INFO.map((item, index) => (
           <li key={item.ID}>
-            <SingleItem
-              singleInfo={item}
-              trackListInfo={viewAllList}
-              position={index}
-              star={item.STAR || 0}
-            />
+
           </li>
         ))}
 			</ul>

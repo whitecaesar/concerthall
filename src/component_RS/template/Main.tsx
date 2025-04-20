@@ -24,7 +24,7 @@ export default function Main({ slug }: { slug?: string }) {
 
 		const path = data?.RECOMMEND_LIST.find((item) => `${item.ID}` === slug)?.ID;
 		if (slug === "undefined" && path) {
-			router.push(`/RS/main/${path}`);
+		//	router.push(`/RS/main/${path}`);
 		}
 	}, [isFetched, error]);
 

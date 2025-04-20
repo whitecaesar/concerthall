@@ -13,9 +13,13 @@ interface ExploreArtistListProps {
 	artistList: ARTIST_INFO_TYPE[];
 }
 
-const ExploreArtistList = (
-	{artistList}: ExploreArtistListProps) => {
+const ExploreArtistList = ({ artistList }: ExploreArtistListProps) => {
 	const router = useRouter();
+
+	// artistList가 존재하고 배열이 비어있지 않은 경우에만 렌더링
+	if (!artistList || artistList.length === 0) {
+		return null;
+	}
 
 	return (
 		<div
@@ -26,7 +30,7 @@ const ExploreArtistList = (
 				isPresent={false}
 				text={"ARTIST"}
 				count={artistList.length}
-			/>
+			/> 
 			<ul className={style.artistList}>
 				{artistList.map((item: ARTIST_INFO_TYPE) => (
 					<li key={item.artist_id}>

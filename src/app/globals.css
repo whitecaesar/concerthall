@@ -350,3 +350,5 @@ nav {
 }
 
 nav + div[class*="Page"]{min-height:500px;}
+.albumBottomInfo{width:100%;display: flex;align-items: center;justify-content: flex-end;}
+.albumBottomInfo .btnPaymentCancel{border:1px solid var(--mainColor);color:var(--mainColor);padding:4px 10px;border-radius:30px;font-size:12px;}

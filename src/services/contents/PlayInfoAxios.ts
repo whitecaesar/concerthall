@@ -27,7 +27,7 @@ export async function getPlayInfoAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`error. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 
@@ -45,6 +45,6 @@ export async function funcGetPreviewAxios(
 		if (response.status === 200) {
 			return response.data;
 		} else {
-			throw new Error(`error. ${response.status}`);
+			throw new Error(`System Error. ${response.status}`);
 		}
 }

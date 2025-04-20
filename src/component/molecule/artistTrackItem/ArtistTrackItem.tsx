@@ -1,54 +1,35 @@
 "use client";
 import Image from "next/image";
 import style from "../trackItem/trackItem.module.css";
-import { funcAlbumTrackPlayClick, generateClientRandomString } from "@/services/common";
+import { funcAlbumTrackPlayClick} from "@/services/common";
 import { useQuery } from "@tanstack/react-query";
-import { getPlayInfoAxios } from "@/services/contents/PlayInfoAxios";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
 import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
 import AlbumTrackLikeButton from "@/component/atom/button/AlbumTrackLikeButton";
 import AlbumFuncButton from "@/component/atom/button/AlbumFuncButton";
-import Link from "next/link";
 import Loading from "@/app/loading";
 import Icon from "@/component/atom/icon/Icon";
-import { useState } from "react";
-import Popup from "@/component/atom/popup/Popup";
-import Payment from "@/component/organism/payment/payment";
 
 interface TrackItemProps {
 	ArtistTrackInfo: ALBUM_ITEM_TYPE;
 	ArtistTrackList: ALBUM_ITEM_TYPE[];
 	position: number;
+	handlePaymentOpen: (track: ALBUM_ITEM_TYPE) => void;
+	handlePopupOpen: (message: string) => void;
 }
 
 export default function ArtistTrackItem({
 	ArtistTrackInfo,
 	ArtistTrackList,
 	position,
+	handlePaymentOpen,
+	handlePopupOpen,
 }: TrackItemProps) {
-
-	const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-	const [isPopupOpen, setIsPopupOpen] = useState(false);
-	const [popupDescription, setPopupDescription] =
-		useState("구매가 불가한 트랙입니다.");
-
-	const id_key = generateClientRandomString();
 	
-
-	const handleConfirm = () => {
-		setIsPopupOpen(false);
-	};
-
-	const handleCancel = () => {
-		alert("취소 버튼 클릭!");
-		setIsPopupOpen(false);
-	};
-
 	const {
 		data: trackData,
 		isError,
-		isLoading,
-		refetch,
+		isLoading
 	} = useQuery({
 		queryKey: ["TRACK-LIST"],
 		queryFn: () => {
@@ -56,16 +37,6 @@ export default function ArtistTrackItem({
 			return TrackItem;
 		},
 	});
-
-
-	const handlePurchaseComplete = () => {
-		refetch();
-	};
-
-	const handleError = (message: string) => {
-		setPopupDescription(message);
-		setIsPopupOpen(true);
-	};
 
 	if (isLoading) return <Loading />;
 	if (isError || !trackData) return <div>Error occurred</div>;
@@ -77,7 +48,7 @@ export default function ArtistTrackItem({
 				onClick={() =>
 					ArtistTrackInfo.YN_PURCHASED === 'Y' 
 					? funcAlbumTrackPlayClick("trackPlay", ArtistTrackInfo)
-					: (ArtistTrackInfo.YN_SALE === 'N' ? setIsPopupOpen(true) : setIsPaymentOpen(true))
+					: (ArtistTrackInfo.YN_SALE === 'N' ? handlePopupOpen("구매가 불가한 트랙입니다.") : handlePaymentOpen(ArtistTrackInfo))
 				}
 			>
 				{/* Link에는 트랙 재생하는 url이 들어가야 함 */}
@@ -106,7 +77,7 @@ export default function ArtistTrackItem({
 					<button 
 						type="button" 
 						className={style.btnPayment}
-						onClick={() => setIsPaymentOpen(true)}
+						onClick={() => handlePaymentOpen(ArtistTrackInfo)}
 					>
 						<p className={style.priceNum}>
 							<span>{ArtistTrackInfo.PRICE}</span>
@@ -132,23 +103,6 @@ export default function ArtistTrackItem({
 				</div>
 			)}
 		</div>
-		<Payment 
-				isOpen={isPaymentOpen}
-				onClose={() => setIsPaymentOpen(false)}
-				trackId={ArtistTrackInfo.ID}
-				price={ArtistTrackInfo.PRICE}
-				idKey={id_key}
-				type="track"
-				onPurchaseComplete={handlePurchaseComplete}
-				onError={handleError}
-		/>
-		<Popup
-				isOpen={isPopupOpen}
-				onClose={() => setIsPopupOpen(false)}
-				title="INFORMATION"
-				description={popupDescription}
-				buttons={[{ text: "OK", className: "ok", onClick: handleConfirm }]}
-			/>
 		</>
 	);
 }

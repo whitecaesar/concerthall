@@ -125,7 +125,7 @@ export async function getLikeTrackListAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`System Error. ${response.status}`);
 	}
 }
 

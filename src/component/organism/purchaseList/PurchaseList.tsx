@@ -41,6 +41,9 @@ export default function PurchaseList(props: Props) {
 							Albums({purchaseList?.PURCHASED_ALBUMS.length})
 						</button>
 					)}
+					{purchaseList?.PURCHASED_TRACKS.length == 0 && purchaseList?.PURCHASED_ALBUMS.length == 0 && (
+						<div>구매한 컨텐츠가 없습니다.</div>
+					)}
 				</div>
 
 
