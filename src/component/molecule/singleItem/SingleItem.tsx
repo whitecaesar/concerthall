@@ -77,9 +77,9 @@ export default function SingleItem({
 					<div className={style.artistName}>
 						{singleInfo.ARTIST &&
 							singleInfo.ARTIST.map((item, index) => (
-								<Link key={index} href={`/artist/${item.artist_id}`}>
+								<span key={index}>
 									{item.artist_name}
-								</Link>
+								</span>
 							))}
 					</div>
 				</p>

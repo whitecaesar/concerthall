@@ -73,10 +73,9 @@ export default function AlbumTrackItem({
 	return (
 		<>
 			<div className={style.trackItem}>
-				<span className={style.albumTrackInfoWrap}>
+				<span className={style.albumTrackInfoWrap} onClick={handleTrackClick}>
 					<span
 						className={style.albumTrackInfo}
-						onClick={handleTrackClick}
 					>
 						<Image
 							src={albumTrackInfo.THUMBNAIL}
@@ -90,9 +89,9 @@ export default function AlbumTrackItem({
 					</span>
 					<div className={style.albumArtistInfo}>
 						{albumTrackInfo.ARTIST?.map((item, index) => (
-							<Link key={index} href={`/artist/${item.artist_id}`}>
+							<span key={index}>
 								<p className={style.artist}>{item.artist_name}</p>
-							</Link>
+							</span>
 						))}
 					</div>
 				</span>
