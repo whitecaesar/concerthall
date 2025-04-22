@@ -19,6 +19,7 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 	const [page, setPage] = useState(0);
 	const trackListRef = useRef<HTMLDivElement>(null);
 	const ITEMS_PER_PAGE = 20;
+	const [isPurchaseCancel, setIsPurchaseCancel] = useState(false);
 
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [isPaymentCancelOpen, setIsPaymentCancelOpen] = useState(false);
@@ -28,9 +29,11 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 	const router = useRouter();
 	const lang = getCookie("lang") || "en";
 	const purchaseText = purchaseTexts[lang]?.purchase || purchaseTexts.en.purchase;
-
 	const handleConfirm = () => {
 		setIsPopupOpen(false);
+		if(isPurchaseCancel) {
+			window.location.reload(); // 페이지 리로드로 대체
+		}
 	};
 
 	const handleCancel = () => {
@@ -50,11 +53,12 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 	const handlePaymentCancel = async () => {
 		if (!selectedTrack) return;
 		// 구매 취소 처리
+		const id_cust = getCookie('userid') || '';	
 		const cancelResponse = await setCancelAxios(selectedTrack.PAYMENT_ID || '', {
-			ID_CUST: getCookie('id_cust') || ''
+			ID_CUST: id_cust
 		});
-		if (cancelResponse.REG_CODE !== "0000") {
-			setPopupDescription(`${cancelResponse.REG_MSG}`);
+		if (cancelResponse.RES_CODE !== "0000") {
+			setPopupDescription(`${cancelResponse.RES_MSG}`);
 			setIsPopupOpen(true);
 		}
 		else {
@@ -70,7 +74,7 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 			}
 			else {
 				setPopupDescription(`Your purchase has been canceled.`);
-				router.push(`/my/purchaseList?title=${purchaseText}`);
+				setIsPurchaseCancel(true);
 				setIsPopupOpen(true);
 				setIsPaymentCancelOpen(false);
 			}

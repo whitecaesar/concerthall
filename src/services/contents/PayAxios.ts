@@ -122,6 +122,7 @@ export async function setPaymentConfirmAxios(
 	param?: PAYMENT_CONFIRM_REQUEST_TYPE,
 	id_key?: string,
 ): Promise<PASS_CHECK_RESPONSE> {
+	console.log("paymentConfirm");
 	let token = getCookie("token");
 	if(!token)
 	{
@@ -134,9 +135,9 @@ export async function setPaymentConfirmAxios(
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
 	});
-	
+	console.log("paymentConfirm response",response);
 	if (response.status === 200) {
-		if(response.data.code === '200')
+		if(response.data.code === '200.1')
         {
             return response.data;
         }
@@ -241,11 +242,6 @@ export async function setAlbumPurchaseCancelAxios(
 	idAlbum?: string,
 	param?: TRACK_PURCHASE_REQUEST_TYPE
 ): Promise<TRACK_PURCHASE_RESPONSE> {
-	let token = getCookie("token");
-	if(!token)
-	{
-		token = process.env.NEXT_PUBLIC_TOKEN;
-	}
 
 	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
 		`http://cip.ontown.co.kr/hch/album/${idAlbum}/cancelPurchase.json`,
@@ -255,6 +251,7 @@ export async function setAlbumPurchaseCancelAxios(
 		}
 	);
 
+	console.log("cancelPurchase response",response);
 	
 	if (response.status === 200) {
       return response.data;

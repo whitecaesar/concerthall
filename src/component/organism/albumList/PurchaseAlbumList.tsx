@@ -22,6 +22,7 @@ export default function PurchaseAlbumList({ albumList }: PurcahseAlbumListProps)
 	const [isPaymentCancelOpen, setIsPaymentCancelOpen] = useState(false);
 	const [popupDescription, setPopupDescription] = useState("구매가 불가한 트랙입니다.");
 	const [selectedAlbum, setSelectedAlbum] = useState<ITEM_INFO_TYPE | null>(null);
+	const [isPurchaseCancel, setIsPurchaseCancel] = useState(false);
 	
 	const router = useRouter();
 	const lang = getCookie("lang") || "en";
@@ -29,6 +30,9 @@ export default function PurchaseAlbumList({ albumList }: PurcahseAlbumListProps)
 	
 	const handleConfirm = () => {
 		setIsPopupOpen(false);
+		if(isPurchaseCancel) {
+			window.location.reload(); // 페이지 리로드로 대체
+		}
 	};
 
 	const handleCancel = () => {
@@ -47,11 +51,13 @@ export default function PurchaseAlbumList({ albumList }: PurcahseAlbumListProps)
 
 	const handlePaymentCancel = async () => {
 		// 구매 취소 처리
+		const id_cust = getCookie('userid') || '';
 		const cancelResponse = await setCancelAxios(selectedAlbum?.PAYMENT_ID || '', {
-			ID_CUST: getCookie('id_cust') || ''
+			ID_CUST: id_cust
 		});
-		if (cancelResponse.REG_CODE !== "0000") {
-			setPopupDescription(`${cancelResponse.REG_MSG}`);
+		console.log("cancelResponse=>", cancelResponse);
+		if (cancelResponse.RES_CODE !== "0000") {
+			setPopupDescription(`${cancelResponse.RES_MSG}`);
 			setIsPopupOpen(true);
 		}
 		else {
@@ -61,13 +67,14 @@ export default function PurchaseAlbumList({ albumList }: PurcahseAlbumListProps)
 				purchaseId: selectedAlbum?.PAYMENT_ID || '',
 				reason: 'SIMPLE_CHANGE_OF_MIND'
 			});
+			console.log("roseCancelResponse=>", roseCancelResponse);
 			if (roseCancelResponse.code !== "200.1") {
 				setPopupDescription(`${roseCancelResponse.message}`);
 				setIsPopupOpen(true);
 			}
 			else {
 				setPopupDescription(`Your purchase has been canceled.`);
-				router.push(`/my/purchaseList?title=${purchaseText}`);
+				setIsPurchaseCancel(true);
 				setIsPopupOpen(true);
 				setIsPaymentCancelOpen(false);
 			}

@@ -103,10 +103,10 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 							const cancelResponse = await setCancelAxios(purchaseId, {
 								ID_CUST: IDCUST?IDCUST:''
 							});
-							if (cancelResponse.REG_CODE !== "0000") {
-								setErrorMessage(`${cancelResponse.REG_MSG}`);
+							if (cancelResponse.RES_CODE !== "0000") {
+								setErrorMessage(`${cancelResponse.RES_MSG}`);
 								if (onError) {
-									onError(`${cancelResponse.REG_MSG}`); // 직접 에러 메시지 전달
+									onError(`${cancelResponse.RES_MSG}`); // 직접 에러 메시지 전달
 								}
 							}
 						}
@@ -157,7 +157,6 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 					<input
 						type="password"
 						id="pin-input"
-						inputMode="numeric"
 						autoComplete="off"
 						value={pin}
 						onChange={handleInputChange}

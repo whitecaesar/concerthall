@@ -5,7 +5,7 @@ import AlbumList from "../organism/albumList/AlbumList";
 import { useQuery } from "@tanstack/react-query";
 import { getBannersAxios } from "@/services/main/MainInfoAxios";
 import { VIEWALL_LIST_TYPE } from "@/services/contents/ViewAllAxios";
-import { recentTexts, RecentText } from "@/services/main/recentText";
+import { recentTexts } from "@/services/main/recentText";
 import { useEffect, useState } from "react";
 import {
 	getRecentAlbumAxios,
@@ -23,28 +23,31 @@ import {
 } from "@/services/contents/RecentTrackListAxios";
 import RecentTrackList from "../organism/singleList/RecentTrackList";
 import TextBanner from "../organism/textBanner/TextBanner";
-import {getCookie, setCookie} from "@/services/common";
+import { getCookie, setCookie } from "@/services/common";
 import ErrorPage from "../organism/error/Error";
 
 export default function Main() {
 	const [error, setError] = useState<string | null>(null);
-	const [t, setT] = useState<string | null>(null);
 
-	setCookie("userid", "mjkim@citech.kr", 24);
-	//setCookie("lang", "en", 24);
-	const token = getCookie("token");
+	setCookie("userid", "3029", 24);
+	const token = getCookie("token") || "";
 
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
-		queryFn: () => {
-			const list = getBannersAxios();
-			return list;
+		queryFn: async () => {
+			try {
+				const list = await getBannersAxios();
+				return list;
+			} catch (err) {
+				console.error('Error fetching banners:', err);
+				return null;
+			}
 		},
 	});
 
-	const [recent, setRecent] = useState<ALBUM_RECENT_LIST_RESPONSE>();
-	const [recentPlayList, setRecentPlayList] = useState<PLAY_RECENT_LIST_RESPONSE>();
-	const [recentTrackList, setRecentTrackList] =	useState<TRACK_RECENT_LIST_RESPONSE>();
+	const [recent, setRecent] = useState<ALBUM_RECENT_LIST_RESPONSE | null>(null);
+	const [recentPlayList, setRecentPlayList] = useState<PLAY_RECENT_LIST_RESPONSE | null>(null);
+	const [recentTrackList, setRecentTrackList] = useState<TRACK_RECENT_LIST_RESPONSE | null>(null);
 
 	const [playTxt, setPlayTxt] = useState<string>(recentTexts.en.play);
 	const [albumTxt, setAlbumTxt] = useState<string>(recentTexts.en.album);
@@ -52,57 +55,64 @@ export default function Main() {
 
 	useEffect(() => {
 		const lang = getCookie("lang") || "en"; // 기본값을 en으로 설정
-		setPlayTxt(recentTexts[lang]?.play || recentTexts.en.play);
-		setAlbumTxt(recentTexts[lang]?.album || recentTexts.en.album);
-		setTrackTxt(recentTexts[lang]?.track || recentTexts.en.track);
-	}, [recentTexts]);
-
-	useEffect(() => {
-		// const recent = ;
-		getRecentAlbumAxios("", 0, 10)
-			.then((albumdata) => setRecent(albumdata))
-			.catch((error) => {
-				//setError(error);
-			});
-		getRecentPlayListAxios("", 0, 10)
-			.then((playdata) => setRecentPlayList(playdata))
-			.catch((error) => {
-				//setError(error);
-			});
-		getRecentTrackListAxios("", 0, 10)
-			.then((trackdata) => setRecentTrackList(trackdata))
-			.catch((error) => {
-				//setError(error);
-			});
+		setPlayTxt(recentTexts[lang as keyof typeof recentTexts]?.play || recentTexts.en.play);
+		setAlbumTxt(recentTexts[lang as keyof typeof recentTexts]?.album || recentTexts.en.album);
+		setTrackTxt(recentTexts[lang as keyof typeof recentTexts]?.track || recentTexts.en.track);
 	}, []);
 
-if (error) {
-		return <ErrorPage></ErrorPage>;
-	} else {
-		return (
-			<>
-				<div>현재토큰 : {token}</div>
-				<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
-				<TextBanner banner={data?.TOP_TXT_BANNER[0]} isFetched={isFetched} />
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const albumData = await getRecentAlbumAxios("", 0, 10);
+				setRecent(albumData);
+			} catch (err) {
+				console.error('Error fetching recent albums:', err);
+			}
 
-				{recentPlayList && (<RecentPlayList showTitle={true} recommendList={recentPlayList} title={playTxt} />)}
-				{recent && <RecentAlbumList showTitle={true} recommendList={recent} title={albumTxt}/>}
-				{recentTrackList && (<RecentTrackList showTitle={true} recommendList={recentTrackList} title={trackTxt}/>)}
+			try {
+				const playData = await getRecentPlayListAxios("", 0, 10);
+				setRecentPlayList(playData);
+			} catch (err) {
+				console.error('Error fetching recent playlists:', err);
+			}
 
-				<ImageBanner list={data?.IMG_BANNER} isFetched={isFetched} />
+			try {
+				const trackData = await getRecentTrackListAxios("", 0, 10);
+				setRecentTrackList(trackData);
+			} catch (err) {
+				console.error('Error fetching recent tracks:', err);
+			}
+		};
 
-				{data?.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE) => {
-					return (
-						<>
-							{content.TYPE == "TRACK" ? (
-								<SingleList showTitle={true} recommendList={content} />
-							) : (
-								<AlbumList showTitle={true} recommendList={content} />
-							)}
-						</>
-					);
-				})}
-			</>
-		);
+		fetchData();
+	}, []);
+
+	if (error) {
+		return <ErrorPage />;
 	}
+
+	return (
+		<>
+			<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
+			{data?.TOP_TXT_BANNER && data.TOP_TXT_BANNER.length > 0 && (
+				<TextBanner banner={data.TOP_TXT_BANNER[0]} isFetched={isFetched} />
+			)}
+
+			{recentPlayList && (<RecentPlayList showTitle={true} recommendList={recentPlayList} title={playTxt} />)}
+			{recent && <RecentAlbumList showTitle={true} recommendList={recent} title={albumTxt}/>}
+			{recentTrackList && (<RecentTrackList showTitle={true} recommendList={recentTrackList} title={trackTxt}/>)}
+
+			<ImageBanner list={data?.IMG_BANNER} isFetched={isFetched} />
+
+			{data?.RECOMMEND_LIST && data.RECOMMEND_LIST.map((content: VIEWALL_LIST_TYPE, index: number) => (
+				<div key={index}>
+					{content.TYPE === "TRACK" ? (
+						<SingleList showTitle={true} recommendList={content} />
+					) : (
+						<AlbumList showTitle={true} recommendList={content} />
+					)}
+				</div>
+			))}
+		</>
+	);
 }

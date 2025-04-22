@@ -39,8 +39,8 @@ export async function setCitechCancelAxios(
 
 
 export type INNER_CANCEL_RESPONSE_TYPE = {
-	REG_MSG: string;
-	REG_CODE: string;
+	RES_MSG: string;
+	RES_CODE: string;
 }
 
 export type INNER_CANCEL_REQUEST_TYPE = {
@@ -51,20 +51,14 @@ export async function setCancelAxios(
 	paymentId: string,
   param?: INNER_CANCEL_REQUEST_TYPE
 ): Promise<INNER_CANCEL_RESPONSE_TYPE> {
-	let token = getCookie("token");
-	if(!token)
-	{
-		token = process.env.NEXT_PUBLIC_TOKEN;
-	}
 	const response: AxiosResponse<INNER_CANCEL_RESPONSE_TYPE> = await axios.post(
-		`http://cip.ontown.co.kr/cancel/${paymentId}/cancelPurchase.json`, param,
-				{
-						headers: {
-								'Authorization': `Bearer ${token}`
-						} // URL 구성
-				} // URL 구성을 동적으로 변경했습니다. // URL 구성을 동적으로 변경했습니다.
+		`http://cip.ontown.co.kr/hch/cancel/${paymentId}/cancelPurchase.json`,
+		null, 
+		{
+			params: param,
+		}
 	);
-
+	console.log("cancelPurchase response",response);
 	if (response.status === 200) {
 		return response.data;
 	} else {

@@ -22,7 +22,7 @@ export default function AlbumTrack({ album_id, func_type}: AlbumTrackProps) {
 
 			// ITEM_INFO의 모든 트랙의 YN_SALE 값을 확인
 			const hasPaymentTrack = trackList.ITEM_INFO.some(
-				(track: any) => track.YN_PURCHASED === 'N' || track.YN_PURCHASED == null
+				(track: any) => (track.YN_SALE === 'Y' && track.YN_PURCHASED === 'N') || (track.YN_SALE === 'Y' && track.YN_PURCHASED == null)
 			);
 
 			const hasUnavailableTrack = trackList.ITEM_INFO.some(

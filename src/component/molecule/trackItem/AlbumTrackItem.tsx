@@ -50,8 +50,25 @@ export default function AlbumTrackItem({
 		},
 	});
 
+	const handleTrackClick = () => {
+		if (albumTrackInfo.PAYMENT_ID !== null && albumTrackInfo.PAYMENT_ID !== undefined && albumTrackInfo.PAYMENT_ID !== "") {
+			// 구매한 트랙은 재생
+			funcAlbumTrackPlayClick("trackPlay", albumTrackInfo);
+		} else if (albumTrackInfo.YN_SALE === "N") {
+			// 판매불가 트랙은 팝업 표시
+			if (handlePopupOpen) {
+				handlePopupOpen("구매 불가능 트랙입니다.");
+			}
+		} else {
+			// 구매 가능한 트랙은 결제창 표시
+			if (handlePaymentOpen) {
+				handlePaymentOpen(albumTrackInfo);
+			}
+		}
+	};
+
 	if (isLoading) return <Loading />;
-	if (isError || !trackData)return <div>Error occurred</div>;
+	if (isError || !trackData) return <div>Error occurred</div>;
 
 	return (
 		<>
@@ -59,15 +76,8 @@ export default function AlbumTrackItem({
 				<span className={style.albumTrackInfoWrap}>
 					<span
 						className={style.albumTrackInfo}
-						onClick={() =>
-							albumTrackInfo.YN_PURCHASED === "Y"
-								? funcAlbumTrackPlayClick("trackPlay", albumTrackInfo)
-								: albumTrackInfo.YN_SALE === "N"
-								? handlePopupOpen && handlePopupOpen("구매 불가능 트랙입니다.")
-								: handlePaymentOpen && handlePaymentOpen(albumTrackInfo)
-						}
+						onClick={handleTrackClick}
 					>
-						{/* Link에는 트랙 재생하는 url이 들어가야 함 */}
 						<Image
 							src={albumTrackInfo.THUMBNAIL}
 							alt={albumTrackInfo.TITLE}
@@ -86,12 +96,19 @@ export default function AlbumTrackItem({
 						))}
 					</div>
 				</span>
-				{albumTrackInfo.YN_CANCEL === "Y" && (<button className={style.btnPaymentCancel} onClick={() => handleCancelOpen && handleCancelOpen(albumTrackInfo)}>CANCEL</button>)}
+				{albumTrackInfo.YN_CANCEL === "Y" && (
+					<button 
+						className={style.btnPaymentCancel} 
+						onClick={() => handleCancelOpen && handleCancelOpen(albumTrackInfo)}
+					>
+						CANCEL
+					</button>
+				)}
 				{/* 구매 관련 버튼 */}
 				{(albumTrackInfo.YN_PURCHASED === "N" || albumTrackInfo.YN_PURCHASED === null) && type !== 'purchase' ? (
 					<div className={`${style.buttonGroup} ${style.payment}`}>
 						{/* 구매 가능 버튼 */}
-						{albumTrackInfo.YN_SALE == "Y" ? (
+						{albumTrackInfo.YN_SALE === "Y" ? (
 							<button
 								type="button"
 								className={style.btnPayment}
@@ -123,7 +140,6 @@ export default function AlbumTrackItem({
 					</div>
 				)}
 			</div>
-
 		</>
 	);
 }
