@@ -29,7 +29,7 @@ import ErrorPage from "../organism/error/Error";
 export default function Main() {
 	const [error, setError] = useState<string | null>(null);
 
-	setCookie("userid", "3029", 24);
+	//setCookie("userid", "3029", 24);
 	const token = getCookie("token") || "";
 
 	const { data, isFetched } = useQuery({
