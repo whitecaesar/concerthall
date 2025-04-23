@@ -205,6 +205,7 @@ const AlbumTrackList = ({ AlbumTrackList, type }: TrackListProps) => {
 					price={selectedTrack?.PRICE}
 					idKey={id_key}
 					type="track"
+					description={selectedTrack?.TITLE}
 					onPurchaseComplete={handlePurchaseComplete}
 					onError={handleError}
 				/>

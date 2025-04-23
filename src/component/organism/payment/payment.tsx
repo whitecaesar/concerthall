@@ -18,6 +18,7 @@ interface PaymentProps {
 	idKey : string;
 	onPurchaseComplete: () => void;
 	onError?: (message: string) => void; // 새로운 prop 추가
+	description?: string;
 }
 
 export function generateUniqueId() {
@@ -29,7 +30,7 @@ export function generateUniqueId() {
   return `${currentTime}_${randomStr}`;
 }
 
-export default function Payment({ onClose, isOpen, trackId, albumId, type, price, onPurchaseComplete, onError, idKey }: PaymentProps) {
+export default function Payment({ onClose, isOpen, trackId, albumId, type, price, onPurchaseComplete, onError, idKey, description }: PaymentProps) {
 	const [pin, setPin] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -94,6 +95,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 							cpCode : cpCode,
 							appType : "CONCERTHALL",
 							purchaseId : purchaseId,
+							description : description
 						}; 
 						const paymentResponse = await setPaymentAxios(paymentParam, idKey);
 						if (paymentResponse.code === "200.1" && paymentResponse.message === "ok") {

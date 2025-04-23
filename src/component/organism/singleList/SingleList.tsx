@@ -158,6 +158,7 @@ export default function SingleList({
 			price={selectedTrack?.PRICE}
 			idKey={id_key}
 			type="track"
+			description={selectedTrack?.TITLE}
 			onPurchaseComplete={handlePurchaseComplete}
 			onError={handleError}
 		/>

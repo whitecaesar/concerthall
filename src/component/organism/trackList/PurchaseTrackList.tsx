@@ -16,9 +16,7 @@ interface TrackListProps {
 const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 	const [isFetch, setIsFetch] = useState<boolean>(false);
 	const [visibleTracks, setVisibleTracks] = useState<ALBUM_ITEM_TYPE[]>([]);
-	const [page, setPage] = useState(0);
 	const trackListRef = useRef<HTMLDivElement>(null);
-	const ITEMS_PER_PAGE = 20;
 	const [isPurchaseCancel, setIsPurchaseCancel] = useState(false);
 
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -29,9 +27,10 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 	const router = useRouter();
 	const lang = getCookie("lang") || "en";
 	const purchaseText = purchaseTexts[lang]?.purchase || purchaseTexts.en.purchase;
+
 	const handleConfirm = () => {
 		setIsPopupOpen(false);
-		if(isPurchaseCancel) {
+		if (isPurchaseCancel) {
 			window.location.reload(); // 페이지 리로드로 대체
 		}
 	};
@@ -60,8 +59,7 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 		if (cancelResponse.RES_CODE !== "0000") {
 			setPopupDescription(`${cancelResponse.RES_MSG}`);
 			setIsPopupOpen(true);
-		}
-		else {
+		} else {
 			const roseCancelResponse = await setCitechCancelAxios({
 				cpCode: 'test-01',
 				appType: 'CONCERTHALL',
@@ -71,8 +69,7 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 			if (roseCancelResponse.code !== "200.1") {
 				setPopupDescription(`${roseCancelResponse.message}`);
 				setIsPopupOpen(true);
-			}
-			else {
+			} else {
 				setPopupDescription(`Your purchase has been canceled.`);
 				setIsPurchaseCancel(true);
 				setIsPopupOpen(true);
@@ -93,18 +90,17 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 	// 초기 트랙 로드 및 star ratings 설정 후 visible tracks 업데이트
 	useEffect(() => {
 		if (isFetch && PurchaseTrackList) {
-			setPage(0);
-			setVisibleTracks(PurchaseTrackList.slice(0, ITEMS_PER_PAGE));
+			setVisibleTracks(PurchaseTrackList); // 모든 트랙을 표시
 		}
 	}, [isFetch, PurchaseTrackList]);
 
 	const fetchStarRatings = async () => {
 		const RegTrackItem: TRACK_REG_ITEM_TYPE[] = [];
 
-		const promises =  PurchaseTrackList.map(async (track: ALBUM_ITEM_TYPE) => {
+		const promises = PurchaseTrackList.map(async (track: ALBUM_ITEM_TYPE) => {
 			const trackItem = {
-				mediaType : "CONCERT_HALL",
-				clientKey : track.ID,
+				mediaType: "CONCERT_HALL",
+				clientKey: track.ID,
 			};
 			RegTrackItem.push(trackItem);
 		});
@@ -116,41 +112,33 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 		};
 
 		const regList = await getRegCheckListAxios(RegTrackParam);
-		if(regList.code === '200')
-		{
+		if (regList.code === '200') {
 			const roseId: any[] = [];
 			const promises = regList.tracks.map(async (track: TRACK_REG_RESPONSE_ITEM_TYPE) => {
-				if(track.id)
-				{
+				if (track.id) {
 					roseId.push(track.id);
-				}
-				else{
+				} else {
 					roseId.push(0);
 				}
 			});
 
 			await Promise.all(promises);
 			const StarParam: STAR_TRACK_LIST_RESPONSE_TYPE = {
-				ids : roseId
+				ids: roseId
 			};
 
 			const starList = await getStarTrackListAxios(StarParam);
 			if (regList.code === '200' && starList && Array.isArray(starList.data)) {
 				const promises = PurchaseTrackList.map(async (track: ALBUM_ITEM_TYPE) => {
-					// 1. regList에서 track.ID와 일치하는 항목 찾기 (clientKey 기준)
 					const regEntry = regList.tracks.find((entry: TRACK_REG_RESPONSE_ITEM_TYPE) => entry.clientKey === track.ID);
-					// 2. regEntry의 id가 존재하면
 					if (regEntry && regEntry.id) {
-						// 3. starList.data에서 regEntry.id와 동일한 id를 가진 항목 찾기
 						const starEntry = starList.data.find((item: any) => item.id === regEntry.id);
-						// 4. 일치하는 항목이 있으면 해당 star 값을 할당, 없으면 0 할당
 						if (starEntry) {
 							track.STAR = starEntry.star;
 						} else {
 							track.STAR = 0;
 						}
 					} else {
-						// regList에 일치하는 항목이 없거나 id가 null이면 바로 0 할당
 						track.STAR = 0;
 					}
 				});
@@ -162,22 +150,17 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 
 	// 스크롤 이벤트 핸들러
 	const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
-		const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
+		const { scrollTop } = event.currentTarget;
 
-		// 스크롤이 맨 아래에 도달했을 때만 추가 로드
-		if (scrollHeight - scrollTop === clientHeight) {
-			const nextPage = page + 1;
-			const start = nextPage * ITEMS_PER_PAGE;
-			const end = start + ITEMS_PER_PAGE;
-
-			if (PurchaseTrackList && start < PurchaseTrackList.length) {
-				const newTracks = PurchaseTrackList.slice(0, end);
-				setVisibleTracks(newTracks);
-				setPage(nextPage);
+		// 리스트가 제일 상단에 있을 때만 새로고침
+		if (scrollTop === 0) {
+			// 새로고침 로직
+			if ((event as unknown as WheelEvent).deltaY < 0) { // 위로 스크롤할 때만 새로고침
+				window.location.reload(); // 또는 다른 새로고침 로직
 			}
 		}
 
-		// 새로고침 방지
+		// 기본 스크롤 동작 방지
 		event.preventDefault();
 	};
 
@@ -197,7 +180,7 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 				});
 			}
 		};
-	}, [page, PurchaseTrackList]);
+	}, [PurchaseTrackList]);
 
 	return isFetch && (
 		<div 
@@ -210,10 +193,10 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 						<AlbumTrackItem 
 							albumTrackInfo={itemInfo} 
 							AlbumTrackList={PurchaseTrackList} 
-							position={index}
 							handleCancelOpen={handleCancelOpen}
 							handlePopupOpen={handlePopupOpen}
               type='purchase'
+              position={index}
 						/>
 					</li>
 				))}

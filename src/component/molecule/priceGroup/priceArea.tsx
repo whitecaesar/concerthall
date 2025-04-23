@@ -87,6 +87,7 @@ const PriceArea = ({ AlbumItem }: PriceAreaProps) => {
 				idKey={id_key}
 				type="album"
 				price={AlbumItem.ALBUM_PRICE}
+				description={AlbumItem.TITLE}
 				onPurchaseComplete={handlePurchaseComplete}
 			/>
 
