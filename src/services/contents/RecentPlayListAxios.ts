@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "../common";
+import { API_URL, getCookie } from "../common";
 
 export type PLAY_RECENT_ITEM_TYPE = {
 	id: number;
@@ -53,7 +53,7 @@ export async function getRecentPlayListAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<PLAY_RECENT_LIST_RESPONSE> = await axios.get(
-		`https://dev.api.roseaudio.kr/v1/member/playlist/recent?mediaTypes=CONCERT_HALL&page=${page}&size=${size}`,{
+		`${API_URL}/v1/member/playlist/recent?mediaTypes=CONCERT_HALL&page=${page}&size=${size}`,{
 		headers: {
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
@@ -62,7 +62,7 @@ export async function getRecentPlayListAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`에러입니다. ${response.data.message}`);
 	}
 }
 

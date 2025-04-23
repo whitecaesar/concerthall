@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "../common";
+import { getCookie, API_URL } from "../common";
 
 export type PLT_STAR_REQUEST_TRACK_TYPE = {
 	id: string;
@@ -29,7 +29,7 @@ export async function setPLTStarAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=TRACK`, param,
+		`${API_URL}/v1/member/rating/star?type=TRACK`, param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -39,7 +39,7 @@ export async function setPLTStarAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`에러입니다. ${response.data.message}`);
 	}
 }
 
@@ -62,7 +62,7 @@ export async function setAlbumStarAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<ALBUM_STAR_RESPONSE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=ALBUM`, param,
+		`${API_URL}/v1/member/rating/star?type=ALBUM`, param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -72,7 +72,7 @@ export async function setAlbumStarAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`에러입니다. ${response.data.message}`);
 	}
 }
 
@@ -99,7 +99,7 @@ export async function setRegTrackAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/track`, param,
+		`${API_URL}/v1/member/track`, param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -109,7 +109,7 @@ export async function setRegTrackAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`에러입니다. ${response.data.message}`);
 	}
 }
 
@@ -136,7 +136,7 @@ export async function setRegAlbumAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<PLT_STAR_RESPONSE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/album`, param,
+		`${API_URL}/v1/member/album`, param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -146,7 +146,7 @@ export async function setRegAlbumAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`에러입니다. ${response.data.message}`);
 	}
 }
 

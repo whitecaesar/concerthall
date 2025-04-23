@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "../common";
+import { getCookie, API_URL, API_URL_CIP } from "../common";
 
 
 export type PASS_CHECK_RESPONSE = {
@@ -20,7 +20,7 @@ export async function getPassCheckAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<PASS_CHECK_RESPONSE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/member/password/check`,param, {
+		`${API_URL}/v1/member/member/password/check`,param, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
@@ -29,7 +29,7 @@ export async function getPassCheckAxios(
 	if (response.status === 200) {
         return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }
 
@@ -53,7 +53,7 @@ export async function getBalanceCheckAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<BALANCE_CHECK_RESPONSE> = await axios.get(
-		`https://dev.api.roseaudio.kr/payment/v1/balance`,{
+		`${API_URL}/payment/v1/balance`,{
 		headers: {
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
@@ -62,7 +62,7 @@ export async function getBalanceCheckAxios(
 	if (response.status === 200) {
         return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }
 
@@ -98,7 +98,7 @@ export async function setPaymentAxios(
 	console.log("param",param);
 
 	const response: AxiosResponse<PASS_CHECK_RESPONSE> = await axios.post(
-		`https://dev.api.roseaudio.kr/payment/v1/content/purchase`,param, {
+		`${API_URL}/payment/v1/content/purchase`,param, {
 		headers: {
 			'Authorization': `Bearer ${token}`,
       'Idempotency-key': `${id_key}`
@@ -114,7 +114,7 @@ export async function setPaymentAxios(
             throw new Error(`System Error. ${response.data.message}`);
         }
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }
 
@@ -130,7 +130,7 @@ export async function setPaymentConfirmAxios(
 	}
 
 	const response: AxiosResponse<PASS_CHECK_RESPONSE> = await axios.post(
-		`https://dev.api.roseaudio.kr/payment/v1/content/purchase/confirm`,param, {
+		`${API_URL}/payment/v1/content/purchase/confirm`,param, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
@@ -145,7 +145,7 @@ export async function setPaymentConfirmAxios(
             throw new Error(`System Error. ${response.data.message}`);
         }
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }
 
@@ -172,7 +172,7 @@ export async function setTrackPurchaseAxios(
 	}
 
 	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
-		`http://cip.ontown.co.kr/hch/track/${idTrack}/purchase.json`,
+		`${API_URL_CIP}/hch/track/${idTrack}/purchase.json`,
 		null, 
 		{
 			params: param,
@@ -183,7 +183,7 @@ export async function setTrackPurchaseAxios(
 	if (response.status === 200) {
       return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.RES_MSG}`);
 	}
 }
 
@@ -198,7 +198,7 @@ export async function setAlbumPurchaseAxios(
 	}
 
 	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
-		`http://cip.ontown.co.kr/hch/album/${idAlbum}/purchase.json`,
+		`${API_URL_CIP}/hch/album/${idAlbum}/purchase.json`,
 		null, 
 		{
 			params: param,
@@ -208,7 +208,7 @@ export async function setAlbumPurchaseAxios(
 	if (response.status === 200) {
     return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.RES_MSG}`);
 	}
 }
 
@@ -223,7 +223,7 @@ export async function setTrackPurchaseCancelAxios(
 	}
 
 	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
-		`http://cip.ontown.co.kr/hch/track/${idTrack}/cancelPurchase.json`,
+		`${API_URL_CIP}/hch/track/${idTrack}/cancelPurchase.json`,
 		null, 
 		{
 			params: param,
@@ -234,7 +234,7 @@ export async function setTrackPurchaseCancelAxios(
 	if (response.status === 200) {
     return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.RES_MSG}`);
 	}
 }
 
@@ -244,7 +244,7 @@ export async function setAlbumPurchaseCancelAxios(
 ): Promise<TRACK_PURCHASE_RESPONSE> {
 
 	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
-		`http://cip.ontown.co.kr/hch/album/${idAlbum}/cancelPurchase.json`,
+		`${API_URL_CIP}/hch/album/${idAlbum}/cancelPurchase.json`,
 		null, 
 		{
 			params: param,
@@ -256,6 +256,6 @@ export async function setAlbumPurchaseCancelAxios(
 	if (response.status === 200) {
       return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.RES_MSG}`);
 	}
 }

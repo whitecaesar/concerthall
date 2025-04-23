@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "../common";
+import { API_URL_CIP, getCookie } from "../common";
 
 export type ALBUM_ARTIST_INFO_TYPE = {
 	artist_id: string;
@@ -62,7 +62,7 @@ export async function getAlbumAxios(
 	const LANG = getCookie("lang");
 	/*
 	const response: AxiosResponse<ALBUM_DETAIL_TYPE> = await axios.get(
-		`http://cip.ontown.co.kr/hch/album/${idAlbum}/contents.json?ID_CUST=${ID_CUST}`, {
+		`${API_URL_CIP}/hch/album/${idAlbum}/contents.json?ID_CUST=${ID_CUST}`, {
 			headers: {
 				'X-Forwarded-For': IP,
 				'Accept-Language': LANG
@@ -71,7 +71,7 @@ export async function getAlbumAxios(
 	);
 	*/
 	const response: AxiosResponse<ALBUM_DETAIL_TYPE> = await axios.get(
-		`http://cip.ontown.co.kr/hch/album/${idAlbum}/contents.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
+		`${API_URL_CIP}/hch/album/${idAlbum}/contents.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
 	);
 
 	if (response.status === 200) {

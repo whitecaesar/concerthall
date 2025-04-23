@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "../common";
+import { API_URL, getCookie } from "../common";
 
 export type STAR_REQUEST_ITEM_TYPE = {
 	id: string | null;
@@ -34,7 +34,7 @@ export async function getStarAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<STAR_RESPONSE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/rating/${method}`, param,
+		`${API_URL}/v1/member/rating/${method}`, param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -45,7 +45,7 @@ export async function getStarAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`error. ${response.status}`);
+		throw new Error(`error. ${response.data.message}`);
 	}
 }
 
@@ -73,7 +73,7 @@ export async function getStarTrackAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<STAR_TRACK_RESPONSE_ITEM_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/track/check?type=TRACK`, param,
+		`${API_URL}/v1/member/track/check?type=TRACK`, param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -84,7 +84,7 @@ export async function getStarTrackAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`에러입니다. ${response.data.message}`);
 	}
 }
 
@@ -119,7 +119,7 @@ export async function getRegCheckListAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<TRACK_REG_RESPONSE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/track/check/list`, param,
+		`${API_URL}/v1/member/track/check/list`, param,
 				{
 						headers: {
 								'Authorization': `Bearer ${token}`
@@ -130,7 +130,7 @@ export async function getRegCheckListAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`에러입니다. ${response.data.message}`);
 	}
 }
 
@@ -158,7 +158,7 @@ export async function getStarAlbumAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<STAR_ALBUM_RESPONSE_ITEM_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/album/check`, param,
+		`${API_URL}/v1/member/album/check`, param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -168,7 +168,7 @@ export async function getStarAlbumAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`error. ${response.status}`);
+		throw new Error(`error. ${response.data.message}`);
 	}
 }
 
@@ -200,7 +200,7 @@ export async function getStarTrackListAxios(
 	}
 
 	const response: AxiosResponse<STAR_LIST_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/track/rating/search/list`, param,
+		`${API_URL}/v1/member/track/rating/search/list`, param,
 				{
 						headers: {
 								'Authorization': `Bearer ${token}`
@@ -211,6 +211,6 @@ export async function getStarTrackListAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`에러입니다. ${response.data.message}`);
 	}
 }

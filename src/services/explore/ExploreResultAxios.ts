@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ARTIST_INFO_TYPE, VIEWALL_LIST_TYPE} from "../contents/ViewAllAxios";
+import { API_URL_CIP } from "../common";
 
 export type TRESULT_LIST_RESPONSE = {
 	RES_CODE: string;
@@ -11,7 +12,7 @@ export async function getExploreResults(
 	keyword? : string
 ): Promise<TRESULT_LIST_RESPONSE> {
 	const response: AxiosResponse = await axios.get(
-		`http://cip.ontown.co.kr/hch/search/info.json?key=${keyword}`
+		`${API_URL_CIP}/hch/search/info.json?key=${keyword}`
 	);
 
 	if (response.status === 200) {

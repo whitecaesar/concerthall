@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "../common";
+import { getCookie, API_URL } from "../common";
 
 export type PLT_LIKE_REQUEST_TYPE = {
 	targetId:string;
@@ -21,7 +21,7 @@ export async function setPLLIKEAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<PLT_LIKE_RESPONSE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/playlist/thumbup`, param,
+		`${API_URL}/v1/member/playlist/thumbup`, param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -31,7 +31,7 @@ export async function setPLLIKEAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`에러입니다. ${response.data.message}`);
 	}
 }
 
@@ -50,7 +50,7 @@ export async function getPLLIKEAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<PLT_LIKE_RST_RESPONSE_TYPE> = await axios.get(
-		`https://dev.api.roseaudio.kr/v1/member/playlist/thumbup?targetId=${targetId}&type=PLAY_LIST`,
+		`${API_URL}/v1/member/playlist/thumbup?targetId=${targetId}&type=PLAY_LIST`,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -60,7 +60,7 @@ export async function getPLLIKEAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다. ${response.status}`);
+		throw new Error(`에러입니다. ${response.data.message}`);
 	}
 }
 

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "../common";
+import { API_URL_CIP, getCookie } from "../common";
 import { ALBUM_ITEM_TYPE } from "./AlbumAxios";
 import { ITEM_INFO_TYPE } from "./ViewAllAxios";
 
@@ -15,7 +15,7 @@ export async function getPurchaseListAxios(
 
 	const ID_CUST = getCookie("userid");
 	const response: AxiosResponse<PURCHASE_LIST_RESPONSE> = await axios.get(
-		`http://cip.ontown.co.kr/hch/purchase/list.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
+		`${API_URL_CIP}/hch/purchase/list.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
 	);
 
 	if (response.status === 200) {

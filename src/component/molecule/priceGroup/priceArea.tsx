@@ -42,14 +42,16 @@ const PriceArea = ({ AlbumItem }: PriceAreaProps) => {
 					setIsPopupOpen(true);
 					return;
 				}
+				
 				const track_info = AlbumItem.ITEM_INFO[0];
-				if (!Array.isArray(track_info) || track_info.length === 0)
-				{
+
+				console.log("track_info", track_info);
+				if (typeof track_info !== 'object' || track_info === null || Object.keys(track_info).length === 0) {
 					setPopupDescription("No preview tracks available.");
 					setIsPopupOpen(true);
 					return;
 				}
-				funcPreviewClick(trackPreviewUrl.INFO.URL, trackPreviewUrl.INFO.PLAYABLE_CODE, track_info);
+				funcPreviewClick(trackPreviewUrl.INFO.URL, "0000", track_info);
 			
 		} else {
 				setPopupDescription("No preview tracks available.");

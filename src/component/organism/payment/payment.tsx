@@ -63,6 +63,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 
 			if (passCheckResponse.code === "200") {
 				// 잔액 확인
+
 				const balanceResponse = await getBalanceCheckAxios();
 				// 입력값 초기화 및 모달 닫기
 				const point = balanceResponse.data.rewardPoint + balanceResponse.data.chargePoint;
@@ -120,17 +121,18 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				}
 				else
 				{
-					setErrorMessage(balanceResponse.message);
+					setErrorMessage("잔여 포인트 부족");
 					if (onError) {
-						onError(balanceResponse.message); // 직접 에러 메시지 전달
+						onError("잔여 포인트 부족"); // 직접 에러 메시지 전달
+						onClose();
 					}
 				}
 			} else {
 				if (onError) {
 					onError(passCheckResponse.message); // 직접 에러 메시지 전달
+					onClose();
 				}
 			}
-
 		} catch (error) {
 			console.error("An error occurred during payment processing:", error);
 			setErrorMessage("An error occurred during payment processing.");

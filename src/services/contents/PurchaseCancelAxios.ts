@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "../common";
+import { getCookie, API_URL, API_URL_CIP } from "../common";
 
 export type CANCEL_RESPONSE_TYPE = {
 	message: string;
@@ -22,7 +22,7 @@ export async function setCitechCancelAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<CANCEL_RESPONSE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/payment/v1/content/purchase/cancel`, param,
+		`${API_URL}/payment/v1/content/purchase/cancel`, param,
 				{
 						headers: {
 								'Authorization': `Bearer ${token}`
@@ -33,7 +33,7 @@ export async function setCitechCancelAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`System Error ${response.status}`);
+		throw new Error(`System Error ${response.data.message}`);
 	}
 }
 
@@ -52,7 +52,7 @@ export async function setCancelAxios(
   param?: INNER_CANCEL_REQUEST_TYPE
 ): Promise<INNER_CANCEL_RESPONSE_TYPE> {
 	const response: AxiosResponse<INNER_CANCEL_RESPONSE_TYPE> = await axios.post(
-		`http://cip.ontown.co.kr/hch/cancel/${paymentId}/cancelPurchase.json`,
+		`${API_URL_CIP}/hch/cancel/${paymentId}/cancelPurchase.json`,
 		null, 
 		{
 			params: param,
@@ -62,6 +62,6 @@ export async function setCancelAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`System Error ${response.status}`);
+		throw new Error(`System Error ${response.data.RES_MSG}`);
 	}
 }

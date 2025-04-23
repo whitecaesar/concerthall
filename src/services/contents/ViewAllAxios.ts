@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { API_URL_CIP } from "../common";
 
 export type ARTIST_INFO_TYPE = {
 	artist_id: string;
@@ -48,7 +49,7 @@ export type TVIEWALL_LIST_RESPONSE = {
 
 export async function getViewallAxios(type?:string): Promise<TVIEWALL_LIST_RESPONSE | void> {
 	const response: AxiosResponse<TVIEWALL_LIST_RESPONSE> = await axios.get(
-		`http://cip.ontown.co.kr/hch/recom/${type}/contents.json`
+		`${API_URL_CIP}/hch/recom/${type}/contents.json`
 	);
 	if (response.status === 200) {
 		const data = response.data;

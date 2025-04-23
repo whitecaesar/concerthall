@@ -25,21 +25,21 @@ type Props = {
 	const handleClick = () => {
 	  if (method === 'albumTrackMore') {
 			if (!albumTrackList) {
-				console.error("Track info or Play info is missing!");
+				console.error("AlbumTrack info is missing!");
 				return; // 에러 메시지 출력하고 함수 종료
 			}
 
 			funcTrackPlayClick(method, track_info?.TRACK_INFO, trackListInfo, position, albumTrackList);
 	  } else if(method == 'albumMore'){
 			if (!album_info) {
-				console.error("Track info or Play info is missing!");
+				console.error("Album info is missing!");
 				return; // 에러 메시지 출력하고 함수 종료
 			}
 			funcAlbumPlayClick(method, album_info);
 	  } 
 			else if(method == 'recentTrackMore') {
 			if (!recent_track_info) {
-				console.error("recent_track info or Play info is missing!");
+				console.error("recent_track info  is missing!");
 				return; // 에러 메시지 출력하고 함수 종료
 			}
 			//funcTrackPlayClick(method, play_info, recent_track_info);

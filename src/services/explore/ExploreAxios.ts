@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ARTIST_INFO_TYPE, VIEWALL_LIST_TYPE } from "../contents/ViewAllAxios";
-import { getCookie } from "../common";
+import { API_URL_CIP, getCookie } from "../common";
 
 export type TKEYWORD_INFO = {
 	KEY: string;
@@ -22,7 +22,7 @@ export type CATEGORY_LIST_RESPONSE = {
 export async function getExploreAxios(): Promise<CATEGORY_LIST_RESPONSE> {
 	const ID_CUST = getCookie("userid");
 	const response: AxiosResponse = await axios.get(
-		`http://cip.ontown.co.kr/hch/recom/info.json?ID_CUST=${ID_CUST}`
+		`${API_URL_CIP}/hch/recom/info.json?ID_CUST=${ID_CUST}`
 	);
 
 	if (response.status === 200) {

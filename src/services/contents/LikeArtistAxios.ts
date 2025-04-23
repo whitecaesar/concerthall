@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { PLAY_RECENT_ITEM_TYPE } from "./RecentPlayListAxios";
-import { getCookie } from "../common";
+import { getCookie, API_URL } from "../common";
 
 
 export type ARTIST_REG_REQUEST_ITEM = {
@@ -27,7 +27,7 @@ export async function getRegArtistInfoAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<ARTIST_REG_RESPONSE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/artist/check`,param, {
+		`${API_URL}/v1/member/artist/check`,param, {
 		headers: {
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
@@ -36,7 +36,7 @@ export async function getRegArtistInfoAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }
 
@@ -68,7 +68,7 @@ export async function setArtistStarAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<ARTIST_STAR_RESPOSNE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/rating/star?type=ARTIST`, param,
+		`${API_URL}/v1/member/rating/star?type=ARTIST`, param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -78,7 +78,7 @@ export async function setArtistStarAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }
 
@@ -108,7 +108,7 @@ export async function setRegArtistAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<ARTIST_SETREG_RESPOSNE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/artist`, param,
+		`${API_URL}/v1/member/artist`, param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -118,7 +118,7 @@ export async function setRegArtistAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }
 
@@ -148,7 +148,7 @@ export async function getArtistStarAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<ARTIST_GET_STAR_RESPONSE_TYPE> = await axios.post(
-		`https://dev.api.roseaudio.kr/v1/member/rating?type=ARTIST&mediaType=CONCERT_HALL`,param,
+		`${API_URL}/v1/member/rating?type=ARTIST&mediaType=CONCERT_HALL`,param,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -158,7 +158,7 @@ export async function getArtistStarAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }
 
@@ -195,7 +195,7 @@ export async function getArtistListAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<ARTIST_LIST_RESPONSE_TYPE> = await axios.get(
-		`https://dev.api.roseaudio.kr/v1/member/artist/favorite?mediaTypes=CONCERT_HALL&sortType=ARTIST_NAME_ASC&page=${page}&size=${size}`,
+		`${API_URL}/v1/member/artist/favorite?mediaTypes=CONCERT_HALL&sortType=ARTIST_NAME_ASC&page=${page}&size=${size}`,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -205,6 +205,6 @@ export async function getArtistListAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "../common";
+import { API_URL_CIP, getCookie } from "../common";
 
 export type PLAY_URL_TYPE = {
 	URL: string;
@@ -21,7 +21,7 @@ export async function getPlayInfoAxios(
 	const IP = getCookie("ip");
 	const LANG = getCookie("lang");
 	const response: AxiosResponse<PLAY_ITEM_RESPONSE> = await axios.get(
-		`http://cip.ontown.co.kr/hch/track/${idTrack}/playInfo.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
+		`${API_URL_CIP}/hch/track/${idTrack}/playInfo.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
 	);
 
 	if (response.status === 200) {
@@ -39,7 +39,7 @@ export async function funcGetPreviewAxios(
 		const IP = getCookie("ip");
 		const LANG = getCookie("lang");
 		const response: AxiosResponse<PLAY_ITEM_RESPONSE> = await axios.get(
-			`http://cip.ontown.co.kr/hch/track/${idTrack}/previewInfo.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
+			`${API_URL_CIP}/hch/track/${idTrack}/previewInfo.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
 		);
 
 		if (response.status === 200) {

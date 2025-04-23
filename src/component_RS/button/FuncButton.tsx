@@ -11,7 +11,7 @@ const FuncButton = ({ method }: Props) => {
 		const artistItem = {
 			artist_id: "test1234",
 			artist_name: "artist",
-			thumbnail: "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
+			thumbnail: "${API_URL_CIP}/images/dummy/dummy_single.png",
 		};
 
 		const WebStreamArtistItem: any[] = [artistItem];
@@ -19,8 +19,8 @@ const FuncButton = ({ method }: Props) => {
 		const trackItem = {
 			track_id: "test1234",
 			title: "test_track",
-			album_thumbnail: "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
-			thumbnail: "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
+			album_thumbnail: "${API_URL_CIP}/images/dummy/dummy_single.png",
+			thumbnail: "${API_URL_CIP}/images/dummy/dummy_single.png",
 			url: "http://movie.cinehotel.co.kr/movie/111111.mkv",
 			playable: "0000",
 			media_type: "video",
@@ -37,7 +37,7 @@ const FuncButton = ({ method }: Props) => {
 		const albumItem = {
 			album_id: "album1234",
 			album_name: "test_album",
-			thumbnail: "http://cip.ontown.co.kr/images/dummy/dummy_single.png",
+			thumbnail: "${API_URL_CIP}/images/dummy/dummy_single.png",
 			tracks: WebStreamTrackItem,
 			artist: WebStreamArtistItem,
 		};

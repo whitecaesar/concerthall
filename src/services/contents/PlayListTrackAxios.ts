@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "../common";
+import { getCookie, API_URL } from "../common";
 
 export type TRACK_ITME_ARTIST_TYPE = {
     albums_count : string;
@@ -140,7 +140,7 @@ export async function getPlayListTrackListAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<TRACK_LIST_RESPONSE> = await axios.get(
-		`https://dev.api.roseaudio.kr/v1/member/playlist/${playlistId}?page=0&size=${size}`,{
+		`${API_URL}/v1/member/playlist/${playlistId}?page=0&size=${size}`,{
 		headers: {
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
@@ -149,7 +149,7 @@ export async function getPlayListTrackListAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`에러입니다!. ${response.status}`);
+		throw new Error(`에러입니다!. ${response.data.message}`);
 	}
 }
 

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { PLAY_RECENT_ITEM_TYPE } from "./RecentPlayListAxios";
-import { getCookie } from "../common";
+import { getCookie, API_URL } from "../common";
 
 export type MY_RECENT_LIST_RESPONSE = {
 	message: string;
@@ -23,7 +23,7 @@ export async function getLikePlayListAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<MY_RECENT_LIST_RESPONSE> = await axios.get(
-		`https://dev.api.roseaudio.kr/v1/member/playlist?sortType=PLAYLIST_RECENT&isFavorite=true&mediaTypes=CONCERT_HALL&page=0&size=${size}`,{
+		`${API_URL}/v1/member/playlist?sortType=PLAYLIST_RECENT&isFavorite=true&mediaTypes=CONCERT_HALL&page=0&size=${size}`,{
 		headers: {
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
@@ -32,7 +32,7 @@ export async function getLikePlayListAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }
 

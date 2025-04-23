@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { TRACK_TRACKS_ITEM_TYPE } from "./PlayListTrackAxios";
-import { getCookie } from "../common";
+import { getCookie, API_URL } from "../common";
 
 
 export type TRACK_RECENT_ITME_ARTIST_TYPE = {
@@ -116,7 +116,7 @@ export async function getLikeTrackListAxios(
 		token = process.env.NEXT_PUBLIC_TOKEN;
 	}
 	const response: AxiosResponse<TRACK_RECENT_LIST_RESPONSE> = await axios.get(
-		`https://dev.api.roseaudio.kr/v1/member/track/favorite?mediaTypes=CONCERT_HALL&sortType=TRACK_RECENT`,{
+		`${API_URL}/v1/member/track/favorite?mediaTypes=CONCERT_HALL&sortType=TRACK_RECENT`,{
 		headers: {
 			'Authorization': `Bearer ${token}`
 		} // URL 구성을 동적으로 변경했습니다.
@@ -125,7 +125,7 @@ export async function getLikeTrackListAxios(
 	if (response.status === 200) {
 		return response.data;
 	} else {
-		throw new Error(`System Error. ${response.status}`);
+		throw new Error(`System Error. ${response.data.message}`);
 	}
 }
 

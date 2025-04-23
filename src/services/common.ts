@@ -8,6 +8,8 @@ import { TRACK_ITEM_TYPE } from "./contents/TrackAxios";
 import { ITEM_INFO_TYPE, VIEWALL_LIST_TYPE } from "./contents/ViewAllAxios";
 
 export const MediaType = 'CONCERT_HALL';
+export const API_URL = 'https://dev.api.roseaudio.kr';
+export const API_URL_CIP = 'http://cip.ontown.co.kr';
 
 export function setCookie(name: string, value: string, days: number) {
     if (typeof window === 'undefined') {
@@ -61,7 +63,7 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
   if(type == 'trackMore')
   {
     const WebStreamTrackItem: any[] = [];
-    tracklistInfo?.ITEM_INFO.forEach(async (item :ITEM_INFO_TYPE) => {
+    const promises = (tracklistInfo?.ITEM_INFO || []).map(async (item :ITEM_INFO_TYPE) => {
       if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
       {
         if (item.ID) {
@@ -110,6 +112,9 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
       }
     });
     
+    // 모든 비동기 작업이 완료될 때까지 기다림
+    await Promise.all(promises || []);
+
     if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
     {
       console.error(`No playable tracks available.`);
@@ -127,8 +132,7 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
   else if(type == 'albumTrackMore')
   {
     const WebStreamTrackItem: any[] = [];
-
-    albumTrackList?.forEach(async (item :ALBUM_ITEM_TYPE) => {
+    const promises = albumTrackList?.map(async (item :ALBUM_ITEM_TYPE) => {
       if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
       {
         if (item.ID) {
@@ -176,6 +180,9 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
         WebStreamTrackItem.push(trackItem);
       }
     });
+
+    // 모든 비동기 작업이 완료될 때까지 기다림
+    await Promise.all(promises || []);
 
     if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
     {
@@ -275,8 +282,7 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
   if(type == 'trackMore')
   {
     const WebStreamTrackItem: any[] = [];
-
-    tracklistInfo?.ITEM_INFO.forEach(async (item :ITEM_INFO_TYPE) => {
+    const promises = (tracklistInfo?.ITEM_INFO || []).map(async (item :ITEM_INFO_TYPE) => {
       if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
       {
         if (item.ID) {
@@ -324,6 +330,9 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
         WebStreamTrackItem.push(trackItem);
       }
     });
+
+    // 모든 비동기 작업이 완료될 때까지 기다림
+    await Promise.all(promises || []);
 
     if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
     {
@@ -480,109 +489,105 @@ export function funcArtistTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPON
   }
 };
 
-export function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
+export async function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TYPE) {
   const WebStreamTrackItem: any[] = [];
 
-  album?.ITEM_INFO?.forEach(async (item :ALBUM_ITEM_TYPE) => {
-    
-    if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
-    {
+  console.log("album", album);
+
+  const promises = album?.ITEM_INFO?.map(async (item: ALBUM_ITEM_TYPE) => {
+    if (item.YN_PURCHASED == 'Y' && item.YN_SALE == 'Y') {
       if (item.ID) {
         try {
           const result = await getPlayInfoAxios(item.ID);
           if (result && result.INFO && result.INFO.URL && result.INFO.PLAYABLE_CODE) {
             item.URL = result.INFO.URL;
             item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
-            const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
+            const PURCHASE_ID = result.INFO.PURCHASE_ID ? result.INFO.PURCHASE_ID : '';
 
-              if(PURCHASE_ID)
+            if (PURCHASE_ID) {
+              const purchaseResponse = await setPaymentConfirmAxios({
+                purchaseId: PURCHASE_ID,
+                reason: 'STREAMING_PLAY',
+                cpCode: 'test-01',
+                appType: 'CONCERTHALL'
+              });
+              /*
+              if(purchaseResponse.code != '200.1' && purchaseResponse.code != '409.2')
               {
-                const purchaseResponse = await setPaymentConfirmAxios({
-                  purchaseId : PURCHASE_ID,
-                  reason : 'STREAMING_PLAY',
-                  cpCode : 'test-01',
-                  appType : 'CONCERTHALL'
-                });
-                /*
-                if(purchaseResponse.code != '200.1' && purchaseResponse.code != '409.2')
-                {
-                  throw new Error('Purchase verification failed');
-                }
-                */
+                throw new Error('Purchase verification failed');
               }
+              */
+            }
           }
         } catch (error) {
           console.error(`Failed to fetch play info for ID ${item.ID}:`, error);
         }
       }
 
-      const duratinon = item.DURATION && convertToMilliseconds(item.DURATION);
+      const duration = item.DURATION && convertToMilliseconds(item.DURATION);
       const trackItem = {
-        track_id : item.ID,
-        title : item.TITLE,
-        album_thumbnail : album.THUMBNAIL,
-        thumbnail : item.THUMBNAIL,
-        url : item.URL,
-        playable_code : item.PLAYABLE_CODE,
-        media_type : item.MEDIA_TYPE,
-        album_id : item.ALBUM_ID,
-        album_name : item.ALBUM_NAME,
-        artist : item.ARTIST,
-        duration : duratinon,
-        resolution : item.DATA?.resolution,
-        codec : item.DATA?.codec,
+        track_id: item.ID,
+        title: item.TITLE,
+        album_thumbnail: album.THUMBNAIL,
+        thumbnail: item.THUMBNAIL,
+        url: item.URL,
+        playable_code: item.PLAYABLE_CODE,
+        media_type: item.MEDIA_TYPE,
+        album_id: item.ALBUM_ID,
+        album_name: item.ALBUM_NAME,
+        artist: item.ARTIST,
+        duration: duration,
+        resolution: item.DATA?.resolution,
+        codec: item.DATA?.codec,
       };
+      console.log("trackItem", trackItem);
       WebStreamTrackItem.push(trackItem);
     }
   });
 
-  if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
-  {
+  // 모든 비동기 작업이 완료될 때까지 기다림
+  await Promise.all(promises || []);
+
+  console.log("WebStreamTrackItem", WebStreamTrackItem);
+
+  if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) {
     console.error(`No playable tracks available.`);
   } else {
-    const WebStreamAlbumItem  = {   
-      album_id : album.ID,           
-      album_name : album.TITLE,       
-      thumbnail : album.THUMBNAIL,
-      tracks  : WebStreamTrackItem, 
-      artist  : album.ARTIST 
-    }
+    const WebStreamAlbumItem = {
+      album_id: album.ID,
+      album_name: album.TITLE,
+      thumbnail: album.THUMBNAIL,
+      tracks: WebStreamTrackItem,
+      artist: album.ARTIST
+    };
 
     const albumData = {
-      webstreamalbumitem : WebStreamAlbumItem
-    }
+      webstreamalbumitem: WebStreamAlbumItem
+    };
 
-    let allData = {}
-
+    let allData = {};
     let json_album_data: string = JSON.stringify(albumData);
 
     // 버튼 클릭 시 실행할 로직
-    if(type == 'albumMore')
-    {
+    if (type == 'albumMore') {
       (window as any).HifiRose.webStreamAlbumMoreClick(json_album_data);
-    }
-    else if(type == 'AlbumPlay')
-    {
-      allData = { 
-        webstreamtrackitem : WebStreamTrackItem,
-        webstreamalbumitem : WebStreamAlbumItem,
-        isShufflePlay : false
-      };
-      let All_data: string = JSON.stringify(allData);
-      (window as any).HifiRose.webStreamAlbumClick(All_data);
-    }
-    else if(type == 'SufflePlay')
-    {
+    } else if (type == 'AlbumPlay') {
       allData = {
-        webstreamtrackitem : WebStreamTrackItem,
-        webstreamalbumitem : WebStreamAlbumItem,
-        isShufflePlay : true
+        webstreamtrackitem: WebStreamTrackItem,
+        webstreamalbumitem: WebStreamAlbumItem,
+        isShufflePlay: false
       };
       let All_data: string = JSON.stringify(allData);
       (window as any).HifiRose.webStreamAlbumClick(All_data);
-    }
-    else if(type == 'AlbumShare')
-    {
+    } else if (type == 'SufflePlay') {
+      allData = {
+        webstreamtrackitem: WebStreamTrackItem,
+        webstreamalbumitem: WebStreamAlbumItem,
+        isShufflePlay: true
+      };
+      let All_data: string = JSON.stringify(allData);
+      (window as any).HifiRose.webStreamAlbumClick(All_data);
+    } else if (type == 'AlbumShare') {
       (window as any).HifiRose.webStreamGotoShareAlbum(json_album_data);
     }
   }
@@ -696,8 +701,8 @@ export function funcPreviewClick(url : string, playable_code: string, item : ALB
     track_id : item.ID,
     title : item.TITLE,
     thumbnail : item.THUMBNAIL,
-    url : item.URL,
-    playable_code : item.PLAYABLE_CODE,
+    url : url,
+    playable_code : playable_code,
     media_type : item.MEDIA_TYPE,
     album_id : item.ALBUM_ID,
     album_name : item.ALBUM_NAME,

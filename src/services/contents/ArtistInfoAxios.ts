@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { ALBUM_ITEM_TYPE } from "./AlbumAxios";
-import { getCookie } from "../common";
+import { API_URL_CIP, getCookie } from "../common";
 
 export type ARTIST_DEFAULT_INFO_TYPE = {
 	artist_id: string;
@@ -54,7 +54,7 @@ export async function getArtistInfoAxios(
 
     const ID_CUST = getCookie("userid");
 	const response: AxiosResponse<ARTIST_INFO_RESPONSE> = await axios.get(
-		`http://cip.ontown.co.kr/hch/artist/${idArtist}/info.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
+		`${API_URL_CIP}/hch/artist/${idArtist}/info.json?ID_CUST=${ID_CUST}` // URL 구성을 동적으로 변경했습니다.
 	);
 
 	if (response.status === 200) {
