@@ -51,7 +51,8 @@ export default function AlbumTrackItem({
 	});
 
 	const handleTrackClick = () => {
-		if (albumTrackInfo.PAYMENT_ID !== null && albumTrackInfo.PAYMENT_ID !== undefined && albumTrackInfo.PAYMENT_ID !== "") {
+		console.log("albumTrackInfo", albumTrackInfo);
+		if (albumTrackInfo.YN_PURCHASED === "Y") {
 			// 구매한 트랙은 재생
 			funcAlbumTrackPlayClick("trackPlay", albumTrackInfo);
 		} else if (albumTrackInfo.YN_SALE === "N") {
