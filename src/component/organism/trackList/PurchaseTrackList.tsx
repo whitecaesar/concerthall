@@ -161,34 +161,40 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 	};
 
 	// 스크롤 이벤트 핸들러
-	const handleScroll = () => {
-		if (trackListRef.current) {
-			const { scrollTop, scrollHeight, clientHeight } = trackListRef.current;
+	const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+		const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
 
-			if (scrollHeight - scrollTop === clientHeight) {
-				const nextPage = page + 1;
-				const start = nextPage * ITEMS_PER_PAGE;
-				const end = start + ITEMS_PER_PAGE;
+		// 스크롤이 맨 아래에 도달했을 때만 추가 로드
+		if (scrollHeight - scrollTop === clientHeight) {
+			const nextPage = page + 1;
+			const start = nextPage * ITEMS_PER_PAGE;
+			const end = start + ITEMS_PER_PAGE;
 
-				if (PurchaseTrackList && start < PurchaseTrackList.length) {
-					const newTracks = PurchaseTrackList.slice(0, end);
-					setVisibleTracks(newTracks);
-					setPage(nextPage);
-				}
+			if (PurchaseTrackList && start < PurchaseTrackList.length) {
+				const newTracks = PurchaseTrackList.slice(0, end);
+				setVisibleTracks(newTracks);
+				setPage(nextPage);
 			}
 		}
+
+		// 새로고침 방지
+		event.preventDefault();
 	};
 
 	// 스크롤 이벤트 리스너 등록
 	useEffect(() => {
 		const trackListElement = trackListRef.current;
 		if (trackListElement) {
-			trackListElement.addEventListener('scroll', handleScroll);
+			trackListElement.addEventListener('scroll', (event: Event) => {
+				handleScroll(event as unknown as React.UIEvent<HTMLDivElement>);
+			});
 		}
 
 		return () => {
 			if (trackListElement) {
-				trackListElement.removeEventListener('scroll', handleScroll);
+				trackListElement.removeEventListener('scroll', (event: Event) => {
+					handleScroll(event as unknown as React.UIEvent<HTMLDivElement>);
+				});
 			}
 		};
 	}, [page, PurchaseTrackList]);

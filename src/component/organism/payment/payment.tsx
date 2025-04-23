@@ -121,9 +121,9 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				}
 				else
 				{
-					setErrorMessage("잔여 포인트 부족");
+					setErrorMessage("잔여 포인트 부족 (보유포인트 : " + point + ")");
 					if (onError) {
-						onError("잔여 포인트 부족"); // 직접 에러 메시지 전달
+						onError("잔여 포인트 부족 (보유포인트 : " + point + ")"); // 직접 에러 메시지 전달
 						onClose();
 					}
 				}
