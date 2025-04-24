@@ -95,7 +95,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 							cpCode : cpCode,
 							appType : "CONCERTHALL",
 							purchaseId : purchaseId,
-							description : description
+							description : `${type}-${description}`
 						}; 
 						const paymentResponse = await setPaymentAxios(paymentParam, idKey);
 						if (paymentResponse.code === "200.1" && paymentResponse.message === "ok") {

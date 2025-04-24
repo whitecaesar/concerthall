@@ -104,7 +104,9 @@ export async function setPaymentAxios(
       'Idempotency-key': `${id_key}`
 		} // URL 구성을 동적으로 변경했습니다.
 	});
-	
+
+	return response.data;
+	/*
 	if (response.status === 200) {
 		if(response.data.code === '200.1')
         {
@@ -116,6 +118,7 @@ export async function setPaymentAxios(
 	} else {
 		throw new Error(`System Error. ${response.data.message}`);
 	}
+	*/
 }
 
 export async function setPaymentConfirmAxios(
