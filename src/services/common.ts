@@ -710,6 +710,7 @@ export function funcPreviewClick(url : string, playable_code: string, item : ALB
     duration : duratinon,
     resolution : item.DATA?.resolution,
     codec : item.DATA?.codec,
+    isPreview : true
   };
   WebStreamTrackItem.push(trackItem);
 

@@ -55,6 +55,10 @@ export default function AlbumTrackItem({
 		if (albumTrackInfo.YN_PURCHASED === "Y") {
 			// 구매한 트랙은 재생
 			funcAlbumTrackPlayClick("trackPlay", albumTrackInfo);
+			// 여기에 화면 리로드
+			if(albumTrackInfo.YN_CANCEL === "Y") {
+				window.location.reload();
+			}
 		} else if (albumTrackInfo.YN_SALE === "N") {
 			// 판매불가 트랙은 팝업 표시
 			if (handlePopupOpen) {
