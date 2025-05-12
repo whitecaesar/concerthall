@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, TouchEvent } from "react";
 import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
 import AlbumTrackItem from "@/component/molecule/trackItem/AlbumTrackItem";
 import {STAR_TRACK_LIST_RESPONSE_TYPE, TRACK_REG_ITEM_TYPE, TRACK_REG_REQUEST_TYPE, TRACK_REG_RESPONSE_ITEM_TYPE, getRegCheckListAxios, getStarAxios, getStarTrackAxios, getStarTrackListAxios } from "@/services/contents/StarAxios";
@@ -18,6 +18,7 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 	const [visibleTracks, setVisibleTracks] = useState<ALBUM_ITEM_TYPE[]>([]);
 	const trackListRef = useRef<HTMLDivElement>(null);
 	const [isPurchaseCancel, setIsPurchaseCancel] = useState(false);
+	const touchStartY = useRef<number | null>(null);
 
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [isPaymentCancelOpen, setIsPaymentCancelOpen] = useState(false);
@@ -148,40 +149,7 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 		}
 	};
 
-	// 스크롤 이벤트 핸들러
-	const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
-		const { scrollTop } = event.currentTarget;
-
-		// 리스트가 제일 상단에 있을 때만 새로고침
-		if (scrollTop === 0) {
-			// 새로고침 로직
-			if ((event as unknown as WheelEvent).deltaY < 0) { // 위로 스크롤할 때만 새로고침
-				window.location.reload(); // 또는 다른 새로고침 로직
-			}
-		}
-
-		// 기본 스크롤 동작 방지
-		event.preventDefault();
-	};
-
-	// 스크롤 이벤트 리스너 등록
-	useEffect(() => {
-		const trackListElement = trackListRef.current;
-		if (trackListElement) {
-			trackListElement.addEventListener('scroll', (event: Event) => {
-				handleScroll(event as unknown as React.UIEvent<HTMLDivElement>);
-			});
-		}
-
-		return () => {
-			if (trackListElement) {
-				trackListElement.removeEventListener('scroll', (event: Event) => {
-					handleScroll(event as unknown as React.UIEvent<HTMLDivElement>);
-				});
-			}
-		};
-	}, [PurchaseTrackList]);
-
+	
 	return isFetch && (
 		<div 
 			className="trackListWrap"
@@ -195,8 +163,8 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 							AlbumTrackList={PurchaseTrackList} 
 							handleCancelOpen={handleCancelOpen}
 							handlePopupOpen={handlePopupOpen}
-              type='purchase'
-              position={index}
+							type='purchase'
+							position={index}
 						/>
 					</li>
 				))}
@@ -222,17 +190,14 @@ const PurchaseTrackList = ({ PurchaseTrackList }: TrackListProps) => {
 				buttons={[{ text: "OK", className: "ok", onClick: handlePaymentCancel}, { text: "CANCEL", className: "cancel", onClick: handleClose }]}
 			/>
 
+
 			<style jsx>{`
 				.trackListWrap {
 					margin-top: 10px;
-					max-height: calc(100vh - 200px);
-					overflow-y: auto;
-					-webkit-overflow-scrolling: touch;
 
 					.trackNum {
 						padding: 10px 15px;
 						font-size: 13px;
-						position: sticky;
 						top: 0;
 						z-index: 1;
 					}

@@ -17,6 +17,7 @@ const ArtistDetailInfo = ({ detailInfo }: ArtistDetailInfoProps) => {
 	const [isFetch, setIsFetch] = useState<boolean>(false);
 
 	useEffect(() => {
+		console.log("ArtistDetailInfo", detailInfo);
 		fetchStarRatings();
 	}, []);
 	

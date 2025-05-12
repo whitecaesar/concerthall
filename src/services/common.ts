@@ -106,7 +106,8 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
           album_id : item.ALBUM_ID,
           album_name : item.ALBUM_NAME,
           artist : item.ARTIST,
-          duration : duratinon
+          duration : duratinon,
+          isPreview : false
         };
         WebStreamTrackItem.push(trackItem);
       }
@@ -127,6 +128,15 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
 
       let json_track_data: string = JSON.stringify(trackData);
       (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+
+      const data = {
+        type: "webStreamTrackMoreClick",
+        data: json_track_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
   }
   else if(type == 'albumTrackMore')
@@ -175,7 +185,8 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
           album_id : item.ALBUM_ID,
           album_name : item.ALBUM_NAME,
           artist : item.ARTIST,
-          duration : duratinon
+          duration : duratinon,
+          isPreview : false
         };
         WebStreamTrackItem.push(trackItem);
       }
@@ -196,6 +207,14 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
 
       let json_track_data: string = JSON.stringify(trackData);
       (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+      const data = {
+        type: "webStreamTrackMoreClick",
+        data: json_track_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
   }
   else if(type == 'trackPlay' || type == 'trackShare')
@@ -247,6 +266,7 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
         duration : duratinon,
         resolution : track?.data?.resolution,
         codec : track?.data?.codec,
+        isPreview : false
       };
       const WebStreamTrackItem: any[] = [trackItem];
       
@@ -263,10 +283,26 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
         if(type == 'trackPlay')
         {
           (window as any).HifiRose.webStreamTrackClick(json_track_data);
+          const data = {
+            type: "webStreamTrackClick",
+            data: json_track_data
+          }
+          window.parent.postMessage(data, "*");
+          if (window.parent.ReactNativeWebView) {
+            window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+          }
         }
         else if(type == 'trackShare')
         {
           (window as any).HifiRose.webStreamGotoShareTrack(json_track_data);
+          const data = {
+            type: "webStreamGotoShareTrack",
+            data: json_track_data
+          }
+          window.parent.postMessage(data, "*");
+          if (window.parent.ReactNativeWebView) {
+            window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+          }
         }
       }
     } else {
@@ -325,7 +361,8 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
           album_id : item.ALBUM_ID,
           album_name : item.ALBUM_NAME,
           artist : item.ARTIST,
-          duration : duratinon
+          duration : duratinon,
+          isPreview : false
         };
         WebStreamTrackItem.push(trackItem);
       }
@@ -345,6 +382,15 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
       
       let json_track_data: string = JSON.stringify(trackData);
       (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+      const data = {
+        type: "webStreamTrackMoreClick",
+        data: json_track_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data)); 
+      }
+      return true;
     }
   }
   else if(type == 'trackPlay' || type == 'trackShare')
@@ -392,9 +438,11 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
         album_id : track.ALBUM_ID,
         album_name : track.ALBUM_NAME,
         artist : track.ARTIST,
-        duration : duratinon
+        duration : duratinon,
+        isPreview : false
       };
       
+      console.log("trackItem", trackItem);
       WebStreamTrackItem.push(trackItem);
     }
     
@@ -412,11 +460,28 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
       if(type == 'trackPlay')
       {
         (window as any).HifiRose.webStreamTrackClick(json_track_data);
+        const data = {
+          type: "webStreamTrackClick",
+          data: json_track_data
+        }
+        window.parent.postMessage(data, "*");
+        if (window.parent.ReactNativeWebView) {
+          window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+        }
       }
       else if(type == 'trackShare')
       {
         (window as any).HifiRose.webStreamGotoShareTrack(json_track_data);
+        const data = {
+          type: "webStreamGotoShareTrack",
+          data: json_track_data
+        }
+        window.parent.postMessage(data, "*");
+        if (window.parent.ReactNativeWebView) {
+          window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+        }
       }
+      return true;
     }
   }
 };
@@ -440,7 +505,8 @@ export function funcArtistTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPON
         album_id : item.ALBUM_ID,
         album_name : item.ALBUM_NAME,
         artist : item.ARTIST,
-        duration : duratinon
+        duration : duratinon,
+        isPreview : false
       };
       WebStreamTrackItem.push(trackItem);
     });
@@ -452,6 +518,14 @@ export function funcArtistTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPON
     
     let json_track_data: string = JSON.stringify(trackData);
     (window as any).HifiRose.webStreamTrackMoreClick(json_track_data);
+    const data = {
+      type: "webStreamTrackMoreClick",
+      data: json_track_data
+    }
+    window.parent.postMessage(data, "*");
+    if (window.parent.ReactNativeWebView) {
+      window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+    }
   }
   else if(type == 'trackPlay' || type == 'trackShare')
   {
@@ -467,7 +541,8 @@ export function funcArtistTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPON
       album_id : track.ALBUM_ID,
       album_name : track.ALBUM_NAME,
       artist : track.ARTIST,
-      duration : duratinon
+      duration : duratinon,
+      isPreview : false
     };
 
     const WebStreamTrackItem: any[] = [trackItem];
@@ -481,10 +556,26 @@ export function funcArtistTrackPlayClick(type : string, playUrl:PLAY_ITEM_RESPON
     if(type == 'trackPlay')
     {
       (window as any).HifiRose.webStreamTrackClick(json_track_data);
+      const data = {
+        type: "webStreamTrackClick",
+        data: json_track_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
     else if(type == 'trackShare')
     {
       (window as any).HifiRose.webStreamGotoShareTrack(json_track_data);
+      const data = {
+        type: "webStreamGotoShareTrack",
+        data: json_track_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
   }
 };
@@ -539,6 +630,7 @@ export async function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TY
         duration: duration,
         resolution: item.DATA?.resolution,
         codec: item.DATA?.codec,
+        isPreview : false
       };
       console.log("trackItem", trackItem);
       WebStreamTrackItem.push(trackItem);
@@ -571,6 +663,14 @@ export async function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TY
     // 버튼 클릭 시 실행할 로직
     if (type == 'albumMore') {
       (window as any).HifiRose.webStreamAlbumMoreClick(json_album_data);
+      const data = {
+        type: "webStreamAlbumMoreClick",
+        data: json_album_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     } else if (type == 'AlbumPlay') {
       allData = {
         webstreamtrackitem: WebStreamTrackItem,
@@ -579,6 +679,14 @@ export async function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TY
       };
       let All_data: string = JSON.stringify(allData);
       (window as any).HifiRose.webStreamAlbumClick(All_data);
+      const data = {
+        type: "webStreamAlbumClick",
+        data: json_album_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     } else if (type == 'SufflePlay') {
       allData = {
         webstreamtrackitem: WebStreamTrackItem,
@@ -587,8 +695,24 @@ export async function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TY
       };
       let All_data: string = JSON.stringify(allData);
       (window as any).HifiRose.webStreamAlbumClick(All_data);
+      const data = {
+        type: "webStreamAlbumClick",
+        data: json_album_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     } else if (type == 'AlbumShare') {
       (window as any).HifiRose.webStreamGotoShareAlbum(json_album_data);
+      const data = {
+        type: "webStreamGotoShareAlbum",
+        data: json_album_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
   }
 };
@@ -608,6 +732,14 @@ export async function funcPlayListTrackClick(type:string, trackItem:TRACK_RECENT
       }
       let json_track_data: string = JSON.stringify(trackData);
       (window as any).HifiRose.webStreamTotalHomeTrackClick(json_track_data);
+      const data = {
+        type: "webStreamTotalHomeTrackClick",
+        data: json_track_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
     else if(type == 'option')
     {
@@ -635,6 +767,14 @@ export async function funcPlayListTrackClick(type:string, trackItem:TRACK_RECENT
       }
       let json_track_data: string = JSON.stringify(trackData);
       (window as any).HifiRose.webStreamTotalHomeMoreClick(json_track_data);
+      const data = {
+        type: "webStreamTotalHomeMoreClick",
+        data: json_track_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
   }
 };
@@ -666,6 +806,14 @@ export async function funcPlayListPlayClick(type:string, playlist:TRACK_RECENT_L
       }
       const json_playList_data: string = JSON.stringify(trackData);
       (window as any).HifiRose.webStreamTotalHomePlaylistClick(json_playList_data);
+      const data = {
+        type: "webStreamTotalHomePlaylistClick",
+        data: json_playList_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
     else if(type == 'sufflePlay'){
       const trackData = {
@@ -674,22 +822,54 @@ export async function funcPlayListPlayClick(type:string, playlist:TRACK_RECENT_L
       }
       const json_playList_data: string = JSON.stringify(trackData);
       (window as any).HifiRose.webStreamTotalHomePlaylistClick(json_playList_data);
+      const data = {
+        type: "webStreamTotalHomePlaylistClick",
+        data: json_playList_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
-    else if(type == 'share'){
+    else if(type === 'share'){
       const json_playList_data: string = JSON.stringify(playlist);
       (window as any).HifiRose.webStreamTotalHomeGotoShare(json_playList_data);
+      const data = {
+        type: "webStreamTotalHomeGotoShare",
+        data: json_playList_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
-    else if(type == 'option'){
+    else if(type === 'option'){
       const json_playList_data: string = JSON.stringify(playlist);
       (window as any).HifiRose.webStreamTotalHomePlaylistMoreClick(json_playList_data);
+      const data = {
+        type: "webStreamTotalHomePlaylistMoreClick",
+        data: json_playList_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
-    else if(type == 'trackoption'){
+    else if(type === 'trackoption'){
       const trackData = {
         rosememberplaylistitem : playlist,
         position: position
       }
       const json_playList_data: string = JSON.stringify(trackData);
       (window as any).HifiRose.webStreamTotalHomePlaylistTrackMoreClick(json_playList_data);
+      const data = {
+        type: "webStreamTotalHomePlaylistTrackMoreClick",
+        data: json_playList_data
+      }
+      window.parent.postMessage(data, "*");
+      if (window.parent.ReactNativeWebView) {
+        window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+      }
     }
   }
 };
@@ -720,6 +900,14 @@ export function funcPreviewClick(url : string, playable_code: string, item : ALB
 
   let json_track_data: string = JSON.stringify(trackData);
   (window as any).HifiRose.webStreamTrackClick(json_track_data);
+  const data = {
+    type: "webStreamTrackClick",
+    data: json_track_data
+  }
+  window.parent.postMessage(data, "*");
+  if (window.parent.ReactNativeWebView) {
+    window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+  }
 }
 
 

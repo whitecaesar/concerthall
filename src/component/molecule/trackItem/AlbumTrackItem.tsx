@@ -1,8 +1,7 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import style from "./trackItem.module.css";
-import { funcAlbumTrackPlayClick, generateClientRandomString, getCookie } from "@/services/common";
+import { funcAlbumTrackPlayClick} from "@/services/common";
 import { useQuery } from "@tanstack/react-query";
 import { getTrackAxios } from "@/services/contents/TrackAxios";
 import { ALBUM_ITEM_TYPE } from "@/services/contents/AlbumAxios";
@@ -10,12 +9,7 @@ import AlbumTrackLikeButton from "@/component/atom/button/AlbumTrackLikeButton";
 import AlbumFuncButton from "@/component/atom/button/AlbumFuncButton";
 import Loading from "@/app/loading";
 import Icon from "@/component_RS/button/icon/Icon";
-import Payment from "@/component/organism/payment/payment";
 import { useState } from "react";
-import Popup from "@/component/atom/popup/Popup";
-import { purchaseTexts } from "@/component/organism/menuList/MenuList";
-import { useRouter } from "next/navigation";
-import { setCancelAxios, setCitechCancelAxios } from "@/services/contents/PurchaseCancelAxios";
 
 interface TrackItemProps {
 	albumTrackInfo: ALBUM_ITEM_TYPE;
@@ -36,6 +30,8 @@ export default function AlbumTrackItem({
 	handlePopupOpen,
 	handleCancelOpen
 }: TrackItemProps) {
+
+	const [isCancelVisible, setIsCancelVisible] = useState("Y"); 
 	
 	const {
 		data: trackData,
@@ -50,14 +46,14 @@ export default function AlbumTrackItem({
 		},
 	});
 
-	const handleTrackClick = () => {
+	const handleTrackClick = async () => {
 		console.log("albumTrackInfo", albumTrackInfo);
 		if (albumTrackInfo.YN_PURCHASED === "Y") {
 			// 구매한 트랙은 재생
-			funcAlbumTrackPlayClick("trackPlay", albumTrackInfo);
-			// 여기에 화면 리로드
-			if(albumTrackInfo.YN_CANCEL === "Y") {
-				window.location.reload();
+			const result = funcAlbumTrackPlayClick("trackPlay", albumTrackInfo);
+			// 여기에 화면 CANCEL 버튼이 안보이게 처리 
+			if(await result) {
+				setIsCancelVisible("N");
 			}
 		} else if (albumTrackInfo.YN_SALE === "N") {
 			// 판매불가 트랙은 팝업 표시
@@ -100,7 +96,7 @@ export default function AlbumTrackItem({
 						))}
 					</div>
 				</span>
-				{albumTrackInfo.YN_CANCEL === "Y" && (
+				{albumTrackInfo.YN_CANCEL === "Y" && isCancelVisible === "Y" && (
 					<button 
 						className={style.btnPaymentCancel} 
 						onClick={() => handleCancelOpen && handleCancelOpen(albumTrackInfo)}

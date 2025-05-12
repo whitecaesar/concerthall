@@ -15,7 +15,7 @@ const RecentPlayListItem = ({ playListInfo, onClick }: PlayListItemProps) => {
 		<div className={style.albumItem} onClick={onClick}>
 			<Link href={`/detail/playList/track/${playListInfo.id}?size=${playListInfo.trackCount}&title=${playListInfo.title}`}>
 				<Image
-					src={playListInfo.thumbnail}
+					src={playListInfo.thumbnail || "/images/imgPaylist.png"}
 					alt={playListInfo.title}
 					width={130}
 					height={130}

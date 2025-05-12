@@ -5,4 +5,7 @@ interface HifiRose {
 
 interface Window {
 	HifiRose?: HifiRose;
+	ReactNativeWebView?: {
+		postMessage: (message: string) => void;
+	};
 }

@@ -20,6 +20,7 @@ const ArtistLikeButton = ({ starPoint, artistInfo } : ArtistLikeButtonProps) => 
         artist: { type: 'CONCERT_HALL', clientKey: artistInfo.ID_ARTIST}
       };
       const artistStarResponse = await getRegArtistInfoAxios(starTrackParam);
+      console.log("artistStarResponse", artistStarResponse);
 
       if (artistStarResponse.id !== null) {
         const param : ARTIST_STAR_REQUEST_TYPE = { ratingInfo: { star: (star + 1) % 4 }, artist: { id: artistStarResponse.id } };
@@ -27,8 +28,9 @@ const ArtistLikeButton = ({ starPoint, artistInfo } : ArtistLikeButtonProps) => 
         setNumber(prevStar => (prevStar + 1) % 4);
       } else {
         const setTrackParam: ARTIST_SETREG_REQUEST_TYPE = {
-          artist: { name: artistInfo.NM_ARTIST, comment: artistInfo.DESC_ARTIST, thumbnail: artistInfo.IMG_ARTIST, clientkey: artistInfo.ID_ARTIST, type: 'CONCERT_HALL' }
+          artist: { name: artistInfo.NM_ARTIST, comment: artistInfo.DESC_ARTIST, thumbnail: [artistInfo.IMG_ARTIST], clientKey: artistInfo.ID_ARTIST ? String(artistInfo.ID_ARTIST) : "", type: 'CONCERT_HALL' }
         };
+        console.log("setTrackParam", setTrackParam);
         const artistRegResponse = await setRegArtistAxios(setTrackParam);
 
         if(!artistRegResponse.id)

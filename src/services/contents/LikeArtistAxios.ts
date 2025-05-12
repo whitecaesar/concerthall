@@ -85,9 +85,9 @@ export async function setArtistStarAxios(
 export type ARTIST_SETREG_ARTIST_TYPE = {
     name : string;
     type : string;
-    clientkey : string;
+    clientKey : string;
     comment : string;
-    thumbnail : string;
+    thumbnail : string[];
 }
 
 export type ARTIST_SETREG_REQUEST_TYPE = {
