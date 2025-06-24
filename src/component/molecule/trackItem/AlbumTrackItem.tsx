@@ -79,7 +79,7 @@ export default function AlbumTrackItem({
 						className={style.albumTrackInfo}
 					>
 						<Image
-							src={albumTrackInfo.THUMBNAIL}
+							src={albumTrackInfo.THUMBNAIL || "/images/hifiRoseSmall.png"}
 							alt={albumTrackInfo.TITLE}
 							width={45}
 							height={45}

@@ -16,7 +16,7 @@ const RecentAlbumItem = ({ albumInfo, onClick }: AlbumItemProps) => {
 		<div className={style.albumItem} onClick={onClick}>
 			<Link href={`/detail/album/track/${albumInfo.clientKey}?title=${encodeURIComponent(albumInfo.title)}`}>
 				<Image
-					src={albumInfo.thumbnail}
+					src={albumInfo.thumbnail || "/images/hifiRoseLarge.png"}
 					alt={albumInfo.title}
 					width={130}
 					height={130}

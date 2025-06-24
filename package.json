@@ -4,6 +4,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev -p 3020",
+		"clean": "rimraf .next",
+		"prebuild": "npm run clean",
 		"build": "next build",
 		"start": "next start -p 3020",
 		"lint": "next lint"

@@ -17,7 +17,7 @@ const playlistDetailInfo = ({ detailInfo }: PlayListDetailInfoProps) => {
 	return (
 		<div className={style.albumDetailInfo}>
 			<Image
-				src={detailInfo?.thumbnail ?? ""}
+				src={detailInfo.thumbnail || "/images/hifiRoseLarge.png"}
 				alt={detailInfo?.title ?? ""}
 				width={720}
 				height={611}

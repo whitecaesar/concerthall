@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import style from "./Error.module.css";
+import { getCookie } from "@/services/common";
 
 const ErrorPage = () => {
 	useEffect(() => {
@@ -40,13 +41,20 @@ const ErrorPage = () => {
 				if (isMobile.any()) {
 					if (isMobile.Android()) {
 						//window.HifiRose?.reLoad();
-						(window as any).HifiRose.reLoad();
-						const data = {
-							type: " reLoad "
+						const appType = getCookie("app_type");
+						if(appType == "mobile")
+						{
+							(window as any).HifiRose.reLoad();
 						}
-						window.parent.postMessage(data, "*");
-						if (window.parent.ReactNativeWebView) {
-							window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+						else
+						{
+							const data = {
+								type: " reLoad "
+							};
+							(window as any).parent.postMessage(data, "*");
+							if ((window as any).parent.ReactNativeWebView) {
+								(window as any).parent.ReactNativeWebView.postMessage(JSON.stringify(data));
+							}
 						}
 					} else if (isMobile.iOS()) {
 						console.log("IOS 호출");

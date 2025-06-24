@@ -1,17 +1,11 @@
 import React from "react";
 import { useRouter } from "next/navigation";
+import { sendMessage } from "@/services/common";
 
 const BackButton = () => {
 	const router = useRouter();
 	const goBackClick = () => {
-		(window as any).HifiRose.Close();
-		const data = {
-				type: " Close "
-		}
-		window.parent.postMessage(data, "*");
-		if (window.parent.ReactNativeWebView) {
-			window.parent.ReactNativeWebView.postMessage(JSON.stringify(data));
-		}
+		sendMessage("Close", "");
 		//router.back();
 	};
 

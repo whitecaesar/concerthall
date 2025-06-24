@@ -21,7 +21,7 @@ const DetailInfo = ({ detailInfo }: DetailInfoProps) => {
 	return (
 		<div className={style.albumDetailInfo}>
 			<Image
-				src={detailInfo.THUMBNAIL}
+				src={detailInfo.THUMBNAIL || "/images/hifiRoseLarge.png"}
 				alt={detailInfo.TITLE}
 				width={720}
 				height={611}
