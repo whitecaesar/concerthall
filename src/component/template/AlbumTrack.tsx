@@ -13,7 +13,7 @@ interface AlbumTrackProps {
 	func_type?: string;
 }
 
-export default function AlbumTrack({ album_id, func_type}: AlbumTrackProps) {
+export default function AlbumTrack({ album_id }: AlbumTrackProps) {
 
 	const { data, isError, isLoading } = useQuery({
 		queryKey: ["ALBUM-ITEM"],

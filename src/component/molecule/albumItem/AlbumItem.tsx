@@ -30,6 +30,11 @@ const AlbumItem = ({ albumInfo, onClick, type, handleCancelOpen }: AlbumItemProp
 				/>
 				<p className={style.title}>{albumInfo.TITLE}</p>
 				</Link>
+				<div className={style.bottomInfo}>
+				<p className={style.artist}>
+					<p className={style.artistName}>{albumInfo.TOTAL_NUM_TRACK} Tracks</p>
+				</p>
+			</div>
 				{albumInfo.YN_CANCEL === 'Y' && <div className={style.bottomInfo}>
 					<span className="albumBottomInfo">
 							<button className="btnPaymentCancel" onClick={() => handleCancelOpen?.(albumInfo)}>CANCEL</button>

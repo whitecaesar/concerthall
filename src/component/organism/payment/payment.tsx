@@ -69,7 +69,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				// 입력값 초기화 및 모달 닫기
 				const point = balanceResponse.data.rewardPoint + balanceResponse.data.chargePoint;
 				console.log("point=>",point,"price=>",price);
-				if(price && point  > price)
+				if(price && point >= price)
 				{
 					const IDCUST = getCookie("userid");
 					if (!IDCUST || !price) {
@@ -123,9 +123,9 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				}
 				else
 				{
-					setErrorMessage("잔여 포인트 부족 (보유포인트 : " + point + ")");
+					setErrorMessage("잔여 포인트 부족 (보유포인트 : " + point + ", 결제금액 : " + price + ")");
 					if (onError) {
-						onError("잔여 포인트 부족 (보유포인트 : " + point + ")"); // 직접 에러 메시지 전달
+						onError("잔여 포인트 부족 (보유포인트 : " + point + ", 결제금액 : " + price + ")"); // 직접 에러 메시지 전달
 						onClose();
 					}
 				}
@@ -135,11 +135,12 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 					onClose();
 				}
 			}
-		} catch (error) {
-			console.error("An error occurred during payment processing:", error);
-			setErrorMessage("An error occurred during payment processing.");
+		} catch (error: unknown) {
+			console.error("결제 처리 중 오류가 발생했습니다:", error);
+			const errorMessage = error instanceof Error ? error.message : String(error);
+			setErrorMessage("결제 처리 중 오류가 발생했습니다. " + errorMessage);
 			if (onError) {
-				onError(error instanceof Error ? error.message : String(error));
+				onError(errorMessage);
 			}
 			onClose();
 		}

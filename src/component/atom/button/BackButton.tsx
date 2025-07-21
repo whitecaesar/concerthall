@@ -5,7 +5,7 @@ import { sendMessage } from "@/services/common";
 const BackButton = () => {
 	const router = useRouter();
 	const goBackClick = () => {
-		sendMessage("Close", "");
+		(window as any).HifiRose.Close();
 		//router.back();
 	};
 

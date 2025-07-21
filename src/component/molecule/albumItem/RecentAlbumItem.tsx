@@ -24,7 +24,13 @@ const RecentAlbumItem = ({ albumInfo, onClick }: AlbumItemProps) => {
 					className={style.thumbnail}
 				/>
 				<p className={style.title}>{albumInfo.title}</p>
+				
 			</Link>
+			<div className={style.bottomInfo}>
+				<p className={style.artist}>
+					<p className={style.artistName}>{albumInfo.tracks?.length} Tracks</p>
+				</p>
+			</div>
 		</div>
 	);
 };

@@ -19,7 +19,7 @@ export default function TrackPage({ params }: { params: { id: string} }) {
 	return (
 		<SubTitleProvider>
 			<div className="trackPage">
-				<AlbumTrack album_id={params.id} func_type={type}/>
+				<AlbumTrack album_id={params.id}/>
 			</div>
 		</SubTitleProvider>
 	);
