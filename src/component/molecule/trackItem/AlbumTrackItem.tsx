@@ -10,6 +10,7 @@ import AlbumFuncButton from "@/component/atom/button/AlbumFuncButton";
 import Loading from "@/app/loading";
 import Icon from "@/component_RS/button/icon/Icon";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 interface TrackItemProps {
 	albumTrackInfo: ALBUM_ITEM_TYPE;
@@ -32,6 +33,8 @@ export default function AlbumTrackItem({
 }: TrackItemProps) {
 
 	const [isCancelVisible, setIsCancelVisible] = useState("Y"); 
+	const pathname = usePathname();
+	const isPurchaseListPage = pathname === "/my/purchaseList";
 	
 	const {
 		data: trackData,
@@ -96,13 +99,20 @@ export default function AlbumTrackItem({
 						))}
 					</div>
 				</span>
-				{albumTrackInfo.YN_CANCEL === "Y" && isCancelVisible === "Y" && (
+				{albumTrackInfo.YN_CANCEL === "Y" && isCancelVisible === "Y" ? (
 					<button 
 						className={style.btnPaymentCancel} 
 						onClick={() => handleCancelOpen && handleCancelOpen(albumTrackInfo)}
 					>
 						CANCEL
 					</button>
+				) : (
+					isPurchaseListPage && (
+						<div className={style.priceWrapper}>
+							<span>{albumTrackInfo.PRICE}</span>
+							<Icon iconName="purchasePoint" />
+						</div>
+					)
 				)}
 				{/* 구매 관련 버튼 */}
 				{(albumTrackInfo.YN_PURCHASED === "N" || albumTrackInfo.YN_PURCHASED === null) && type !== 'purchase' ? (

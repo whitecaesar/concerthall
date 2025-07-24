@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Icon from "../../../component_RS/button/icon/Icon";
+import Icon from "../icon/Icon";
 import style from "./dropdown.module.css";
 import { DropdownProps } from "@/interface/DropdownType";
 

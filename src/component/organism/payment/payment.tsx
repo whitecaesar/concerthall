@@ -34,6 +34,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 	const [pin, setPin] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
+	// purchaseId state 제거
 
 	useEffect(() => {
 		if (isOpen && inputRef.current) {
@@ -47,6 +48,9 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 	};
 
 	const handleSubmit = async () => {
+		// 각 실행에서 사용할 purchaseId 생성
+		const purchaseId = generateUniqueId();
+
 		try {
 			if (pin.length === 0) {
 				if (onError) {
@@ -79,7 +83,6 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 						}
 					}
 
-					const purchaseId = generateUniqueId();
 					const param = {
 						ID_CUST: IDCUST?IDCUST:'',
 						PRICE: price, // number 타입 유지
@@ -136,9 +139,18 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				}
 			}
 		} catch (error: unknown) {
-			console.error("결제 처리 중 오류가 발생했습니다:", error);
-			const errorMessage = error instanceof Error ? error.message : String(error);
+			let errorMessage = error instanceof Error ? error.message : String(error);
 			setErrorMessage("결제 처리 중 오류가 발생했습니다. " + errorMessage);
+			const IDCUST = getCookie("userid");
+			const cancelResponse = await setCancelAxios(purchaseId, {
+				ID_CUST: IDCUST?IDCUST:''
+			});
+			if (cancelResponse.RES_CODE !== "0000") {
+				setErrorMessage(`${cancelResponse.RES_MSG}`);
+				errorMessage = `${cancelResponse.RES_MSG}`;
+				setErrorMessage("결제 처리 중 오류가 발생했습니다. " + errorMessage);
+			}
+			
 			if (onError) {
 				onError(errorMessage);
 			}

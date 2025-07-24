@@ -114,6 +114,13 @@ span.albumTrackInfoWrap .albumArtistInfo .artist {
 	font-size: 13px;
 }
 
+.priceWrapper {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	font-size: 13px;
+}
+
 .btnPayment.no {
 	background: #2b2b2b;
 }

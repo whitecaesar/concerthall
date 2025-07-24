@@ -32,6 +32,7 @@ export default function Main() {
 	//setCookie("userid", "3029", 24);
 	const token = getCookie("token") || "";
 
+
 	const { data, isFetched } = useQuery({
 		queryKey: ["MAIN-BANNER"],
 		queryFn: async () => {
@@ -93,7 +94,8 @@ export default function Main() {
 
 	return (
 		<>
-			<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
+		
+		<ImageBanner list={data?.TOP_IMG_BANNER} isFetched={isFetched} />
 			{data?.TOP_TXT_BANNER && data.TOP_TXT_BANNER.length > 0 && (
 				<TextBanner banner={data.TOP_TXT_BANNER[0]} isFetched={isFetched} />
 			)}
@@ -113,6 +115,7 @@ export default function Main() {
 					)}
 				</div>
 			))}
+
 		</>
 	);
 }

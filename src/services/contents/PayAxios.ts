@@ -15,10 +15,7 @@ export async function getPassCheckAxios(
 	param?:PASS_CHECK_REQUEST
 ): Promise<PASS_CHECK_RESPONSE> {
 	let token = getCookie("token");
-	if(!token)
-	{
-		token = process.env.NEXT_PUBLIC_TOKEN;
-	}
+
 	const response: AxiosResponse<PASS_CHECK_RESPONSE> = await axios.post(
 		`${API_URL}/v1/member/member/password/check`,param, {
 		headers: {
@@ -48,10 +45,7 @@ export type BALANCE_CHECK_RESPONSE = {
 export async function getBalanceCheckAxios(
 ): Promise<BALANCE_CHECK_RESPONSE> {
 	let token = getCookie("token");
-	if(!token)
-	{
-		token = process.env.NEXT_PUBLIC_TOKEN;
-	}
+
 	const response: AxiosResponse<BALANCE_CHECK_RESPONSE> = await axios.get(
 		`${API_URL}/payment/v1/balance`,{
 		headers: {
@@ -90,12 +84,6 @@ export async function setPaymentAxios(
 	id_key?: string,
 ): Promise<PASS_CHECK_RESPONSE> {
 	let token = getCookie("token");
-	if(!token)
-	{
-		token = process.env.NEXT_PUBLIC_TOKEN;
-	}
-
-	console.log("param",param);
 
 	const response: AxiosResponse<PASS_CHECK_RESPONSE> = await axios.post(
 		`${API_URL}/payment/v1/content/purchase`,param, {
@@ -105,6 +93,7 @@ export async function setPaymentAxios(
 		} // URL 구성을 동적으로 변경했습니다.
 	});
 
+	console.log("response",response);
 	return response.data;
 	/*
 	if (response.status === 200) {
@@ -127,10 +116,6 @@ export async function setPaymentConfirmAxios(
 ): Promise<PASS_CHECK_RESPONSE> {
 	console.log("paymentConfirm");
 	let token = getCookie("token");
-	if(!token)
-	{
-		token = process.env.NEXT_PUBLIC_TOKEN;
-	}
 
 	const response: AxiosResponse<PASS_CHECK_RESPONSE> = await axios.post(
 		`${API_URL}/payment/v1/content/purchase/confirm`,param, {
@@ -140,7 +125,7 @@ export async function setPaymentConfirmAxios(
 	});
 	console.log("paymentConfirm response",response);
 	if (response.status === 200) {
-		if(response.data.code === '200.1')
+		if(response.data.code === '200.1' || response.data.code === '409.2')
         {
             return response.data;
         }
@@ -169,10 +154,6 @@ export async function setTrackPurchaseAxios(
 	param?: TRACK_PURCHASE_REQUEST_TYPE
 ): Promise<TRACK_PURCHASE_RESPONSE> {
 	let token = getCookie("token");
-	if(!token)
-	{
-		token = process.env.NEXT_PUBLIC_TOKEN;
-	}
 
 	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
 		`${API_URL_CIP}/hch/track/${idTrack}/purchase.json`,
@@ -195,10 +176,6 @@ export async function setAlbumPurchaseAxios(
 	param?: TRACK_PURCHASE_REQUEST_TYPE
 ): Promise<TRACK_PURCHASE_RESPONSE> {
 	let token = getCookie("token");
-	if(!token)
-	{
-		token = process.env.NEXT_PUBLIC_TOKEN;
-	}
 
 	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
 		`${API_URL_CIP}/hch/album/${idAlbum}/purchase.json`,
@@ -219,11 +196,6 @@ export async function setTrackPurchaseCancelAxios(
 	idTrack?: string,
 	param?: TRACK_PURCHASE_REQUEST_TYPE
 ): Promise<TRACK_PURCHASE_RESPONSE> {
-	let token = getCookie("token");
-	if(!token)
-	{
-		token = process.env.NEXT_PUBLIC_TOKEN;
-	}
 
 	const response: AxiosResponse<TRACK_PURCHASE_RESPONSE> = await axios.post(
 		`${API_URL_CIP}/hch/track/${idTrack}/cancelPurchase.json`,

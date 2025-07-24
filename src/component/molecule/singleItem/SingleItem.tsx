@@ -40,7 +40,7 @@ export default function SingleItem({
 		isError,
 		isLoading,
 	} = useQuery({
-		queryKey: ["TRACK-LIST"],
+		queryKey: ["TRACK-LIST", singleInfo.ID],
 		queryFn: () => {
 			const TrackItem = getTrackAxios(singleInfo.ID);
 			return TrackItem;
@@ -55,10 +55,10 @@ export default function SingleItem({
 		<>
 		<div className={style.singleItem} id={`${singleInfo.ID}`}>
 			<span
+			
 				onClick={() =>
-					
 					singleInfo.YN_PURCHASED === 'Y' 
-								? funcTrackPlayClick("trackPlay", trackData.TRACK_INFO)
+								?  funcTrackPlayClick("trackPlay", trackData.TRACK_INFO)
 								: (singleInfo.YN_SALE === 'N' ? handlePopupOpen(popupDescription) : handlePaymentOpen(singleInfo))
 				}
 			>

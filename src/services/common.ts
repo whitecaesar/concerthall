@@ -82,12 +82,7 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
                   cpCode : 'test-01',
                   appType : 'CONCERTHALL'
                 });
-                /*
-                if(purchaseResponse.code != '200.1' && purchaseResponse.code != '409.2')
-                {
-                  throw new Error('Purchase verification failed');
-                }
-                */
+                
               }
             }
           } catch (error) {
@@ -153,12 +148,7 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
                   cpCode : 'test-01',
                   appType : 'CONCERTHALL'
                 });
-                /*
-                if(purchaseResponse.code != '200.1' && purchaseResponse.code != '409.2')
-                {
-                  throw new Error('Purchase verification failed');
-                }
-                */
+                
               }
             }
           } catch (error) {
@@ -235,12 +225,6 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
                   appType : 'CONCERTHALL'
                 });
             
-              /*
-                if(purchaseResponse.code !== '200.1' && purchaseResponse.code !== '409.2')
-                {
-                  throw new Error('Purchase verification failed');
-                }
-              */
               }
               
           }
@@ -333,12 +317,7 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
                   cpCode : 'test-01',
                   appType : 'CONCERTHALL'
                 });
-                /*
-                if(purchaseResponse.code != '200.1' && purchaseResponse.code != '409.2')
-                {
-                  throw new Error('Purchase verification failed');
-                }
-                */
+                
               }
             }
           } catch (error) {
@@ -401,12 +380,7 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
                   cpCode : 'test-01',
                   appType : 'CONCERTHALL'
                 });
-                /*
-                if(purchaseResponse.code != '200.1' && purchaseResponse.code != '409.2')
-                {
-                  throw new Error('Purchase verification failed');
-                }
-                */
+                
               }
           }
         } catch (error) {
@@ -551,12 +525,7 @@ export async function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TY
                 cpCode: 'test-01',
                 appType: 'CONCERTHALL'
               });
-              /*
-              if(purchaseResponse.code != '200.1' && purchaseResponse.code != '409.2')
-              {
-                throw new Error('Purchase verification failed');
-              }
-              */
+              
             }
           }
         } catch (error) {
