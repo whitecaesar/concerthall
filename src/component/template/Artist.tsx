@@ -19,7 +19,7 @@ export default function ArtistInfo(artist: ArtistInfoProps) {
 	// useQuery 호출을 옵션 객체를 사용하는 형태로 수정
 
 	const { data, isError, isLoading } = useQuery({
-		queryKey: ["ARTIST-ITEM"],
+		queryKey: ["ARTIST-ITEM", artist.artist_id],
 		queryFn: () => {
 			const ArtistInfo = getArtistInfoAxios(artist.artist_id);
 			return ArtistInfo;

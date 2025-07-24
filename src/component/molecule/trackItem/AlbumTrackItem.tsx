@@ -42,7 +42,7 @@ export default function AlbumTrackItem({
 		isLoading,
 		refetch,
 	} = useQuery({
-		queryKey: ["TRACK-LIST"],
+		queryKey: ["TRACK-LIST", albumTrackInfo.ID],
 		queryFn: () => {
 			const TrackItem = getTrackAxios(albumTrackInfo.ID);
 			return TrackItem;
@@ -53,11 +53,9 @@ export default function AlbumTrackItem({
 		console.log("albumTrackInfo", albumTrackInfo);
 		if (albumTrackInfo.YN_PURCHASED === "Y") {
 			// 구매한 트랙은 재생
-			const result = funcAlbumTrackPlayClick("trackPlay", albumTrackInfo);
+			await funcAlbumTrackPlayClick("trackPlay", albumTrackInfo);
 			// 여기에 화면 CANCEL 버튼이 안보이게 처리 
-			if(await result) {
-				setIsCancelVisible("N");
-			}
+			setIsCancelVisible("N");
 		} else if (albumTrackInfo.YN_SALE === "N") {
 			// 판매불가 트랙은 팝업 표시
 			if (handlePopupOpen) {

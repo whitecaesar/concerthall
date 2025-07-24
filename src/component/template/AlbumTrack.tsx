@@ -16,7 +16,7 @@ interface AlbumTrackProps {
 export default function AlbumTrack({ album_id }: AlbumTrackProps) {
 
 	const { data, isError, isLoading } = useQuery({
-		queryKey: ["ALBUM-ITEM"],
+		queryKey: ["ALBUM-ITEM", album_id],
 		queryFn: async () => {
 			const trackList = await getAlbumAxios(album_id);
 

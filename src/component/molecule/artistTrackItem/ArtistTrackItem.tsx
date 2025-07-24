@@ -31,7 +31,7 @@ export default function ArtistTrackItem({
 		isError,
 		isLoading
 	} = useQuery({
-		queryKey: ["TRACK-LIST"],
+		queryKey: ["TRACK-LIST", ArtistTrackInfo.ID],
 		queryFn: () => {
 			const TrackItem = getTrackAxios(ArtistTrackInfo.ID);
 			return TrackItem;

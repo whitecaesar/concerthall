@@ -73,8 +73,9 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
               item.URL = result.INFO.URL;
               item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
               const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
+              const YN_CONFIRM_PURCHASE_REQUEST = result.INFO.YN_CONFIRM_PURCHASE_REQUEST?result.INFO.YN_CONFIRM_PURCHASE_REQUEST:'';
 
-              if(PURCHASE_ID)
+              if(PURCHASE_ID && YN_CONFIRM_PURCHASE_REQUEST === 'Y')
               {
                 const purchaseResponse = await setPaymentConfirmAxios({
                   purchaseId : PURCHASE_ID,
@@ -139,8 +140,9 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
               item.URL = result.INFO.URL;
               item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
               const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
+              const YN_CONFIRM_PURCHASE_REQUEST = result.INFO.YN_CONFIRM_PURCHASE_REQUEST?result.INFO.YN_CONFIRM_PURCHASE_REQUEST:'';
 
-              if(PURCHASE_ID)
+              if(PURCHASE_ID && YN_CONFIRM_PURCHASE_REQUEST === 'Y')
               {
                 const purchaseResponse = await setPaymentConfirmAxios({
                   purchaseId : PURCHASE_ID,
@@ -216,7 +218,9 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
             track.URL = result.INFO.URL;
             track.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
             const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
-              if(PURCHASE_ID)
+            const YN_CONFIRM_PURCHASE_REQUEST = result.INFO.YN_CONFIRM_PURCHASE_REQUEST?result.INFO.YN_CONFIRM_PURCHASE_REQUEST:'';
+
+              if(PURCHASE_ID && YN_CONFIRM_PURCHASE_REQUEST === 'Y')
               {
                 const purchaseResponse = await setPaymentConfirmAxios({
                   purchaseId : PURCHASE_ID,
@@ -308,8 +312,9 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
               item.URL = result.INFO.URL;
               item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
               const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
+              const YN_CONFIRM_PURCHASE_REQUEST = result.INFO.YN_CONFIRM_PURCHASE_REQUEST?result.INFO.YN_CONFIRM_PURCHASE_REQUEST:'';
 
-              if(PURCHASE_ID)
+              if(PURCHASE_ID && YN_CONFIRM_PURCHASE_REQUEST === 'Y')
               {
                 const purchaseResponse = await setPaymentConfirmAxios({
                   purchaseId : PURCHASE_ID,
@@ -317,7 +322,6 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
                   cpCode : 'test-01',
                   appType : 'CONCERTHALL'
                 });
-                
               }
             }
           } catch (error) {
@@ -372,7 +376,9 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
             track.URL = result.INFO.URL;
             track.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
             const PURCHASE_ID = result.INFO.PURCHASE_ID?result.INFO.PURCHASE_ID:'';
-              if(PURCHASE_ID)
+            const YN_CONFIRM_PURCHASE_REQUEST = result.INFO.YN_CONFIRM_PURCHASE_REQUEST?result.INFO.YN_CONFIRM_PURCHASE_REQUEST:'';
+
+              if(PURCHASE_ID && YN_CONFIRM_PURCHASE_REQUEST === 'Y')
               {
                 const purchaseResponse = await setPaymentConfirmAxios({
                   purchaseId : PURCHASE_ID,
@@ -517,8 +523,9 @@ export async function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TY
             item.URL = result.INFO.URL;
             item.PLAYABLE_CODE = result.INFO.PLAYABLE_CODE;
             const PURCHASE_ID = result.INFO.PURCHASE_ID ? result.INFO.PURCHASE_ID : '';
+            const YN_CONFIRM_PURCHASE_REQUEST = result.INFO.YN_CONFIRM_PURCHASE_REQUEST?result.INFO.YN_CONFIRM_PURCHASE_REQUEST:'';
 
-            if (PURCHASE_ID) {
+            if (PURCHASE_ID && YN_CONFIRM_PURCHASE_REQUEST === 'Y') {
               const purchaseResponse = await setPaymentConfirmAxios({
                 purchaseId: PURCHASE_ID,
                 reason: 'STREAMING_PLAY',
@@ -744,20 +751,20 @@ export function generateClientRandomString() {
 }
 
 export function sendMessage(type: string, data: any) {
-  console.log("sendMessage : ", type, data);
   const appType = getCookie("app_type");
-  console.log("appType : ", appType);
   const messageData = {
     type: type,
     data: typeof data === 'string' ? data : JSON.stringify(data)
   };
   
-  if (appType === "mobile" && (window as any).HifiRose && typeof (window as any).HifiRose[type] === 'function') {
+  if (appType === "mobile") {
     // 모바일 앱에서 호출
     (window as any).HifiRose[type](typeof data === 'string' ? data : JSON.stringify(data));
+    /*
     if ((window as any).ReactNativeWebView) {
       (window as any).ReactNativeWebView.postMessage(JSON.stringify(messageData));
     }
+    */
   } 
   else if (type === "close") {
     const messageData = {
@@ -787,11 +794,9 @@ export function sendMessage(type: string, data: any) {
 
     // 일반 웹뷰에서 호출
     (window as any).parent.postMessage(messageData, "*");
-    /*
     if ((window as any).parent.ReactNativeWebView) {
       (window as any).parent.ReactNativeWebView.postMessage(JSON.stringify(messageData));
     }
-    */
   }
   
   return true;

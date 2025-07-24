@@ -20,7 +20,7 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 		isError,
 		isLoading,
 	} = useQuery({
-		queryKey: ["TRACK-LIST"],
+		queryKey: ["TRACK-LIST", trackInfo.TRACK_ID],
 		queryFn: () => {
 			const TrackItem = getTrackAxios(trackInfo.TRACK_ID);
 			return TrackItem;
@@ -32,7 +32,7 @@ export default function TrackItem({ trackInfo }: TrackItemProps) {
 		isError: playError,
 		isLoading: playLoding,
 	} = useQuery({
-		queryKey: ["PLAY-INFO"],
+		queryKey: ["PLAY-INFO", trackInfo.TRACK_ID],
 		queryFn: () => {
 			const PlayInfo = getPlayInfoAxios(trackInfo.TRACK_ID);
 			return PlayInfo;

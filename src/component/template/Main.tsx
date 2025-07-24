@@ -29,7 +29,12 @@ import ErrorPage from "../organism/error/Error";
 export default function Main() {
 	const [error, setError] = useState<string | null>(null);
 
-	//setCookie("userid", "3029", 24);
+	/*setCookie("userid", "104395", 24);
+	setCookie("ip", "127.0.0.1",24);
+	setCookie("lang", "en", 24);
+	setCookie("app_type", "mobile", 24);
+	setCookie("token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMDQzOTUiLCJpYXQiOjE3NTMzMzIyMzQsImV4cCI6MjA2ODY5MjIzNCwiaWQiOjEwNDM5NSwibmFtZSI6IndoaXRlIiwibm8iOjEwNDM5NSwiZnJpZW5kIjozNzIzLCJ1c2VybmFtZSI6IndoaXRlIiwiaXNFbWFpbENvbmZpcm0iOnRydWUsImF1dGhvcml0aWVzIjpbIlJPU0VfTUVNQkVSIiwiUk9MRV9VU0VSX09OTElORSJdfQ.CqDhnHr3dsc0nKCMUlCcAWuM-MSkIuEjXYWkdrRzmZYnruiWfgOnJB2xKSeneZe6Vn0ML2A0Xa7Xuq6Hs-1gug", 24);
+	*/
 	const token = getCookie("token") || "";
 
 

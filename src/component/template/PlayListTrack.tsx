@@ -28,7 +28,7 @@ export default function PlayListTrack({
 	const ITEMS_PER_PAGE = 20;
 
 	const { data, isError } = useQuery({
-		queryKey: ["ALBUM-ITEM"],
+		queryKey: ["ALBUM-ITEM", playList_id],
 		queryFn: () => getPlayListTrackListAxios(playList_id, size),
 	});
 

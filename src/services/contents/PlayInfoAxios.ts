@@ -5,6 +5,7 @@ export type PLAY_URL_TYPE = {
 	URL: string;
 	PLAYABLE_CODE : string;
 	PURCHASE_ID?: string;
+	YN_CONFIRM_PURCHASE_REQUEST?: string;
 };
 
 export type PLAY_ITEM_RESPONSE = {
