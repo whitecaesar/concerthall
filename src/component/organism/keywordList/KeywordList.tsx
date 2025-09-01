@@ -26,7 +26,14 @@ const KeywordList = ({ categoryList: { TITLE, KEWORD } }: CategoryProps) => {
 						<Keyword
 							keywordInfo={keyword}
 							onClick={() => {
-								router.push(`/explore/result?search=${keyword.KEY}`);
+								// 키워드 값 디버깅 로그
+								console.log('원본 키워드:', keyword.KEY, 'NAME:', keyword.NAME);
+								
+								// 키워드에 표시되는 NAME 값을 사용하여 검색 (실제 보여지는 텍스트 사용)
+								const searchValue = keyword.NAME || keyword.KEY;
+								console.log('검색에 사용될 값:', searchValue);
+								
+								router.push(`/explore/result?search=${encodeURIComponent(searchValue)}`);
 							}}
 						/>
 					</li>

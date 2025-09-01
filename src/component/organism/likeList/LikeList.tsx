@@ -11,11 +11,18 @@ import MyPlayViewAll from "../albumList/LikePlayList";
 import { MY_RECENT_LIST_RESPONSE, getLikePlayListAxios } from "@/services/contents/LikePlayListAxios";
 import { ARTIST_LIST_RESPONSE_TYPE, getArtistListAxios } from "@/services/contents/LikeArtistAxios";
 import ArtistListViewAll from "../artistList/ArtistListViewAll";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type Props = {};
 
 export default function LikeList(props: Props) {
-	const [activeTab, setActiveTab] = useState<string>("Tab1");
+	const searchParams = useSearchParams();
+	const router = useRouter();
+	
+	// URL에서 tab 파라미터 읽기 (없으면 기본값 "Tab1" 사용)
+	const tabParam = searchParams.get('tab');
+	const [activeTab, setActiveTab] = useState<string>(tabParam || "Tab1");
+	
 	const [trackList, setTrackList] = useState<TRACK_RECENT_LIST_RESPONSE>();
 	const [AlbumList, setAlubmList] = useState<ALBUM_LIKE_LIST_RESPONSE>();
 	const [ArtistList, setArtistList] = useState<ARTIST_LIST_RESPONSE_TYPE>();
@@ -28,9 +35,21 @@ export default function LikeList(props: Props) {
 		getLikePlayListAxios().then((data) => setPlayList(data));
 		getArtistListAxios().then((data) => setArtistList(data));
 	}, []);
+	
+	// URL 파라미터 변경 시 탭 업데이트
+	useEffect(() => {
+		if (tabParam) {
+			setActiveTab(tabParam);
+		}
+	}, [tabParam]);
 
 	const handleTabClick = (tabName: string) => {
 		setActiveTab(tabName);
+		
+		// URL 쿼리 파라미터 업데이트
+		const url = new URL(window.location.href);
+		url.searchParams.set('tab', tabName);
+		router.replace(url.pathname + url.search);
 	};
 
 	return (

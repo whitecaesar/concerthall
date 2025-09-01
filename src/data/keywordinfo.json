@@ -1,9 +1,0 @@
-{
-	"GENRE": [
-		{ "key": "-1", "children": "선택", "isSelected": true }
-	],
-	"KEYWORD": [
-		{ "key": "-1", "children": "선택", "isSelected": true }
-
-	]
-}

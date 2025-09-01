@@ -21,7 +21,7 @@ export default function PLTrackItem({trackInfo, trackListInfo, position, method 
 			<span onClick={() => funcPlayListTrackClick('play', trackInfo, trackListInfo, position)}>
 				{/* Link에는 트랙 재생하는 url이 들어가야 함 */}
 				<Image
-					src={trackInfo.thumbnailUrl}
+					src={trackInfo.thumbnailUrl ? trackInfo.thumbnailUrl : "/images/hifiRoseSmall.png"}
 					alt={trackInfo.title}
 					width={45}
 					height={45}

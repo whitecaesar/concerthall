@@ -63,7 +63,7 @@ export default function SingleItem({
 				}
 			>
 				<Image
-					src={singleInfo.THUMBNAIL}
+					src={singleInfo.THUMBNAIL? singleInfo.THUMBNAIL : "/images/hifiRoseLarge.png"}
 					alt={singleInfo.TITLE}
 					width={150}
 					height={85}

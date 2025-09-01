@@ -759,6 +759,7 @@ export function sendMessage(type: string, data: any) {
   
   if (appType === "mobile") {
     // 모바일 앱에서 호출
+    console.log("sendMessage : ", type, data);
     (window as any).HifiRose[type](typeof data === 'string' ? data : JSON.stringify(data));
     /*
     if ((window as any).ReactNativeWebView) {

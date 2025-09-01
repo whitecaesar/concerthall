@@ -20,7 +20,7 @@ export default function RecentTrackListItem({
 		<div className={style.singleItem} id={`${trackInfo.id}`}>
 			<span onClick={() => funcPlayListTrackClick('play', trackInfo, trackListInfo, position)}>
 				<Image
-					src={trackInfo.thumbnailUrl}
+					src={trackInfo.thumbnailUrl? trackInfo.thumbnailUrl : "/images/hifiRoseLarge.png"}
 					alt={trackInfo.title}
 					width={150}
 					height={85}
