@@ -169,7 +169,7 @@ export default function Payment({ onClose, isOpen, trackId, albumId, type, price
 				<div className={style.paymentAreaInner}>
 					<p>
 						<Icon iconName="paymentLogo" />
-						PASSWORD
+						USER PASSWORD
 					</p>
 					<input
 						type="password"

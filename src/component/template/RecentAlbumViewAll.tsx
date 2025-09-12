@@ -81,10 +81,13 @@ export default function RecentAlbumViewAll(total: RecentAlbumViewAllProps) {
     fetchAlbums(0); // 초기 데이터 로드
     let newSortedList = [...recent?.recentList || []];
 
+    /*
     if (event === "recent") {
       // recent 정렬 로직
       // newSortedList.sort((a, b) => a.album.playTime.localeCompare(b.album.playTime));
-    } else if (event === "preference") {
+    } else
+    */
+    if (event === "preference") {
       newSortedList.sort((a, b) => b.album.star - a.album.star);
     } else if (event === "ascending") {
       newSortedList.sort((a, b) => a.album.title.localeCompare(b.album.title));

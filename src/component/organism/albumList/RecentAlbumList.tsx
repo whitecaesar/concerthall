@@ -20,6 +20,7 @@ const RecentAlbumList = ({
 	noScroll = false,
 	title,
 }: RecentAlbumListProps) => {
+	console.log("recentList", recentList);
 	return (
 		<div className={style.albumListContainer} style={{ paddingBottom: "10px" }}>
 			{showTitle && recentList && (

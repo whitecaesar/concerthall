@@ -10,7 +10,7 @@ import { TRACK_RECENT_ITEM_TYPE, TRACK_RECENT_LIST_RESPONSE } from "@/services/c
 interface PLTrackItemProps {
 	trackInfo: TRACK_RECENT_ITEM_TYPE;
 	trackListInfo: TRACK_RECENT_LIST_RESPONSE | TRACK_PLAYLIST_TYPE;
-    position: number;
+  position: number;
 	method: string;
 }
 

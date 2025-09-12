@@ -59,11 +59,12 @@ function convertToMilliseconds(duration : string) {
 
 export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE, tracklistInfo? : VIEWALL_LIST_TYPE, position? : number, albumTrackList? : ALBUM_ITEM_TYPE[]) {
   const appType = getCookie("app_type");
+  const track_id = track?.TRACK_ID;
    // 버튼 클릭 시 실행할 로직
   if(type == 'trackMore')
   {
     const WebStreamTrackItem: any[] = [];
-    const promises = (tracklistInfo?.ITEM_INFO || []).map(async (item :ITEM_INFO_TYPE) => {
+    const trackItemPromises = (tracklistInfo?.ITEM_INFO || []).map(async (item :ITEM_INFO_TYPE) => {
       if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
       {
         if (item.ID) {
@@ -105,21 +106,36 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
           duration : duratinon,
           isPreview : false
         };
-        WebStreamTrackItem.push(trackItem);
+        return trackItem;
       }
+      return null;
     });
     
-    // 모든 비동기 작업이 완료될 때까지 기다림
-    await Promise.all(promises || []);
+    // 모든 비동기 작업이 완료된 후 순서대로 WebStreamTrackItem에 추가
+    const trackItems = await Promise.all(trackItemPromises || []);
+    trackItems.forEach(item => {
+      if (item) WebStreamTrackItem.push(item);
+    });
+
+    console.log("WebStreamTrackItem", WebStreamTrackItem);
 
     if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
     {
       console.error(`No playable tracks available.`);
-
     } else {
+      // track_id와 track?.TRACK_ID가 일치하는 항목의 인덱스를 찾아서 position으로 사용
+      let newPosition = position;
+      if (track?.TRACK_ID) {
+        const foundIndex = WebStreamTrackItem.findIndex(item => item.track_id === track.TRACK_ID);
+        if (foundIndex !== -1) {
+          newPosition = foundIndex;
+        }
+        console.log("Found position for track:", newPosition);
+      }
+      
       const trackData = {
         webstreamtrackitem : WebStreamTrackItem,
-        position : position
+        position : newPosition
       };
 
       let json_track_data: string = JSON.stringify(trackData);
@@ -130,7 +146,7 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
   else if(type == 'albumTrackMore')
   {
     const WebStreamTrackItem: any[] = [];
-    const promises = albumTrackList?.map(async (item :ALBUM_ITEM_TYPE) => {
+    const trackItemPromises = albumTrackList?.map(async (item :ALBUM_ITEM_TYPE) => {
       if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
       {
         if (item.ID) {
@@ -172,21 +188,31 @@ export async function funcTrackPlayClick(type : string, track? : TRACK_ITEM_TYPE
           duration : duratinon,
           isPreview : false
         };
-        WebStreamTrackItem.push(trackItem);
+        return trackItem;
       }
+      return null;
     });
 
-    // 모든 비동기 작업이 완료될 때까지 기다림
-    await Promise.all(promises || []);
+    // 모든 비동기 작업이 완료된 후 순서대로 WebStreamTrackItem에 추가
+    const trackItems = await Promise.all(trackItemPromises || []);
+    trackItems.forEach(item => {
+      if (item) WebStreamTrackItem.push(item);
+    });
 
     if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
     {
       console.error(`No playable tracks available.`);
 
     } else {
+
+      // track_id와 track.TRACK_ID가 일치하는 항목의 인덱스를 찾아서 position으로 사용
+      const foundIndex = WebStreamTrackItem.findIndex(item => item.track_id === track_id);
+      const newPosition = foundIndex !== -1 ? foundIndex : position;
+      console.log("Found position:", newPosition);
+      
       const trackData = {
         webstreamtrackitem : WebStreamTrackItem,
-        position : position
+        position : newPosition
       };
 
       const json_track_data: string = JSON.stringify(trackData);
@@ -302,7 +328,7 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
   if(type == 'trackMore')
   {
     const WebStreamTrackItem: any[] = [];
-    const promises = (tracklistInfo?.ITEM_INFO || []).map(async (item :ITEM_INFO_TYPE) => {
+    const trackItemPromises = (tracklistInfo?.ITEM_INFO || []).map(async (item :ITEM_INFO_TYPE) => {
       if(item.YN_PURCHASED =='Y' && item.YN_SALE == 'Y')
       {
         if (item.ID) {
@@ -343,12 +369,16 @@ export async function funcAlbumTrackPlayClick(type : string, track : ALBUM_ITEM_
           duration : duratinon,
           isPreview : false
         };
-        WebStreamTrackItem.push(trackItem);
+        return trackItem;
       }
+      return null;
     });
 
-    // 모든 비동기 작업이 완료될 때까지 기다림
-    await Promise.all(promises || []);
+    // 모든 비동기 작업이 완료된 후 순서대로 WebStreamTrackItem에 추가
+    const trackItems = await Promise.all(trackItemPromises || []);
+    trackItems.forEach(item => {
+      if (item) WebStreamTrackItem.push(item);
+    });
 
     if (!Array.isArray(WebStreamTrackItem) || WebStreamTrackItem.length === 0) 
     {
@@ -514,7 +544,7 @@ export async function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TY
 
   console.log("album", album);
 
-  const promises = album?.ITEM_INFO?.map(async (item: ALBUM_ITEM_TYPE) => {
+  const trackItemPromises = album?.ITEM_INFO?.map(async (item: ALBUM_ITEM_TYPE) => {
     if (item.YN_PURCHASED == 'Y' && item.YN_SALE == 'Y') {
       if (item.ID) {
         try {
@@ -532,7 +562,6 @@ export async function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TY
                 cpCode: 'test-01',
                 appType: 'CONCERTHALL'
               });
-              
             }
           }
         } catch (error) {
@@ -558,12 +587,19 @@ export async function funcAlbumPlayClick(type : string,  album : ALBUM_DETAIL_TY
         isPreview : false
       };
       console.log("trackItem", trackItem);
-      WebStreamTrackItem.push(trackItem);
+      return trackItem; // 아이템을 반환하여 순서를 유지
     }
+    return null; // 조건에 맞지 않는 아이템은 null 반환
+  });
+
+  // 모든 비동기 작업이 완료된 후 순서대로 WebStreamTrackItem에 추가
+  const trackItems = await Promise.all(trackItemPromises);
+  trackItems.forEach(item => {
+    if (item) WebStreamTrackItem.push(item);
   });
 
   // 모든 비동기 작업이 완료될 때까지 기다림
-  await Promise.all(promises || []);
+  await Promise.all(trackItemPromises || []);
 
   console.log("WebStreamTrackItem", WebStreamTrackItem);
 

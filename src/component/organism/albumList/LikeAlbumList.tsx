@@ -20,6 +20,7 @@ export default function LikeAlbumList({likeAlbumList}: LikeAlbumListProps) {
 					<li key={item.id}>
 						<RecentAlbumItem
 							albumInfo={item}
+							cnt={item.tracks?.length || 0}
 						/>
 					</li>
 				))}
