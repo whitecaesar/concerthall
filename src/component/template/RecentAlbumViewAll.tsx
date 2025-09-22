@@ -7,6 +7,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { getCookie } from "@/services/common";
 import style from "../organism/albumList/albumList.module.css";
 import RecentAlbumItem from "../molecule/albumItem/RecentAlbumItem";
+import { ALBUM_TRACK_CNT_RESPONSE_TYPE, getAlbumTrackCnt } from "@/services/contents/AlbumAxios";
 
 interface RecentAlbumViewAllProps {
   totalCnt: any;
@@ -21,6 +22,7 @@ export default function RecentAlbumViewAll(total: RecentAlbumViewAllProps) {
   const [hasMore, setHasMore] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const ITEMS_PER_PAGE = 20;
+  const [trackCntResult, setTrackCntResult] = useState<ALBUM_TRACK_CNT_RESPONSE_TYPE | null>(null);
 
   useEffect(() => {
     const lang = getCookie("lang") || "en";
@@ -39,6 +41,18 @@ export default function RecentAlbumViewAll(total: RecentAlbumViewAllProps) {
       const data = await getRecentAlbumAxios("", page, ITEMS_PER_PAGE);
       
       if (data.recentList.length > 0) {
+
+        const albumIds = data.recentList.map(item => item.album.clientKey);
+				
+				// getAlbumTrackCnt 함수에 전달할 파라미터 생성
+				const param = {
+					albums: albumIds.map(id => ({ albumId: id }))
+				};
+				
+				// getAlbumTrackCnt 함수 호출
+				const result = await getAlbumTrackCnt(param);
+				setTrackCntResult(result);
+        
         setRecent(prev => prev ? {
           ...data,
           recentList: page === 0 ? data.recentList : [...prev.recentList, ...data.recentList]
@@ -111,6 +125,7 @@ export default function RecentAlbumViewAll(total: RecentAlbumViewAllProps) {
               <li key={item.album.id}>
                 <RecentAlbumItem
                   albumInfo={item.album}
+                  trackCnt={trackCntResult?.albums.find(album => album.album_id === item.album.clientKey)?.track_cnt}
                 />
               </li>
             ))}

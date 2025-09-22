@@ -53,6 +53,25 @@ export type ALBUM_DETAIL_TYPE = {
 	ALBUM_PRICE? : number;
 };
 
+export type ALBUM_TRACK_CNT_TYPE = {
+	album_id : string;
+	track_cnt : number;
+}
+
+export type ALBUM_TRACK_CNT_RESPONSE_TYPE = {
+	RES_CODE : string;
+	RES_MSG : string;
+	albums : ALBUM_TRACK_CNT_TYPE[];
+}
+
+export type ALBUM_TRACK_CNT_ITEM_TYPE = {
+	albumId : string;
+}
+
+export type ALBUM_TRACK_CNT_REQUEST_TYPE = {
+	albums : ALBUM_TRACK_CNT_ITEM_TYPE[];
+}
+
 export async function getAlbumAxios(
 	idAlbum?: string // idAlbum 파라미터를 추가했습니다.
 ): Promise<ALBUM_DETAIL_TYPE> {
@@ -90,5 +109,19 @@ export async function getAlbumAxios(
         return albumData;
 	} else {
 		throw new Error(`에러입니다. ${response.status}`);
+	}
+}
+
+export async function getAlbumTrackCnt(
+	param?: ALBUM_TRACK_CNT_REQUEST_TYPE
+): Promise<ALBUM_TRACK_CNT_RESPONSE_TYPE> {
+	const response: AxiosResponse<ALBUM_TRACK_CNT_RESPONSE_TYPE> = await axios.post(
+		`${API_URL_CIP}/hch/albums/track-counts.json`,param
+	);	
+
+	if (response.status === 200) {
+		return response.data;
+	} else {
+		throw new Error(`에러입니다. ${response.data.RES_MSG}`);
 	}
 }
